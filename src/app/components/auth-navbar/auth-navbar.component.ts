@@ -3,13 +3,13 @@ import { CommonService } from '../../core/service/common/common.service';
 import { DataService, sideBar } from '../../core/service/data/data.service';
 import { SidebarService } from '../../core/service/sidebar/sidebar.service';
 import { routes } from '../../app.routes';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth-navbar',
   standalone: true,
-  imports: [NgClass, RouterLink, NgFor, NgIf],
+  imports: [NgClass, RouterLink, CommonModule],
   templateUrl: './auth-navbar.component.html',
   styleUrl: './auth-navbar.component.scss',
 })

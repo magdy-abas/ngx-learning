@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   provideRouter,
   withInMemoryScrolling,
@@ -13,6 +13,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,8 +23,6 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' })
     ),
     provideAnimations(),
-    BrowserAnimationsModule,
-
     provideHttpClient(withFetch(), withInterceptors([])),
   ],
 };
