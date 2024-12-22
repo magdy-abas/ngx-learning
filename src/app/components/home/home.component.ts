@@ -4,9 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CountUpModule } from 'ngx-countup';
-import { Data } from '@angular/router';
 import { Router } from '@angular/router';
-import * as AOS from 'aos';
+import AOS from 'aos';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import {
   DataService,
@@ -21,7 +20,11 @@ import {
 import { routes } from '../../app.routes';
 import { HomeData } from './data';
 import { BrowserModule, EventManager } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
+
+import { HomeInstructorsComponent } from './home-components/home-instructors/home-instructors.component';
+import { HomeCoursesComponent } from './home-components/home-courses/home-courses.component';
+import { HomeCategoriesComponent } from './home-components/home-categories/home-categories.component';
+import { HomeSliderComponent } from './home-components/home-slider/home-slider.component';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +35,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     MatSelectModule,
     CarouselModule,
     CountUpModule,
+    HomeInstructorsComponent,
+    HomeCoursesComponent,
+    HomeCategoriesComponent,
+    HomeSliderComponent,
   ],
   providers: [
     EventManager,

@@ -6,13 +6,15 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/auth-components/login/login.component';
 import { RegisterComponent } from './components/auth-components/register/register.component';
 import { ForgotPasswordComponent } from './components/auth-components/forgot-password/forgot-password.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { CoursesDetailsComponent } from './components/courses-details/courses-details.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
     children: [
-      { path: '', redirectTo: 'forgotPass', pathMatch: 'full' },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'home' },
       { path: 'login', component: LoginComponent, title: 'signin' },
       { path: 'signup', component: RegisterComponent, title: 'signup' },
@@ -20,6 +22,12 @@ export const routes: Routes = [
         path: 'forgotPass',
         component: ForgotPasswordComponent,
         title: 'forgotPass',
+      },
+      { path: 'courses', component: CoursesComponent, title: 'courses' },
+      {
+        path: 'course-d',
+        component: CoursesDetailsComponent,
+        title: 'courses-details',
       },
     ],
   },

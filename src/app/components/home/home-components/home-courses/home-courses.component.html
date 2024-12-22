@@ -1,0 +1,79 @@
+<!-- Feature Course -->
+<section class="featured-courses-sec">
+  <div class="patter-one-main">
+    <img class="patter-one" src="assets/img/bg/patter-one.png" alt="">
+  </div>
+  <div class="container">
+    <div class="header-two-title text-center" data-aos="fade-up">
+      <p class="tagline">What’s New</p>
+      <h2>Featured Courses</h2>
+      <div class="header-two-text m-auto text-center d-block">
+        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget aenean accumsan bibendum gravida
+          maecenas augue elementum et neque. Suspendisse imperdiet.</p>
+      </div>
+    </div>
+    <div class="featured-courses-two">
+      <div class="row">
+
+        <!-- Featured Courses -->
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 d-flex" data-aos="fade-down"
+          *ngFor="let data of Featured_Courses">
+          <div class="featured-details-two">
+            <div class="product-item-two">
+              <div class="product-img-two">
+                <a>
+                  <img class="img-fluid" alt="" src="assets/img/course/courses-0{{data.id}}.jpg">
+                </a>
+                <div class="price-text">
+                  <h4><span>{{data.title}}</span></h4>
+                </div>
+              </div>
+              <div class="course-details-content">
+                <div class="image-info">
+                  <img class="img-fluid" alt="" src="assets/img/profiles/avatar-0{{data.id}}.jpg">
+                </div>
+                <div class="rating">
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star filled"></i>
+                  <span class="ms-3">{{data.reviews}} reviews</span>
+                </div>
+
+                <div class="name-text featured-info-two">
+                  <h3 class="title instructor-text"><a>{{data.course}}</a></h3>
+                  <p class="me-3">By<span class="text-danger ms-2">{{data.author}}</span></p>
+                </div>
+
+                <div class="featured-info-time d-flex align-items-center">
+                  <div class="hours-time-two d-flex align-items-center">
+                    <span><i class="fa-regular fa-clock me-2"></i></span>
+                    <p>6hr 30min</p>
+                  </div>
+                  <div class="course-view d-inline-flex align-items-center">
+                    <div class="course-price">
+                      <h3>$400 <span>$99.00</span></h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Featured Courses -->
+
+
+
+      </div>
+    </div>
+    <!-- View all  Courses -->
+    <div class="col-lg-12" data-aos="fade-up">
+      <div class="more-details text-center">
+        <a class="discover-btn">View all Courses <i class="fas fa-arrow-right ms-2"></i></a>
+      </div>
+    </div>
+    <!-- /View all  Courses -->
+  </div>
+</section>
+<!-- /Feature Course -->

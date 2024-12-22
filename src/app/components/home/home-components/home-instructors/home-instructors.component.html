@@ -1,0 +1,53 @@
+<!-- Feature Instructors -->
+<div class="feature-instructors-sec">
+  <div class="container">
+    <div class="header-two-title text-center" data-aos="fade-up">
+      <p class="tagline">New Courses</p>
+      <h2>Featured Instructor</h2>
+      <div class="header-two-text aos" data-aos="fade-up">
+        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget aenean accumsan bibendum gravida
+          maecenas augue elementum et neque. Suspendisse imperdiet.</p>
+      </div>
+    </div>
+    <!-- Featured Instructor -->
+    <div class="featured-instructor-two">
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12" data-aos="fade-up" *ngFor="let data of feature_instructors">
+          <div class="instructors-widget">
+            <div class="instructors-img">
+              <a>
+                <img class="img-fluid" alt="" src="assets/img/instructor/instructor-0{{data.id}}.jpg">
+              </a>
+              <div class="featured-border">
+                <div class="featured-img ">
+                  <img src="assets/img/category/category-{{data.id}}.svg" alt="" class="img-fluid">
+                </div>
+              </div>
+            </div>
+            <div class="course-details-two">
+              <div class="instructors-content text-center">
+                <h5><a>{{data.name}}</a></h5>
+                <p>{{data.title}}</p>
+              </div>
+              <div class="course-info"></div>
+              <div class="student-count d-flex justify-content-center">
+                <i class="fa-solid fa-user-group"></i>
+                <span>{{data.students}} Students</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Featured Instructor -->
+
+    <!-- View all Category -->
+    <div class="col-lg-12">
+      <div class="more-details text-center" data-aos="fade-up">
+        <a class="discover-btn discover-btn">View all Instructors <i class="fas fa-arrow-right ms-2"></i></a>
+      </div>
+    </div>
+    <!-- /View all Category -->
+  </div>
+</div>
+<!-- /Feature Instructors -->
