@@ -1,0 +1,29 @@
+@if (formName.get(controlName)?.errors && formName.get(controlName)?.touched) {
+
+<div class="">
+  <ul class="m-0">
+
+    @if(formName.get(controlName)?.getError('required') ){
+    <li class="fw-normal my-2 text-danger fs-6"> Input is required</li>
+    }@if (formName.get(controlName)?.getError('minlength')) {
+    <li class="fw-normal my-2 text-danger fs-6">Input must be at least 3 characters long.</li>
+    }@if (formName.get(controlName)?.getError('maxlength')) {
+    <li class="fw-normal my-2 text-danger fs-6">Input must not exceed 20 characters</li>
+    } @if (formName.get(controlName)?.getError('email')) {
+    <li class="fw-normal my-2 text-danger fs-6"> Please enter a valid email address</li>
+    }@if (formName.get(controlName)?.getError('pattern')) {
+    <li class="fw-normal my-2 text-danger fs-6">password must be at least 6 characters long and include at least one
+      letter</li>
+    }
+  </ul>
+</div>
+
+}@else if (formName.getError('mismatch') && formName.get(controlName)?.touched && controlName =="rePassword") {
+
+<div class="alert alert-danger mt-1">
+  <ul class="m-0">
+    <li>Password Confirmation is incorrect</li>
+  </ul>
+</div>
+
+}

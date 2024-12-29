@@ -5773,11 +5773,18 @@ export class Mainregister {
   name?: string;
   email?: string;
   password?: string;
-  confirmPassword?: string;
-  img?: string;
-  content1?: string;
-  content2?: string;
-  paragraph?: string;
+  password_confirmation?: string;
+  phone?: string;
+  token?: string;
+  serial_number?: string;
+  os?: string;
+}
+export class Mainlogin {
+  email?: string;
+  password?: string;
+  token?: string;
+  serial_number?: string;
+  os?: string;
 }
 
 export class passwordResponce {

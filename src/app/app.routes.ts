@@ -8,24 +8,20 @@ import { RegisterComponent } from './components/auth-components/register/registe
 import { ForgotPasswordComponent } from './components/auth-components/forgot-password/forgot-password.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CoursesDetailsComponent } from './components/courses-details/courses-details.component';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: AuthLayoutComponent,
+    component: PublicLayoutComponent,
+    // Routes for non-authenticated users
+
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'home' },
-      { path: 'login', component: LoginComponent, title: 'signin' },
-      { path: 'signup', component: RegisterComponent, title: 'signup' },
-      {
-        path: 'forgotPass',
-        component: ForgotPasswordComponent,
-        title: 'forgotPass',
-      },
       { path: 'courses', component: CoursesComponent, title: 'courses' },
       {
-        path: 'course-d',
+        path: 'courses-d',
         component: CoursesDetailsComponent,
         title: 'courses-details',
       },
@@ -33,7 +29,22 @@ export const routes: Routes = [
   },
   {
     path: '',
+    component: AuthLayoutComponent,
+    // Routes for auth pages
+    children: [
+      { path: 'login', component: LoginComponent, title: 'Login' },
+      { path: 'signup', component: RegisterComponent, title: 'Signup' },
+      {
+        path: 'forgotpass',
+        component: ForgotPasswordComponent,
+        title: 'Forgot Password',
+      },
+    ],
+  },
+  {
+    path: '',
     component: MainLayoutComponent,
+    // Routes for authenticated users
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'home' },

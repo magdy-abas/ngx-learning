@@ -39,3 +39,56 @@ $dreams-lms-theme: mat.define-light-theme(
 
 // Import your custom components last
 @import "assets/components/all";
+
+// my custom styles
+.valid-phone .form-control[type="tel"] {
+  border: 1px solid green !important;
+}
+
+.invalid-phone .form-control[type="tel"] {
+  border: 1px solid red !important;
+}
+
+.iti {
+  width: 100%;
+}
+
+.iti__input {
+  width: 100%;
+}
+.loginbox .form-control[type="tel"] {
+  padding-left: 50px !important;
+}
+
+.iti__selected-flag {
+  top: 30%;
+  left: 20px;
+  position: absolute;
+  cursor: pointer;
+  width: 40px !important;
+  height: 30px !important;
+}
+
+.iti__country-list {
+  max-height: 200px;
+}
+.dropdown-menu.country-dropdown {
+  width: 50% !important;
+}
+
+.iti__country-list {
+  font-size: 14px !important;
+}
+.iti__country {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.iti__dial-code {
+  color: #555;
+  font-weight: bold;
+}
+
+.iti__flag {
+  margin-right: 25px;
+}
