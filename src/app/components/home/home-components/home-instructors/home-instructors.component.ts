@@ -16,4 +16,8 @@ export class HomeInstructorsComponent {
   constructor(public data: HomeData) {
     this.feature_instructors = this.data.feature_instructors;
   }
+
+  ngOnInit(): void {
+    console.log(this.instructorsData);
+  }
 }

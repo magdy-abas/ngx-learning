@@ -17,7 +17,7 @@ export class HomeCoursesComponent {
     this.Featured_Courses = this.data.Featured_Courses;
   }
 
-  ngOnInit(): void {
-    console.log(this.coursesData);
-  }
+  // ngOnInit(): void {
+  //   console.log(this.coursesData);
+  // }
 }

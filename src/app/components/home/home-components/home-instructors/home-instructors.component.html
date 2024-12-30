@@ -12,27 +12,27 @@
     <!-- Featured Instructor -->
     <div class="featured-instructor-two">
       <div class="row">
-        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12" data-aos="fade-up" *ngFor="let data of feature_instructors">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12" data-aos="fade-up" *ngFor="let data of instructorsData">
           <div class="instructors-widget">
             <div class="instructors-img">
               <a>
-                <img class="img-fluid" alt="" src="assets/img/instructor/instructor-0{{data.id}}.jpg">
+                <img class="img-fluid" style="height: 250px;" alt="" [src]="data.image">
               </a>
-              <div class="featured-border">
+              <!-- <div class="featured-border">
                 <div class="featured-img ">
                   <img src="assets/img/category/category-{{data.id}}.svg" alt="" class="img-fluid">
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="course-details-two">
               <div class="instructors-content text-center">
                 <h5><a>{{data.name}}</a></h5>
-                <p>{{data.title}}</p>
+                <p>{{data.job_title}}</p>
               </div>
               <div class="course-info"></div>
               <div class="student-count d-flex justify-content-center">
-                <i class="fa-solid fa-user-group"></i>
-                <span>{{data.students}} Students</span>
+                <i class="fa-solid fa-laptop-file"></i>
+                <span>{{data.courses_count}} Courses</span>
               </div>
             </div>
           </div>
