@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HomeData } from '../../data';
 import { feature_instructors } from '../../../../core/service/data/data.service';
 import { NgFor } from '@angular/common';
@@ -12,6 +12,7 @@ import { NgFor } from '@angular/common';
 })
 export class HomeInstructorsComponent {
   public feature_instructors: feature_instructors[] = [];
+  @Input() instructorsData: any[] = [];
   constructor(public data: HomeData) {
     this.feature_instructors = this.data.feature_instructors;
   }

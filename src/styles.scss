@@ -92,3 +92,25 @@ $dreams-lms-theme: mat.define-light-theme(
 .iti__flag {
   margin-right: 25px;
 }
+
+.responsive-img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  min-height: 400px;
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .responsive-img {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-img {
+    max-height: 300px;
+    object-position: right;
+  }
+}

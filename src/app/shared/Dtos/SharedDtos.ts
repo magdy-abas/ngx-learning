@@ -88,3 +88,13 @@ export interface CityVM {
   title: string;
   status: number;
 }
+export interface IHomeSection {
+  id: number;
+  title: string;
+  short_title: string;
+  description: string;
+  display_type: string;
+  grid_columns_count: number;
+  type: 'sliders' | 'courses' | 'doctors' | 'banar' | 'categories';
+  data: any[];
+}

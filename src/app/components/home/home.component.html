@@ -1,24 +1,16 @@
-<!-- Home Banner -->
-<section class="home-two-slide  home-two d-flex align-items-center">
+<section class="home-two-slide home-two d-flex align-items-center">
   <div class="container">
-    <div class="row ">
+    <div class="row">
       <div class="col-lg-8 col-12" data-aos="fade-up">
         <div class="home-slide-face">
-          <div class="home-slide-text ">
+          <div class="home-slide-text">
             <h5>The Leader in Online Learning</h5>
             <h1>Engaging & Accessible Online Courses For All</h1>
           </div>
           <div class="banner-content">
-            <form class="form" name="store" id="store" method="post" action="course-list.html">
+            <form class="form" name="store" id="store" method="post">
               <div class="form-inner">
                 <div class="input-group">
-                  <span class="drop-detail home-arrow">
-                    <mat-select class="form-control select" [(value)]="selected">
-                      <mat-option value="1">Select category</mat-option>
-                      <mat-option value="2">Category One</mat-option>
-                      <mat-option value="3">Category Two</mat-option>
-                    </mat-select>
-                  </span>
                   <input type="email" class="form-control" placeholder="Search School, Online eductional centers, etc">
                   <button class="btn btn-primary sub-btn" type="submit" (click)="directPath()">Search</button>
                 </div>
@@ -46,14 +38,22 @@
       <img class="shapes-middle" src="assets/img/bg/home-middle.png" alt="">
       <img class="shapes-four wow animate__animated animate__slideInLeft" src="assets/img/bg/home-left.png" alt="">
     </div>
-    <!-- /Shapes -->
   </div>
 </section>
-<!-- /Home Banner -->
 
-
-
-<app-home-categories></app-home-categories>
-<app-home-slider></app-home-slider>
-<app-home-courses></app-home-courses>
-<app-home-instructors></app-home-instructors>
+@for (section of homeSections; track section.id) {
+@switch (section.type) {
+@case ('sliders') {
+<app-home-slider [sliderData]="section.data"></app-home-slider>
+}
+@case ('courses') {
+<app-home-courses [coursesData]="section.data"></app-home-courses>
+}
+@case ('doctors') {
+<app-home-instructors [instructorsData]="section.data"></app-home-instructors>
+}
+@case ('categories') {
+<app-home-categories [categoriesData]="section.data"></app-home-categories>
+}
+}
+}

@@ -63,7 +63,7 @@ export class LoginComponent {
 
   constructor(
     private DataService: DataService,
-    public router: Router,
+    public _Router: Router,
     private _AuthService: AuthService,
     private _FormBuilder: FormBuilder
   ) {
@@ -113,11 +113,22 @@ export class LoginComponent {
 
       this._AuthService.login(this.loginDto).subscribe({
         next: (res) => {
-          //navigate to sign in
-          // this._Router.navigate(['/login']);
-          console.log(res.message);
+          if (res.status === 1) {
+            console.log(res);
+            this._Router.navigate(['/home']);
+          } else {
+            this.msgError = res.message;
 
-          // this.isLoading = false;
+            if (res.message.includes('email')) {
+              this.loginForm
+                .get('email')
+                ?.setErrors({ serverError: res.data.email[0] });
+            } else {
+              this.loginForm
+                .get('password')
+                ?.setErrors({ serverError: res.data.password[0] });
+            }
+          }
         },
         error: (err: HttpErrorResponse) => {
           this.msgError = err.message;

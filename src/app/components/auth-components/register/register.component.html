@@ -25,7 +25,7 @@
     </div>
     <!-- /Login Banner -->
 
-    <div class="col-md-6 login-wrap-bg">
+    <div class="col-md-6 login-wrap-bg ">
       <!-- Login -->
       <div class="login-wrapper">
         <div class="loginbox">
@@ -36,6 +36,11 @@
             </div>
           </div>
           <h1>Sign up</h1>
+          @if (msgError) {
+          <div class="alert alert-danger mt-1">
+            <p class="m-0">{{msgError}}</p>
+          </div>
+          }
 
           <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -134,6 +139,7 @@
                 <a [routerLink]="routes.page_privacy_policy">Privacy Policy.</a>
               </label>
             </div>
+
             <div class="d-grid">
               <button class="btn btn-primary btn-start" type="submit">
                 Create Account
@@ -159,9 +165,11 @@
               </li>
             </ul>
           </div>
+
           <p class="mb-0">
             Already have an account? <a routerLink="/login">Sign in</a>
           </p>
+
         </div>
       </div>
       <!-- /Login -->

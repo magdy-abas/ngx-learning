@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { category } from '../../../../core/service/data/data.service';
 import { NgFor } from '@angular/common';
 import { HomeData } from '../../data';
@@ -12,7 +12,7 @@ import { HomeData } from '../../data';
 })
 export class HomeCategoriesComponent {
   public Category: category[] = [];
-
+  @Input() categoriesData: any[] = [];
   constructor(public data: HomeData) {
     this.Category = this.data.Category;
   }

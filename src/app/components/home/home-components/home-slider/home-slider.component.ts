@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { routes } from '../../../../core/service/routes/routes';
 import { DataService } from '../../../../core/service/data/data.service';
@@ -16,7 +16,7 @@ interface data {
 })
 export class HomeSliderComponent {
   public routes = routes;
-
+  @Input() sliderData: any[] = [];
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

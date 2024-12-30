@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Featured_Courses } from '../../../../core/service/data/data.service';
 import { HomeData } from '../../data';
 
@@ -12,8 +12,12 @@ import { HomeData } from '../../data';
 })
 export class HomeCoursesComponent {
   public Featured_Courses: Featured_Courses[] = [];
-
+  @Input() coursesData: any[] = [];
   constructor(public data: HomeData) {
     this.Featured_Courses = this.data.Featured_Courses;
+  }
+
+  ngOnInit(): void {
+    console.log(this.coursesData);
   }
 }

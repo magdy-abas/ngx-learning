@@ -1,19 +1,16 @@
 <!-- Feature Instructors -->
 <div class="container">
   <div class="aos" data-aos="fade-up">
-
     <owl-carousel-o [options]="customOptions">
+      @for (slider of sliderData; track $index) {
       <ng-template carouselSlide>
-        <img src="../../../../../assets/img/blog/blog-05.jpg" alt="slider-1">
+        <img [src]="slider.image" [alt]="slider.title" class="responsive-img">
       </ng-template>
-      <ng-template carouselSlide>
-        <img src="../../../../../assets/img/blog/blog-05.jpg" alt="slider-2">
-      </ng-template>
-      <ng-template carouselSlide>
-        <img src="../../../../../assets/img/blog/blog-05.jpg" alt="slider-2">
-      </ng-template>
-      <!-- Add more slides as needed -->
+      }
     </owl-carousel-o>
+
+
+
     <div id="carousel-custom-dots" class="owl-dots">
     </div>
   </div>

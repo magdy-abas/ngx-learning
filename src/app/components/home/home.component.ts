@@ -25,6 +25,8 @@ import { HomeInstructorsComponent } from './home-components/home-instructors/hom
 import { HomeCoursesComponent } from './home-components/home-courses/home-courses.component';
 import { HomeCategoriesComponent } from './home-components/home-categories/home-categories.component';
 import { HomeSliderComponent } from './home-components/home-slider/home-slider.component';
+import { DynamicHomeService } from '../../core/service/dynamic-home.service';
+import { IHomeSection } from '../../shared/Dtos/sharedDtos';
 
 @Component({
   selector: 'app-home',
@@ -52,10 +54,13 @@ import { HomeSliderComponent } from './home-components/home-slider/home-slider.c
       deps: [PLATFORM_ID],
     },
   ],
+
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  homeSections: IHomeSection[] = [];
+
   public routes = routes;
   selected = '1';
   public universitiesCompanies: universitiesCompanies[] = [];
@@ -68,7 +73,8 @@ export class HomeComponent {
   constructor(
     private DataService: DataService,
     public router: Router,
-    public data: HomeData
+    public data: HomeData,
+    private _DynamicHomeService: DynamicHomeService
   ) {
     this.universitiesCompanies = this.DataService.universitiesCompanies;
     this.Category = this.data.Category;
@@ -83,6 +89,8 @@ export class HomeComponent {
       duration: 1200,
       once: true,
     });
+
+    this.getHomeData();
   }
   customReview: OwlOptions = {
     loop: true,
@@ -130,8 +138,20 @@ export class HomeComponent {
       },
     },
   };
-  toggleClass() {}
+
+  getHomeData = () => {
+    this._DynamicHomeService.getHomeData().subscribe({
+      next: (res) => {
+        console.log(res.data);
+        this.homeSections = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  };
+
   directPath() {
-    this.router.navigate(['/pages/course/course-list']);
+    this.router.navigate(['/courses']);
   }
 }

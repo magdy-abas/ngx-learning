@@ -27,6 +27,7 @@ import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.
 import { AuthService } from '../../../core/service/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RegisterDto } from '../../../shared/Dtos/AuthDtos';
+import { scrollToTop } from '../../../shared/utils/ui-utils';
 
 @Component({
   selector: 'app-register',
@@ -231,19 +232,26 @@ export class RegisterComponent {
       this.RegisterDto.serial_number = '123';
       this.RegisterDto.os = 'ios';
 
-      console.log(RegisterDto);
+      console.log(this.RegisterDto);
       this._AuthService.register(this.RegisterDto).subscribe({
         next: (res) => {
-          //navigate to sign in
-          // this._Router.navigate(['/login']);
-          console.log(res);
-
-          console.log(res.message);
-          // this.isLoading = false;
+          if (res.status === 1) {
+            console.log(res);
+            console.log('Token:', res.data.token);
+            console.log('User details:', res.data.user);
+            this._Router.navigate(['/login']);
+          } else {
+            console.log(res.message);
+            this.msgError = res.message;
+            this.regForm
+              .get('email')
+              ?.setErrors({ serverError: res.data.email[0] });
+            scrollToTop();
+          }
         },
         error: (err: HttpErrorResponse) => {
           this.msgError = err.message;
-          this.isLoading = false;
+
           console.log(err);
         },
       });
