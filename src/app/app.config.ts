@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { loadingInterceptor } from './core/interceptor/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,6 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' })
     ),
     provideAnimations(),
-    provideHttpClient(withFetch(), withInterceptors([])),
+    provideHttpClient(withFetch(), withInterceptors([loadingInterceptor])),
   ],
 };

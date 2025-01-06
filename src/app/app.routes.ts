@@ -42,7 +42,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: 'auth',
     component: MainLayoutComponent,
     // Routes for authenticated users
     children: [

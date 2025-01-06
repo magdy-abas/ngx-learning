@@ -114,7 +114,7 @@ export class LoginComponent {
         next: (res) => {
           if (res.status === 1) {
             console.log(res);
-            // this._Router.navigate(['/home']);
+            this._Router.navigate(['/auth/home']);
           } else {
             this.msgError = res.message;
             console.log(res);
