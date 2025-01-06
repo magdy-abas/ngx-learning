@@ -21,9 +21,9 @@ export const routes: Routes = [
       { path: 'home', component: HomeComponent, title: 'home' },
       { path: 'courses', component: CoursesComponent, title: 'courses' },
       {
-        path: 'courses-d',
+        path: 'course-details/:id',
         component: CoursesDetailsComponent,
-        title: 'courses-details',
+        title: 'course-details',
       },
     ],
   },

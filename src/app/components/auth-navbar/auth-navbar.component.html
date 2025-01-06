@@ -1,22 +1,29 @@
 <!-- Header -->
 <header class="header header-two" [ngClass]="{
   'menu-opened': isMenuOpened,
-  'header-page':
-    base === 'blog' ||
-    page === 'notifications' ||
-    page === 'faq' ||
-    page === 'pricing-plan' ||
-    page === 'wishlist' ||
-    page === 'support' ||
-    page === 'job-category' ||
-    page === 'term-condition' ||
-    page === 'privacy-policy' ||
-    page === 'help-center' ||
-    page === 'pricing-plan2'
+
+
+  'header-page': !isHomePage ||
+                   base === 'blog' ||
+                   page === 'notifications' ||
+                   page === 'faq' ||
+                   page === 'pricing-plan' ||
+                   page === 'wishlist' ||
+                   page === 'support' ||
+                   page === 'job-category' ||
+                   page === 'term-condition' ||
+                   page === 'privacy-policy' ||
+                   page === 'help-center' ||
+                   page === 'pricing-plan2'
+
+
+
 }">
   <div class="header-fixed">
     <nav class="navbar navbar-expand-lg header-nav scroll-sticky" [ngClass]="{
-      'add-header-bg': white_bg === true
+      'add-header-bg': white_bg === true,
+
+
     }">
       <div class="container">
         <div class="navbar-header">
@@ -27,13 +34,13 @@
               <span></span>
             </span>
           </a>
-          <a [routerLink]="" class="navbar-brand logo">
+          <a routerLink="/home" class="navbar-brand logo">
             <img src="assets/img/logo.svg" class="img-fluid" alt="Logo" />
           </a>
         </div>
         <div class="main-menu-wrapper">
           <div class="menu-header">
-            <a [routerLink]="" class="menu-logo">
+            <a routerLink="/home" class="menu-logo">
               <img src="assets/img/logo.svg" class="img-fluid" alt="Logo" />
             </a>
             <a (click)="hideSidebar()" class="menu-close" href="javascript:;">

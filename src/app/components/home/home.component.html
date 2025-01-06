@@ -42,18 +42,27 @@
 </section>
 
 @for (section of homeSections; track section.id) {
+
 @switch (section.type) {
 @case ('sliders') {
-<app-home-slider [sliderData]="section.data"></app-home-slider>
+<app-home-slider [sliderData]="section.data" [sliderTitle]="section.title"
+  [sliderShortTitle]="section.short_title"></app-home-slider>
 }
 @case ('courses') {
-<app-home-courses [coursesData]="section.data"></app-home-courses>
+<app-home-courses [coursesData]="section.data" [courseTitle]="section.title"
+  [CourseShortTitle]="section.short_title"></app-home-courses>
 }
 @case ('doctors') {
-<app-home-instructors [instructorsData]="section.data"></app-home-instructors>
+<app-home-instructors [instructorsData]="section.data" [instructorsTitle]="section.title"
+  [instructorsShortTitle]="section.short_title"></app-home-instructors>
 }
 @case ('categories') {
-<app-home-categories [categoriesData]="section.data"></app-home-categories>
+<app-home-categories [categoriesData]="section.data" [categoriesTitle]="section.title"
+  [categoriesShortTitle]="section.short_title"></app-home-categories>
+}
+@case ('banar') {
+<app-home-banner [bannerData]="section.data" [bannerTitle]="section.title"
+  [bannerShortTitle]="section.short_title"></app-home-banner>
 }
 }
 }

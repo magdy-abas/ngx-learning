@@ -45,4 +45,9 @@ export class AuthService {
       headers: headers,
     });
   }
+  sendPinCode(data: object): Observable<any> {
+    return this._HttpClient.post(`${baseUrl}send-pin-code`, data, {
+      headers: headers,
+    });
+  }
 }

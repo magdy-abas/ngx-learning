@@ -4,6 +4,7 @@ import { routes } from '../../../../core/service/routes/routes';
 import { DataService } from '../../../../core/service/data/data.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import Aos from 'aos';
+import { IHomeSection } from '../../../../shared/Dtos/SharedDtos';
 interface data {
   active?: boolean;
 }
@@ -17,6 +18,8 @@ interface data {
 export class HomeSliderComponent {
   public routes = routes;
   @Input() sliderData: any[] = [];
+  @Input() sliderTitle: string = '';
+  @Input() sliderShortTitle: string = '';
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

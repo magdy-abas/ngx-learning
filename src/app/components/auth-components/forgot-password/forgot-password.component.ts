@@ -1,25 +1,47 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { Router, RouterLink } from '@angular/router';
+import Aos from 'aos';
+import { routes } from '../../../core/service/routes/routes';
+import { CodeInputModule } from 'angular-code-input';
+import { AuthService } from '../../../core/service/auth.service';
 import {
   DataService,
   forgotPassword,
 } from '../../../core/service/data/data.service';
-import { Router, RouterLink } from '@angular/router';
-import Aos from 'aos';
-import { routes } from '../../../core/service/routes/routes';
-
+import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CarouselModule, CommonModule, RouterLink],
+  imports: [
+    CarouselModule,
+    CommonModule,
+    RouterLink,
+    CodeInputModule,
+    ReactiveFormsModule,
+    AlertErrorComponent,
+  ],
   templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss',
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
   public routes = routes;
-  public forgotPassword: forgotPassword[] = [];
+  public forgotPassword: forgotPassword[] = []; // Slider data
+  public forgotStep: number = 1; // Start with step 1
+  errMsg: string = '';
 
+  // FormGroups
+  public emailForm: FormGroup;
+  public resetPasswordForm: FormGroup;
+
+  // Owl carousel options
   public forgotPasswordOwlOptions: OwlOptions = {
     margin: 25,
     nav: true,
@@ -37,14 +59,118 @@ export class ForgotPasswordComponent implements OnInit {
     },
   };
 
-  constructor(private DataService: DataService, public router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private _AuthService: AuthService,
+    private router: Router,
+    private DataService: DataService
+  ) {
+    // Slider data initialization
     this.forgotPassword = this.DataService.forgotPassword;
+
+    // Forms Initialization
+    this.emailForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
+
+    this.resetPasswordForm = this.fb.group(
+      {
+        code: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(4),
+          ],
+        ],
+        password: [
+          '',
+          [Validators.required, Validators.pattern('^(?=.*[A-Z]).{6,}$')],
+        ],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: this.passwordMatchValidator }
+    );
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Initialize animations
     Aos.init();
   }
-  directLogin() {
-    this.router.navigate(['/auth/login']);
+
+  private passwordMatchValidator(
+    group: FormGroup
+  ): { [key: string]: boolean } | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
+
+  public directLogin(): void {
+    if (this.forgotStep === 1) {
+      if (this.emailForm.invalid) {
+        this.markFormGroupTouched(this.emailForm);
+        return; // Stop further execution if the form is invalid
+      }
+
+      this._AuthService.sendPinCode(this.emailForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+
+          if (res.status === 1) {
+            this.errMsg = '';
+            this.forgotStep++;
+          } else {
+            this.errMsg = res.message;
+          }
+        },
+        error: (err) => {
+          console.error('Error sending verification email:', err);
+        },
+      });
+    } else if (this.forgotStep === 2) {
+      if (this.resetPasswordForm.invalid) {
+        this.markFormGroupTouched(this.resetPasswordForm);
+        return;
+      }
+
+      // Prepare payload
+      const payload = {
+        email: this.emailForm.get('email')?.value,
+        pin_code: this.resetPasswordForm.get('code')?.value,
+        password: this.resetPasswordForm.get('password')?.value,
+        password_confirmation:
+          this.resetPasswordForm.get('confirmPassword')?.value,
+      };
+
+      // Reset password
+      this._AuthService.resetPassword(payload).subscribe({
+        next: (res) => {
+          console.log('Password reset successful:', res);
+          if (res.status === 1) {
+            this.router.navigate(['/login']);
+          } else {
+            this.errMsg = res.message;
+          }
+        },
+        error: (err) => {
+          console.error('Error resetting password:', err);
+        },
+      });
+    }
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
+  public onCodeCompleted(code: string): void {
+    this.resetPasswordForm.patchValue({ code }); // Update the code field
+    console.log('Code completed:', code);
   }
 }

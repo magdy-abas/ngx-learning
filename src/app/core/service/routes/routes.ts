@@ -1,7 +1,3 @@
-
-
-
-
 export class routes {
   private static Url = '';
 
@@ -133,10 +129,10 @@ export class routes {
   }
   public static get deposit_student_dashboard(): string {
     return this.students + 'deposit-student-dashboard';
-  }  
+  }
   public static get deposit_student(): string {
     return this.students + 'deposit-student';
-  }  
+  }
   public static get course_student(): string {
     return this.students + 'course-student';
   }

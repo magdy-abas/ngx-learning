@@ -1,8 +1,15 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  ViewChild,
+  OnInit,
+} from '@angular/core';
 import { CommonService } from '../../core/service/common/common.service';
 import { DataService, sideBar } from '../../core/service/data/data.service';
 import { SidebarService } from '../../core/service/sidebar/sidebar.service';
-import { routes } from '../../app.routes';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { CommonModule, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -11,14 +18,14 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [NgClass, RouterLink, CommonModule],
   templateUrl: './auth-navbar.component.html',
-  styleUrl: './auth-navbar.component.scss',
+  styleUrls: ['./auth-navbar.component.scss'],
 })
-export class AuthNavbarComponent {
+export class AuthNavbarComponent implements OnInit {
   @ViewChild('stickyMenu') menuElement!: ElementRef;
 
-  public routes = routes;
   public sidebar: Array<sideBar> = [];
   public isMenuOpened = false;
+  public isHomePage = false; // Flag to determine if the current page is home
 
   base = '';
   page = '';
@@ -30,7 +37,9 @@ export class AuthNavbarComponent {
   constructor(
     private common: CommonService,
     private data: DataService,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.sidebar = this.data.sideBar;
 
@@ -42,6 +51,21 @@ export class AuthNavbarComponent {
     this.common.base.subscribe((res: string) => (this.base = res));
     this.common.page.subscribe((res: string) => (this.page = res));
     this.common.last.subscribe((res: string) => (this.last = res));
+  }
+
+  ngOnInit(): void {
+    this.checkIfHomePage();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.checkIfHomePage();
+      });
+  }
+
+  private checkIfHomePage(): void {
+    const currentRoute =
+      this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
+    this.isHomePage = !currentRoute || currentRoute === 'home';
   }
 
   @HostListener('window:scroll', ['$event'])

@@ -1,4 +1,4 @@
-import { UserVM } from './sharedDtos';
+import { UserVM } from './SharedDtos';
 
 export class RegisterDto {
   name?: string;

@@ -12,8 +12,9 @@
     } @if (formName.get(controlName)?.getError('email')) {
     <li class="fw-normal my-2 text-danger fs-6"> Please enter a valid email address</li>
     }@if (formName.get(controlName)?.getError('pattern')) {
-    <li class="fw-normal my-2 text-danger fs-6">password must be at least 6 characters long and include at least one
-      letter</li>
+    <li class="fw-normal my-2 text-danger fs-6"> Password must be at least 6 characters long and include at least one
+      capital letter.
+    </li>
     }
   </ul>
 </div>

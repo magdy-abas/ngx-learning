@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FeatherIconModule } from '../../shared/utils/feather-icons.utils';
 import { courseGrid, DataService } from '../../core/service/data/data.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,8 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { CoursesService } from '../../core/service/courses.service';
+import { ICourse } from '../../core/interfaces/courses.interface';
 interface data {
   active?: boolean;
 }
@@ -25,6 +27,12 @@ interface data {
   styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
+  searchValue: string = '';
+  pagination: number = 9;
+  pageNum: number = 1;
+  coursesData: ICourse[] = [];
+  isLoading: boolean = false;
+  allDataLoaded: boolean = false;
   public routes = routes;
   public searchDataValue = '';
   dataSource!: MatTableDataSource<courseGrid>;
@@ -43,11 +51,15 @@ export class CoursesComponent {
   public totalPages = 0;
   public courseGrid: courseGrid[] = [];
   selected = '1';
-  constructor(private data: DataService) {
+  constructor(
+    private data: DataService,
+    private _CoursesService: CoursesService
+  ) {
     // this.courseGrid = this.DataService.courseGrid;
   }
   ngOnInit(): void {
     this.getcourseGrid();
+    this.getCourses();
   }
   private getcourseGrid(): void {
     this.courseGrid = [];
@@ -142,7 +154,51 @@ export class CoursesComponent {
   toggleClass(data: data) {
     data.active = !data.active;
   }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.body.offsetHeight - 10; // Trigger when 10px from the bottom
+
+    if (scrollPosition >= threshold) {
+      this.getCourses();
+    }
+  }
+  ClearSearch() {
+    this.searchValue = '';
+    this.getCourses();
+  }
+
+  getCourses() {
+    if (this.isLoading || this.allDataLoaded) {
+      return;
+    }
+    this.isLoading = true;
+
+    this._CoursesService
+      .getCourses(this.searchValue, this.pagination, this.pageNum)
+      .subscribe({
+        next: (res) => {
+          console.log(res.meta.total);
+
+          if (res.data.length === 0) {
+            this.allDataLoaded = true; // No more data to load
+          } else {
+            this.coursesData = [...this.coursesData, ...res.data]; // add new data
+            this.pageNum++;
+            console.log(this.coursesData.length);
+          }
+          this.isLoading = false;
+          console.log(res.data);
+        },
+        error: (err) => {
+          console.error(err);
+          this.isLoading = false;
+        },
+      });
+  }
 }
+
 export interface pageSelection {
   skip: number;
   limit: number;

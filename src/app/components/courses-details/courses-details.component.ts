@@ -1,15 +1,76 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FeatherIconModule } from './../../shared/utils/feather-icons.utils';
 import { RouterLink } from '@angular/router';
 import { routes } from '../../core/service/routes/routes';
+import { AuthService } from '../../core/service/auth.service';
+import { CoursesService } from '../../core/service/courses.service';
+import { CourseContent } from '../../core/interfaces/courses.interface';
 
 @Component({
   selector: 'app-courses-details',
   standalone: true,
   imports: [FeatherIconModule, RouterLink],
   templateUrl: './courses-details.component.html',
-  styleUrl: './courses-details.component.scss',
+  styleUrls: ['./courses-details.component.scss'],
 })
-export class CoursesDetailsComponent {
-  public routes = routes;
+export class CoursesDetailsComponent implements OnInit {
+  public routes = routes; // Preserve the existing routes property
+  courseDetails?: CourseContent;
+  public isLoading = true;
+  public errorMessage = '';
+
+  constructor(
+    private _AuthService: AuthService,
+    private _CoursesService: CoursesService,
+    private _route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    // Get course ID from route parameters
+    const courseId = this._route.snapshot.paramMap.get('id');
+    if (courseId) {
+      this.fetchCourseDetails(+courseId);
+    } else {
+      this.errorMessage = 'Invalid course ID';
+      this.isLoading = false;
+    }
+  }
+
+  getIcon(type: string): string {
+    switch (type) {
+      case 'video':
+        return 'fa-solid fa-play';
+      case 'quiz':
+        return 'fa-solid fa-pen-to-square';
+      default:
+        return 'fa-solid fa-info-circle';
+    }
+  }
+
+  getTotalLessons(): number {
+    if (!this.courseDetails?.data) {
+      return 0;
+    }
+    return this.courseDetails.data.reduce(
+      (total, chapter) => total + (chapter.lessons?.length || 0),
+      0
+    );
+  }
+
+  fetchCourseDetails(courseId: number): void {
+    this._CoursesService.getCoursesDetails(courseId).subscribe({
+      next: (data) => {
+        this.courseDetails = data;
+        console.log(this.courseDetails);
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Failed to fetch course details.';
+        console.error(err);
+        this.isLoading = false;
+      },
+    });
+  }
 }

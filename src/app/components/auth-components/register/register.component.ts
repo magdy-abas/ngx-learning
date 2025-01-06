@@ -118,10 +118,7 @@ export class RegisterComponent {
       phone: [null, [Validators.required]],
       password: [
         null,
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*[A-Za-z])[A-Za-z\\d]{6,}$'),
-        ],
+        [Validators.required, Validators.pattern('^(?=.*[A-Z]).{6,}$'), ,],
       ],
     },
     {}

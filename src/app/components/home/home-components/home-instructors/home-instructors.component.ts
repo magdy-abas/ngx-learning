@@ -13,6 +13,8 @@ import { NgFor } from '@angular/common';
 export class HomeInstructorsComponent {
   public feature_instructors: feature_instructors[] = [];
   @Input() instructorsData: any[] = [];
+  @Input() instructorsTitle: string = '';
+  @Input() instructorsShortTitle: string = '';
   constructor(public data: HomeData) {
     this.feature_instructors = this.data.feature_instructors;
   }

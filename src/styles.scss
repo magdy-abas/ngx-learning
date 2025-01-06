@@ -114,3 +114,101 @@ $dreams-lms-theme: mat.define-light-theme(
     object-position: right;
   }
 }
+
+.instructors-img img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.instructors-img {
+  height: 300px;
+}
+
+.categories-icon img {
+  width: 80px;
+  height: 80px;
+}
+
+.categories-item {
+  text-align: center;
+}
+
+.min-height-170 {
+  min-height: 170px;
+}
+
+code-input.code-input {
+  --item-spacing: 10px;
+  --item-height: 1em;
+  --item-border: none;
+  --item-border-bottom: 2px solid #ff875a;
+  --item-border-has-value: none;
+  --item-border-bottom-has-value: 2px solid #ff875a;
+  --item-border-focused: none;
+  --item-border-bottom-focused: 2px solid #ff875a;
+  --item-shadow-focused: none;
+  --item-border-radius: 0px;
+  font-size: 1.1rem;
+}
+
+.product-img-courses {
+  height: 200px;
+}
+
+.product-img-courses img {
+  width: 100%;
+  height: -webkit-fill-available;
+}
+
+.courses-doctor-img {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+
+@media (max-width: 480px) {
+  .courses-doctor-img {
+    margin-right: 0;
+  }
+}
+
+.courses-doctor-img img {
+  width: 100%;
+}
+.product-content .title {
+  height: 40px;
+}
+
+// loading
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  -webkit-mask: conic-gradient(from 15deg, #0000, #000);
+  animation: l26 1s infinite steps(12);
+}
+.loader,
+.loader:before,
+.loader:after {
+  background: radial-gradient(closest-side at 50% 12.5%, #ff875a 96%, #0000) 50%
+      0/20% 80% repeat-y,
+    radial-gradient(closest-side at 12.5% 50%, #ff875a 96%, #0000) 0 50%/80% 20%
+      repeat-x;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  transform: rotate(30deg);
+}
+.loader:after {
+  transform: rotate(60deg);
+}
+
+@keyframes l26 {
+  100% {
+    transform: rotate(1turn);
+  }
+}

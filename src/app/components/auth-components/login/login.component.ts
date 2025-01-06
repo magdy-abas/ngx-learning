@@ -75,10 +75,7 @@ export class LoginComponent {
       email: [null, [Validators.required, Validators.email]],
       password: [
         null,
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*[A-Za-z])[A-Za-z\\d]{6,}$'),
-        ],
+        [Validators.required, Validators.pattern('^(?=.*[A-Z]).{6,}$'), ,],
       ],
     },
     {}
@@ -109,16 +106,18 @@ export class LoginComponent {
       this.loginDto.password = this.loginForm.get('password')?.value;
       this.loginDto.token = '123';
       this.loginDto.serial_number = '1234';
-      this.loginDto.os = 'web';
+      this.loginDto.os = 'desktop';
+
+      console.log(this.loginDto);
 
       this._AuthService.login(this.loginDto).subscribe({
         next: (res) => {
           if (res.status === 1) {
             console.log(res);
-            this._Router.navigate(['/home']);
+            // this._Router.navigate(['/home']);
           } else {
             this.msgError = res.message;
-
+            console.log(res);
             if (res.message.includes('email')) {
               this.loginForm
                 .get('email')

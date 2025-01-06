@@ -26,7 +26,7 @@
 
         <!-- Filter -->
         <div class="showing-list">
-          <div class="row">
+          <div class="row justify-content-between">
             <div class="col-lg-6">
               <div class="d-flex align-items-center">
                 <div class="view-icons">
@@ -39,121 +39,135 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="show-filter add-course-info mat-style">
-                <form action="#">
-                  <div class="row gx-2 align-items-center">
-                    <div class="col-md-6 col-item">
-                      <div class=" search-group">
-                        <i-feather name="search"></i-feather>
-                        <input type="text" [(ngModel)]="searchDataValue" name="one"
-                          (ngModelChange)="searchData(searchDataValue)" class="form-control"
-                          placeholder="Search our courses">
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-item">
-                      <div class="form-group select-form mb-0">
-                        <mat-select class="form-select select" id="sel1" name="sellist1" [(value)]="selected">
-                          <mat-option value="1">Newly published</mat-option>
-                          <mat-option value="angular">Angular</mat-option>
-                          <mat-option value="nodejs">Node Js</mat-option>
-                          <mat-option value="react">React</mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
+            <div class="col-lg-6 ">
+              <div class="show-filter add-course-info mat-style  d-flex    " style="place-self: end;">
+
+
+                <div class="  me-2">
+                  <div class=" search-group">
+                    <i-feather name="search"></i-feather>
+                    <input type="text" [(ngModel)]="searchValue" name="one" class="form-control"
+                      placeholder="Search our courses">
+
                   </div>
-                </form>
+
+                </div>
+                <div class=" ">
+                  <button class="btn-action-method btn " (click)="getCourses()">Search</button>
+                </div>
+
+
               </div>
+
+
             </div>
           </div>
         </div>
         <!-- /Filter -->
 
         <div class="row">
-          <div class="col-lg-4 col-md-6 d-flex" *ngFor="let data of courseGrid">
-            <div class="course-box course-design d-flex ">
+
+
+
+          <div class="col-lg-4 col-md-6 d-flex" *ngFor="let data of coursesData; let i = index">
+
+            <div class="course-box course-design d-flex  " [routerLink]="['/course-details', data.id]"
+              style="cursor: pointer;">
               <div class="product">
+
+
                 <div class="product-img">
-                  <a [routerLink]="routes.page_course_details">
-                    <img class="img-fluid" alt="" [src]="data.img1">
+                  <a [routerLink]="">
+                    <div class="product-img-courses">
+                      <img class="img-fluid" alt="" [src]="data.image">
+                    </div>
+
                   </a>
-                  <div class="price" [ngClass]="{'combo': data.idle === 'FREE'}">
-                    <h3>{{data.idle}}</h3>
-                    <h3>{{data.price1}} <span>{{data.price2}}</span></h3>
+                  <!-- [ngClass]="{'combo': data.idle === 'FREE'}" -->
+
+
+                  @if (data.price) {
+                  <div class="price">
+                    <!-- <h3>{{data.doctor}}</h3> -->
+                    <h3>{{data.price}} </h3>
+                    <!-- <span>200</span> -->
                   </div>
+
+                  }
+
+
+
                 </div>
                 <div class="product-content">
                   <div class="course-group d-flex">
                     <div class="course-group-img d-flex">
-                      <a [routerLink]="routes.instructor_instructor_profile"><img [src]="data.img2" alt=""
-                          class="img-fluid"></a>
+                      <div [routerLink]="" class="courses-doctor-img rounded-circle"><img [src]="data.doctor_image"
+                          alt="img-doctor" class="img-fluid"></div>
                       <div class="course-name">
-                        <h4><a [routerLink]="routes.instructor_instructor_profile">{{data.name}}</a></h4>
-                        <p>{{data.role}}</p>
+                        <h4><a [routerLink]="">{{data.doctor}}</a></h4>
+                        <p>Instractor</p>
                       </div>
                     </div>
                     <div class="course-share d-flex align-items-center justify-content-center">
-                      <a href="javascript:void(0)"><i class="fa-heart" (click)="toggleClass(data)"
-                          [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a>
+                      <!-- <a href="javascript:void(0)"><i class="fa-heart" (click)="toggleClass(data)"
+                          [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a> -->
                     </div>
                   </div>
-                  <h3 class="title"><a [routerLink]="routes.page_course_details">{{data.heading}}</a></h3>
+                  <h3 class="title"><a [routerLink]="">{{data.title}}</a></h3>
                   <div class="course-info d-flex align-items-center">
                     <div class="rating-img d-flex align-items-center">
-                      <img [src]="data.img3" alt="">
-                      <p>{{data.lesson}}</p>
+                      <img src="assets/img/icon/icon-01.svg" alt="icon-01">
+                      <p>13+ Lesson</p>
                     </div>
                     <div class="course-view d-flex align-items-center">
-                      <img [src]="data.img4" alt="">
-                      <p>{{data.time}}</p>
+                      <img src="assets/img/icon/icon-02.svg" alt="icon-02">
+                      <p>10hr 30min
+
+                      </p>
                     </div>
                   </div>
                   <div class="rating">
-                    <i class="fas fa-star filled me-1"></i>
-                    <i class="fas fa-star filled me-1"></i>
-                    <i class="fas fa-star filled me-1"></i>
-                    <i class="fas fa-star filled me-1"></i>
-                    <i class="fas fa-star me-1"></i>
-                    <span class="d-inline-block average-rating"><span>{{data.rating1}}</span> {{data.rating2}}</span>
+
+
+
+
+                    @if (data.rate != 0) {
+                    @for (item of [1,2,3,4,5].slice(0, data.rate); track $index) {
+                    <i class="fas fa-star filled me-1 "></i>
+
+
+                    }
+
+
+
+
+                    @if (data.rate % 1 !== 0) {
+                    <i class="fa-solid filled fa-star-half-stroke me-1"></i>
+
+                    }
+
+
+                    <span class="d-inline-block average-rating"><span>{{data.rate}}</span> (14)</span>
+
+                    }
+
+
                   </div>
                   <div class="all-btn all-category d-flex align-items-center">
-                    <a [routerLink]="routes.page_checkout" class="btn btn-primary">BUY NOW</a>
+                    <a [routerLink]="" class="btn btn-primary">BUY NOW</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="loading d-flex justify-content-center" *ngIf="isLoading">
+            <div class="loader"></div>
+
+          </div>
+          <p *ngIf="coursesData.length === 0" class="text-center w-100">Not Found Courses</p>
         </div>
 
-        <!-- /pagination -->
-        <div class="row">
-          <div class="col-md-12">
-            <ul class="pagination lms-page">
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0)" tabindex="-1"><i class="fas fa-angle-left"></i></a>
-              </li>
-              <li class="page-item first-page active">
-                <a class="page-link" href="javascript:void(0)">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0)">5</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0)"><i class="fas fa-angle-right"></i></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /pagination -->
+
 
       </div>
       <div class="col-lg-3 theiaStickySidebar">
@@ -162,7 +176,8 @@
             <div class="clear-filter d-flex align-items-center">
               <h4><i-feather name="filter"></i-feather>Filters</h4>
               <div class="clear-text">
-                <p>CLEAR</p>
+
+                <a (click)="ClearSearch()" class="btn btn-danger">Clear </a>
               </div>
             </div>
 
@@ -295,82 +310,7 @@
             </div>
             <!-- /Search Filter -->
 
-            <!-- Latest Posts -->
-            <div class="card post-widget ">
-              <div class="card-body">
-                <div class="latest-head">
-                  <h4 class="card-title">Latest Courses</h4>
-                </div>
-                <ul class="latest-posts">
-                  <li>
-                    <div class="post-thumb">
-                      <a [routerLink]="routes.page_course_details">
-                        <img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="">
-                      </a>
-                    </div>
-                    <div class="post-info free-color">
-                      <h4>
-                        <a [routerLink]="routes.page_course_details">Introduction LearnPress – LMS plugin</a>
-                      </h4>
-                      <p>FREE</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="post-thumb">
-                      <a [routerLink]="routes.page_course_details">
-                        <img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="">
-                      </a>
-                    </div>
-                    <div class="post-info">
-                      <h4>
-                        <a [routerLink]="routes.page_course_details">Become a PHP Master and Make Money</a>
-                      </h4>
-                      <p>$200</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="post-thumb">
-                      <a [routerLink]="routes.page_course_details">
-                        <img class="img-fluid" src="assets/img/blog/blog-03.jpg" alt="">
-                      </a>
-                    </div>
-                    <div class="post-info free-color">
-                      <h4>
-                        <a [routerLink]="routes.page_course_details">Learning jQuery Mobile for Beginners</a>
-                      </h4>
-                      <p>FREE</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="post-thumb">
-                      <a [routerLink]="routes.page_course_details">
-                        <img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="">
-                      </a>
-                    </div>
-                    <div class="post-info">
-                      <h4>
-                        <a [routerLink]="routes.page_course_details">Improve Your CSS Workflow with SASS</a>
-                      </h4>
-                      <p>$200</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="post-thumb ">
-                      <a [routerLink]="routes.page_course_details">
-                        <img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="">
-                      </a>
-                    </div>
-                    <div class="post-info free-color">
-                      <h4>
-                        <a [routerLink]="routes.page_course_details">HTML5/CSS3 Essentials in 4-Hours</a>
-                      </h4>
-                      <p>FREE</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <!-- /Latest Posts -->
+
 
           </div>
         </div>
