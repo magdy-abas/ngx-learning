@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { HomeData } from '../../data';
 import { feature_instructors } from '../../../../core/service/data/data.service';
 import { NgFor } from '@angular/common';
+import { IDoctor } from '../../../../core/interfaces/Home.interface';
 
 @Component({
   selector: 'app-home-instructors',
@@ -12,14 +13,12 @@ import { NgFor } from '@angular/common';
 })
 export class HomeInstructorsComponent {
   public feature_instructors: feature_instructors[] = [];
-  @Input() instructorsData: any[] = [];
+  @Input() instructorsData: IDoctor[] = [];
   @Input() instructorsTitle: string = '';
   @Input() instructorsShortTitle: string = '';
   constructor(public data: HomeData) {
     this.feature_instructors = this.data.feature_instructors;
   }
 
-  ngOnInit(): void {
-    console.log(this.instructorsData);
-  }
+  ngOnInit(): void {}
 }

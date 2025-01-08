@@ -19,16 +19,17 @@ import {
 } from './../../core/service/data/data.service';
 import { routes } from '../../app.routes';
 import { HomeData } from './data';
-import { BrowserModule, EventManager } from '@angular/platform-browser';
+import { EventManager } from '@angular/platform-browser';
 
 import { HomeInstructorsComponent } from './home-components/home-instructors/home-instructors.component';
 import { HomeCoursesComponent } from './home-components/home-courses/home-courses.component';
 import { HomeCategoriesComponent } from './home-components/home-categories/home-categories.component';
 import { HomeSliderComponent } from './home-components/home-slider/home-slider.component';
 import { DynamicHomeService } from '../../core/service/dynamic-home.service';
-import { IHomeSection } from '../../core/interfaces/Dtos/SharedDtos';
+import { IHomeSection } from '../../core/interfaces/Home.interface';
+import { SectionDataHelpers } from '../../shared/utils/HomeDataHelpers.utils';
+
 import { HomeBannerComponent } from './home-components/home-banner/home-banner.component';
-import { CoursesCardComponent } from '../../shared/ui/courses-card/courses-card.component';
 
 @Component({
   selector: 'app-home',
@@ -87,6 +88,14 @@ export class HomeComponent {
     this.real_reviews = this.data.real_reviews;
     this.blog = this.data.blog;
   }
+
+  // Type guard functions
+  protected readonly getSliderData = SectionDataHelpers.getSliderData;
+  protected readonly getCourseData = SectionDataHelpers.getCourseData;
+  protected readonly getDoctorData = SectionDataHelpers.getDoctorData;
+  protected readonly getCategoryData = SectionDataHelpers.getCategoryData;
+  protected readonly getBannerData = SectionDataHelpers.getBannerData;
+
   ngOnInit(): void {
     AOS.init({
       duration: 1200,
@@ -145,8 +154,8 @@ export class HomeComponent {
   getHomeData = () => {
     this._DynamicHomeService.getHomeData().subscribe({
       next: (res) => {
-        console.log(res.data);
         this.homeSections = res.data;
+        console.log(this.homeSections);
       },
       error: (err) => {
         console.log(err);

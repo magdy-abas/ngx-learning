@@ -115,8 +115,6 @@ export class ForgotPasswordComponent implements OnInit {
 
       this._AuthService.sendPinCode(this.emailForm.value).subscribe({
         next: (res) => {
-          console.log(res);
-
           if (res.status === 1) {
             this.errMsg = '';
             this.forgotStep++;

@@ -14,7 +14,5 @@ export class CoursesCardComponent implements OnInit {
   @Input() coursesData: any[] = [];
   @Input() fromHome: boolean = true;
 
-  ngOnInit(): void {
-    console.log('Received coursesData:', this.coursesData);
-  }
+  ngOnInit(): void {}
 }

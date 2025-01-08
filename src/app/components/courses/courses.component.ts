@@ -184,8 +184,6 @@ export class CoursesComponent {
       .getCourses(this.searchValue, this.pagination, this.pageNum)
       .subscribe({
         next: (res) => {
-          console.log(res.meta.total);
-
           if (res.data.length === 0) {
             this.allDataLoaded = true; // No more data to load
           } else {
@@ -194,7 +192,6 @@ export class CoursesComponent {
             console.log(this.coursesData.length);
           }
           this.isLoading = false;
-          console.log(res.data);
         },
         error: (err) => {
           console.error(err);
