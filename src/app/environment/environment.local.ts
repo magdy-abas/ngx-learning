@@ -1,4 +1,4 @@
-export const baseUrl = 'https:/steps-teem.stepsio.com/api/';
+export const baseUrl = 'https:/total.stepsio.com/api/';
 
 // city-center
 //farida

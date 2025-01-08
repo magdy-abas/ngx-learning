@@ -163,7 +163,9 @@ export class HomeComponent {
     });
   };
 
-  directPath() {
-    this.router.navigate(['/courses']);
+  directPath(searchInput: string) {
+    this.router.navigate(['/courses'], {
+      queryParams: { search: searchInput },
+    });
   }
 }

@@ -36,10 +36,12 @@
         <div class="product-content">
           <div class="course-group d-flex">
             <div class="course-group-img d-flex">
-              <div [routerLink]="" class="courses-doctor-img rounded-circle"><img [src]="data.doctor_image"
-                  alt="img-doctor" class="img-fluid"></div>
+              <div class="courses-doctor-img rounded-circle">
+                <img [src]="data.doctor_image || './assets/img/course/doctor.png'"
+                  onerror="this.src='./assets/img/course/doctor.png'" alt="img-doctor" class="img-fluid">
+              </div>
               <div class="course-name">
-                <h4><a [routerLink]="">{{data.doctor}}</a></h4>
+                <h4><a>{{data.doctor}}</a></h4>
                 <p>Instractor</p>
               </div>
             </div>
@@ -48,7 +50,7 @@
                           [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a> -->
             </div>
           </div>
-          <h3 class="title"><a [routerLink]="">{{data.title}}</a></h3>
+          <h3 class="title"><a>{{data.title}}</a></h3>
           <div class="course-info d-flex align-items-center">
             <div class="rating-img d-flex align-items-center">
               <img src="assets/img/icon/icon-01.svg" alt="icon-01">
@@ -91,7 +93,7 @@
 
             </div>
             <div class="all-btn   all-category ">
-              <a [routerLink]="" class="btn cst-course-btn btn-primary">BUY NOW</a>
+              <a class="btn cst-course-btn btn-primary">BUY NOW</a>
             </div>
           </div>
 

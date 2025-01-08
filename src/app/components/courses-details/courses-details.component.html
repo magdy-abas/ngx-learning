@@ -27,7 +27,10 @@
         <div class="instructor-wrap border-bottom-0 m-0">
           <div class="about-instructor align-items-center">
             <div class="abt-instructor-img">
-              <a><img [src]="courseDetails?.course?.doctor_image" alt="doctor-img" class="img-fluid"></a>
+
+              <img [src]="courseDetails?.course?.doctor_image || './assets/img/course/doctor.png'"
+                onerror="this.src='assets/img/doctor.png'" alt="doctor-img" class="img-fluid">
+
             </div>
             <div class="instructor-detail me-3">
               <h5><a>{{courseDetails?.course?.doctor}}</a></h5>
@@ -233,8 +236,10 @@
             <div class="instructor-wrap">
               <div class="about-instructor">
                 <div class="abt-instructor-img">
-                  <a [routerLink]="routes.instructor_instructor_profile"><img src="assets/img/user/user1.jpg" alt="img"
-                      class="img-fluid"></a>
+                  <a>
+                    <img [src]="courseDetails?.course?.doctor_image || 'assets/img/doctor.png'"
+                      onerror="this.src='assets/img/doctor.png'" alt="doctor-img" class="img-fluid">
+                  </a>
                 </div>
                 <div class="instructor-detail">
                   <h5><a [routerLink]="routes.instructor_instructor_profile">Nicole Brown</a></h5>

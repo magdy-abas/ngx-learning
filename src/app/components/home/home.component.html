@@ -11,8 +11,11 @@
             <form class="form" name="store" id="store" method="post">
               <div class="form-inner">
                 <div class="input-group">
-                  <input type="email" class="form-control" placeholder="Search School, Online eductional centers, etc">
-                  <button class="btn btn-primary sub-btn" type="submit" (click)="directPath()">Search</button>
+                  <input #searchInput type="email" class="form-control"
+                    placeholder="Search School, Online educational centers, etc" />
+                  <button class="btn btn-primary sub-btn" type="button" (click)="directPath(searchInput.value)">
+                    Search
+                  </button>
                 </div>
               </div>
             </form>
