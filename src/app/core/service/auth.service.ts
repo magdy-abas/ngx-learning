@@ -5,7 +5,7 @@ import { baseUrl, headers } from '../../environment/environment.local';
 import { jwtDecode } from 'jwt-decode';
 
 import { Observable } from 'rxjs';
-import { LoginDto, RegisterDto } from '../../shared/Dtos/AuthDtos';
+import { LoginDto, RegisterDto } from '../interfaces/Dtos/AuthDtos';
 
 @Injectable({
   providedIn: 'root',

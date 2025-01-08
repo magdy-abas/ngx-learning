@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { CoursesService } from '../../core/service/courses.service';
 import { ICourse } from '../../core/interfaces/courses.interface';
+import { CoursesCardComponent } from '../../shared/ui/courses-card/courses-card.component';
+
 interface data {
   active?: boolean;
 }
@@ -22,6 +24,7 @@ interface data {
     CommonModule,
     MatSelectModule,
     FormsModule,
+    CoursesCardComponent,
   ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',
@@ -157,13 +160,15 @@ export class CoursesComponent {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const threshold = document.body.offsetHeight - 10; // Trigger when 10px from the bottom
+    const scrollPosition = window.innerHeight + window.pageYOffset; // Bottom of the viewport
+    const threshold = document.documentElement.scrollHeight - 50; // Total height of the document
 
+    // Check if the user is at the very bottom of the page
     if (scrollPosition >= threshold) {
       this.getCourses();
     }
   }
+
   ClearSearch() {
     this.searchValue = '';
     this.getCourses();

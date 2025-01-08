@@ -153,6 +153,7 @@ code-input.code-input {
 
 .product-img-courses {
   height: 200px;
+  object-fit: cover;
 }
 
 .product-img-courses img {
@@ -174,6 +175,7 @@ code-input.code-input {
 
 .courses-doctor-img img {
   width: 100%;
+  object-fit: cover;
 }
 .product-content .title {
   height: 40px;
@@ -181,7 +183,6 @@ code-input.code-input {
 
 // loading
 
-/* HTML: <div class="loader"></div> */
 .loader {
   width: 50px;
   aspect-ratio: 1;
@@ -211,4 +212,19 @@ code-input.code-input {
   100% {
     transform: rotate(1turn);
   }
+}
+
+.course-content .cst-course-btn {
+  min-width: 100px !important;
+  padding: 8px 12px !important;
+}
+.center-btn {
+  place-self: center !important;
+}
+
+.center-btn .cst-course-btn {
+  min-width: 200px !important;
+}
+.product .rating {
+  margin: 0;
 }

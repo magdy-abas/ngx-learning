@@ -2,11 +2,12 @@ import { NgClass, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Featured_Courses } from '../../../../core/service/data/data.service';
 import { HomeData } from '../../data';
+import { CoursesCardComponent } from '../../../../shared/ui/courses-card/courses-card.component';
 
 @Component({
   selector: 'app-home-courses',
   standalone: true,
-  imports: [NgFor, NgClass],
+  imports: [CoursesCardComponent],
   templateUrl: './home-courses.component.html',
   styleUrl: './home-courses.component.scss',
 })

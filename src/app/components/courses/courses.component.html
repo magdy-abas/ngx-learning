@@ -68,103 +68,20 @@
         <div class="row">
 
 
-
-          <div class="col-lg-4 col-md-6 d-flex" *ngFor="let data of coursesData; let i = index">
-
-            <div class="course-box course-design d-flex  " [routerLink]="['/course-details', data.id]"
-              style="cursor: pointer;">
-              <div class="product">
-
-
-                <div class="product-img">
-                  <a [routerLink]="">
-                    <div class="product-img-courses">
-                      <img class="img-fluid" alt="" [src]="data.image">
-                    </div>
-
-                  </a>
-                  <!-- [ngClass]="{'combo': data.idle === 'FREE'}" -->
-
-
-                  @if (data.price) {
-                  <div class="price">
-                    <!-- <h3>{{data.doctor}}</h3> -->
-                    <h3>{{data.price}} </h3>
-                    <!-- <span>200</span> -->
-                  </div>
-
-                  }
+          <app-courses-card [coursesData]="coursesData" [fromHome]="false"></app-courses-card>
 
 
 
-                </div>
-                <div class="product-content">
-                  <div class="course-group d-flex">
-                    <div class="course-group-img d-flex">
-                      <div [routerLink]="" class="courses-doctor-img rounded-circle"><img [src]="data.doctor_image"
-                          alt="img-doctor" class="img-fluid"></div>
-                      <div class="course-name">
-                        <h4><a [routerLink]="">{{data.doctor}}</a></h4>
-                        <p>Instractor</p>
-                      </div>
-                    </div>
-                    <div class="course-share d-flex align-items-center justify-content-center">
-                      <!-- <a href="javascript:void(0)"><i class="fa-heart" (click)="toggleClass(data)"
-                          [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a> -->
-                    </div>
-                  </div>
-                  <h3 class="title"><a [routerLink]="">{{data.title}}</a></h3>
-                  <div class="course-info d-flex align-items-center">
-                    <div class="rating-img d-flex align-items-center">
-                      <img src="assets/img/icon/icon-01.svg" alt="icon-01">
-                      <p>13+ Lesson</p>
-                    </div>
-                    <div class="course-view d-flex align-items-center">
-                      <img src="assets/img/icon/icon-02.svg" alt="icon-02">
-                      <p>10hr 30min
-
-                      </p>
-                    </div>
-                  </div>
-                  <div class="rating">
-
-
-
-
-                    @if (data.rate != 0) {
-                    @for (item of [1,2,3,4,5].slice(0, data.rate); track $index) {
-                    <i class="fas fa-star filled me-1 "></i>
-
-
-                    }
-
-
-
-
-                    @if (data.rate % 1 !== 0) {
-                    <i class="fa-solid filled fa-star-half-stroke me-1"></i>
-
-                    }
-
-
-                    <span class="d-inline-block average-rating"><span>{{data.rate}}</span> (14)</span>
-
-                    }
-
-
-                  </div>
-                  <div class="all-btn all-category d-flex align-items-center">
-                    <a [routerLink]="" class="btn btn-primary">BUY NOW</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="loading d-flex justify-content-center" *ngIf="isLoading">
             <div class="loader"></div>
 
           </div>
-          <p *ngIf="coursesData.length === 0" class="text-center w-100">Not Found Courses</p>
+
+
+
+
+          <p *ngIf="!isLoading && coursesData.length === 0" class="text-center w-100">Not Found Courses</p>
+
         </div>
 
 

@@ -4,7 +4,7 @@ import { routes } from '../../../../core/service/routes/routes';
 import { DataService } from '../../../../core/service/data/data.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import Aos from 'aos';
-import { IHomeSection } from '../../../../shared/Dtos/SharedDtos';
+import { IHomeSection } from '../../../../core/interfaces/Dtos/SharedDtos';
 interface data {
   active?: boolean;
 }

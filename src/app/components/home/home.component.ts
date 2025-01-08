@@ -26,8 +26,9 @@ import { HomeCoursesComponent } from './home-components/home-courses/home-course
 import { HomeCategoriesComponent } from './home-components/home-categories/home-categories.component';
 import { HomeSliderComponent } from './home-components/home-slider/home-slider.component';
 import { DynamicHomeService } from '../../core/service/dynamic-home.service';
-import { IHomeSection } from './../../shared/Dtos/SharedDtos';
+import { IHomeSection } from '../../core/interfaces/Dtos/SharedDtos';
 import { HomeBannerComponent } from './home-components/home-banner/home-banner.component';
+import { CoursesCardComponent } from '../../shared/ui/courses-card/courses-card.component';
 
 @Component({
   selector: 'app-home',

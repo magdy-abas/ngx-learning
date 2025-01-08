@@ -19,7 +19,7 @@ import {
 import { AuthService } from '../../../core/service/auth.service';
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginDto } from '../../../shared/Dtos/AuthDtos';
+import { LoginDto } from '../../../core/interfaces/Dtos/AuthDtos';
 
 @Component({
   selector: 'app-login',
