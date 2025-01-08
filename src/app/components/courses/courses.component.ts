@@ -38,6 +38,8 @@ export class CoursesComponent {
   public routes = routes;
   public searchDataValue = '';
   dataSource!: MatTableDataSource<courseGrid>;
+  totalCourses: number = 0;
+  currentlyShowing: number = 0;
 
   constructor(
     private data: DataService,
@@ -103,6 +105,9 @@ export class CoursesComponent {
           } else {
             this.coursesData = [...this.coursesData, ...res.data];
             this.pageNum++;
+            this.totalCourses = res.meta.total;
+
+            this.currentlyShowing = this.coursesData.length;
           }
           this.isLoading = false;
         },
