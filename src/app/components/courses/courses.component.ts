@@ -35,9 +35,6 @@ export class CoursesComponent {
   coursesData: ICourse[] = [];
   isLoading: boolean = false;
   allDataLoaded: boolean = false;
-  public routes = routes;
-  public searchDataValue = '';
-  dataSource!: MatTableDataSource<courseGrid>;
   totalCourses: number = 0;
   currentlyShowing: number = 0;
 
@@ -69,7 +66,6 @@ export class CoursesComponent {
     const scrollPosition = window.innerHeight + window.pageYOffset; // Bottom of the viewport
     const threshold = document.documentElement.scrollHeight - 50; // Total height of the document
 
-    // Check if the user is at the very bottom of the page
     if (scrollPosition >= threshold) {
       this.getCourses();
     }
