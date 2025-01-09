@@ -67,7 +67,7 @@ export class AuthNavbarComponent implements OnInit {
     {
       tittle: 'Courses',
       route: '/courses',
-      base: 'home',
+      base: 'courses', // Changed from 'home' to 'courses'
       separateRoute: true,
     },
     {
@@ -150,21 +150,29 @@ export class AuthNavbarComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.checkIfHomePage();
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    // Monitor route changes to update active states
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
+        const url = this.router.url;
+        const urlParts = url.split('/').filter((part) => part);
+
+        this.base = urlParts[0] || '';
+        this.page = urlParts[1] || '';
+        this.last = urlParts[2] || '';
+
         this.checkIfHomePage();
       });
   }
 
+  ngOnInit(): void {
+    this.checkIfHomePage();
+  }
+
   private checkIfHomePage(): void {
-    const currentRoute =
-      this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
-    this.isHomePage = !currentRoute || currentRoute === 'home';
+    const url = this.router.url;
+    this.isHomePage = url === '/' || url === '/home';
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -180,5 +188,27 @@ export class AuthNavbarComponent implements OnInit {
 
   public hideSidebar(): void {
     this.isMenuOpened = false;
+  }
+
+  // Helper methods for active state
+  isMainMenuActive(mainMenu: SidebarMenu): boolean {
+    return (
+      this.base === mainMenu.base ||
+      this.base === mainMenu.base2 ||
+      this.base === mainMenu.base3 ||
+      this.base === mainMenu.base4
+    );
+  }
+
+  isSubmenuActive(menu: any): boolean {
+    return this.base === menu.base && this.page === menu.page;
+  }
+
+  isSubSubmenuActive(subMenu: any): boolean {
+    return (
+      this.base === subMenu.base &&
+      this.page === subMenu.page &&
+      this.last === subMenu.last
+    );
   }
 }

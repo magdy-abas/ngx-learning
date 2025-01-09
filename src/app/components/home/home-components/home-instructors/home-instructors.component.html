@@ -12,8 +12,8 @@
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" *ngFor="let data of instructorsData">
           <div class="instructors-widget">
             <div class="instructors-img">
-              <a>
-                <img class="img-fluid" alt="" [src]="data.image">
+              <a href="javascript:;">
+                <img class="img-fluid" [alt]="data.name" [src]="data.image">
               </a>
               <!-- <div class="featured-border">
                 <div class="featured-img ">
@@ -23,7 +23,7 @@
             </div>
             <div class="course-details-two">
               <div class="instructors-content text-center">
-                <h5><a>{{data.name}}</a></h5>
+                <h5><a href="javascript:;">{{data.name}}</a></h5>
                 <p>{{data.job_title}}</p>
               </div>
               <div class="course-info"></div>
@@ -41,7 +41,8 @@
     <!-- View all Category -->
     <div class="col-lg-12">
       <div class="more-details text-center" data-aos="fade-up">
-        <a class="discover-btn discover-btn">View all Instructors <i class="fas fa-arrow-right ms-2"></i></a>
+        <a href="javascript:;" class="discover-btn discover-btn">View all Instructors <i
+            class="fas fa-arrow-right ms-2"></i></a>
       </div>
     </div>
     <!-- /View all Category -->
