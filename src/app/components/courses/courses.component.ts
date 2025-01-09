@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FeatherIconModule } from '../../shared/utils/feather-icons.utils';
 import { courseGrid, DataService } from '../../core/service/data/data.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { CoursesService } from '../../core/service/courses.service';
 import { ICourse } from '../../core/interfaces/courses.interface';
 import { CoursesCardComponent } from '../../shared/ui/courses-card/courses-card.component';
+import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
+import { Subscription } from 'rxjs';
 
 interface data {
   active?: boolean;
@@ -28,7 +30,7 @@ interface data {
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',
 })
-export class CoursesComponent {
+export class CoursesComponent implements OnInit, OnDestroy {
   searchValue: string = '';
   pagination: number = 9;
   pageNum: number = 1;
@@ -37,6 +39,7 @@ export class CoursesComponent {
   allDataLoaded: boolean = false;
   totalCourses: number = 0;
   currentlyShowing: number = 0;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private data: DataService,
@@ -53,6 +56,10 @@ export class CoursesComponent {
         this.getCourses();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
   clearSearchParam() {
     this.router.navigate([], {
@@ -92,7 +99,7 @@ export class CoursesComponent {
 
     this.isLoading = true;
 
-    this._CoursesService
+    const coursesSub = this._CoursesService
       .getCourses(this.searchValue, this.pagination, this.pageNum)
       .subscribe({
         next: (res) => {
@@ -112,5 +119,7 @@ export class CoursesComponent {
           this.isLoading = false;
         },
       });
+
+    this.subscriptions.push(coursesSub);
   }
 }

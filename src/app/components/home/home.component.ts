@@ -1,4 +1,10 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -30,6 +36,8 @@ import { IHomeSection } from '../../core/interfaces/Home.interface';
 import { SectionDataHelpers } from '../../shared/utils/HomeDataHelpers.utils';
 
 import { HomeBannerComponent } from './home-components/home-banner/home-banner.component';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 
 @Component({
   selector: 'app-home',
@@ -62,7 +70,7 @@ import { HomeBannerComponent } from './home-components/home-banner/home-banner.c
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   homeSections: IHomeSection[] = [];
 
   public routes = routes;
@@ -74,6 +82,7 @@ export class HomeComponent {
   public feature_instructors: feature_instructors[] = [];
   public real_reviews: real_reviews[] = [];
   public blog: blog[] = [];
+  private subscriptions: Subscription[] = [];
   constructor(
     private DataService: DataService,
     public router: Router,
@@ -151,8 +160,8 @@ export class HomeComponent {
     },
   };
 
-  getHomeData = () => {
-    this._DynamicHomeService.getHomeData().subscribe({
+  getHomeData(): void {
+    const subscription = this._DynamicHomeService.getHomeData().subscribe({
       next: (res) => {
         this.homeSections = res.data;
         console.log(this.homeSections);
@@ -161,11 +170,17 @@ export class HomeComponent {
         console.log(err);
       },
     });
-  };
+
+    this.subscriptions.push(subscription);
+  }
 
   directPath(searchInput: string) {
     this.router.navigate(['/courses'], {
       queryParams: { search: searchInput },
     });
+  }
+
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

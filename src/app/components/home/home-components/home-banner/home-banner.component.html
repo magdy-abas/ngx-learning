@@ -1,16 +1,11 @@
 <ng-container>
   <div class="container">
-
-    <div data-aos="fade-up" class="d-flex aos-init justify-content-center">
-
+    <div data-aos="fade-up" class="aos-init banner-wrapper">
       @for (data of bannerData; track $index) {
-
-      <img class="img-fluid rounded-3 shadow-sm" [src]="data.image" [alt]="data.title">
+      <div class="image-container ">
+        <img class="img-fluid " [src]="data.image" [alt]="data.title">
+      </div>
       }
-
-
     </div>
   </div>
-
-
 </ng-container>
