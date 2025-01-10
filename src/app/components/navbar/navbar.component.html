@@ -64,8 +64,14 @@
                                                 ">
                                 <a [routerLink]="subMenu.route">{{
                                   subMenu.menuValue
+
                                   }}</a>
+
+                                <a href="">dasdsadsa</a>
                               </li>
+
+
+
                             </ng-container>
                           </ul>
                         </li>
@@ -78,6 +84,9 @@
             <li class="login-link">
               <a [routerLink]="routes.login">Login / Signup</a>
             </li>
+
+
+
           </ul>
         </div>
         <ul class="nav header-navbar-rht">
@@ -345,8 +354,10 @@
                   <input class="form-check-input" type="checkbox" id="night-mode">
                 </div>
               </div>
-              <a class="dropdown-item" [routerLink]="routes.home"><i-feather name="log-out" class="me-1"></i-feather>
-                Logout</a>
+              <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+                <i-feather name="log-out" class="me-1"></i-feather>
+                Logout
+              </a>
             </div>
           </li>
         </ul>

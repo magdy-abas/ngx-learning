@@ -43,13 +43,13 @@ export class AuthService {
   }
 
   saveUserData(): void {
-    const token = this.cookieService.get('token'); // Retrieve token from cookies
+    const token = this.cookieService.get('token');
 
     if (token) {
       try {
         const decoded = jwtDecode(token); // Decode the JWT
-        this.userData = decoded; // Save decoded data
-        this.auth.set(true); // Set auth flag to true
+        this.userData = decoded;
+        this.auth.set(true);
       } catch (error) {
         this._Router.navigate(['/login']);
         this.clearUserData(); // Clear cookies if token is invalid
@@ -62,16 +62,16 @@ export class AuthService {
   saveToken(token: string): void {
     this.cookieService.set('token', token, {
       path: '/',
-      secure: true, // Use secure cookies in production
-      sameSite: 'Strict', // Prevent CSRF attacks
+      secure: true,
+      sameSite: 'Strict',
     });
     this.auth.set(true); // Set auth flag to true after saving token
   }
 
   clearUserData(): void {
     this.cookieService.delete('token', '/'); // Delete the token cookie
-    this.userData = null; // Clear user data in memory
-    this.auth.set(false); // Set auth flag to false
+    this.userData = null;
+    this.auth.set(false);
   }
 
   isAuthenticated(): boolean {

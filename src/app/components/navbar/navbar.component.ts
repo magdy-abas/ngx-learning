@@ -1,8 +1,9 @@
 // navbar.component.ts
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule, NgClass } from '@angular/common';
 import { FeatherIconModule } from '../../shared/utils/feather-icons.utils';
+import { AuthService } from '../../core/service/auth.service';
 
 interface SidebarMenu {
   tittle: string;
@@ -53,6 +54,9 @@ interface NotificationItem {
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
+  _AuthService = inject(AuthService);
+  _Router = inject(Router);
+
   base = '';
   page = '';
   last = '';
@@ -278,5 +282,10 @@ export class NavbarComponent {
       nightMode.checked = !nightMode.checked;
       document.body.classList.toggle('dark-mode');
     }
+  }
+
+  logout(): void {
+    this._AuthService.clearUserData();
+    this._Router.navigate(['/login']);
   }
 }
