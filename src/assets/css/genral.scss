@@ -203,12 +203,23 @@ code-input.code-input {
 }
 
 // owl-slider
+
 .owl-slider .owl-slider-cover {
-  max-height: 350px;
-  min-height: 300px;
-  width: 100%;
-  display: block;
+  max-height: 450px;
+  min-height: 350px;
   object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Image styling */
+.owl-slider .owl-slider-cover img {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -223,4 +234,11 @@ code-input.code-input {
     max-height: 200px;
     min-height: 150px;
   }
+}
+
+//courses details
+
+.ng-courses-details img {
+  width: 24px;
+  height: 24px;
 }

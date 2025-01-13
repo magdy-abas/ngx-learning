@@ -47,11 +47,11 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   getIcon(type: string): string {
     switch (type) {
       case 'video':
-        return 'fa-solid fa-play';
+        return 'assets/img/icon/play.svg';
       case 'quiz':
-        return 'fa-solid fa-pen-to-square';
+        return 'assets/img/icon/quiz.svg';
       default:
-        return 'fa-solid fa-info-circle';
+        return 'assets/img/icon/google-meet.svg';
     }
   }
 
@@ -71,6 +71,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.courseDetails = data;
+          console.log(data);
+
           this.isLoading = false;
         },
         error: (err) => {

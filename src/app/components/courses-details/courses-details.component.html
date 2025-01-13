@@ -131,12 +131,13 @@
             @for (chapter of courseDetails?.data; track $index) {
 
 
-            <div class="course-card">
+            <div class="course-card ng-courses-details">
               <h6 class="cou-title">
                 <a class="collapsed " data-bs-toggle="collapse" href="#collapseOne"
                   aria-expanded="false">{{chapter.title}}</a>
               </h6>
               <div id="collapseOne" class="card-collapse collapse">
+                @if (chapter.lessons?.length) {
                 <ul>
                   @for (lesson of chapter.lessons; track $index) {
                   <li>
@@ -148,22 +149,18 @@
                       }
                       {{ lesson.title }}
                     </p>
-
-
-
-
                     <div>
                       @if (lesson.is_free) {
                       <a href="javascript:;">Preview</a>
                       }
-
                       <span>02:53</span>
                     </div>
                   </li>
                   }
-
-
                 </ul>
+                } @else {
+                <p class="text-center py-3">No available lessons</p>
+                }
               </div>
             </div>
 
