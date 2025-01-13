@@ -192,7 +192,7 @@ code-input.code-input {
 }
 
 .image-container {
-  flex: 1; /* Ensures the images are evenly distributed */
+  flex: 1;
 }
 
 .banner-wrapper img.img-fluid {
@@ -200,4 +200,27 @@ code-input.code-input {
   height: 100%;
   object-fit: cover;
   border-radius: 25px;
+}
+
+// owl-slider
+.owl-slider .owl-slider-cover {
+  max-height: 350px;
+  min-height: 300px;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .owl-slider .owl-slider-cover {
+    max-height: 250px;
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .owl-slider .owl-slider-cover {
+    max-height: 200px;
+    min-height: 150px;
+  }
 }

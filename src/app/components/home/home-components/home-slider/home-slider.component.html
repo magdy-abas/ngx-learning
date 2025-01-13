@@ -1,11 +1,11 @@
 <!-- Feature Instructors -->
-<div class="container">
+<div class="container owl-slider">
 
   <div class="aos" data-aos="fade-up">
-    <owl-carousel-o [options]="customOptions" class="banner-wrapper">
+    <owl-carousel-o [options]="customOptions" class="">
       @for (slider of sliderData; track $index) {
       <ng-template carouselSlide>
-        <div>
+        <div class="owl-slider-cover">
           <img [src]="slider.image" [alt]="slider.title" class="img-fluid">
         </div>
 
