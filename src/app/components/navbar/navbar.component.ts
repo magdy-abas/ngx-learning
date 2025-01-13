@@ -153,11 +153,11 @@ export class NavbarComponent {
     {
       tittle: 'Courses',
       base: 'courses',
-      route: '/courses',
+      route: 'courses',
       separateRoute: false,
       menu: [
         {
-          menuValue: 'All Courses',
+          menuValue: 'Courses',
           route: '/courses/all',
           base: 'courses',
           page: 'all',

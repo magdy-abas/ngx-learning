@@ -49,6 +49,12 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'home' },
+      { path: 'courses', component: CoursesComponent, title: 'courses' },
+      {
+        path: 'course-details/:id',
+        component: CoursesDetailsComponent,
+        title: 'course-details',
+      },
     ],
   },
   { path: '**', component: NotFoundComponent, title: 'not found' },

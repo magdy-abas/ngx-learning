@@ -38,6 +38,7 @@ import { SectionDataHelpers } from '../../shared/utils/HomeDataHelpers.utils';
 import { HomeBannerComponent } from './home-components/home-banner/home-banner.component';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
+import { AuthService } from '../../core/service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -75,6 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public routes = routes;
   selected = '1';
+  isAuthenticated: boolean = false;
   public universitiesCompanies: universitiesCompanies[] = [];
   public Category: category[] = [];
   public Featured_Courses: Featured_Courses[] = [];
@@ -87,7 +89,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private DataService: DataService,
     public router: Router,
     public data: HomeData,
-    private _DynamicHomeService: DynamicHomeService
+    private _DynamicHomeService: DynamicHomeService,
+    private _AuthService: AuthService
   ) {
     this.universitiesCompanies = this.DataService.universitiesCompanies;
     this.Category = this.data.Category;
@@ -112,6 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.getHomeData();
+    this.checkAuthStatus();
   }
   customReview: OwlOptions = {
     loop: true,
@@ -174,10 +178,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
+  checkAuthStatus(): void {
+    this.isAuthenticated = this._AuthService.isAuthenticated();
+  }
+
   directPath(searchInput: string) {
-    this.router.navigate(['/courses'], {
-      queryParams: { search: searchInput },
-    });
+    if (this.isAuthenticated) {
+      this.router.navigate(['/auth/courses'], {
+        queryParams: { search: searchInput },
+      });
+    } else {
+      this.router.navigate(['/courses'], {
+        queryParams: { search: searchInput },
+      });
+    }
   }
 
   ngOnDestroy(): void {
