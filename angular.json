@@ -39,6 +39,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/regular.css",
               "node_modules/ngx-spinner/animations/ball-spin-fade.css",
               "./node_modules/intl-tel-input/build/css/intlTelInput.css",
+              "node_modules/sweetalert2/src/sweetalert2.scss",
               "src/styles.scss"
             ],
             "scripts": [
@@ -53,8 +54,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

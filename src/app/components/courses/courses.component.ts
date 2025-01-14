@@ -103,6 +103,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
       .getCourses(this.searchValue, this.pagination, this.pageNum)
       .subscribe({
         next: (res) => {
+          console.log(res);
+
           if (res.data.length === 0) {
             this.allDataLoaded = true;
           } else {

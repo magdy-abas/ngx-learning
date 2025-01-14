@@ -202,3 +202,8 @@ interface ProtectionSettings {
   pdf_degree_of_clarity: number | null;
   pdf_show_new_way: boolean;
 }
+
+export class RequestJoinDto {
+  course_id?: string;
+  code?: string;
+}

@@ -242,3 +242,71 @@ code-input.code-input {
   width: 24px;
   height: 24px;
 }
+
+//sweet alert
+
+// .custom-swal-icon {
+//   width: 50px;
+//   height: 50px;
+
+// }
+
+.custom-swal-icon.swal2-info {
+  color: #ff875a; /* Info icon color */
+  border: 2px solid #ff875a;
+}
+
+.custom-swal-icon.swal2-warning {
+  color: #ffc107; /* Warning icon color */
+}
+
+.custom-swal-icon.swal2-success {
+  color: #28a745; /* Success icon color */
+}
+
+.custom-swal-icon.swal2-error {
+  color: #dc3545; /* Error icon color */
+}
+.custom-swal-popup {
+  background: #fff;
+
+  border-radius: 8px;
+}
+
+.custom-swal-title {
+  color: #ff875a;
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding-bottom: 15px;
+}
+
+.custom-swal-text {
+  color: #444;
+  font-size: 1rem;
+}
+
+.custom-swal-confirm-button,
+.custom-swal-cancel-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: #fff !important;
+  transition: background-color 0.5s ease;
+}
+
+.custom-swal-confirm-button {
+  background-color: #ff875a !important;
+  transition: background-color 0.5s ease;
+}
+
+.custom-swal-confirm-button:hover {
+  background-color: #dd754f !important;
+}
+
+.custom-swal-cancel-button {
+  background-color: #d33 !important;
+  transition: background-color 0.5s ease;
+}
+
+.custom-swal-cancel-button:hover {
+  background-color: rgb(167, 32, 32) mportant;
+}

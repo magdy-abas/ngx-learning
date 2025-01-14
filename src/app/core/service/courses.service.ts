@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { baseUrl } from '../../environment/environment.local';
+import { baseUrl, headers } from '../../environment/environment.local';
+import { RequestJoinDto } from '../interfaces/courses.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,11 @@ export class CoursesService {
     return this._HttpClient.get(
       `${baseUrl}chapters/v2/unsubscribed-course-content?course_id=${courseId}`
     );
+  }
+
+  makeRequest(data: RequestJoinDto): Observable<any> {
+    return this._HttpClient.post(`${baseUrl}/courses/request-join`, data, {
+      headers: headers,
+    });
   }
 }
