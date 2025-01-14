@@ -11,8 +11,4 @@ export class HomeBannerComponent {
   @Input() bannerData: IBanner[] = [];
   @Input() bannerTitle: string = '';
   @Input() bannerShortTitle: string = '';
-
-  ngOnInit(): void {
-    console.log(this.bannerData);
-  }
 }

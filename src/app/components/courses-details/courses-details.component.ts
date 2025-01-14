@@ -71,7 +71,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.courseDetails = data;
-          console.log(data);
 
           this.isLoading = false;
         },

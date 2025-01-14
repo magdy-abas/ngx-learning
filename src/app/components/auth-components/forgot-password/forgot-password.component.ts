@@ -169,6 +169,5 @@ export class ForgotPasswordComponent implements OnInit {
 
   public onCodeCompleted(code: string): void {
     this.resetPasswordForm.patchValue({ code }); // Update the code field
-    console.log('Code completed:', code);
   }
 }

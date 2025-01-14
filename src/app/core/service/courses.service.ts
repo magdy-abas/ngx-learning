@@ -28,7 +28,7 @@ export class CoursesService {
   }
 
   makeRequest(data: RequestJoinDto): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}/courses/request-join`, data, {
+    return this._HttpClient.post(`${baseUrl}courses/request-join`, data, {
       headers: headers,
     });
   }

@@ -108,8 +108,6 @@ export class LoginComponent {
       this.loginDto.serial_number = '1234';
       this.loginDto.os = 'desktop';
 
-      console.log(this.loginDto);
-
       this._AuthService.login(this.loginDto).subscribe({
         next: (res) => {
           if (res.status === 1) {

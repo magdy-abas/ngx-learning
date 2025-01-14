@@ -35,6 +35,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   pagination: number = 9;
   pageNum: number = 1;
   coursesData: ICourse[] = [];
+
   isLoading: boolean = false;
   allDataLoaded: boolean = false;
   totalCourses: number = 0;

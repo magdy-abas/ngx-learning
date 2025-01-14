@@ -1,15 +1,35 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FeatherIconModule } from '../../utils/feather-icons.utils';
 import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
 import { AuthService } from '../../../core/service/auth.service';
 import Swal from 'sweetalert2';
 import { CoursesService } from '../../../core/service/courses.service';
-import { RequestJoinDto } from '../../../core/interfaces/courses.interface';
+import {
+  ICourse,
+  RequestJoinDto,
+} from '../../../core/interfaces/courses.interface';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SweetAlertUtils } from './../../utils/SweetAlert.utils';
+
 @Component({
   selector: 'app-courses-card',
   standalone: true,
-  imports: [RouterLink, FeatherIconModule, NgFor, NgClass, CurrencyPipe],
+  imports: [
+    RouterLink,
+    FeatherIconModule,
+    NgFor,
+    NgClass,
+    CurrencyPipe,
+    MatProgressBarModule,
+  ],
 
   templateUrl: './courses-card.component.html',
   styleUrl: './courses-card.component.scss',
@@ -18,12 +38,19 @@ export class CoursesCardComponent implements OnInit {
   constructor(
     private _AuthService: AuthService,
     private _Router: Router,
-    private _CoursesService: CoursesService
+    private _CoursesService: CoursesService,
+    private _ChangeDetectorRef: ChangeDetectorRef
   ) {}
   @Input() coursesData: any[] = [];
   @Input() fromHome: boolean = true;
+
+  isItPending: boolean = false;
+
   isAuth!: boolean;
   reqData: RequestJoinDto = new RequestJoinDto();
+  course = {
+    progress: 75,
+  };
 
   getFloorValue(value: number): number {
     return Math.floor(value);
@@ -32,58 +59,95 @@ export class CoursesCardComponent implements OnInit {
   ngOnInit(): void {
     this.isAuth = this._AuthService.isAuthenticated();
   }
-  buyCourse(event: MouseEvent, courseId: any, buyWith: string): void {
+
+  async buyCourse(
+    event: MouseEvent,
+    courseId: number,
+    buyWith: string,
+    client_status: string
+  ): Promise<void> {
     event.stopPropagation();
 
-    // Check if the user is authenticated
     if (!this.isAuth) {
       this.confirmBox();
       return;
     }
 
-    console.log(courseId, buyWith);
-
     if (buyWith === 'by_request_course') {
-      //logic for requset course
+      const course = this.coursesData.find((c) => c.id === courseId);
+      if (client_status === 'not_asked') {
+        const { isConfirmed } =
+          await SweetAlertUtils.showPurchaseConfirmation();
+
+        if (isConfirmed) {
+          this.reqData.course_id = courseId;
+          try {
+            const result = await this.sendData(buyWith);
+            if (result) {
+              course.client_status = 'pending';
+              await SweetAlertUtils.showSuccessAlert(
+                'Course request sent successfully'
+              );
+            }
+          } catch (error) {
+            await SweetAlertUtils.showErrorAlert(error as string);
+          }
+        }
+      }
     } else if (buyWith === 'by_code') {
-      //logic for by code
-      this.reqData.course_id = courseId;
+      const { value: code, isConfirmed } =
+        await SweetAlertUtils.showCodeInputDialog();
+
+      if (isConfirmed && code) {
+        this.reqData.course_id = courseId;
+        this.reqData.code = code;
+
+        try {
+          const result = await this.sendData(buyWith);
+          if (result) {
+            const course = this.coursesData.find((c) => c.id === courseId);
+            course.client_status = 'pending';
+            await SweetAlertUtils.showSuccessAlert(
+              'Course code verified successfully'
+            );
+          }
+        } catch (error) {
+          await SweetAlertUtils.showErrorAlert(error as string);
+        }
+      }
     }
   }
 
   confirmBox(): void {
-    Swal.fire({
-      title: 'Please Login to Buy the Course',
-
-      icon: 'info',
-      showCancelButton: true,
-      confirmButtonText: 'Go to Login',
-      cancelButtonText: 'Cancel',
-      width: '450px',
-      customClass: {
-        popup: 'custom-swal-popup',
-        title: 'custom-swal-title',
-        htmlContainer: 'custom-swal-text',
-        confirmButton: 'custom-swal-confirm-button',
-        cancelButton: 'custom-swal-cancel-button',
-        icon: 'custom-swal-icon',
-      },
-    }).then((result) => {
+    SweetAlertUtils.showLoginRequired().then((result) => {
       if (result.isConfirmed) {
-        // Navigate to the login page using Angular Router
-        this._Router.navigate(['/login']); // Replace '/login' with your actual login route
+        this._Router.navigate(['/login']);
       }
     });
   }
 
-  sendData() {
-    this._CoursesService.makeRequest(this.reqData).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
+  ngAfterViewChecked(): void {
+    this._ChangeDetectorRef.detectChanges();
+  }
+
+  sendData(buyWith: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this._CoursesService.makeRequest(this.reqData).subscribe({
+        next: (res) => {
+          console.log(res);
+
+          if (res.status === 1) {
+            resolve(true);
+          } else {
+            reject(res.message as string);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          // reject(false);
+          reject('Something went wrong');
+        },
+      });
     });
   }
 }

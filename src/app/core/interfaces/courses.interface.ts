@@ -204,6 +204,6 @@ interface ProtectionSettings {
 }
 
 export class RequestJoinDto {
-  course_id?: string;
+  course_id?: number;
   code?: string;
 }

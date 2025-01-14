@@ -65,8 +65,9 @@
             </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="rating">
+          <div class="footer-course-card"
+            [ngClass]="{'d-flex justify-content-between align-items-center': data.client_status !== 'accepted'}">
+            <div class="rating" [ngClass]="{'d-none': data.client_status === 'accepted'}">
               @if (data.rate !== 0) {
               <!-- Display actual rating -->
               <div class="d-flex">
@@ -82,7 +83,7 @@
                 <span class="d-inline-block average-rating"><span>{{ data.rate }}</span></span>
               </div>
               } @else {
-              <!-- Display fake rating of 4.5 -->
+
               <div>
                 <div *ngFor="let item of [1, 2, 3, 4]">
                   <i class="fas fa-star filled me-1"></i>
@@ -93,15 +94,37 @@
               }
             </div>
 
-
-            <div class="all-btn   all-category ">
-              <a (click)="buyCourse($event, data.id , data.way_to_by_course_in_app)"
-                class="btn cst-course-btn btn-primary">BUY
-                NOW</a>
-
-
+            <div>
 
             </div>
+
+
+            @if (data.client_status === 'accepted') {
+            <div class="course-card-progress-bar">
+              <div class="progress-container">
+                <div class="progress-fill" [style.width.%]="course.progress">
+                  <span class="progress-text">{{course.progress}}%</span>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            }@else {
+            <div class="all-btn   all-category ">
+              <button [disabled]="data.client_status === 'pending'"
+                [ngClass]="{'pending-btn': data.client_status === 'pending'}"
+                (click)="buyCourse($event, data.id , data.way_to_by_course_in_app , data.client_status)"
+                class="btn cst-course-btn btn-primary"> {{ data.client_status === 'pending' ? 'Pending' : 'Buy Now'
+                }}</button>
+            </div>
+
+            }
+
+
+
+
           </div>
 
         </div>

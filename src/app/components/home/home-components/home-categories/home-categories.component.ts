@@ -19,8 +19,4 @@ export class HomeCategoriesComponent {
   constructor(public data: HomeData) {
     this.Category = this.data.Category;
   }
-
-  // ngOnInit(): void {
-  //   console.log(this.categoriesData);
-  // }
 }
