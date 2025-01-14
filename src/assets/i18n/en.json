@@ -1,0 +1,10 @@
+{
+  "navbar": {
+    "home": "Home",
+    "courses": "Courses",
+    "login": "Login",
+    "signUp": "Sign Up",
+    "logout": "Logout",
+    "allCourses": "all Courses"
+  }
+}

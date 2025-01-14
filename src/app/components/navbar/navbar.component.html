@@ -27,51 +27,42 @@
           </div>
           <ul class="main-nav">
             <ng-container *ngFor="let mainMenus of sidebar">
+              <!-- Main menu with separate route -->
               <ng-container *ngIf="mainMenus.separateRoute === true">
                 <li [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route">{{ mainMenus.tittle }}</a>
+                  <a [routerLink]="mainMenus.route">{{ mainMenus.translationKey | translate }}</a>
                 </li>
               </ng-container>
+
+              <!-- Main menu with submenu -->
               <ng-container *ngIf="mainMenus.separateRoute === false">
                 <li class="has-submenu" [class.active]="base === mainMenus.base">
-
                   <a [routerLink]="mainMenus.route" href="javascript:;"
-                    (click)="mainMenus.showAsTab = !mainMenus.showAsTab">{{ mainMenus.tittle }} <i
-                      class="fas fa-chevron-down"></i></a>
-                  <ul class="submenu" [ngClass]="{
-                                      'show-sub-menu': mainMenus.showAsTab === true
-                                    }">
+                    (click)="mainMenus.showAsTab = !mainMenus.showAsTab">
+                    {{ mainMenus.translationKey | translate }}
+                    <i class="fas fa-chevron-down"></i>
+                  </a>
+                  <ul class="submenu" [ngClass]="{'show-sub-menu': mainMenus.showAsTab === true}">
                     <ng-container *ngFor="let menu of mainMenus.menu">
+                      <!-- Regular submenu items -->
                       <ng-container *ngIf="menu.hasSubRoute === false">
-                        <li [class.active]="
-                                            base === menu.base && page === menu.page
-                                          ">
-                          <a [routerLink]="menu.route">{{ menu.menuValue }}</a>
+                        <li [class.active]="base === menu.base && page === menu.page">
+                          <a [routerLink]="menu.route">{{ menu.translationKey | translate }}</a>
                         </li>
                       </ng-container>
+
+                      <!-- Submenu items with nested submenu -->
                       <ng-container *ngIf="menu.hasSubRoute === true">
                         <li class="has-submenu" [class.active]="page === menu.page">
-                          <a (click)="menu.showSubRoute = !menu.showSubRoute" [routerLink]="menu.route">{{
-                            menu.menuValue }}</a>
-                          <ul class="submenu" [ngClass]="{
-                                              'show-sub-menu': menu.showSubRoute === true
-                                            }">
+                          <a (click)="menu.showSubRoute = !menu.showSubRoute" [routerLink]="menu.route">
+                            {{ menu.translationKey | translate }}
+                          </a>
+                          <ul class="submenu" [ngClass]="{'show-sub-menu': menu.showSubRoute === true}">
                             <ng-container *ngFor="let subMenu of menu.subMenus">
-                              <li [class.active]="
-                                                  base === subMenu.base &&
-                                                  page === subMenu.page &&
-                                                  last === subMenu.last
-                                                ">
-                                <a [routerLink]="subMenu.route">{{
-                                  subMenu.menuValue
-
-                                  }}</a>
-
-                                <a href="">dasdsadsa</a>
+                              <li
+                                [class.active]="base === subMenu.base && page === subMenu.page && last === subMenu.last">
+                                <a [routerLink]="subMenu.route">{{ subMenu.translationKey | translate }}</a>
                               </li>
-
-
-
                             </ng-container>
                           </ul>
                         </li>
@@ -356,7 +347,7 @@
               </div>
               <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
                 <i-feather name="log-out" class="me-1"></i-feather>
-                Logout
+                {{"navbar.logout"| translate}}
               </a>
             </div>
           </li>

@@ -1,3 +1,9 @@
+// auth-navbar.component.ts
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { CommonModule, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { navbarMenu, MainMenuItem } from '../../core/service/data/navbar.data';
 import {
   Component,
   ElementRef,
@@ -5,11 +11,9 @@ import {
   ViewChild,
   OnInit,
 } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { CommonModule, NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
+// Update the interface to include translation keys
 interface SidebarMenu {
   tittle: string;
   route?: string;
@@ -19,6 +23,7 @@ interface SidebarMenu {
   base4?: string;
   separateRoute: boolean;
   showAsTab?: boolean;
+  translationKey: string; // Add translation key
   menu?: {
     menuValue: string;
     route: string;
@@ -26,12 +31,14 @@ interface SidebarMenu {
     page: string;
     hasSubRoute: boolean;
     showSubRoute?: boolean;
+    translationKey: string; // Add translation key
     subMenus?: {
       menuValue: string;
       route: string;
       base: string;
       page: string;
       last: string;
+      translationKey: string; // Add translation key
     }[];
   }[];
 }
@@ -39,7 +46,7 @@ interface SidebarMenu {
 @Component({
   selector: 'app-auth-navbar',
   standalone: true,
-  imports: [NgClass, RouterLink, CommonModule],
+  imports: [NgClass, RouterLink, CommonModule, TranslateModule],
   templateUrl: './auth-navbar.component.html',
   styleUrls: ['./auth-navbar.component.scss'],
 })
@@ -48,6 +55,7 @@ export class AuthNavbarComponent implements OnInit {
 
   public isMenuOpened = false;
   public isHomePage = false;
+  public sidebar: SidebarMenu[] = navbarMenu;
 
   base = '';
   page = '';
@@ -56,101 +64,15 @@ export class AuthNavbarComponent implements OnInit {
   white_bg = false;
   elementPosition: number = 0;
 
-  // Static sidebar data
-  public sidebar: SidebarMenu[] = [
-    {
-      tittle: 'Home',
-      route: '/home',
-      base: 'home',
-      separateRoute: true,
-    },
-    {
-      tittle: 'Courses',
-      route: '/courses',
-      base: 'courses', // Changed from 'home' to 'courses'
-      separateRoute: true,
-    },
-    {
-      tittle: 'Blog',
-      base: 'blog',
-      separateRoute: false,
-      menu: [
-        {
-          menuValue: 'Blog Grid',
-          route: '/blog/grid',
-          base: 'blog',
-          page: 'grid',
-          hasSubRoute: false,
-        },
-        {
-          menuValue: 'Blog List',
-          route: '/blog/list',
-          base: 'blog',
-          page: 'list',
-          hasSubRoute: false,
-        },
-        {
-          menuValue: 'Blog Details',
-          route: '/blog/details',
-          base: 'blog',
-          page: 'details',
-          hasSubRoute: false,
-        },
-      ],
-    },
-    {
-      tittle: 'Pages',
-      base: 'pages',
-      separateRoute: false,
-      menu: [
-        {
-          menuValue: 'About Us',
-          route: '/pages/about',
-          base: 'pages',
-          page: 'about',
-          hasSubRoute: false,
-        },
-        {
-          menuValue: 'Categories',
-          route: '/pages/categories',
-          base: 'pages',
-          page: 'categories',
-          hasSubRoute: true,
-          subMenus: [
-            {
-              menuValue: 'Category List',
-              route: '/pages/categories/list',
-              base: 'pages',
-              page: 'categories',
-              last: 'list',
-            },
-            {
-              menuValue: 'Category Grid',
-              route: '/pages/categories/grid',
-              base: 'pages',
-              page: 'categories',
-              last: 'grid',
-            },
-          ],
-        },
-        {
-          menuValue: 'Help Center',
-          route: '/pages/help',
-          base: 'pages',
-          page: 'help',
-          hasSubRoute: false,
-        },
-      ],
-    },
-    {
-      tittle: 'Contact',
-      route: '/contact',
-      base: 'contact',
-      separateRoute: true,
-    },
-  ];
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService
+  ) {
+    // Initialize translation service
+    translate.setDefaultLang('en');
+    translate.use('en');
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     // Monitor route changes to update active states
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -210,5 +132,10 @@ export class AuthNavbarComponent implements OnInit {
       this.page === subMenu.page &&
       this.last === subMenu.last
     );
+  }
+
+  // Add language switching method
+  switchLanguage(lang: string) {
+    this.translate.use(lang);
   }
 }
