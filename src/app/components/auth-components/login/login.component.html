@@ -32,78 +32,97 @@
 
       <!-- Login -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
         <div class="login-wrapper">
           <div class="loginbox">
             <div class="w-100">
               <div class="img-logo">
                 <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
                 <div class="back-home">
-                  <a [routerLink]="routes.home">Back to Home</a>
+                  <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
                 </div>
               </div>
-              <h1>Sign into Your Account</h1>
+              <h1>{{ 'auth.signIntoYourAccount' | translate }}</h1>
 
-              @if (msgError) {
-              <div class="alert alert-danger mt-1">
-                <p class="m-0">{{msgError}}</p>
+              <div *ngIf="msgError" class="alert alert-danger mt-1">
+                <p class="m-0">{{ msgError }}</p>
               </div>
-              }
+
               <div class="form-group">
-                <label class="form-control-label">Email</label>
-                <input type="email" class="form-control" placeholder="Enter your email address" formControlName="email"
-                  [ngClass]="{
-                  ' border-success': isFieldValid('email'),
-                  ' border-danger': isFieldInvalid('email')
-                }">
-                <div>
-                  <app-alert-error controlName="email" [formName]="loginForm" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-control-label">Password</label>
-                <div class="pass-group">
-                  <input [type]="password" class="form-control pass-input" placeholder="Enter your password"
-                    formControlName="password" [ngClass]="{
-                    ' border-success': isFieldValid('password'),
-                    ' border-danger': isFieldInvalid('password')
+                <label class="form-control-label">{{ 'auth.email' | translate }}</label>
+                <input type="email" class="form-control" [placeholder]="'auth.emailPlaceholder' | translate"
+                  formControlName="email" [ngClass]="{
+                    ' border-success': isFieldValid('email'),
+                    ' border-danger': isFieldInvalid('email')
                   }">
-                  <span><i-feather name="eye" class="toggle-password feather-eye" (click)="onClick()"
-                      *ngIf="show"></i-feather></span>
-                  <span><i-feather name="eye-off" class="toggle-password feather-eye-off" (click)="onClick()"
-                      *ngIf="!show"></i-feather></span>
+                <div>
+                  <app-alert-error controlName="email" [formName]="loginForm"></app-alert-error>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label">{{ 'auth.password' | translate }}</label>
+                <div class="pass-group">
+                  <input [type]="password" class="form-control pass-input"
+                    [placeholder]="'auth.passwordPlaceholder' | translate" formControlName="password" [ngClass]="{
+                      ' border-success': isFieldValid('password'),
+                      ' border-danger': isFieldInvalid('password')
+                    }">
+                  <span>
+                    <i-feather name="eye" class="toggle-password feather-eye" (click)="onClick()"
+                      *ngIf="show"></i-feather>
+                  </span>
+                  <span>
+                    <i-feather name="eye-off" class="toggle-password feather-eye-off" (click)="onClick()"
+                      *ngIf="!show"></i-feather>
+                  </span>
                 </div>
                 <div>
-                  <app-alert-error controlName="password" [formName]="loginForm" />
+                  <app-alert-error controlName="password" [formName]="loginForm"></app-alert-error>
                 </div>
               </div>
+
               <div class="forgot">
-                <span><a class="forgot-link" routerLink="/forgotpass">Forgot Password ?</a></span>
+                <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate }}</a></span>
               </div>
+
               <div class="form-check remember-me">
-                <label class="form-check-label mb-0"> Remember me
+                <label class="form-check-label mb-0">
+                  {{ 'auth.rememberMe' | translate }}
                   <input class="form-check-input input-box" type="checkbox" name="radio">
                 </label>
               </div>
+
               <div class="d-grid">
-                <button class="btn btn-primary btn-start" type="submit">Sign In</button>
+                <button class="btn btn-primary btn-start" type="submit">{{ 'auth.signIn' | translate }}</button>
               </div>
             </div>
           </div>
+
           <div class="google-bg text-center">
-            <span><a href="javascript:;">Or sign in with</a></span>
+            <span><a href="javascript:;">{{ 'auth.orSignInWith' | translate }}</a></span>
             <div class="sign-google">
               <ul>
-                <li><a href="javascript:;"><img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo"> Sign In
-                    using Google</a></li>
-                <li><a href="javascript:;"><img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo">Sign In
-                    using Facebook</a></li>
+                <li>
+                  <a href="javascript:;">
+                    <img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo">
+                    {{ 'auth.signInWithGoogle' | translate }}
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:;">
+                    <img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo">
+                    {{ 'auth.signInWithFacebook' | translate }}
+                  </a>
+                </li>
               </ul>
             </div>
-            <p class="mb-0">New User ? <a routerLink="/signup">Create an Account</a></p>
+            <p class="mb-0">
+              {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
+            </p>
           </div>
         </div>
       </form>
+
 
       <!-- /Login -->
 

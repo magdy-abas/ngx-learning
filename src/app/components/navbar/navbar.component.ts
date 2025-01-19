@@ -9,6 +9,7 @@ import {
   navbarMenu,
 } from './../../core/service/data/navbar.data';
 import { TranslateModule } from '@ngx-translate/core';
+import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FeatherIconModule,
     CommonModule,
     TranslateModule,
+    BtnLangComponent,
   ],
 
   templateUrl: './navbar.component.html',

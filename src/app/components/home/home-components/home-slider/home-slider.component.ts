@@ -28,6 +28,7 @@ export class HomeSliderComponent {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
+    rtl: true,
     dots: true,
     navSpeed: 700,
     items: 1,

@@ -28,6 +28,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RegisterDto } from '../../../core/interfaces/Dtos/AuthDtos';
 import { scrollToTop } from '../../../shared/utils/ui-utils';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -42,6 +43,7 @@ import { scrollToTop } from '../../../shared/utils/ui-utils';
     NgxIntlTelInputModule,
     ReactiveFormsModule,
     AlertErrorComponent,
+    TranslateModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -90,6 +92,7 @@ export class RegisterComponent {
     margin: 25,
     nav: true,
     loop: true,
+    rtl: true,
     responsive: {
       0: {
         items: 1,

@@ -116,7 +116,8 @@
               <button [disabled]="data.client_status === 'pending'"
                 [ngClass]="{'pending-btn': data.client_status === 'pending'}"
                 (click)="buyCourse($event, data.id , data.way_to_by_course_in_app , data.client_status)"
-                class="btn cst-course-btn btn-primary"> {{ data.client_status === 'pending' ? 'Pending' : 'Buy Now'
+                class="btn cst-course-btn btn-primary"> {{ data.client_status === 'pending' ? ('courses.pending' |
+                translate) : ('courses.buyNow' | translate)
                 }}</button>
             </div>
 

@@ -4,16 +4,15 @@
   <ul class="m-0">
 
     @if(formName.get(controlName)?.getError('required') ){
-    <li class="fw-normal my-2 text-danger fs-6"> Input is required</li>
+    <li class="fw-normal my-2 text-danger fs-6"> {{ 'auth.inputRequired' | translate}}</li>
     }@if (formName.get(controlName)?.getError('minlength')) {
-    <li class="fw-normal my-2 text-danger fs-6">Input must be at least 3 characters long.</li>
+    <li class="fw-normal my-2 text-danger fs-6">{{'auth.inputMinLength' | translate}}.</li>
     }@if (formName.get(controlName)?.getError('maxlength')) {
-    <li class="fw-normal my-2 text-danger fs-6">Input must not exceed 20 characters</li>
+    <li class="fw-normal my-2 text-danger fs-6">{{'auth.inputMaxLength' | translate}}</li>
     } @if (formName.get(controlName)?.getError('email')) {
-    <li class="fw-normal my-2 text-danger fs-6"> Please enter a valid email address</li>
+    <li class="fw-normal my-2 text-danger fs-6"> {{'auth.invalidEmail' | translate}}</li>
     }@if (formName.get(controlName)?.getError('pattern')) {
-    <li class="fw-normal my-2 text-danger fs-6"> Password must be at least 6 characters long and include at least one
-      capital letter.
+    <li class="fw-normal my-2 text-danger fs-6"> {{'auth.passwordRequirements' | translate}}
     </li>
     }
   </ul>
@@ -23,7 +22,7 @@
 
 <div class="alert alert-danger mt-1">
   <ul class="m-0">
-    <li>Password Confirmation is incorrect</li>
+    <li>{{'auth.passwordConfirmationIncorrect' | translate}}</li>
   </ul>
 </div>
 

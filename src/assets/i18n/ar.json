@@ -6,5 +6,84 @@
     "signUp": "إنشاء حساب",
     "signOut": "تسجيل الخروج",
     "allCourses": "كل الكورسات"
+  },
+  "auth": {
+    "backToHome": "الرجوع إلى الرئيسيه",
+    "signIntoYourAccount": "تسجيل الدخول إلى حسابك",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "newUser": "مستخدم جديد؟",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "createAccount": "إنشاء حساب",
+    "createAnAccount": "إنشاء حساب",
+
+    "email": "البريد الإلكتروني",
+    "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "inputRequired": "الحقل مطلوب",
+    "inputMaxLength": "الحقل يجب ألا يتجاوز 20 حرفًا",
+    "inputMinLength": "الحقل يجب أن يكون 3 أحرف على الأقل",
+
+    "fullName": "الاسم الكامل",
+
+    "password": "كلمة المرور",
+    "newPassword": "أدخل كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "passwordRequirements": "يجب أن تكون كلمة المرور مكونة من 6 أحرف على الأقل وتحتوي على حرف كبير واحد على الأقل.",
+    "passwordConfirmationIncorrect": "تأكيد كلمة المرور غير صحيح",
+    "passwordsMustMatch": "يجب أن تتطابق كلمات المرور",
+
+    "code": "الرمز",
+    "codeRequired": "رمز مطلوب (4 أحرف).",
+
+    "phoneNumber": "رقم الهاتف",
+    "invalidPhoneNumber": "رقم الهاتف غير صالح",
+
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "resetPasswordInstruction": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور.",
+
+    "rememberMe": "تذكرني",
+    "termsOfService": "شروط الخدمة",
+    "privacyPolicy": "سياسة الخصوصية",
+    "and": "و",
+    "orSignInWith": "أو تسجيل الدخول باستخدام",
+    "signInWithGoogle": "تسجيل الدخول باستخدام Google",
+    "signInWithFacebook": "تسجيل الدخول باستخدام Facebook",
+    "submit": "إرسال",
+
+    "namePlaceholder": "أدخل اسمك الكامل",
+    "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+    "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
+    "confirmPassPlaceholder": "أكد كلمة المرور الخاصة بك"
+  },
+  "courses": {
+    "home": "الرئيسية",
+    "allCourses": "جميع الدورات",
+    "showing": "عرض",
+    "of": "من",
+    "results": "النتائج",
+    "search": "بحث",
+    "notFound": "لم يتم العثور على دورات",
+    "courseCategories": "فئات الدورات",
+    "filters": "التصفية",
+    "clear": "مسح",
+    "searchPlaceholder": "ابحث في دوراتنا",
+    "pending": "قيد الانتظار",
+    "buyNow": "اشترِي الآن"
+  },
+
+  "sweetAlerts": {
+    "loginRequired": "الرجاء تسجيل الدخول لشراء الدورة",
+    "goToLogin": "الذهاب لتسجيل الدخول",
+    "cancel": "إلغاء",
+    "confirmPurchase": "تأكيد الشراء",
+    "confirmPurchaseText": "هل أنت متأكد أنك تريد شراء هذه الدورة؟",
+    "yesBuyIt": "نعم، اشتريها!",
+    "enterCode": "أدخل رمز الدورة",
+    "enterCodeHere": "أدخل الرمز هنا",
+    "submit": "إرسال",
+    "pleaseEnterCode": "الرجاء إدخال الرمز!",
+    "success": "تم بنجاح!",
+    "error": "خطأ!"
   }
 }

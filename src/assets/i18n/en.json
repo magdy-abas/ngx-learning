@@ -5,6 +5,85 @@
     "login": "Login",
     "signUp": "Sign Up",
     "logout": "Logout",
-    "allCourses": "all Courses"
+    "allCourses": "All Courses"
+  },
+  "auth": {
+    "backToHome": "Back to Home",
+    "signIntoYourAccount": "Sign into Your Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "newUser": "New User?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "createAccount": "Create Account",
+    "createAnAccount": "Create an Account",
+
+    "email": "Email",
+    "invalidEmail": "Please enter a valid email address",
+    "inputRequired": "Input is required",
+    "inputMaxLength": "Input must not exceed 20 characters",
+    "inputMinLength": "Input must be at least 3 characters long",
+
+    "fullName": "Full Name",
+
+    "password": "Password",
+    "newPassword": "Enter your new password",
+    "confirmPassword": "Confirm Password",
+    "passwordRequirements": "Password must be at least 6 characters long and include at least one capital letter.",
+    "passwordConfirmationIncorrect": "Password Confirmation is incorrect",
+    "passwordsMustMatch": "Passwords must match",
+
+    "code": "Code",
+    "codeRequired": "Code is required (4 characters).",
+
+    "phoneNumber": "Phone number",
+    "invalidPhoneNumber": "Phone number is invalid",
+
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reset Password",
+    "resetPasswordInstruction": "Enter your email to reset your password.",
+
+    "rememberMe": "Remember me",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "and": "and",
+    "orSignInWith": "Or sign in with",
+    "signInWithGoogle": "Sign In using Google",
+    "signInWithFacebook": "Sign In using Facebook",
+    "submit": "Submit",
+
+    "namePlaceholder": "Enter your full name",
+    "emailPlaceholder": "Enter your email address",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassPlaceholder": "Confirm your password"
+  },
+  "courses": {
+    "home": "Home",
+    "allCourses": "All Courses",
+    "showing": "Showing",
+    "of": "of",
+    "results": "results",
+    "search": "Search",
+    "notFound": "Not Found Courses",
+    "courseCategories": "Course categories",
+    "filters": "Filters",
+    "clear": "Clear",
+    "searchPlaceholder": "Search our courses",
+    "pending": "pending",
+    "buyNow": "Buy Now"
+  },
+
+  "sweetAlerts": {
+    "loginRequired": "Please Login to Buy the Course",
+    "goToLogin": "Go to Login",
+    "cancel": "Cancel",
+    "confirmPurchase": "Confirm Purchase",
+    "confirmPurchaseText": "Are you sure you want to buy this course?",
+    "yesBuyIt": "Yes, Buy it!",
+    "enterCode": "Enter Course Code",
+    "enterCodeHere": "Enter your code here",
+    "submit": "Submit",
+    "pleaseEnterCode": "Please enter a code!",
+    "success": "Success!",
+    "error": "Error!"
   }
 }

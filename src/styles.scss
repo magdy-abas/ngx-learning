@@ -28,6 +28,10 @@ $dreams-lms-theme: mat.define-light-theme(
 // Include theme styles for core and each component
 @include mat.all-component-themes($dreams-lms-theme);
 
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap");
+
 // Custom styles
 .hide-dropdown {
   display: none;
@@ -39,4 +43,13 @@ $dreams-lms-theme: mat.define-light-theme(
 
 // Import your custom components last
 @import "assets/components/all";
+
 @import "assets/css/genral.scss";
+
+.lang-en {
+  @import "assets/css/eng.scss";
+}
+
+.lang-ar {
+  @import "assets/css/ar.scss";
+}

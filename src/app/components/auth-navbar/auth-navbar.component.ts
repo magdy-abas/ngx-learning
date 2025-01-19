@@ -3,7 +3,11 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CommonModule, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { navbarMenu, MainMenuItem } from '../../core/service/data/navbar.data';
+import {
+  navbarMenu,
+  MainMenuItem,
+  navbarAuthMenu,
+} from '../../core/service/data/navbar.data';
 import {
   Component,
   ElementRef,
@@ -12,6 +16,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 
 // Update the interface to include translation keys
 interface SidebarMenu {
@@ -46,7 +51,13 @@ interface SidebarMenu {
 @Component({
   selector: 'app-auth-navbar',
   standalone: true,
-  imports: [NgClass, RouterLink, CommonModule, TranslateModule],
+  imports: [
+    NgClass,
+    RouterLink,
+    CommonModule,
+    TranslateModule,
+    BtnLangComponent,
+  ],
   templateUrl: './auth-navbar.component.html',
   styleUrls: ['./auth-navbar.component.scss'],
 })
@@ -55,7 +66,7 @@ export class AuthNavbarComponent implements OnInit {
 
   public isMenuOpened = false;
   public isHomePage = false;
-  public sidebar: SidebarMenu[] = navbarMenu;
+  public sidebar: SidebarMenu[] = navbarAuthMenu;
 
   base = '';
   page = '';
@@ -69,10 +80,6 @@ export class AuthNavbarComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService
   ) {
-    // Initialize translation service
-    translate.setDefaultLang('en');
-    translate.use('en');
-
     // Monitor route changes to update active states
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

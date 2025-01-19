@@ -20,6 +20,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginDto } from '../../../core/interfaces/Dtos/AuthDtos';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ import { LoginDto } from '../../../core/interfaces/Dtos/AuthDtos';
     RouterLink,
     ReactiveFormsModule,
     AlertErrorComponent,
+    TranslateModule,
   ],
 
   templateUrl: './login.component.html',
@@ -48,6 +50,7 @@ export class LoginComponent {
     margin: 25,
     nav: true,
     loop: true,
+    rtl: true,
     responsive: {
       0: {
         items: 1,

@@ -17,6 +17,7 @@ import {
   forgotPassword,
 } from '../../../core/service/data/data.service';
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -27,6 +28,7 @@ import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.
     CodeInputModule,
     ReactiveFormsModule,
     AlertErrorComponent,
+    TranslateModule,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
@@ -46,6 +48,7 @@ export class ForgotPasswordComponent implements OnInit {
     margin: 25,
     nav: true,
     loop: true,
+    rtl: true,
     responsive: {
       0: {
         items: 1,

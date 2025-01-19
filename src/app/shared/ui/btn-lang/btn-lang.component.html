@@ -1,0 +1,9 @@
+<div class="toggle-wrapper">
+  <button [class.active]="_TranslateService.currentLang === 'ar'" (click)="setLanguage('ar')" class="toggle-btn">
+    عربي
+  </button>
+
+  <button [class.active]="_TranslateService.currentLang === 'en'" (click)="setLanguage('en')" class="toggle-btn">
+    English
+  </button>
+</div>

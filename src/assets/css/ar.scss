@@ -1,0 +1,101 @@
+//ar
+body {
+  font-family: "Cairo", serif;
+}
+
+//navbar
+.header-navbar-rht > li {
+  padding-left: 20px;
+}
+
+.header .dropdown-menu[data-bs-popper] {
+  right: -150px !important;
+}
+.dropdown-menu.notifications {
+  right: -300px !important;
+}
+//home-main-section
+
+.home-two .shapes-two {
+  right: 74rem !important;
+}
+
+.home-slide-face {
+  margin-right: 74px;
+}
+
+//courses-card
+.courses-doctor-img {
+  margin-left: 16px;
+}
+
+.course-view {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.all-btn {
+  margin-right: auto !important;
+  margin-left: 0;
+}
+
+.course-info p {
+  margin-right: 12px;
+  margin-left: 0;
+}
+
+//login
+.student-count i {
+  margin-right: 0;
+  margin-left: 17px;
+}
+
+.toggle-password {
+  left: 17px;
+  right: auto;
+}
+
+.back-home {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.login-wrapper .loginbox label {
+  width: auto;
+}
+
+.loginbox .form-control[type="tel"] {
+  text-align: right;
+  padding-right: 36px;
+}
+
+.iti__selected-flag {
+  right: -13px !important;
+}
+
+.iti__arrow {
+  --iti-arrow-padding: 30px !important;
+}
+
+.dropdown-menu.country-dropdown {
+  transform: translateX(100%) !important;
+}
+.btn-danger {
+  margin-right: 10px;
+}
+
+.show-result {
+  margin-right: 10px;
+}
+
+//courses-page
+
+.btn-action-method {
+  margin-right: 10px;
+}
+
+.page-breadcrumb .breadcrumb-item + .breadcrumb-item:before {
+  position: relative;
+  left: 96px;
+  transform: rotateY(-165deg);
+}

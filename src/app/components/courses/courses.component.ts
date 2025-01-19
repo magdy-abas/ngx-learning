@@ -12,6 +12,7 @@ import { ICourse } from '../../core/interfaces/courses.interface';
 import { CoursesCardComponent } from '../../shared/ui/courses-card/courses-card.component';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 import { Subscription } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface data {
   active?: boolean;
@@ -26,6 +27,7 @@ interface data {
     MatSelectModule,
     FormsModule,
     CoursesCardComponent,
+    TranslateModule,
   ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',

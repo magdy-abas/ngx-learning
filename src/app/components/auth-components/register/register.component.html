@@ -32,144 +32,137 @@
           <div class="img-logo">
             <img src="assets/img/logo.svg" class="img-fluid" alt="Logo" />
             <div class="back-home">
-              <a [routerLink]="routes.home">Back to Home</a>
+              <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
             </div>
           </div>
-          <h1>Sign up</h1>
+          <h1>{{ 'auth.signUp' | translate }}</h1>
           @if (msgError) {
           <div class="alert alert-danger mt-1">
-            <p class="m-0">{{msgError}}</p>
+            <p class="m-0">{{ msgError }}</p>
           </div>
           }
 
           <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <label class="form-control-label">Full Name</label>
-              <input type="text" class="form-control " formControlName="name" placeholder="Enter your Full Name"
-                [ngClass]="{
-                ' border-success': isFieldValid('name'),
-                ' border-danger': isFieldInvalid('name')
-              }" />
+              <label class="form-control-label">{{ 'auth.fullName' | translate }}</label>
+              <input type="text" class="form-control " formControlName="name"
+                [placeholder]="'auth.namePlaceholder' | translate" [ngClass]="{
+                  ' border-success': isFieldValid('name'),
+                  ' border-danger': isFieldInvalid('name')
+                }" />
               <div>
                 <app-alert-error controlName="name" [formName]="regForm" />
               </div>
             </div>
             <div class="form-group">
-              <label class="form-control-label">Email</label>
-              <input type="email" class="form-control " formControlName="email" placeholder="Enter your email address"
-                [ngClass]="{
+              <label class="form-control-label">{{ 'auth.email' | translate }}</label>
+              <input type="email" class="form-control " formControlName="email"
+                [placeholder]="'auth.emailPlaceholder' | translate" [ngClass]="{
                   ' border-success': isFieldValid('email'),
                   ' border-danger': isFieldInvalid('email')
                 }" />
-
               <div>
                 <app-alert-error controlName="email" [formName]="regForm" />
               </div>
             </div>
 
-
             <div class="form-group phone-valid " [ngClass]="{
-              ' valid-phone':regForm.get('phone')?.valid && regForm.get('phone')?.touched,
-              ' invalid-phone':  regForm.get('phone')?.invalid && regForm.get('phone')?.touched
-            }">
-              <label class="form-control-label">Phone number</label>
+                ' valid-phone': regForm.get('phone')?.valid && regForm.get('phone')?.touched,
+                ' invalid-phone': regForm.get('phone')?.invalid && regForm.get('phone')?.touched
+              }">
+              <label class="form-control-label">{{ 'auth.phoneNumber' | translate }}</label>
               <ngx-intl-tel-input #phone formControlName="phone" type="tel"
                 [searchCountryField]="[SearchCountryField.All]" [phoneValidation]="true"
                 [selectedCountryISO]="CountryISO.SaudiArabia" [enableAutoCountrySelect]="true"
                 [searchCountryFlag]="true" [preferredCountries]="preferredCountries">
               </ngx-intl-tel-input>
-
               <ul class="m-0">
                 @if (regForm.get('phone')?.errors && regForm.get('phone')?.touched) {
                 @if (regForm.get('phone')?.dirty && regForm.get('phone')?.invalid) {
-                <li class="fw-normal my-2 text-danger">Phone number is invalid</li>
+                <li class="fw-normal my-2 text-danger">
+                  {{ 'auth.invalidPhoneNumber' | translate }}
+                </li>
                 }
                 }
               </ul>
-
             </div>
 
-
             <div class="form-group">
-              <label class="form-control-label">Password</label>
+              <label class="form-control-label">{{ 'auth.password' | translate }}</label>
               <div class="pass-group" id="passwordInput">
-                <input [type]="password" class="form-control pass-input" placeholder="Enter your password"
-                  formControlName="password" (input)="onChangePassword()" [ngClass]="{
-                  'border-success': isFieldValid('password'),
-                  'border-danger': isFieldInvalid('password')
-                }" />
+                <input [type]="password" class="form-control pass-input"
+                  [placeholder]="'auth.passwordPlaceholder' | translate" formControlName="password"
+                  (input)="onChangePassword()" [ngClass]="{
+                    'border-success': isFieldValid('password'),
+                    'border-danger': isFieldInvalid('password')
+                  }" />
                 <div>
                   <app-alert-error controlName="password" [formName]="regForm" />
                 </div>
                 <span><i-feather name="eye" class="toggle-password feather-eye" (click)="onClick()"
                     *ngIf="show"></i-feather></span>
                 <span><i-feather name="check" class="pass-checked" [ngClass]="{
-                    active: passwordResponce.passwordResponceKey === '3'
-                  }"></i-feather></span>
+                      active: passwordResponce.passwordResponceKey === '3'
+                    }"></i-feather></span>
                 <span><i-feather name="eye-off" class="toggle-password feather-eye-off" (click)="onClick()"
                     *ngIf="!show"></i-feather></span>
               </div>
               <div class="password-strength" [ngClass]="{
-                'poor-active': passwordResponce.passwordResponceKey === '0',
-                'avg-active': passwordResponce.passwordResponceKey === '1',
-                'strong-active': passwordResponce.passwordResponceKey === '2',
-                'heavy-active': passwordResponce.passwordResponceKey === '3'
-              }" id="passwordStrength">
+                  'poor-active': passwordResponce.passwordResponceKey === '0',
+                  'avg-active': passwordResponce.passwordResponceKey === '1',
+                  'strong-active': passwordResponce.passwordResponceKey === '2',
+                  'heavy-active': passwordResponce.passwordResponceKey === '3'
+                }" id="passwordStrength">
                 <span id="poor" class="active"></span>
                 <span id="weak" class="active"></span>
                 <span id="strong" class="active"></span>
                 <span id="heavy" class="active"></span>
               </div>
               <div id="passwordInfo" [ngClass]="{
-                weak: passwordResponce.passwordResponceKey === '0',
-                average: passwordResponce.passwordResponceKey === '1',
-                good: passwordResponce.passwordResponceKey === '2',
-                great: passwordResponce.passwordResponceKey === '3'
-              }">
+                  weak: passwordResponce.passwordResponceKey === '0',
+                  average: passwordResponce.passwordResponceKey === '1',
+                  good: passwordResponce.passwordResponceKey === '2',
+                  great: passwordResponce.passwordResponceKey === '3'
+                }">
                 <img [src]="passwordResponce.passwordResponceImage" />
                 {{ passwordResponce.passwordResponceText }}
               </div>
-
             </div>
             <div class="form-check remember-me">
               <label class="form-check-label mb-0">
                 <input class="form-check-input input-box-auth" type="checkbox" name="remember" />
-                I agree to the
-                <a [routerLink]="routes.page_term_condition">Terms of Service</a> and
-                <a [routerLink]="routes.page_privacy_policy">Privacy Policy.</a>
+                {{ 'auth.termsOfService' | translate }}
+                <a [routerLink]="routes.page_term_condition">{{ 'auth.termsOfService' | translate }}</a> {{ 'auth.and' |
+                translate }}
+                <a [routerLink]="routes.page_privacy_policy">{{ 'auth.privacyPolicy' | translate }}</a>.
               </label>
             </div>
 
             <div class="d-grid">
               <button class="btn btn-primary btn-start" type="submit">
-                Create Account
+                {{ 'auth.createAccount' | translate }}
               </button>
             </div>
-
           </form>
-
-
-
         </div>
         <div class="google-bg text-center">
-          <span><a href="javascript:;">Or sign in with</a></span>
+          <span><a href="javascript:;">{{ 'auth.orSignInWith' | translate }}</a></span>
           <div class="sign-google">
             <ul>
               <li>
                 <a href="javascript:;"><img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo" />
-                  Sign In using Google</a>
+                  {{ 'auth.signInWithGoogle' | translate }}</a>
               </li>
               <li>
-                <a href="javascript:;"><img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo" />Sign In
-                  using Facebook</a>
+                <a href="javascript:;"><img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo" />
+                  {{ 'auth.signInWithFacebook' | translate }}</a>
               </li>
             </ul>
           </div>
 
           <p class="mb-0">
-            Already have an account? <a routerLink="/login">Sign in</a>
+            {{ 'auth.alreadyHaveAccount' | translate }} <a routerLink="/login">{{ 'auth.signIn' | translate }}</a>
           </p>
-
         </div>
       </div>
       <!-- /Login -->

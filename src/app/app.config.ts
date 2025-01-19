@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
       CarouselModule,
       NgxSpinnerModule,
       TranslateModule.forRoot({
-        defaultLanguage: 'en',
+        defaultLanguage: 'ar',
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,

@@ -18,6 +18,7 @@ import {
 } from '../../../core/interfaces/courses.interface';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SweetAlertUtils } from './../../utils/SweetAlert.utils';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-courses-card',
@@ -29,6 +30,7 @@ import { SweetAlertUtils } from './../../utils/SweetAlert.utils';
     NgClass,
     CurrencyPipe,
     MatProgressBarModule,
+    TranslateModule,
   ],
 
   templateUrl: './courses-card.component.html',

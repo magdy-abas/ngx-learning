@@ -122,6 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     margin: 15,
     mouseDrag: true,
     touchDrag: false,
+    rtl: true,
     pullDrag: false,
     navSpeed: 700,
     dots: false,
@@ -149,6 +150,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     margin: 24,
     nav: true,
     loop: true,
+    rtl: true,
     autoplay: true,
     autoplaySpeed: 2000,
     responsive: {
