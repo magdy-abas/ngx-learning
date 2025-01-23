@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { baseUrl, headers } from '../../environment/environment.local';
+import { baseUrl } from '../../environment/environment.local';
 import { Observable } from 'rxjs';
 
 @Injectable({

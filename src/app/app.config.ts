@@ -18,6 +18,7 @@ import { authInterceptor } from './core/interceptor/auth.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { securityInterceptor } from './core/interceptor/security.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -34,7 +35,11 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(
       withFetch(),
-      withInterceptors([loadingInterceptor, authInterceptor])
+      withInterceptors([
+        loadingInterceptor,
+        authInterceptor,
+        securityInterceptor,
+      ])
     ),
     importProvidersFrom(
       CarouselModule,
