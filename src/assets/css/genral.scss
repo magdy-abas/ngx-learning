@@ -386,10 +386,52 @@ code-input.code-input {
 
 .toggle-btn.active {
   background-color: white;
-  color: #2563eb;
+  color: #324fa2;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .toggle-btn:not(.active):hover {
   color: #374151;
+}
+
+.navbar .container {
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: start;
+}
+
+@media (max-width: 991.98px) {
+  .navbar .main-menu-wrapper {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+
+.header-page .header-fixed {
+  top: 50px;
+  transition: all 0.3s ease;
+}
+.header-fixed:has(.add-header-bg) {
+  top: 0 !important;
+}
+
+.header-page {
+  margin-bottom: 30px;
+}
+
+//auth-navbar
+.auth-navbar .header-fixed {
+  top: 0 !important;
+  transition: all 0.3s ease;
+}
+.auth-navbar.header-page {
+  margin-bottom: 0 !important;
+}
+
+.auth-navbar .navbar .container {
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
 }

@@ -5,19 +5,35 @@ body {
 
 //navbar
 .header-navbar-rht > li {
-  padding-left: 20px;
+  padding-left: 0;
+  padding-right: 20px;
+}
+.navbar .main-menu-wrapper {
+  margin-right: 100px;
 }
 
-.header .dropdown-menu[data-bs-popper] {
-  right: -150px !important;
+.users.dropdown-menu.dropdown-menu-right.show {
+  transform: translateX(130px);
 }
-.dropdown-menu.notifications {
-  right: -300px !important;
+
+.wishes-list.dropdown-menu.dropdown-menu-right.show {
+  transform: translateX(380px);
 }
 //home-main-section
+.home-two {
+  overflow: hidden !important;
+}
+
+.home-two .shapes-middle {
+  position: absolute;
+  left: 30rem;
+  top: 18rem;
+  bottom: 0;
+}
 
 .home-two .shapes-two {
   right: 74rem !important;
+  top: 15rem !important;
 }
 
 .home-slide-face {

@@ -1,18 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FeatherIconModule } from './../../shared/utils/feather-icons.utils';
+import { FeatherIconModule } from './../../../shared/utils/feather-icons.utils';
 import { RouterLink } from '@angular/router';
-import { routes } from '../../core/service/routes/routes';
-import { AuthService } from '../../core/service/auth.service';
-import { CoursesService } from '../../core/service/courses.service';
-import { CourseContent } from '../../core/interfaces/courses.interface';
-import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
-import { Subscription } from 'rxjs';
+import { routes } from './../../../core/service/routes/routes';
+import { AuthService } from './../../../core/service/auth.service';
+import { CoursesService } from './../../../core/service/courses.service';
 
+import { CourseContent } from './../../../core/interfaces/courses.interface';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
   imports: [FeatherIconModule, RouterLink],
+
   templateUrl: './courses-details.component.html',
   styleUrls: ['./courses-details.component.scss'],
 })

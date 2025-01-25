@@ -7,6 +7,7 @@ import {
   navbarMenu,
   MainMenuItem,
   navbarAuthMenu,
+  navbarAuthMobileMenu,
 } from '../../core/service/data/navbar.data';
 import {
   Component,
@@ -67,6 +68,7 @@ export class AuthNavbarComponent implements OnInit {
   public isMenuOpened = false;
   public isHomePage = false;
   public sidebar: SidebarMenu[] = navbarAuthMenu;
+  public mobileSidebar: SidebarMenu[] = navbarAuthMobileMenu;
 
   base = '';
   page = '';
@@ -141,7 +143,6 @@ export class AuthNavbarComponent implements OnInit {
     );
   }
 
-  // Add language switching method
   switchLanguage(lang: string) {
     this.translate.use(lang);
   }

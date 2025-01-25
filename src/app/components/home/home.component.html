@@ -4,8 +4,8 @@
       <div class="col-lg-8 col-12" data-aos="fade-up">
         <div class="home-slide-face">
           <div class="home-slide-text">
-            <h5>The Leader in Online Learning</h5>
-            <h1>Engaging & Accessible Online Courses For All</h1>
+            <h5>{{ 'home.homeP' | translate }}</h5>
+            <h1>{{ 'home.homeTitle' | translate }}</h1>
           </div>
           <div class="banner-content">
             <form class="form" name="store" id="store" method="post">
@@ -14,14 +14,14 @@
                   <input #searchInput type="email" class="form-control"
                     placeholder="Search School, Online educational centers, etc" />
                   <button class="btn btn-primary sub-btn" type="button" (click)="directPath(searchInput.value)">
-                    Search
+                    {{ 'courses.search' | translate }}
                   </button>
                 </div>
               </div>
             </form>
           </div>
           <div class="trust-user-two">
-            <p>Trusted by over 15K Users worldwide since 2022</p>
+            <p>{{ 'home.trustedUsers' | translate }}</p>
             <div class="rating-two">
               <span>4.4</span>
               <i class="fas fa-star filled"></i>
@@ -39,7 +39,7 @@
       <img class="shapes-one" src="assets/img/bg/home-right.png" alt="">
       <img class="shapes-two" src="assets/img/bg/home-right-bottom.png" alt="">
       <img class="shapes-middle" src="assets/img/bg/home-middle.png" alt="">
-      <img class="shapes-four wow animate__animated animate__slideInLeft" src="assets/img/bg/home-left.png" alt="">
+      <img class="shapes-four " src="assets/img/bg/home-left.png" alt="">
     </div>
   </div>
 </section>

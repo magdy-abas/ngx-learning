@@ -132,3 +132,72 @@ export const navbarAuthMenu: MainMenuItem[] = [
     ],
   },
 ];
+export const navbarAuthMobileMenu: MainMenuItem[] = [
+  {
+    tittle: 'login',
+    route: '/login',
+    base: 'courses',
+    separateRoute: true,
+    translationKey: 'navbar.login',
+  },
+  {
+    tittle: 'signup',
+    route: '/signup',
+    base: 'courses',
+    separateRoute: true,
+    translationKey: 'navbar.signUp',
+  },
+
+  {
+    tittle: 'Languages',
+
+    base: 'courses',
+    separateRoute: false,
+    translationKey: 'navbar.language',
+    menu: [
+      {
+        menuValue: 'English',
+        route: '',
+        base: 'courses',
+        page: 'all',
+        hasSubRoute: false,
+        translationKey: 'English',
+      },
+      {
+        menuValue: 'العربية',
+        route: '',
+        base: 'courses',
+        page: 'all',
+        hasSubRoute: false,
+        translationKey: 'العربية',
+      },
+    ],
+  },
+];
+export const navbarMobileMenu: MainMenuItem[] = [
+  {
+    tittle: 'Languages',
+
+    base: 'courses',
+    separateRoute: false,
+    translationKey: 'navbar.language',
+    menu: [
+      {
+        menuValue: 'English',
+        route: '',
+        base: 'courses',
+        page: 'all',
+        hasSubRoute: false,
+        translationKey: 'English',
+      },
+      {
+        menuValue: 'العربية',
+        route: '',
+        base: 'courses',
+        page: 'all',
+        hasSubRoute: false,
+        translationKey: 'العربية',
+      },
+    ],
+  },
+];

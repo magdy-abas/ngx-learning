@@ -39,6 +39,7 @@ import { HomeBannerComponent } from './home-components/home-banner/home-banner.c
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 import { AuthService } from '../../core/service/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -54,18 +55,7 @@ import { AuthService } from '../../core/service/auth.service';
     HomeCategoriesComponent,
     HomeSliderComponent,
     HomeBannerComponent,
-  ],
-  providers: [
-    EventManager,
-    {
-      provide: 'WINDOW',
-      useFactory: () => window,
-    },
-    {
-      provide: 'isBrowser',
-      useFactory: (platformId: Object) => isPlatformBrowser(platformId),
-      deps: [PLATFORM_ID],
-    },
+    TranslateModule,
   ],
 
   templateUrl: './home.component.html',

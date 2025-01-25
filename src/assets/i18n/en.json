@@ -2,6 +2,7 @@
   "navbar": {
     "home": "Home",
     "courses": "Courses",
+    "language": "Language",
     "login": "Login",
     "signUp": "Sign Up",
     "logout": "Logout",
@@ -85,5 +86,10 @@
     "pleaseEnterCode": "Please enter a code!",
     "success": "Success!",
     "error": "Error!"
+  },
+  "home": {
+    "homeP": "The Leader in Online Learning",
+    "homeTitle": "Engaging & Accessible Online Courses For All",
+    "trustedUsers": "Trusted by over 15K Users worldwide since 2022"
   }
 }

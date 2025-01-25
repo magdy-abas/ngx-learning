@@ -1,16 +1,19 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FeatherIconModule } from '../../shared/utils/feather-icons.utils';
-import { courseGrid, DataService } from '../../core/service/data/data.service';
+import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
+import {
+  courseGrid,
+  DataService,
+} from '../../../core/service/data/data.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { routes } from '../../core/service/routes/routes';
+import { routes } from '../../../core/service/routes/routes';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { CoursesService } from '../../core/service/courses.service';
-import { ICourse } from '../../core/interfaces/courses.interface';
-import { CoursesCardComponent } from '../../shared/ui/courses-card/courses-card.component';
-import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
+import { CoursesService } from '../../../core/service/courses.service';
+import { ICourse } from '../../../core/interfaces/courses.interface';
+import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
+import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 

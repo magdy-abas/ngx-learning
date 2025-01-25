@@ -7,6 +7,7 @@ import { AuthService } from '../../core/service/auth.service';
 import {
   MainMenuItem,
   navbarMenu,
+  navbarMobileMenu,
 } from './../../core/service/data/navbar.data';
 import { TranslateModule } from '@ngx-translate/core';
 import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
@@ -35,6 +36,7 @@ export class NavbarComponent {
   last = '';
   public isMenuOpened = false;
   public sidebar: MainMenuItem[] = navbarMenu;
+  public mobileSidebar: MainMenuItem[] = navbarMobileMenu;
 
   // Static Routes
   public routes = {
