@@ -114,12 +114,15 @@ export class LoginComponent {
       this._AuthService.login(this.loginDto).subscribe({
         next: (res) => {
           if (res.status === 1) {
-            console.log(res);
             this._AuthService.saveToken(res.data.token);
+            this._AuthService.saveUserData(res.data.user);
+            console.log(res);
+
             this._Router.navigate(['/auth']);
           } else {
             this.msgError = res.message;
             console.log(res);
+
             if (res.message.includes('email')) {
               this.loginForm
                 .get('email')

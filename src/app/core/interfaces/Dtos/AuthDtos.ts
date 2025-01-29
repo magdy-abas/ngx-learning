@@ -27,3 +27,14 @@ export interface RegisterVM {
   token: string;
   user: UserVM;
 }
+
+export interface UserData {
+  id: number;
+  first_login: boolean;
+  name: string;
+  phone_code: string;
+  phone: string;
+  email: string;
+  image: string;
+  categories: any[];
+}

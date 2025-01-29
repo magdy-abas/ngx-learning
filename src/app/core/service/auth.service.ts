@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 
 import { Observable } from 'rxjs';
-import { LoginDto, RegisterDto } from '../interfaces/Dtos/AuthDtos';
+import { LoginDto, RegisterDto, UserData } from '../interfaces/Dtos/AuthDtos';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +16,17 @@ export class AuthService {
     private _HttpClient: HttpClient,
     private _Router: Router,
     private cookieService: CookieService
-  ) {}
-  userData: any = null;
-  auth = signal(false); // Signal to track auth status
+  ) {
+    this.auth.set(this.isAuthenticated());
+    if (this.isAuthenticated()) {
+      const storedUserData = localStorage.getItem('userData');
+      if (storedUserData) {
+        this.userData = JSON.parse(storedUserData);
+      }
+    }
+  }
+  userData: UserData | null = null;
+  auth = signal(false);
 
   register(data: RegisterDto): Observable<any> {
     return this._HttpClient.post(`${baseUrl}register`, data, {
@@ -42,21 +50,9 @@ export class AuthService {
     });
   }
 
-  saveUserData(): void {
-    const token = this.cookieService.get('token');
-
-    if (token) {
-      try {
-        const decoded = jwtDecode(token); // Decode the JWT
-        this.userData = decoded;
-        this.auth.set(true);
-      } catch (error) {
-        this._Router.navigate(['/login']);
-        this.clearUserData(); // Clear cookies if token is invalid
-      }
-    } else {
-      this.auth.set(false); // Set auth flag to false if no token
-    }
+  saveUserData(userData: UserData): void {
+    this.userData = userData;
+    localStorage.setItem('userData', JSON.stringify(userData));
   }
 
   saveToken(token: string): void {
@@ -70,11 +66,16 @@ export class AuthService {
 
   clearUserData(): void {
     this.cookieService.delete('token', '/'); // Delete the token cookie
+    localStorage.removeItem('userData'); // Remove user data from localStorage
     this.userData = null;
     this.auth.set(false);
   }
 
   isAuthenticated(): boolean {
     return !!this.cookieService.get('token');
+  }
+
+  getToken(): string | null {
+    return this.cookieService.get('token') || null;
   }
 }

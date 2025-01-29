@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { baseUrl, headers } from '../../environment/environment.local';
-import { RequestJoinDto } from '../interfaces/courses.interface';
+import { QuizDTO, RequestJoinDto } from '../interfaces/courses.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +31,16 @@ export class CoursesService {
     return this._HttpClient.post(`${baseUrl}courses/request-join`, data, {
       headers: headers,
     });
+  }
+
+  //quiz
+
+  getQuiz(quizId: number): Observable<any> {
+    return this._HttpClient.get(
+      `${baseUrl}v1.0.1/lessons/questions?quiz_id=${quizId}`
+    );
+  }
+  answerQuiz(answers: QuizDTO): Observable<any> {
+    return this._HttpClient.post(`${baseUrl}v1.0.1/lessons/questions`, answers);
   }
 }

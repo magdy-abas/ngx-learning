@@ -237,8 +237,10 @@ export class RegisterComponent {
         next: (res) => {
           if (res.status === 1) {
             console.log(res);
-            console.log('Token:', res.data.token);
-            console.log('User details:', res.data.user);
+            this._AuthService.saveToken(res.data.token);
+            console.log(res.data.user);
+
+            this._AuthService.saveUserData(res.data.user);
             this._Router.navigate(['/login']);
           } else {
             console.log(res.message);
@@ -251,8 +253,6 @@ export class RegisterComponent {
         },
         error: (err: HttpErrorResponse) => {
           this.msgError = err.message;
-
-          console.log(err);
         },
       });
     } else {

@@ -1,1 +1,143 @@
-<p>courses-quiz works!</p>
+<div class="cstm-quiz">
+  <div class="quiz-container">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-6">
+          @if (quizData.length > 0) {
+          <div class="quiz-box">
+            <div class="question-number text-end">
+              Question <span class="fw-bold">{{currentQuestion}}</span>/{{quizData.length}}
+            </div>
+
+            <!-- Question Display -->
+            <div class="d-flex justify-content-center" [class.pb-4]="quizData[currentQuestion - 1].image">
+              <span class="question-text text-center">Q{{currentQuestion}}. </span>
+              @if (quizData[currentQuestion - 1].image) {
+              <div class="question-img">
+                <img [src]="quizData[currentQuestion - 1].image" class="img-fluid" alt="Question image">
+              </div>
+              } @else {
+              <span class="question-text text-center">{{quizData[currentQuestion - 1].title}}</span>
+              }
+            </div>
+
+            <!-- Answers List -->
+            <div class="options-list options-list-img d-flex flex-column justify-content-center align-items-center">
+              @for (answer of quizData[currentQuestion - 1].Answers; track answer.id) {
+              <div class="option-item" [class.option-item-image]="answer.image">
+                <input type="radio" [name]="'answer'" [id]="'option' + answer.id" class="option-input"
+                  [(ngModel)]="selectedAnswer" [value]="answer.id">
+                @if (answer.image) {
+                <div class="radio-wrapper"></div>
+                <label [for]="'option' + answer.id" class="option-label img-option p-1">
+                  <img [src]="answer.image" [alt]="answer.title">
+                </label>
+                } @else {
+                <label [for]="'option' + answer.id" class="option-label "
+                  [ngClass]="{'question-right': quizResponse.can_show_answers}">{{answer.title}}</label>
+                }
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="quiz-btns">
+            @if (quizResponse.can_show_answers) {
+            <button type="button" class="back-btn  btn  mx-2">Back</button>
+            }
+            <button type="button" class="next-btn btn" (click)="nextQuestion()"
+              [disabled]="!selectedAnswer && quizResponse.can_show_answers === false">
+              Next
+            </button>
+
+
+
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="cstm-quiz">
+  <div class="quiz-container cstm-quiz ">
+    <div class="container ">
+      <div class="row justify-content-center ">
+        <div class="col-12 col-md-10 col-lg-6">
+          <div class="quiz-box">
+            <div class="question-number text-end">Question <span class="fw-bold">1</span>/10</div>
+
+            <div class="d-flex justify-content-center ">
+              <span class="question-text text-center">Q1. </span>
+              <span class="question-text text-center"> What Is The Meaning Of UI UX Design?</span>
+
+            </div>
+
+
+
+
+            <div class="options-list d-flex flex-column justify-content-center  align-items-center">
+
+              <div class="option-item     ">
+                <input type="radio" name="answer" id="option1" class="option-input">
+                <label for="option1" class="option-label ">User Interface Design</label>
+              </div>
+
+              <div class="option-item">
+                <input type="radio" name="answer" id="option2" class="option-input">
+                <label for="option2" class="option-label question-right">User Experience Design</label>
+              </div>
+
+              <div class="option-item">
+                <input type="radio" name="answer" id="option3" class="option-input">
+                <label for="option3" class="option-label">Both</label>
+              </div>
+            </div>
+
+
+
+          </div>
+
+          <div class="quiz-btns">
+            <button type="button" class="back-btn  btn  ">Back</button>
+            <button type="button" class="next-btn btn ">Next</button>
+            <button type="button" class="next-btn btn   disabled  disabled-btn"> <span
+                class="spinner-border spinner-border-sm " id="spinner" role="status" aria-hidden="true"></span></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="cstm-quiz container py-5">
+  <div class="row justify-content-center ">
+
+    <div class="result-card bad-result shadow-sm">
+      <div class="card-header border-bottom">
+        <h2 class="fs-5 mb-0">Your Result</h2>
+        <span class="fs-6"> <span class="fw-bold fs-5">8</span>/10</span>
+      </div>
+      <div class="image-container">
+        <img src="../../../../assets/img/test-quiz/8c501db7fcb0f3a49d5bdf0f0e9ded40.png" alt="Sad emoji"
+          class="result-image">
+      </div>
+      <p class="result-message">very good result.</p>
+      <button class="next-btn btn col-12">Close</button>
+    </div>
+  </div>
+</div>

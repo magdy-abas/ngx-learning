@@ -62,6 +62,13 @@ export class CoursesCardComponent implements OnInit {
     this.isAuth = this._AuthService.isAuthenticated();
   }
 
+  getRouterLink(courseId: number): string[] {
+    if (this._AuthService.isAuthenticated()) {
+      return ['/auth/course-details', courseId.toString()];
+    }
+    return ['/course-details', courseId.toString()];
+  }
+
   async buyCourse(
     event: MouseEvent,
     courseId: number,

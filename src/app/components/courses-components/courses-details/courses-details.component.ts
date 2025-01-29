@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FeatherIconModule } from './../../../shared/utils/feather-icons.utils';
 import { RouterLink } from '@angular/router';
 import { routes } from './../../../core/service/routes/routes';
@@ -27,7 +27,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private _AuthService: AuthService,
     private _CoursesService: CoursesService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _Router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +44,22 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     unsubscribeAll(...this.subscriptions);
+  }
+
+  redirectToLesson(id: number, type: string): void {
+    console.log(id, type);
+
+    if (type === 'quiz') {
+      console.log(!this._AuthService.isAuthenticated());
+
+      if (this._AuthService.isAuthenticated()) {
+        this._Router.navigate([`/auth/course-quiz/${id}`]);
+      }
+    }
+    if (type === 'meeting') {
+    }
+    if (type === 'video') {
+    }
   }
 
   getIcon(type: string): string {
@@ -72,6 +89,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.courseDetails = data;
+          console.log(data);
 
           this.isLoading = false;
         },

@@ -207,3 +207,41 @@ export class RequestJoinDto {
   course_id?: number;
   code?: string;
 }
+
+export class QuizDTO {
+  quiz_id!: number;
+  answers!: { [questionNumber: number]: number };
+}
+
+export interface QuizResponse {
+  can_show_answers: boolean;
+  data: QuestionData[];
+  is_answered: boolean;
+  message: string;
+  remaining_seconds: number | null;
+  show_answers_at: string | null;
+  show_answers_in_date_status: number;
+  status: any;
+}
+
+export interface QuestionData {
+  id: number;
+  title: string;
+  image: string | null;
+  Answers_count: number;
+  Answers: Answer[];
+  user_answer_data: UserAnswerData;
+}
+
+export interface Answer {
+  id: number;
+  title: string;
+  image: string | null;
+}
+
+export interface UserAnswerData {
+  is_answered: number;
+  user_answer: Record<string, unknown>;
+  correct_answer: any[]; // Adjust type based on actual data structure
+  is_true_answer: boolean;
+}

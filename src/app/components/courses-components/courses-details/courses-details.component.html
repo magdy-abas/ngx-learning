@@ -140,7 +140,7 @@
                 @if (chapter.lessons?.length) {
                 <ul>
                   @for (lesson of chapter.lessons; track $index) {
-                  <li>
+                  <li (click)="redirectToLesson(lesson.id , lesson.type)">
                     <p>
                       @if (getIcon(lesson.type).endsWith('.svg')) {
                       <img [src]="getIcon(lesson.type)" [alt]="lesson.type" class="me-2" />

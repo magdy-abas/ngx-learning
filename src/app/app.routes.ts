@@ -11,6 +11,7 @@ import { RegisterComponent } from './components/auth-components/register/registe
 import { ForgotPasswordComponent } from './components/auth-components/forgot-password/forgot-password.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { CoursesQuizComponent } from './components/courses-components/courses-quiz/courses-quiz.component';
 
 export const routes: Routes = [
   {
@@ -50,10 +51,16 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'home' },
       { path: 'courses', component: CoursesComponent, title: 'courses' },
+
       {
         path: 'course-details/:id',
         component: CoursesDetailsComponent,
         title: 'course-details',
+      },
+      {
+        path: 'course-quiz/:id',
+        component: CoursesQuizComponent,
+        title: 'quiz',
       },
     ],
   },
