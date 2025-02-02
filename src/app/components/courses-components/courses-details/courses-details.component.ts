@@ -9,10 +9,11 @@ import { CoursesService } from './../../../core/service/courses.service';
 import { CourseContent } from './../../../core/interfaces/courses.interface';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
+import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
-  imports: [FeatherIconModule, RouterLink],
+  imports: [FeatherIconModule, RouterLink, NgIf, NgFor],
 
   templateUrl: './courses-details.component.html',
   styleUrls: ['./courses-details.component.scss'],
@@ -22,6 +23,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   courseDetails?: CourseContent;
   public isLoading = true;
   public errorMessage = '';
+  courseId!: number;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -36,6 +38,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     const courseId = this._route.snapshot.paramMap.get('id');
     if (courseId) {
       this.fetchCourseDetails(+courseId);
+      this.courseId = +courseId;
     } else {
       this.errorMessage = 'Invalid course ID';
       this.isLoading = false;
@@ -53,7 +56,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       console.log(!this._AuthService.isAuthenticated());
 
       if (this._AuthService.isAuthenticated()) {
-        this._Router.navigate([`/auth/course-quiz/${id}`]);
+        this._Router.navigate([`/auth/course-quiz/${this.courseId}/${id}`]);
       }
     }
     if (type === 'meeting') {

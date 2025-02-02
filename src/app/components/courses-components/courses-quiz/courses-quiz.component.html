@@ -3,14 +3,48 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-6">
-          @if (quizData.length > 0) {
+          @if (showIntro) {
+          <div class="quiz-box">
+            <div class="card-header border-bottom text-center pb-3">
+              <h2 class="fs-4 mb-0">Welcome to the Quiz!</h2>
+            </div>
+            <div class="d-flex flex-column align-items-center p-4">
+              @if (showResult) { <p class="text-center mb-4">
+                سيتم اظهار الاسئلة والاجابات بمجرد الضعط علي الزر
+              </p>
+
+
+
+              }
+              <p class="text-center mb-4">
+                الرجاء قرائة الاسئلة جيدا قبل الاجابة لان لايمكن العودة للسؤال بعد الاجابة
+              </p>
+
+              @if (showResult) {
+              <button type="button" class="next-btn btn" (click)="startQuiz()">
+
+                show Result
+              </button>
+
+
+              }
+              <button type="button" class="next-btn btn" (click)="startQuiz()">
+
+                Start Quiz
+              </button>
+            </div>
+          </div>
+          }
+          @if ( !showIntro && quizData.length > 0) {
+          <!-- Show Quiz Box only when not showing result -->
+          @if (!showResult) {
           <div class="quiz-box">
             <div class="question-number text-end">
               Question <span class="fw-bold">{{currentQuestion}}</span>/{{quizData.length}}
             </div>
 
             <!-- Question Display -->
-            <div class="d-flex justify-content-center" [class.pb-4]="quizData[currentQuestion - 1].image">
+            <div class="d-flex justify-content-center pb-4">
               <span class="question-text text-center">Q{{currentQuestion}}. </span>
               @if (quizData[currentQuestion - 1].image) {
               <div class="question-img">
@@ -22,37 +56,80 @@
             </div>
 
             <!-- Answers List -->
-            <div class="options-list options-list-img d-flex flex-column justify-content-center align-items-center">
+            <div class="options-list d-flex flex-column justify-content-center align-items-center">
               @for (answer of quizData[currentQuestion - 1].Answers; track answer.id) {
-              <div class="option-item" [class.option-item-image]="answer.image">
+              <div class="option-item" [ngClass]="{
+                      'active-answer': isCorrectAnswer(answer.id) && quizResponse.can_show_answers,
+                      'wrong-answer': isWrongAnswer(answer.id) && quizResponse.can_show_answers
+                    }">
                 <input type="radio" [name]="'answer'" [id]="'option' + answer.id" class="option-input"
-                  [(ngModel)]="selectedAnswer" [value]="answer.id">
+                  [(ngModel)]="selectedAnswer" [value]="answer.id" [disabled]="quizResponse.can_show_answers">
                 @if (answer.image) {
-                <div class="radio-wrapper"></div>
                 <label [for]="'option' + answer.id" class="option-label img-option p-1">
                   <img [src]="answer.image" [alt]="answer.title">
                 </label>
                 } @else {
-                <label [for]="'option' + answer.id" class="option-label "
-                  [ngClass]="{'question-right': quizResponse.can_show_answers}">{{answer.title}}</label>
+                <label [for]="'option' + answer.id" class="option-label">
+                  {{answer.title}}
+                </label>
                 }
               </div>
               }
             </div>
+
+            <!-- Navigation Buttons -->
+            <div class="quiz-btns">
+              @if (quizResponse.can_show_answers && currentQuestion > 1) {
+              <button type="button" class="back-btn btn mx-2" (click)="previousQuestion()">
+                Back
+              </button>
+              }
+
+              <button type="button" class="next-btn btn" (click)="nextQuestion()" [disabled]="!canProceed()">
+
+                Next
+
+              </button>
+            </div>
+          </div>
+          }
+
+          <!-- Result Card - Show when showResult is true -->
+          @if (showResult) {
+
+          <div class="d-flex justify-content-center align-items-center">
+            <div class="row justify-content-center w-100">
+              <div class="col-12 col-md-10 col-lg-6">
+                <div class="container">
+                  <div class="result-card" [ngClass]="getResultClass()">
+                    <div class="card-header border-bottom">
+                      <h2 class="fs-5 mb-0">نتيجتك</h2>
+                      <span class="fs-6">
+                        <span class="fw-bold fs-5">{{getCorrectAnswersCount()}}</span>/{{quizData.length}}
+                      </span>
+                    </div>
+                    <div class="image-container">
+                      @if( getResulimoji()){
+                      <img src="../../../../assets/img/test-quiz/great-result.png" alt="result emoji"
+                        class="result-image">
+
+                      }@else {
+                      <img src="../../../../assets/img/test-quiz/sad-result.png" alt="result emoji"
+                        class="result-image">
+                      }
+
+                    </div>
+                    <p class="result-message">{{getResultMessage()}}</p>
+                    <button class="next-btn btn col-12" (click)="closeResult()">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
-          <div class="quiz-btns">
-            @if (quizResponse.can_show_answers) {
-            <button type="button" class="back-btn  btn  mx-2">Back</button>
-            }
-            <button type="button" class="next-btn btn" (click)="nextQuestion()"
-              [disabled]="!selectedAnswer && quizResponse.can_show_answers === false">
-              Next
-            </button>
-
-
-
-          </div>
+          }
           }
         </div>
       </div>
@@ -60,15 +137,7 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
+<!--
 <div class="cstm-quiz">
   <div class="quiz-container cstm-quiz ">
     <div class="container ">
@@ -140,4 +209,4 @@
       <button class="next-btn btn col-12">Close</button>
     </div>
   </div>
-</div>
+</div> -->

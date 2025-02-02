@@ -58,7 +58,7 @@ export const routes: Routes = [
         title: 'course-details',
       },
       {
-        path: 'course-quiz/:id',
+        path: 'course-quiz/:courseId/:quizId',
         component: CoursesQuizComponent,
         title: 'quiz',
       },

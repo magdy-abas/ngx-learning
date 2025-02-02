@@ -10,3 +10,15 @@ body {
   padding-left: 20px !important;
   padding-right: 0;
 }
+
+// quiz
+.option-label {
+  padding-left: 50px;
+}
+.option-label:before {
+  left: 18px;
+}
+
+.option-label:after {
+  left: 22px;
+}

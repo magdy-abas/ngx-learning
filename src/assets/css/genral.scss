@@ -501,7 +501,7 @@ code-input.code-input {
   }
 
   .question-text {
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 500;
     margin-bottom: 2.5rem;
     color: #000000;
@@ -515,7 +515,7 @@ code-input.code-input {
 
   .option-item {
     margin-bottom: 1.25rem;
-    width: 75%;
+    width: 100%;
     position: relative;
     overflow: auto;
   }
@@ -527,7 +527,7 @@ code-input.code-input {
     transition: all 0.2s ease;
     position: relative;
     padding: 1rem 1.25rem;
-    padding-left: 50px;
+
     border-radius: 8px;
     outline: none !important;
     border: 1px solid transparent;
@@ -557,7 +557,7 @@ code-input.code-input {
     transform: translateY(-50%);
     border-radius: 50%;
     transition: all 0.2s ease;
-    left: 18px;
+
     width: 20px;
     height: 20px;
     border: 2px solid #ccc;
@@ -572,7 +572,7 @@ code-input.code-input {
     background-color: #000000;
     opacity: 0;
     transition: all 0.2s ease;
-    left: 22px;
+
     width: 12px;
     height: 12px;
   }
@@ -738,5 +738,73 @@ code-input.code-input {
     text-align: center;
     font-size: 20px;
     margin-top: 0;
+  }
+
+  .option-item {
+    .active-answer .option-label:before {
+      display: none !important;
+    }
+    &.active-answer label {
+      background-color: rgba(0, 255, 0, 0.1);
+    }
+
+    &.wrong-answer label {
+      background-color: rgba(255, 0, 0, 0.1);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+  }
+
+  .quiz-btns {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .result-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-message {
+      font-size: 1.1rem;
+      margin: 1.5rem 0;
+    }
+
+    &.excellent-result {
+      border: 2px solid #28a745;
+      .card-header {
+        color: #28a745;
+      }
+    }
+
+    &.good-result {
+      border: 2px solid #ffc107;
+      .card-header {
+        color: #ffc107;
+      }
+    }
+
+    &.bad-result {
+      border: 2px solid #dc3545;
+      .card-header {
+        color: #dc3545;
+      }
+    }
   }
 }

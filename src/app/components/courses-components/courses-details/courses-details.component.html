@@ -137,30 +137,32 @@
                   aria-expanded="false">{{chapter.title}}</a>
               </h6>
               <div id="collapseOne" class="card-collapse collapse">
-                @if (chapter.lessons?.length) {
-                <ul>
-                  @for (lesson of chapter.lessons; track $index) {
-                  <li (click)="redirectToLesson(lesson.id , lesson.type)">
+
+                <ul *ngIf="chapter.lessons?.length; else noLessons">
+                  <li *ngFor="let lesson of chapter.lessons" (click)="redirectToLesson(lesson.id, lesson.type)">
                     <p>
-                      @if (getIcon(lesson.type).endsWith('.svg')) {
-                      <img [src]="getIcon(lesson.type)" [alt]="lesson.type" class="me-2" />
-                      } @else {
-                      <i class="m-2 fs-6" [class]="getIcon(lesson.type)" aria-hidden="true" style="color: #ff875a;"></i>
-                      }
+                      <ng-container *ngIf="getIcon(lesson.type).endsWith('.svg'); else iconFallback">
+                        <img [src]="getIcon(lesson.type)" [alt]="lesson.type" class="me-2" />
+                      </ng-container>
+                      <ng-template #iconFallback>
+                        <i class="m-2 fs-6" [class]="getIcon(lesson.type)" aria-hidden="true"
+                          style="color: #ff875a;"></i>
+                      </ng-template>
                       {{ lesson.title }}
                     </p>
                     <div>
-                      @if (lesson.is_free) {
-                      <a href="javascript:;">Preview</a>
-                      }
+                      <ng-container *ngIf="lesson.is_free">
+                        <a href="javascript:;">Preview</a>
+                      </ng-container>
                       <span>02:53</span>
                     </div>
                   </li>
-                  }
                 </ul>
-                } @else {
-                <p class="text-center py-3">No available lessons</p>
-                }
+
+                <!-- Fallback for no lessons -->
+                <ng-template #noLessons>
+                  <p class="text-center py-3">No available lessons</p>
+                </ng-template>
               </div>
             </div>
 

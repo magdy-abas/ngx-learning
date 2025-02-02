@@ -115,3 +115,15 @@ body {
   left: 96px;
   transform: rotateY(-165deg);
 }
+// quiz
+.option-label {
+  padding-right: 50px;
+}
+
+.option-label:before {
+  right: 18px;
+}
+
+.option-label:after {
+  right: 22px;
+}
