@@ -43,4 +43,17 @@ export class CoursesService {
   answerQuiz(answers: QuizDTO): Observable<any> {
     return this._HttpClient.post(`${baseUrl}v1.0.1/lessons/questions`, answers);
   }
+
+  //metting
+  joinMeeting(lessonId: number): Observable<any> {
+    return this._HttpClient.post(`${baseUrl}lessons/join-meeting`, {
+      meeting_id: lessonId,
+    });
+  }
+
+  getResources(courseId: any): Observable<any> {
+    return this._HttpClient.get(
+      `${baseUrl}chapters/resources?course_id=${courseId}`
+    );
+  }
 }

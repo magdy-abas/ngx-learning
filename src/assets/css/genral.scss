@@ -243,6 +243,25 @@ code-input.code-input {
   height: 24px;
 }
 
+li {
+  // Target li elements that don't contain lock.svg
+  &:has(img[src*="play-icon.svg"]),
+  &:has(img[src*="quiz.svg"]),
+  &:has(img[src*="google-meet.svg"]) {
+    cursor: pointer;
+
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #ff875a;
+    }
+  }
+
+  // Default state for locked items
+  &:has(img[src*="lock.svg"]) {
+    cursor: default;
+  }
+}
 //sweet alert
 
 // .custom-swal-icon {

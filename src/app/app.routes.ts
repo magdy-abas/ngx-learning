@@ -12,6 +12,7 @@ import { ForgotPasswordComponent } from './components/auth-components/forgot-pas
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CoursesQuizComponent } from './components/courses-components/courses-quiz/courses-quiz.component';
+import { CoursesMettingComponent } from './components/courses-components/courses-metting/courses-metting.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,11 @@ export const routes: Routes = [
         path: 'course-quiz/:courseId/:quizId',
         component: CoursesQuizComponent,
         title: 'quiz',
+      },
+      {
+        path: 'course-metting/:courseId/:mettingId/:shapterId',
+        component: CoursesMettingComponent,
+        title: 'metting',
       },
     ],
   },
