@@ -1,3 +1,8 @@
+// genral
+.csr-pointer {
+  cursor: pointer;
+}
+
 // iti input package
 
 .valid-phone .form-control[type="tel"] {
@@ -237,7 +242,18 @@ code-input.code-input {
 }
 
 //courses details
+.more-section ul li {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.more-section ul li p {
+  color: black;
+  transition: color 0.3s ease;
+}
 
+.more-section ul li:hover p {
+  color: #ff875a;
+}
 .ng-courses-details img {
   width: 24px;
   height: 24px;
@@ -827,3 +843,154 @@ li {
     }
   }
 }
+
+// pdf viewr
+.pdf-viewer-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  padding: clamp(10px, 2vw, 20px); /* Responsive padding */
+  box-sizing: border-box;
+}
+
+.pdf-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: clamp(8px, 1.5vw, 10px);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: #333;
+}
+
+.pdf-viewer-header h4 {
+  font-size: clamp(16px, 2.5vw, 20px); /* Responsive font size */
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: clamp(20px, 3vw, 24px); /* Responsive font size */
+  cursor: pointer;
+  color: #ff875a;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px; /* Minimum touch target size */
+  min-height: 44px;
+}
+
+.pdf-viewer-container {
+  flex-grow: 1;
+  overflow: auto; /* Changed from hidden to allow scrolling */
+  background-color: white;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: clamp(8px, 1.5vw, 10px);
+  position: relative;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Make PDF pages responsive */
+:host ::ng-deep .pdf-viewer .page {
+  margin: 10px auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+:host ::ng-deep .pdf-viewer .textLayer {
+  height: auto !important;
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: clamp(8px, 1.5vw, 10px);
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  flex-wrap: wrap; /* Allow controls to wrap on small screens */
+  gap: 10px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  padding: clamp(15px, 2.5vw, 20px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%; /* Prevent text from touching edges */
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+.btn {
+  padding: clamp(5px, 1vw, 10px);
+  margin: 0 5px;
+  min-height: 44px; /* Minimum touch target size */
+  min-width: 44px;
+}
+
+/* Media Queries for different screen sizes */
+@media screen and (max-width: 768px) {
+  .pdf-viewer-wrapper {
+    padding: 10px;
+  }
+
+  .pdf-controls {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .pdf-viewer-header {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .close-btn {
+    align-self: flex-end;
+  }
+}
+
+// /* Add support for dark mode */
+// @media (prefers-color-scheme: dark) {
+//   .pdf-viewer-header,
+//   .pdf-controls {
+//     background-color: #333;
+//     color: #fff;
+//   }
+
+//   .pdf-viewer-container {
+//     background-color: #222;
+//   }
+// }
+
+// /* Improve accessibility */
+// .pdf-viewer:focus,
+// .close-btn:focus {
+//   outline: 2px solid #ff875a;
+//   outline-offset: 2px;
+// }

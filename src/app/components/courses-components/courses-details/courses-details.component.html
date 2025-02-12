@@ -93,14 +93,14 @@
 
 
             @if (courseDetails?.data){
-            @for (chapter of courseDetails?.data; track $index) {
+            @for (chapter of courseDetails?.data; track $index ;let first = $first) {
             <div class="course-card">
               <h6 class="cou-title">
-                <a class="collapsed" data-bs-toggle="collapse" [href]="'#chapter' + $index">
+                <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index">
                   {{chapter.title}} <span>{{chapter.lessons.length}} Lessons</span>
                 </a>
               </h6>
-              <div [id]="'chapter' + $index" class="card-collapse collapse">
+              <div [id]="'chapter' + $index" class="card-collapse collapse " [class.show]="first">
                 <div class="student-percent lesson-percent">
 
                 </div>
@@ -143,63 +143,58 @@
 
           </div>
           <!-- course Notes  -->
-
           <!-- course more  -->
           <div class="lesson-group tab-pane fade" id="more">
-
+            @for (chapter of resources; track chapter.id ;let first = $first) {
             <div class="course-card">
               <h6 class="cou-title">
-                <a class="" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="true">Files <span>
-                  </span> </a>
+                <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index"
+                  aria-expanded="true">
+                  {{chapter.title}} <span>{{chapter.resources.length}} Files</span>
+                </a>
               </h6>
-              <div id="collapseOne" class="card-collapse collapse show">
 
+
+
+              <div [id]="'chapter' + $index" class="card-collapse collapse " [class.show]="first">
                 <div class="student-percent lesson-percent">
-                  <p>10hrs<span>50%</span></p>
-                </div>
-                <ul>
-                  <li>
-                    <p class="play-intro">Introduction</p>
-                    <div>
-                      <img src="assets/img/icon/play-icon.svg" alt="">
-                    </div>
-                  </li>
-                  <li>
-                    <p>Course Introduction </p>
-                    <div>
-                      <img src="assets/img/icon/lock.svg" alt="">
-                    </div>
-                  </li>
-                  <li>
-                    <p>About the Exam</p>
-                    <div>
-                      <img src="assets/img/icon/lock.svg" alt="">
-                    </div>
-                  </li>
-                  <li>
-                    <p>About the Course</p>
-                    <div>
-                      <img src="assets/img/icon/lock.svg" alt="">
-                    </div>
-                  </li>
-                  <li>
-                    <p>Building Our Scenario</p>
-                    <div>
-                      <img src="assets/img/icon/lock.svg" alt="">
-                    </div>
-                  </li>
-                  <li>
-                    <p>Learnings</p>
-                    <div>
-                      <img src="assets/img/icon/lock.svg" alt="">
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
 
+                </div>
+                <div class="chapter-section csr-pointer mb-3" [class.more-section]="CourseSubscribe">
+
+                  <ul>
+                    @for (resource of chapter.resources; track resource.id) {
+                    <!-- In the resources section, update the click handler -->
+                    <li (click)="handleResourceClick(
+  chapter.id,
+  resource.id,
+  resource.created_at,
+  resource.title
+)">
+                      <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
+                      <div>
+                        @if (CourseSubscribe == false) {
+                        <img [src]="resource.is_free ? 'assets/img/icon/file.svg' : 'assets/img/icon/lock.svg'"
+                          alt="file">
+                        }
+                        <img src='assets/img/icon/file.svg' alt="file">
+                      </div>
+                    </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+
+
+
+            </div>
+            }
+
+            @if (!resources.length) {
+            <p class="text-center py-3">No resources available</p>
+            }
           </div>
-          <!-- course more  -->
+          <!-- /course more  -->
         </div>
 
       </div>
@@ -227,3 +222,5 @@
   </div>
 </section>
 <!-- /Course Lesson -->
+<app-pdf-viewer [pdfUrl]="pdfUrl" [showPdfViewer]="showPdfViewer" [resourceTitle]="currentResourceTitle"
+  (closePdfEvent)="closePdfViewer()"></app-pdf-viewer>

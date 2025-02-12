@@ -41,6 +41,7 @@
     "ng-apexcharts": "^1.8.0",
     "ng-circle-progress": "^1.7.1",
     "ng2-charts": "^5.0.4",
+    "ng2-pdf-viewer": "^10.4.0",
     "ngx-bootstrap": "^12.0.0",
     "ngx-cookie-service": "^19.0.0",
     "ngx-countup": "^13.1.0",
