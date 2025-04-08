@@ -17,7 +17,7 @@ export class CoursesService {
     pageNum: number
   ): Observable<any> {
     return this._HttpClient.get(
-      `${baseUrl}courses?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`
+      `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`
     );
   }
 

@@ -242,6 +242,6 @@ export interface Answer {
 export interface UserAnswerData {
   is_answered: number;
   user_answer: Record<string, unknown>;
-  correct_answer: any[]; // Adjust type based on actual data structure
+  correct_answer: any[];
   is_true_answer: boolean;
 }

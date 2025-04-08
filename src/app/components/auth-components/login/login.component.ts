@@ -113,6 +113,8 @@ export class LoginComponent {
 
       this._AuthService.login(this.loginDto).subscribe({
         next: (res) => {
+          console.log(res);
+
           if (res.status === 1) {
             this._AuthService.saveToken(res.data.token);
             this._AuthService.saveUserData(res.data.user);

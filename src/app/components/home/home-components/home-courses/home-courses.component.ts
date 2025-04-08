@@ -18,6 +18,9 @@ export class HomeCoursesComponent {
   @Input() courseTitle: string = '';
   @Input() CourseShortTitle: string = '';
 
+  ngOnInit(): void {
+    console.log(this.coursesData);
+  }
   constructor(public data: HomeData) {
     this.Featured_Courses = this.data.Featured_Courses;
   }

@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HomeCategoriesComponent } from './home-categories.component';
+
+describe('CoursesMettingComponent', () => {
+  let component: HomeCategoriesComponent;
+  let fixture: ComponentFixture<HomeCategoriesComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HomeCategoriesComponent],
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(HomeCategoriesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

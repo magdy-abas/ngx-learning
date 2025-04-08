@@ -15,7 +15,7 @@ export class SectionTypeGuards {
    * @returns Type predicate confirming if data is ISlider[]
    */
   static isSliderData(data: any[]): data is ISlider[] {
-    return data?.length > 0 && 'video' in data[0];
+    return data?.length > 0 && 'image' in data[0];
   }
 
   /**
@@ -24,7 +24,7 @@ export class SectionTypeGuards {
    * @returns Type predicate confirming if data is ICourse[]
    */
   static isCourseData(data: any[]): data is ICourse[] {
-    return data?.length > 0 && 'price' in data[0];
+    return data?.length > 0 && 'doctor' in data[0];
   }
 
   /**

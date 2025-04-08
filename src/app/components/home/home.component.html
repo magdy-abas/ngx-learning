@@ -50,11 +50,13 @@
 <app-home-slider [sliderData]="getSliderData(section.data)" [sliderTitle]="section.title"
   [sliderShortTitle]="section.short_title">
 </app-home-slider>
+
 }
 @case ('courses') {
 <app-home-courses [coursesData]="getCourseData(section.data)" [courseTitle]="section.title"
   [CourseShortTitle]="section.short_title">
 </app-home-courses>
+
 }
 @case ('doctors') {
 <app-home-instructors [instructorsData]="getDoctorData(section.data)" [instructorsTitle]="section.title"

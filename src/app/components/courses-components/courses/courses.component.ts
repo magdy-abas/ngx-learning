@@ -76,8 +76,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
   @HostListener('window:scroll', [])
   onScroll(): void {
-    const scrollPosition = window.innerHeight + window.pageYOffset; // Bottom of the viewport
-    const threshold = document.documentElement.scrollHeight - 50; // Total height of the document
+    const scrollPosition = window.innerHeight + window.pageYOffset;
+    const threshold = document.documentElement.scrollHeight - 50;
 
     if (scrollPosition >= threshold) {
       this.getCourses();

@@ -19,6 +19,9 @@ interface data {
   styleUrl: './home-slider.component.scss',
 })
 export class HomeSliderComponent {
+  ngOnInit(): void {
+    console.log(this.sliderData);
+  }
   public routes = routes;
   @Input() sliderData: ISlider[] = [];
   @Input() sliderTitle: string = '';

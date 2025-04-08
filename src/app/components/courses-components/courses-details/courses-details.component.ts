@@ -6,13 +6,16 @@ import { routes } from './../../../core/service/routes/routes';
 import { AuthService } from './../../../core/service/auth.service';
 import { CoursesService } from './../../../core/service/courses.service';
 import * as CryptoJS from 'crypto-js';
-import { CourseContent } from './../../../core/interfaces/courses.interface';
+import {
+  CourseContent,
+  RequestJoinDto,
+} from './../../../core/interfaces/courses.interface';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
 import { NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
-
+import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
@@ -37,6 +40,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   resourceId!: number;
   chapterId!: number;
   public resources: any[] = [];
+  isAuth!: boolean;
+  reqData: RequestJoinDto = new RequestJoinDto();
   VIDEO_ENCRYPTION_KEY: string =
     'ar95ZqLTMkHUXBNj6qjP-dI4Fk6NHtWXDDgUknzCw-O9A7DsHLjWZzIbqEherP';
   VIDEO_ENCRYPTION_IV: string =
@@ -56,6 +61,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     // Get course ID from route parameters
+    this.isAuth = this._AuthService.isAuthenticated();
     const courseId = this._route.snapshot.paramMap.get('id');
     if (courseId) {
       this.fetchCourseDetails(+courseId);
@@ -215,6 +221,94 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+
+  async buyCourse(
+    event: MouseEvent,
+    courseId: number | undefined,
+    buyWith: string | undefined,
+    client_status: string | undefined
+  ): Promise<void> {
+    event.stopPropagation();
+
+    if (!this.isAuth) {
+      this.confirmBox();
+      return;
+    }
+
+    if (buyWith === 'by_request_course') {
+      if (client_status === 'not_asked') {
+        const { isConfirmed } =
+          await SweetAlertUtils.showPurchaseConfirmation();
+
+        if (isConfirmed) {
+          this.reqData.course_id = courseId;
+          try {
+            const result = await this.sendData(buyWith);
+            if (result) {
+              if (this.courseDetails) {
+                this.courseDetails.course.client_status = 'pending';
+              }
+              await SweetAlertUtils.showSuccessAlert(
+                'Course request sent successfully'
+              );
+            }
+          } catch (error) {
+            await SweetAlertUtils.showErrorAlert(error as string);
+          }
+        }
+      }
+    } else if (buyWith === 'by_code') {
+      const { value: code, isConfirmed } =
+        await SweetAlertUtils.showCodeInputDialog();
+
+      if (isConfirmed && code) {
+        this.reqData.course_id = courseId;
+        this.reqData.code = code;
+
+        try {
+          const result = await this.sendData(buyWith);
+          if (result) {
+            if (this.courseDetails) {
+              this.courseDetails.course.client_status = 'pending';
+            }
+            await SweetAlertUtils.showSuccessAlert(
+              'Course code verified successfully'
+            );
+          }
+        } catch (error) {
+          await SweetAlertUtils.showErrorAlert(error as string);
+        }
+      }
+    }
+  }
+  confirmBox(): void {
+    SweetAlertUtils.showLoginRequired().then((result) => {
+      if (result.isConfirmed) {
+        this._Router.navigate(['/login']);
+      }
+    });
+  }
+
+  sendData(buyWith: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this._CoursesService.makeRequest(this.reqData).subscribe({
+        next: (res) => {
+          console.log(res);
+
+          if (res.status === 1) {
+            resolve(true);
+          } else {
+            reject(res.message as string);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          // reject(false);
+          reject('Something went wrong');
+        },
+      });
     });
   }
 }

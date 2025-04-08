@@ -45,7 +45,16 @@
               <span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
             </div>
           </div>
-          <span class="web-badge mb-3">WEB DEVELPMENT</span>
+          <div *ngIf="courseDetails?.course?.client_status !== 'accepted'">
+            <button * 4="courseDetails?.course?.client_status !== 'pending'"
+              (click)="buyCourse($event, courseDetails?.course?.id, courseDetails?.course?.way_to_by_course_in_app, courseDetails?.course?.client_status)"
+              class="web-badge mb-3 btn">
+              اشترك الآن
+            </button>
+            <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="web-badge mb-3 btn">
+              قيد الانتظار
+            </button>
+          </div>
         </div>
         <h2>{{courseDetails?.course?.title}}</h2>
         <p>Learn Web Development by building 25 websites and mobile apps using HTML, CSS, Javascript, PHP, Python, MySQL
