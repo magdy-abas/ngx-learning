@@ -7,6 +7,11 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { Observable } from 'rxjs';
 import { LoginDto, RegisterDto, UserData } from '../interfaces/Dtos/AuthDtos';
+import {
+  AuthResponse,
+  ResetPasswordSuccessResponse,
+  SendPinCodeSuccessResponse,
+} from '../Dtos/auth.models';
 
 @Injectable({
   providedIn: 'root',
@@ -28,26 +33,24 @@ export class AuthService {
   userData: UserData | null = null;
   auth = signal(false);
 
-  register(data: RegisterDto): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}register`, data, {
-      headers: headers,
-    });
+  register(data: RegisterDto): Observable<AuthResponse> {
+    return this._HttpClient.post<AuthResponse>(`${baseUrl}register`, data);
   }
-
-  login(data: LoginDto): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}login`, data, {
-      headers: headers,
-    });
+  login(data: LoginDto): Observable<AuthResponse> {
+    return this._HttpClient.post<AuthResponse>(`${baseUrl}login`, data);
   }
-  resetPassword(data: object): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}reset-password`, data, {
-      headers: headers,
-    });
+  resetPassword(data: object): Observable<ResetPasswordSuccessResponse> {
+    return this._HttpClient.post<ResetPasswordSuccessResponse>(
+      `${baseUrl}reset-password`,
+      data,
+      {}
+    );
   }
-  sendPinCode(data: object): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}send-pin-code`, data, {
-      headers: headers,
-    });
+  sendPinCode(data: object): Observable<SendPinCodeSuccessResponse> {
+    return this._HttpClient.post<SendPinCodeSuccessResponse>(
+      `${baseUrl}send-pin-code`,
+      data
+    );
   }
 
   saveUserData(userData: UserData): void {

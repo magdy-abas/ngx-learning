@@ -29,6 +29,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RegisterDto } from '../../../core/interfaces/Dtos/AuthDtos';
 import { scrollToTop } from '../../../shared/utils/ui-utils';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  AuthResponse,
+  ErrorAuthData,
+  ErrorAuthResponse,
+} from '../../../core/Dtos/auth.models';
 
 @Component({
   selector: 'app-register',
@@ -225,7 +230,7 @@ export class RegisterComponent {
 
       this.RegisterDto.name = formData.name;
       this.RegisterDto.email = formData.email;
-      this.RegisterDto.phone = phoneControl?.value?.number;
+      this.RegisterDto.phone = phoneControl?.value?.number || '';
       this.RegisterDto.password = formData.password;
       this.RegisterDto.password_confirmation = formData.password;
       this.RegisterDto.token = '123';
@@ -234,20 +239,22 @@ export class RegisterComponent {
 
       console.log(this.RegisterDto);
       this._AuthService.register(this.RegisterDto).subscribe({
-        next: (res) => {
+        next: (res: AuthResponse) => {
           if (res.status === 1) {
             console.log(res);
             this._AuthService.saveToken(res.data.token);
             console.log(res.data.user);
-
             this._AuthService.saveUserData(res.data.user);
             this._Router.navigate(['/login']);
           } else {
+            const errorData = res.data as ErrorAuthData;
             console.log(res.message);
             this.msgError = res.message;
-            this.regForm
-              .get('email')
-              ?.setErrors({ serverError: res.data.email[0] });
+            if (errorData.email?.length) {
+              this.regForm
+                .get('email')
+                ?.setErrors({ serverError: errorData.email[0] });
+            }
             scrollToTop();
           }
         },

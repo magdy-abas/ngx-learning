@@ -2,8 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { baseUrl, headers } from '../../environment/environment.local';
-import { QuizDTO, RequestJoinDto } from '../interfaces/courses.interface';
+import { baseUrl } from '../../environment/environment.local';
+
+import {
+  QuizDTO,
+  RequestJoinDto,
+  QuizAnswerResponse,
+  RequestJoinResponse,
+  CoursesResponse,
+} from '../Dtos/courses.models';
+import { CourseDetailsResponse } from '../Dtos/courses-details.models';
+import { QuizResponse } from '../interfaces/courses.interface';
+import { ChapterResourcesResponse } from '../Dtos/courses-resourses.models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,33 +25,42 @@ export class CoursesService {
     searchTerms: string,
     pagination: number,
     pageNum: number
-  ): Observable<any> {
-    return this._HttpClient.get(
+  ): Observable<CoursesResponse> {
+    return this._HttpClient.get<CoursesResponse>(
       `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`
     );
   }
 
-  getCoursesDetails(courseId: number): Observable<any> {
-    return this._HttpClient.get(
+  getCoursesDetails(courseId: number): Observable<CourseDetailsResponse> {
+    return this._HttpClient.get<CourseDetailsResponse>(
       `${baseUrl}chapters/v2/unsubscribed-course-content?course_id=${courseId}`
     );
   }
-
-  makeRequest(data: RequestJoinDto): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}courses/request-join`, data, {
-      headers: headers,
-    });
+  makeRequest(data: RequestJoinDto): Observable<RequestJoinResponse> {
+    return this._HttpClient.post<RequestJoinResponse>(
+      `${baseUrl}courses/request-join`,
+      data
+    );
   }
-
   //quiz
 
-  getQuiz(quizId: number): Observable<any> {
-    return this._HttpClient.get(
+  getQuiz(quizId: number): Observable<QuizResponse> {
+    return this._HttpClient.get<QuizResponse>(
       `${baseUrl}v1.0.1/lessons/questions?quiz_id=${quizId}`
     );
   }
-  answerQuiz(answers: QuizDTO): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}v1.0.1/lessons/questions`, answers);
+
+  getResources(courseId: any): Observable<ChapterResourcesResponse> {
+    return this._HttpClient.get<ChapterResourcesResponse>(
+      `${baseUrl}chapters/resources?course_id=${courseId}`
+    );
+  }
+
+  answerQuiz(answers: QuizDTO): Observable<QuizAnswerResponse> {
+    return this._HttpClient.post<QuizAnswerResponse>(
+      `${baseUrl}v1.0.1/lessons/questions`,
+      answers
+    );
   }
 
   //metting
@@ -49,11 +68,5 @@ export class CoursesService {
     return this._HttpClient.post(`${baseUrl}lessons/join-meeting`, {
       meeting_id: lessonId,
     });
-  }
-
-  getResources(courseId: any): Observable<any> {
-    return this._HttpClient.get(
-      `${baseUrl}chapters/resources?course_id=${courseId}`
-    );
   }
 }

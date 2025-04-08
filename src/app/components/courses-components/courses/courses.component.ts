@@ -16,6 +16,7 @@ import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-ca
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { Course } from '../../../core/Dtos/courses.models';
 
 interface data {
   active?: boolean;
@@ -39,7 +40,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   searchValue: string = '';
   pagination: number = 9;
   pageNum: number = 1;
-  coursesData: ICourse[] = [];
+  coursesData: Course[] = [];
 
   isLoading: boolean = false;
   allDataLoaded: boolean = false;

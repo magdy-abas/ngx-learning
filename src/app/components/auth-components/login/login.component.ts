@@ -21,6 +21,7 @@ import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginDto } from '../../../core/interfaces/Dtos/AuthDtos';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthResponse, ErrorAuthData } from '../../../core/Dtos/auth.models';
 
 @Component({
   selector: 'app-login',
@@ -105,40 +106,42 @@ export class LoginComponent {
   }
   onSubmit() {
     if (this.loginForm.valid) {
-      this.loginDto.email = this.loginForm.get('email')?.value;
-      this.loginDto.password = this.loginForm.get('password')?.value;
+      this.loginDto.email = this.loginForm.get('email')?.value || '';
+      this.loginDto.password = this.loginForm.get('password')?.value || '';
       this.loginDto.token = '123';
       this.loginDto.serial_number = '1234';
       this.loginDto.os = 'desktop';
 
       this._AuthService.login(this.loginDto).subscribe({
-        next: (res) => {
+        next: (res: AuthResponse) => {
           console.log(res);
 
           if (res.status === 1) {
             this._AuthService.saveToken(res.data.token);
             this._AuthService.saveUserData(res.data.user);
             console.log(res);
-
             this._Router.navigate(['/auth']);
           } else {
+            const errorData = res.data as ErrorAuthData;
             this.msgError = res.message;
             console.log(res);
 
-            if (res.message.includes('email')) {
+            // Set email error if present
+            if (errorData.email?.length) {
               this.loginForm
                 .get('email')
-                ?.setErrors({ serverError: res.data.email[0] });
-            } else {
+                ?.setErrors({ serverError: errorData.email[0] });
+            }
+            // Set password error if present
+            if (errorData.password?.length) {
               this.loginForm
                 .get('password')
-                ?.setErrors({ serverError: res.data.password[0] });
+                ?.setErrors({ serverError: errorData.password[0] });
             }
           }
         },
         error: (err: HttpErrorResponse) => {
           this.msgError = err.message;
-
           console.log(err);
         },
       });

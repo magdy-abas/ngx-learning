@@ -16,6 +16,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
+import { CourseDetailsResponse } from '../../../core/Dtos/courses-details.models';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
@@ -29,7 +30,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   showPdfViewer = false;
   currentResourceTitle = '';
   public routes = routes;
-  courseDetails?: CourseContent;
+  courseDetails?: CourseDetailsResponse;
   public isLoading: boolean = true;
   public errorMessage: string = '';
   courseId!: number;

@@ -141,6 +141,9 @@ export class CoursesQuizComponent implements AfterViewInit {
     this._CoursesService.answerQuiz(this.question).subscribe({
       next: (data) => {
         if (data.status === 1) {
+          console.log('first' + data);
+          console.log(data);
+
           // Fetch updated quiz data with correct answers
           this._CoursesService.getQuiz(this.quizId).subscribe({
             next: (quizData) => {
@@ -248,6 +251,9 @@ export class CoursesQuizComponent implements AfterViewInit {
   answerQuestion(question: QuizDTO): void {
     this._CoursesService.answerQuiz(question).subscribe({
       next: (data) => {
+        console.log('sec' + data);
+        console.log(data);
+
         if (data.status === 1) {
           this.currentQuestion++;
           this.selectedAnswer = null;

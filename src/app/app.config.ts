@@ -19,6 +19,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { securityInterceptor } from './core/interceptor/security.interceptor';
+import { headerInterceptor } from './core/interceptor/header.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -39,6 +40,7 @@ export const appConfig: ApplicationConfig = {
         loadingInterceptor,
         authInterceptor,
         securityInterceptor,
+        headerInterceptor,
       ])
     ),
     importProvidersFrom(
