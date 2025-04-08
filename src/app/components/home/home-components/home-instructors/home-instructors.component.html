@@ -13,7 +13,9 @@
           <div class="instructors-widget">
             <div class="instructors-img">
               <a href="javascript:;">
-                <img class="img-fluid" [alt]="data.name" [src]="data.image">
+                <img class="img-fluid" [alt]="data.name" [src]="data.image ||
+                '../../../../../assets/img/instractor-placeholder.png'"
+                  onerror="this.src='../../../../../assets/img/instractor-placeholder.png'">
               </a>
               <!-- <div class="featured-border">
                 <div class="featured-img ">
@@ -24,7 +26,7 @@
             <div class="course-details-two">
               <div class="instructors-content text-center">
                 <h5><a href="javascript:;">{{data.name}}</a></h5>
-                <p>{{data.job_title}}</p>
+                <!-- <p>{{data.job_title}}</p> -->
               </div>
               <div class="course-info"></div>
               <div class="student-count d-flex justify-content-center">

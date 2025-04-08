@@ -3,6 +3,7 @@ import { HomeData } from '../../data';
 import { feature_instructors } from '../../../../core/service/data/data.service';
 import { NgFor } from '@angular/common';
 import { IDoctor } from '../../../../core/interfaces/Home.interface';
+import { Doctor } from '../../../../core/Dtos/dynamic-home.models';
 
 @Component({
   selector: 'app-home-instructors',
@@ -13,7 +14,7 @@ import { IDoctor } from '../../../../core/interfaces/Home.interface';
 })
 export class HomeInstructorsComponent {
   public feature_instructors: feature_instructors[] = [];
-  @Input() instructorsData: IDoctor[] = [];
+  @Input() instructorsData: Doctor[] = [];
   @Input() instructorsTitle: string = '';
   @Input() instructorsShortTitle: string = '';
   constructor(public data: HomeData) {

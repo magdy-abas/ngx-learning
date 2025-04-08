@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { category } from '../../../../core/service/data/data.service';
 import { NgClass, NgFor } from '@angular/common';
 import { HomeData } from '../../data';
-import { ICategory } from '../../../../core/interfaces/Home.interface';
+
+import { Category } from '../../../../core/Dtos/dynamic-home.models';
 
 @Component({
   selector: 'app-home-categories',
@@ -13,7 +14,7 @@ import { ICategory } from '../../../../core/interfaces/Home.interface';
 })
 export class HomeCategoriesComponent {
   public Category: category[] = [];
-  @Input() categoriesData: ICategory[] = [];
+  @Input() categoriesData: Category[] = [];
   @Input() categoriesTitle: string = '';
   @Input() categoriesShortTitle: string = '';
   constructor(public data: HomeData) {

@@ -14,7 +14,8 @@
         <div class="product-img">
           <a href="javascript:;">
             <div class="product-img-courses">
-              <img class="img-fluid" alt="" [src]="data.image">
+              <img class="img-fluid" alt="" [src]="data.image || '../../../../assets/img/course-placeholder.png'"
+                onerror="this.src='../../../../assets/img/course-placeholder.png'">
             </div>
 
           </a>
@@ -35,15 +36,17 @@
 
         </div>
         <div class="product-content">
+          <h3 class="title"><a href="javascript:;">{{data.title}}</a></h3>
           <div class="course-group d-flex">
+
             <div class="course-group-img d-flex">
               <div class="courses-doctor-img rounded-circle">
                 <img [src]="data.doctor_image || './assets/img/course/doctor.png'"
                   onerror="this.src='./assets/img/course/doctor.png'" alt="img-doctor" class="img-fluid">
               </div>
-              <div class="course-name">
-                <h4><a href="javascript:;">{{data.doctor}}</a></h4>
-                <p>Instractor</p>
+              <div class="course-name align-content-center">
+                <!-- <h4><a href="javascript:;">{{data.doctor}}</a></h4> -->
+                <p>{{data.doctor}}</p>
               </div>
             </div>
             <div class="course-share d-flex align-items-center justify-content-center">
@@ -51,7 +54,7 @@
                           [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a> -->
             </div>
           </div>
-          <h3 class="title"><a href="javascript:;">{{data.title}}</a></h3>
+
           <div class="course-info d-flex align-items-center">
             <div class="rating-img d-flex align-items-center">
               <img src="assets/img/icon/icon-01.svg" alt="icon-01">

@@ -8,6 +8,7 @@ import {
   IHomeSection,
   ISlider,
 } from '../../../../core/interfaces/Home.interface';
+import { Slider } from '../../../../core/Dtos/dynamic-home.models';
 interface data {
   active?: boolean;
 }
@@ -23,7 +24,7 @@ export class HomeSliderComponent {
     console.log(this.sliderData);
   }
   public routes = routes;
-  @Input() sliderData: ISlider[] = [];
+  @Input() sliderData: Slider[] = [];
   @Input() sliderTitle: string = '';
   @Input() sliderShortTitle: string = '';
   customOptions: OwlOptions = {

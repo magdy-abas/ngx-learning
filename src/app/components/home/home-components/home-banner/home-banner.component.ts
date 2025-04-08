@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IBanner } from '../../../../core/interfaces/Home.interface';
+import { Banner } from '../../../../core/Dtos/dynamic-home.models';
 
 @Component({
   selector: 'app-home-banner',
@@ -8,7 +9,7 @@ import { IBanner } from '../../../../core/interfaces/Home.interface';
   styleUrls: ['./home-banner.component.scss'],
 })
 export class HomeBannerComponent {
-  @Input() bannerData: IBanner[] = [];
+  @Input() bannerData: Banner[] = [];
   @Input() bannerTitle: string = '';
   @Input() bannerShortTitle: string = '';
 }

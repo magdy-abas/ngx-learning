@@ -4,6 +4,7 @@ import { Featured_Courses } from '../../../../core/service/data/data.service';
 import { HomeData } from '../../data';
 import { CoursesCardComponent } from '../../../../shared/ui/courses-card/courses-card.component';
 import { ICourse } from '../../../../core/interfaces/Home.interface';
+import { Course } from '../../../../core/Dtos/dynamic-home.models';
 
 @Component({
   selector: 'app-home-courses',
@@ -14,7 +15,7 @@ import { ICourse } from '../../../../core/interfaces/Home.interface';
 })
 export class HomeCoursesComponent {
   public Featured_Courses: Featured_Courses[] = [];
-  @Input() coursesData: ICourse[] = [];
+  @Input() coursesData: Course[] = [];
   @Input() courseTitle: string = '';
   @Input() CourseShortTitle: string = '';
 

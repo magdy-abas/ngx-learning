@@ -40,6 +40,7 @@ import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 import { AuthService } from '../../core/service/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { HomeSection } from '../../core/Dtos/dynamic-home.models';
 
 @Component({
   selector: 'app-home',
@@ -62,7 +63,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  homeSections: IHomeSection[] = [];
+  homeSections: HomeSection[] = [];
 
   public routes = routes;
   selected = '1';
