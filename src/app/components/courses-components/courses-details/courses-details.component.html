@@ -45,8 +45,8 @@
               <span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
             </div>
           </div>
-          <div *ngIf="courseDetails?.course?.client_status !== 'accepted'">
-            <button * 4="courseDetails?.course?.client_status !== 'pending'"
+          <div>
+            <button *ngIf="courseDetails?.course?.client_status !== 'pending'"
               (click)="buyCourse($event, courseDetails?.course?.id, courseDetails?.course?.way_to_by_course_in_app, courseDetails?.course?.client_status)"
               class="web-badge mb-3 btn">
               اشترك الآن
