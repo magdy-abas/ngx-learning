@@ -34,6 +34,7 @@ import {
   ErrorAuthData,
   ErrorAuthResponse,
 } from '../../../core/Dtos/auth.models';
+import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
 
 @Component({
   selector: 'app-register',
@@ -49,6 +50,7 @@ import {
     ReactiveFormsModule,
     AlertErrorComponent,
     TranslateModule,
+    PhoneInputComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -119,11 +121,12 @@ export class RegisterComponent {
   ) {
     this.register = this.DataService.register;
   }
+
   regForm: FormGroup = this._FormBuilder.group(
     {
       name: [null, [Validators.required, Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.email]],
-      phone: [null, [Validators.required]],
+      phone: [null],
       password: [
         null,
         [Validators.required, Validators.pattern('^(?=.*[A-Z]).{6,}$'), ,],
@@ -245,7 +248,7 @@ export class RegisterComponent {
             this._AuthService.saveToken(res.data.token);
             console.log(res.data.user);
             this._AuthService.saveUserData(res.data.user);
-            this._Router.navigate(['/login']);
+            this._Router.navigate(['/auth/home']);
           } else {
             const errorData = res.data as ErrorAuthData;
             console.log(res.message);

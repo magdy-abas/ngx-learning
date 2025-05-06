@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { Router, RouterLink } from '@angular/router';
@@ -39,7 +39,8 @@ import { AuthResponse, ErrorAuthData } from '../../../core/Dtos/auth.models';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginWithWats: boolean = false;
   loginDto: LoginDto = new LoginDto();
   public routes = routes;
   password = 'password';
@@ -74,6 +75,21 @@ export class LoginComponent {
     this.welcomeLogin = this.DataService.welcomeLogin;
   }
 
+  ngOnInit(): void {
+    this._AuthService.checkLoginMethod().subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.status === 1) {
+          if (res.data.settings.auth_login_with === 'mobile_whatsapp') {
+            this.loginWithWats = true;
+          }
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   loginForm: FormGroup = this._FormBuilder.group(
     {
       email: [null, [Validators.required, Validators.email]],

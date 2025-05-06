@@ -47,40 +47,44 @@
                 <p class="m-0">{{ msgError }}</p>
               </div>
 
-              <div class="form-group">
-                <label class="form-control-label">{{ 'auth.email' | translate }}</label>
-                <input type="email" class="form-control" [placeholder]="'auth.emailPlaceholder' | translate"
-                  formControlName="email" [ngClass]="{
-                    ' border-success': isFieldValid('email'),
-                    ' border-danger': isFieldInvalid('email')
-                  }">
-                <div>
-                  <app-alert-error controlName="email" [formName]="loginForm"></app-alert-error>
+              <!-- regular reg email and password fields  -->
+              <div>
+                <div class="form-group">
+                  <label class="form-control-label">{{ 'auth.email' | translate }}</label>
+                  <input type="email" class="form-control" [placeholder]="'auth.emailPlaceholder' | translate"
+                    formControlName="email" [ngClass]="{
+        ' border-success': isFieldValid('email'),
+        ' border-danger': isFieldInvalid('email')
+      }">
+                  <div>
+                    <app-alert-error controlName="email" [formName]="loginForm"></app-alert-error>
+                  </div>
                 </div>
-              </div>
 
-              <div class="form-group">
-                <label class="form-control-label">{{ 'auth.password' | translate }}</label>
-                <div class="pass-group">
-                  <input [type]="password" class="form-control pass-input"
-                    [placeholder]="'auth.passwordPlaceholder' | translate" formControlName="password" [ngClass]="{
-                      ' border-success': isFieldValid('password'),
-                      ' border-danger': isFieldInvalid('password')
-                    }">
-                  <span>
-                    <i-feather name="eye" class="toggle-password feather-eye" (click)="onClick()"
-                      *ngIf="show"></i-feather>
-                  </span>
-                  <span>
-                    <i-feather name="eye-off" class="toggle-password feather-eye-off" (click)="onClick()"
-                      *ngIf="!show"></i-feather>
-                  </span>
+                <div class="form-group">
+                  <label class="form-control-label">{{ 'auth.password' | translate }}</label>
+                  <div class="pass-group">
+                    <input [type]="password" class="form-control pass-input"
+                      [placeholder]="'auth.passwordPlaceholder' | translate" formControlName="password" [ngClass]="{
+          ' border-success': isFieldValid('password'),
+          ' border-danger': isFieldInvalid('password')
+        }">
+                    <span>
+                      <i-feather name="eye" class="toggle-password feather-eye" (click)="onClick()"
+                        *ngIf="show"></i-feather>
+                    </span>
+                    <span>
+                      <i-feather name="eye-off" class="toggle-password feather-eye-off" (click)="onClick()"
+                        *ngIf="!show"></i-feather>
+                    </span>
+                  </div>
+                  <div>
+                    <app-alert-error controlName="password" [formName]="loginForm"></app-alert-error>
+                  </div>
                 </div>
-                <div>
-                  <app-alert-error controlName="password" [formName]="loginForm"></app-alert-error>
-                </div>
-              </div>
 
+              </div>
+              <!-- wats version  reg   -->
               <div class="forgot">
                 <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate }}</a></span>
               </div>

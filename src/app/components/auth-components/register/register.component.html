@@ -66,26 +66,7 @@
               </div>
             </div>
 
-            <div class="form-group phone-valid " [ngClass]="{
-                ' valid-phone': regForm.get('phone')?.valid && regForm.get('phone')?.touched,
-                ' invalid-phone': regForm.get('phone')?.invalid && regForm.get('phone')?.touched
-              }">
-              <label class="form-control-label">{{ 'auth.phoneNumber' | translate }}</label>
-              <ngx-intl-tel-input #phone formControlName="phone" type="tel"
-                [searchCountryField]="[SearchCountryField.All]" [phoneValidation]="true"
-                [selectedCountryISO]="CountryISO.SaudiArabia" [enableAutoCountrySelect]="true"
-                [searchCountryFlag]="true" [preferredCountries]="preferredCountries">
-              </ngx-intl-tel-input>
-              <ul class="m-0">
-                @if (regForm.get('phone')?.errors && regForm.get('phone')?.touched) {
-                @if (regForm.get('phone')?.dirty && regForm.get('phone')?.invalid) {
-                <li class="fw-normal my-2 text-danger">
-                  {{ 'auth.invalidPhoneNumber' | translate }}
-                </li>
-                }
-                }
-              </ul>
-            </div>
+            <app-phone-input [formGroup]="regForm" controlName="phone"></app-phone-input>
 
             <div class="form-group">
               <label class="form-control-label">{{ 'auth.password' | translate }}</label>

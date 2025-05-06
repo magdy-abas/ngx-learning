@@ -1,0 +1,12 @@
+.form-group.phone-valid {
+  &.valid-phone {
+    input {
+      border: 1px solid #28a745 !important;
+    }
+  }
+  &.invalid-phone {
+    input {
+      border: 1px solid #dc3545 !important;
+    }
+  }
+}

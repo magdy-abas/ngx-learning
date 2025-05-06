@@ -1,0 +1,20 @@
+<div [formGroup]="formGroup">
+  <div class="form-group phone-valid" [ngClass]="{
+      'valid-phone': formGroup.get(controlName)?.valid && formGroup.get(controlName)?.touched,
+      'invalid-phone': formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched
+    }">
+    <label class="form-control-label">{{ label | translate }}</label>
+    <ngx-intl-tel-input [formControlName]="controlName" type="tel" [searchCountryField]="[SearchCountryField.All]"
+      [phoneValidation]="true" [selectedCountryISO]="CountryISO.SaudiArabia" [enableAutoCountrySelect]="true"
+      [searchCountryFlag]="true" [preferredCountries]="preferredCountries" (blur)="onBlur()"
+      (input)="onInputChange($event)">
+    </ngx-intl-tel-input>
+    <ul class="m-0">
+      @if (formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched) {
+      <li class="fw-normal my-2 text-danger">
+        {{ 'auth.invalidPhoneNumber' | translate }}
+      </li>
+      }
+    </ul>
+  </div>
+</div>
