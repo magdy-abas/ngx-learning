@@ -113,7 +113,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.forgotStep === 1) {
       if (this.emailForm.invalid) {
         this.markFormGroupTouched(this.emailForm);
-        return; // Stop further execution if the form is invalid
+        return;
       }
 
       this._AuthService.sendPinCode(this.emailForm.value).subscribe({
@@ -171,6 +171,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   public onCodeCompleted(code: string): void {
-    this.resetPasswordForm.patchValue({ code }); // Update the code field
+    this.resetPasswordForm.patchValue({ code });
   }
 }

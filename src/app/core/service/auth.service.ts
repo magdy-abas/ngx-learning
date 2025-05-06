@@ -6,11 +6,22 @@ import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 
 import { Observable } from 'rxjs';
-import { LoginDto, RegisterDto, UserData } from '../interfaces/Dtos/AuthDtos';
+import {
+  LoginDto,
+  RegisterDto,
+  ResetPasswordDto,
+  SendOtpDto,
+  sendPinCodeDto,
+  UserData,
+  WatsLoginDto,
+} from '../interfaces/Dtos/AuthDtos';
 import {
   AuthResponse,
   ResetPasswordSuccessResponse,
   SendPinCodeSuccessResponse,
+  CheckResponse,
+  OtpResponse,
+  LoginResponse,
 } from '../Dtos/auth.models';
 
 @Injectable({
@@ -33,20 +44,44 @@ export class AuthService {
   userData: UserData | null = null;
   auth = signal(false);
 
+  // login with watsapp
+  checkLoginMethod(): Observable<CheckResponse> {
+    return this._HttpClient.get<CheckResponse>(
+      `${baseUrl}mobile-versions/last-version`
+    );
+  }
+
+  sendOtpCode(data: SendOtpDto): Observable<OtpResponse> {
+    return this._HttpClient.post<OtpResponse>(
+      `${baseUrl}auth/ws/send-otp`,
+      data
+    );
+  }
+
+  watsLogin(data: WatsLoginDto): Observable<LoginResponse> {
+    return this._HttpClient.post<LoginResponse>(
+      `${baseUrl}auth/ws/login`,
+      data
+    );
+  }
+
+  //regular login
   register(data: RegisterDto): Observable<AuthResponse> {
     return this._HttpClient.post<AuthResponse>(`${baseUrl}register`, data);
   }
   login(data: LoginDto): Observable<AuthResponse> {
     return this._HttpClient.post<AuthResponse>(`${baseUrl}login`, data);
   }
-  resetPassword(data: object): Observable<ResetPasswordSuccessResponse> {
+  resetPassword(
+    data: ResetPasswordDto
+  ): Observable<ResetPasswordSuccessResponse> {
     return this._HttpClient.post<ResetPasswordSuccessResponse>(
       `${baseUrl}reset-password`,
       data,
       {}
     );
   }
-  sendPinCode(data: object): Observable<SendPinCodeSuccessResponse> {
+  sendPinCode(data: sendPinCodeDto): Observable<SendPinCodeSuccessResponse> {
     return this._HttpClient.post<SendPinCodeSuccessResponse>(
       `${baseUrl}send-pin-code`,
       data

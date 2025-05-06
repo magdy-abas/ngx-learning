@@ -12,10 +12,7 @@ import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
 import { AuthService } from '../../../core/service/auth.service';
 import Swal from 'sweetalert2';
 import { CoursesService } from '../../../core/service/courses.service';
-import {
-  ICourse,
-  RequestJoinDto,
-} from '../../../core/interfaces/courses.interface';
+import { ICourse, RequestJoinDto } from '../../../core/Dtos/courses.interface';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SweetAlertUtils } from './../../utils/SweetAlert.utils';
 import { TranslateModule } from '@ngx-translate/core';

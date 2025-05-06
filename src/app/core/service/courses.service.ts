@@ -12,7 +12,7 @@ import {
   CoursesResponse,
 } from '../Dtos/courses.models';
 import { CourseDetailsResponse } from '../Dtos/courses-details.models';
-import { QuizResponse } from '../interfaces/courses.interface';
+import { QuizResponse } from '../Dtos/courses.interface';
 import { ChapterResourcesResponse } from '../Dtos/courses-resourses.models';
 
 @Injectable({

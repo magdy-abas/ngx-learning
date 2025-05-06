@@ -6,7 +6,7 @@ import {
   QuestionData,
   QuizDTO,
   QuizResponse,
-} from '../../../core/interfaces/courses.interface';
+} from '../../../core/Dtos/courses.interface';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 

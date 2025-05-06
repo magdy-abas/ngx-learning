@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { HomeData } from '../../data';
 import { feature_instructors } from '../../../../core/service/data/data.service';
 import { NgFor } from '@angular/common';
-import { IDoctor } from '../../../../core/interfaces/Home.interface';
+import { IDoctor } from '../../../../core/Dtos/dynamic-home.models';
 import { Doctor } from '../../../../core/Dtos/dynamic-home.models';
 
 @Component({

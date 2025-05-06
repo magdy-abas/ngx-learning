@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IBanner } from '../../../../core/interfaces/Home.interface';
+import { IBanner } from '../../../../core/Dtos/dynamic-home.models';
 import { Banner } from '../../../../core/Dtos/dynamic-home.models';
 
 @Component({

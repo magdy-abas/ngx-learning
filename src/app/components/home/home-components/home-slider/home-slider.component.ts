@@ -7,7 +7,7 @@ import Aos from 'aos';
 import {
   IHomeSection,
   ISlider,
-} from '../../../../core/interfaces/Home.interface';
+} from '../../../../core/Dtos/dynamic-home.models';
 import { Slider } from '../../../../core/Dtos/dynamic-home.models';
 interface data {
   active?: boolean;

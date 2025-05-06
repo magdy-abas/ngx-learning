@@ -9,7 +9,7 @@ import * as CryptoJS from 'crypto-js';
 import {
   CourseContent,
   RequestJoinDto,
-} from './../../../core/interfaces/courses.interface';
+} from '../../../core/Dtos/courses.interface';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
 import { NgFor, NgIf } from '@angular/common';

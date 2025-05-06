@@ -38,3 +38,29 @@ export interface UserData {
   image: string;
   categories: any[];
 }
+export class ResetPasswordDto {
+  email?: string;
+  pin_code?: string;
+  password?: string;
+  password_confirmation?: string;
+}
+export class sendPinCodeDto {
+  email?: string;
+}
+
+// with watsapp Dtos
+
+export class WatsLoginDto {
+  phone_code?: string;
+  mobile?: string;
+  otp?: string;
+  token?: string;
+  serial_number?: string;
+  os?: string;
+}
+export class SendOtpDto {
+  phone_code?: string;
+  mobile?: string;
+  serial_number?: string;
+  os?: string;
+}

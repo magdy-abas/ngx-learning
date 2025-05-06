@@ -21,7 +21,6 @@ export class GlobalTranslateService {
     this._TranslateService.use(lang);
     this.changeDirection();
 
-    // Add language class on initialization
     const htmlElement = document.documentElement;
     htmlElement.classList.remove('lang-ar', 'lang-en');
     htmlElement.classList.add(`lang-${lang}`);
@@ -31,7 +30,6 @@ export class GlobalTranslateService {
     let lang = localStorage.getItem('lang') || 'ar';
     const htmlElement = document.documentElement;
 
-    // Remove existing language classes
     htmlElement.classList.remove('lang-ar', 'lang-en');
 
     if (lang === 'en') {
@@ -44,9 +42,8 @@ export class GlobalTranslateService {
       htmlElement.classList.add('lang-ar');
     }
 
-    // Force a style recalculation
     document.body.style.display = 'none';
-    document.body.offsetHeight; // Force a reflow
+    document.body.offsetHeight;
     document.body.style.display = '';
   }
 
@@ -57,7 +54,6 @@ export class GlobalTranslateService {
       await this._TranslateService.use(lang).toPromise();
       this.changeDirection();
 
-      // Add a small delay to ensure styles are applied
       await new Promise((resolve) => setTimeout(resolve, 300));
     } finally {
       await this.spinner.hide();

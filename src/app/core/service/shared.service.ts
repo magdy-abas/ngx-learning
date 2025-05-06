@@ -50,6 +50,4 @@ export class SharedService {
   isInitialized(): boolean {
     return this.initializationComplete.value;
   }
-
-  //redirect auth or not
 }

@@ -48,3 +48,56 @@ export interface ResetPasswordSuccessResponse {
   message: string;
   data: null;
 }
+
+//check
+
+interface Settings {
+  open_in_tab: boolean;
+  open_in_ipad: boolean;
+  ios_auth_login_with: string;
+  android_auth_login_with: string;
+  auth_login_with: string;
+  ws_ready_to_use: boolean;
+  all_verified: boolean;
+}
+
+interface Data {
+  version: string;
+  force_update: number;
+  settings: Settings;
+  app_styles: null | any;
+  app_attrs: any[];
+  ecommerce_status: boolean;
+  select_category_in_register: boolean;
+}
+
+export interface CheckResponse {
+  status: number;
+  message: string;
+  success: boolean;
+  data: Data;
+}
+
+interface Data {
+  accepted_sender_numbers: string[];
+  token: string;
+  user: User;
+}
+
+export interface OtpResponse {
+  status: number;
+  message: string;
+  success: boolean;
+  data: Data;
+}
+
+interface UserData {
+  token: string;
+  user: User;
+}
+
+export interface LoginResponse {
+  status: number;
+  message: string;
+  userData: UserData;
+}
