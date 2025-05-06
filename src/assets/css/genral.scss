@@ -93,15 +93,13 @@
 }
 // code-input
 code-input.code-input {
-  --item-spacing: 10px;
-  --item-height: 1em;
-  --item-border: none;
+  text-align: left !important;
   --item-border-bottom: 2px solid #ff875a;
-  --item-border-has-value: none;
   --item-border-bottom-has-value: 2px solid #ff875a;
-  --item-border-focused: none;
   --item-border-bottom-focused: 2px solid #ff875a;
-  --item-shadow-focused: none;
+  --item-border: 2px solid #ff875a;
+  --item-border-has-value: 2px solid #ff875a;
+  --item-border-focused: 2px solid #ff875a;
   --item-border-radius: 0px;
   font-size: 1.1rem;
 }

@@ -203,16 +203,6 @@ interface ProtectionSettings {
   pdf_show_new_way: boolean;
 }
 
-export class RequestJoinDto {
-  course_id?: number;
-  code?: string;
-}
-
-export class QuizDTO {
-  quiz_id!: number;
-  answers!: { [questionNumber: number]: number };
-}
-
 export interface QuizResponse {
   can_show_answers: boolean;
   data: QuestionData[];
@@ -244,4 +234,47 @@ export interface UserAnswerData {
   user_answer: Record<string, unknown>;
   correct_answer: any[];
   is_true_answer: boolean;
+}
+export interface CoursesResponse {
+  data: Course[];
+  links: PaginationLinks;
+  meta: PaginationMeta;
+  status: number;
+  message: string;
+}
+
+export interface Course {
+  id: number;
+  title: string;
+  rate: string;
+  image: string;
+  client_complete_percentage: string;
+  complete_status: string | null;
+  client_status: 'pending' | 'not_asked' | 'accepted';
+  doctor: string;
+}
+
+export interface PaginationMeta {
+  current_page: number;
+  from: number;
+  last_page: number;
+  links: PaginationLink[];
+  path: string;
+  per_page: number;
+  to: number;
+  total: number;
+}
+
+//requestjoin Response
+export interface RequestJoinResponse {
+  status: number;
+  message: string;
+  data: null | any;
+}
+
+// QuizAnswerResponse
+export interface QuizAnswerResponse {
+  status: number;
+  message: string;
+  data: any[];
 }

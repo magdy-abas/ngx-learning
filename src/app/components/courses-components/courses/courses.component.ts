@@ -11,12 +11,12 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { CoursesService } from '../../../core/service/courses.service';
-import { ICourse } from '../../../core/Dtos/courses.interface';
+import { ICourse } from '../../../core/interfaces/courses.interface';
 import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { Course } from '../../../core/Dtos/courses.models';
+import { Course } from '../../../core/interfaces/courses.interface';
 
 interface data {
   active?: boolean;

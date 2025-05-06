@@ -6,7 +6,7 @@ import {
   ICourse,
   IDoctor,
   ISlider,
-} from '../../core/Dtos/dynamic-home.models';
+} from '../../core/interfaces/dynamic-home.interface';
 
 export class SectionTypeGuards {
   /**

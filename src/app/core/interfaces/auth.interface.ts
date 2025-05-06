@@ -99,5 +99,5 @@ interface UserData {
 export interface LoginResponse {
   status: number;
   message: string;
-  userData: UserData;
+  data: UserData;
 }

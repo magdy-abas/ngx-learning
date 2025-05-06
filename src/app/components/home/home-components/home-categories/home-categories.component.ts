@@ -3,7 +3,7 @@ import { category } from '../../../../core/service/data/data.service';
 import { NgClass, NgFor } from '@angular/common';
 import { HomeData } from '../../data';
 
-import { Category } from '../../../../core/Dtos/dynamic-home.models';
+import { Category } from '../../../../core/interfaces/dynamic-home.interface';
 
 @Component({
   selector: 'app-home-categories',

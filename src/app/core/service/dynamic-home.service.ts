@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { baseUrl } from '../../environment/environment.local';
 import { Observable } from 'rxjs';
-import { DynamicHomeResponse } from '../Dtos/dynamic-home.models';
+import { DynamicHomeResponse } from '../interfaces/dynamic-home.interface';
 
 @Injectable({
   providedIn: 'root',

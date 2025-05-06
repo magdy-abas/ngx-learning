@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 import { Featured_Courses } from '../../../../core/service/data/data.service';
 import { HomeData } from '../../data';
 import { CoursesCardComponent } from '../../../../shared/ui/courses-card/courses-card.component';
-import { ICourse } from '../../../../core/Dtos/dynamic-home.models';
-import { Course } from '../../../../core/Dtos/dynamic-home.models';
+import { ICourse } from '../../../../core/interfaces/dynamic-home.interface';
+import { Course } from '../../../../core/interfaces/dynamic-home.interface';
 
 @Component({
   selector: 'app-home-courses',

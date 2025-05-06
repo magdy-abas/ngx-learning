@@ -12,11 +12,11 @@ import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
 import { AuthService } from '../../../core/service/auth.service';
 import Swal from 'sweetalert2';
 import { CoursesService } from '../../../core/service/courses.service';
-import { ICourse, RequestJoinDto } from '../../../core/Dtos/courses.interface';
+import { ICourse } from '../../../core/interfaces/courses.interface';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SweetAlertUtils } from './../../utils/SweetAlert.utils';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { RequestJoinDto } from './../../../core/Dtos/coursesDtos';
 @Component({
   selector: 'app-courses-card',
   standalone: true,

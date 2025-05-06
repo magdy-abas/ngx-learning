@@ -2,18 +2,19 @@ import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../../core/service/auth.service';
 import { CoursesService } from '../../../core/service/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  QuestionData,
-  QuizDTO,
-  QuizResponse,
-} from '../../../core/Dtos/courses.interface';
+import { QuizDTO } from '../../../core/Dtos/coursesDtos';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
+import {
+  QuestionData,
+  QuizResponse,
+} from '../../../core/interfaces/courses.interface';
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
   imports: [FormsModule, NgClass],
+
   templateUrl: './courses-quiz.component.html',
   styleUrl: './courses-quiz.component.scss',
 })
@@ -146,11 +147,11 @@ export class CoursesQuizComponent implements AfterViewInit {
 
           // Fetch updated quiz data with correct answers
           this._CoursesService.getQuiz(this.quizId).subscribe({
-            next: (quizData) => {
-              if (quizData.status === 1) {
-                this.quizData = quizData.data;
-                this.quizResponse = quizData;
-                this.showResult = true; // Show results immediately
+            next: (res) => {
+              if (res.status === 1) {
+                this.quizData = res.data;
+                this.quizResponse = res;
+                this.showResult = true; // Show results
               }
             },
             error: (err) => console.error(err),

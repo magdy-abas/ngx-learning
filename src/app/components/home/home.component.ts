@@ -32,7 +32,7 @@ import { HomeCoursesComponent } from './home-components/home-courses/home-course
 import { HomeCategoriesComponent } from './home-components/home-categories/home-categories.component';
 import { HomeSliderComponent } from './home-components/home-slider/home-slider.component';
 import { DynamicHomeService } from '../../core/service/dynamic-home.service';
-import { IHomeSection } from '../../core/Dtos/dynamic-home.models';
+import { IHomeSection } from '../../core/interfaces/dynamic-home.interface';
 import { SectionDataHelpers } from '../../shared/utils/HomeDataHelpers.utils';
 
 import { HomeBannerComponent } from './home-components/home-banner/home-banner.component';
@@ -40,7 +40,7 @@ import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 import { AuthService } from '../../core/service/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { HomeSection } from '../../core/Dtos/dynamic-home.models';
+import { HomeSection } from '../../core/interfaces/dynamic-home.interface';
 
 @Component({
   selector: 'app-home',

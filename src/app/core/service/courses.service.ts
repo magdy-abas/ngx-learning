@@ -3,18 +3,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../../environment/environment.local';
-
+import { CourseDetailsResponse } from '../interfaces/courses-details.interface';
+import { QuizResponse } from '../interfaces/courses.interface';
+import { ChapterResourcesResponse } from '../interfaces/courses-resourses.interface';
 import {
-  QuizDTO,
-  RequestJoinDto,
   QuizAnswerResponse,
-  RequestJoinResponse,
   CoursesResponse,
-} from '../Dtos/courses.models';
-import { CourseDetailsResponse } from '../Dtos/courses-details.models';
-import { QuizResponse } from '../Dtos/courses.interface';
-import { ChapterResourcesResponse } from '../Dtos/courses-resourses.models';
-
+  RequestJoinResponse,
+} from '../interfaces/courses.interface';
+import { RequestJoinDto, QuizDTO } from './../Dtos/coursesDtos';
 @Injectable({
   providedIn: 'root',
 })

@@ -14,7 +14,6 @@ import {
   PhoneNumberFormat,
 } from 'ngx-intl-tel-input';
 import { TranslateModule } from '@ngx-translate/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-phone-input',

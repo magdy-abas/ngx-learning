@@ -6,17 +6,15 @@ import { routes } from './../../../core/service/routes/routes';
 import { AuthService } from './../../../core/service/auth.service';
 import { CoursesService } from './../../../core/service/courses.service';
 import * as CryptoJS from 'crypto-js';
-import {
-  CourseContent,
-  RequestJoinDto,
-} from '../../../core/Dtos/courses.interface';
+import { RequestJoinDto } from '../../../core/Dtos/coursesDtos';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
 import { NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
-import { CourseDetailsResponse } from '../../../core/Dtos/courses-details.models';
+import { CourseDetailsResponse } from './../../../core/interfaces/courses-details.interface';
+
 @Component({
   selector: 'app-courses-details',
   standalone: true,

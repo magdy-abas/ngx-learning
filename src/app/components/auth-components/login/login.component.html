@@ -31,24 +31,25 @@
     <div class="col-md-6 login-wrap-bg">
 
       <!-- Login -->
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="login-wrapper">
-          <div class="loginbox">
-            <div class="w-100">
-              <div class="img-logo">
-                <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
-                <div class="back-home">
-                  <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
-                </div>
-              </div>
-              <h1>{{ 'auth.signIntoYourAccount' | translate }}</h1>
 
-              <div *ngIf="msgError" class="alert alert-danger mt-1">
-                <p class="m-0">{{ msgError }}</p>
+      <div class="login-wrapper">
+        <div class="loginbox">
+          <div class="w-100">
+            <div class="img-logo">
+              <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+              <div class="back-home">
+                <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
               </div>
+            </div>
+            <h1>{{ 'auth.signIntoYourAccount' | translate }}</h1>
 
-              <!-- regular reg email and password fields  -->
-              <div>
+            <div *ngIf="msgError" class="alert alert-danger mt-1">
+              <p class="m-0">{{ msgError }}</p>
+            </div>
+
+            <!-- regular reg email and password fields  -->
+            <form *ngIf="loading" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div *ngIf="!loginWithWats">
                 <div class="form-group">
                   <label class="form-control-label">{{ 'auth.email' | translate }}</label>
                   <input type="email" class="form-control" [placeholder]="'auth.emailPlaceholder' | translate"
@@ -66,9 +67,9 @@
                   <div class="pass-group">
                     <input [type]="password" class="form-control pass-input"
                       [placeholder]="'auth.passwordPlaceholder' | translate" formControlName="password" [ngClass]="{
-          ' border-success': isFieldValid('password'),
-          ' border-danger': isFieldInvalid('password')
-        }">
+                                                                ' border-success': isFieldValid('password'),
+                                                            ' border-danger': isFieldInvalid('password')
+                                                        }">
                     <span>
                       <i-feather name="eye" class="toggle-password feather-eye" (click)="onClick()"
                         *ngIf="show"></i-feather>
@@ -84,48 +85,107 @@
                 </div>
 
               </div>
-              <!-- wats version  reg   -->
-              <div class="forgot">
-                <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate }}</a></span>
+            </form>
+            <!-- wats version  reg   -->
+            <form *ngIf="loginWithWats" [formGroup]="loginWatsForm" (ngSubmit)="onSubmitWats()">
+              <div *ngIf="watsStep === 1">
+                <app-phone-input [formGroup]="loginWatsForm" controlName="phone"></app-phone-input>
+
+                <div class="forgot">
+                  <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
+                      }}</a></span>
+                </div>
+
+                <div class="form-check remember-me">
+                  <label class="form-check-label mb-0">
+                    {{ 'auth.rememberMe' | translate }}
+                    <input class="form-check-input input-box" type="checkbox" name="radio">
+                  </label>
+                </div>
+
+
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-start" type="submit">{{ 'auth.signIn' | translate }}</button>
+                </div>
+
+
               </div>
 
-              <div class="form-check remember-me">
-                <label class="form-check-label mb-0">
-                  {{ 'auth.rememberMe' | translate }}
-                  <input class="form-check-input input-box" type="checkbox" name="radio">
-                </label>
+
+
+
+
+
+
+            </form>
+
+
+
+            <form [formGroup]="sendCode" (ngSubmit)="loginWithWatsApp()">
+              <div class="form-group" *ngIf="watsStep === 2">
+                <label class="form-control-label">{{'auth.code' | translate}}</label>
+                <code-input style="text-align: left; direction: ltr; margin-bottom: 20px;" class="code-input"
+                  [isCodeHidden]="false" [codeLength]="4" controlName="code"
+                  (codeCompleted)="onCodeCompleted($event)"></code-input>
+
+
+
+                <ul class="m-0">
+                  @if (sendCode.get('code')?.invalid && sendCode.get('code')?.touched) {
+
+                  <li class="fw-normal my-2 text-danger"> {{'auth.codeRequired' | translate}}</li>
+
+                  }
+                </ul>
+                <div class="forgot">
+                  <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
+                      }}</a></span>
+                </div>
+
+                <div class="form-check remember-me">
+                  <label class="form-check-label mb-0">
+                    {{ 'auth.rememberMe' | translate }}
+                    <input class="form-check-input input-box" type="checkbox" name="radio">
+                  </label>
+                </div>
+
+
+
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-start" type="submit">{{ 'auth.signIn' | translate }}</button>
+                </div>
+
               </div>
 
-              <div class="d-grid">
-                <button class="btn btn-primary btn-start" type="submit">{{ 'auth.signIn' | translate }}</button>
-              </div>
-            </div>
-          </div>
+            </form>
 
-          <div class="google-bg text-center">
-            <span><a href="javascript:;">{{ 'auth.orSignInWith' | translate }}</a></span>
-            <div class="sign-google">
-              <ul>
-                <li>
-                  <a href="javascript:;">
-                    <img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo">
-                    {{ 'auth.signInWithGoogle' | translate }}
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:;">
-                    <img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo">
-                    {{ 'auth.signInWithFacebook' | translate }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <p class="mb-0">
-              {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
-            </p>
           </div>
         </div>
-      </form>
+
+        <div class="google-bg text-center">
+          <span><a href="javascript:;">{{ 'auth.orSignInWith' | translate }}</a></span>
+          <div class="sign-google">
+            <ul>
+              <li>
+                <a href="javascript:;">
+                  <img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo">
+                  {{ 'auth.signInWithGoogle' | translate }}
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;">
+                  <img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo">
+                  {{ 'auth.signInWithFacebook' | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <p class="mb-0">
+            {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
+          </p>
+        </div>
+      </div>
+
 
 
       <!-- /Login -->

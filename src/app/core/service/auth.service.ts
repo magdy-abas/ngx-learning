@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { baseUrl, headers } from '../../environment/environment.local';
-import { jwtDecode } from 'jwt-decode';
+
 import { CookieService } from 'ngx-cookie-service';
 
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import {
   sendPinCodeDto,
   UserData,
   WatsLoginDto,
-} from '../interfaces/Dtos/AuthDtos';
+} from './../Dtos/AuthDtos';
 import {
   AuthResponse,
   ResetPasswordSuccessResponse,
@@ -22,7 +22,7 @@ import {
   CheckResponse,
   OtpResponse,
   LoginResponse,
-} from '../Dtos/auth.models';
+} from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',

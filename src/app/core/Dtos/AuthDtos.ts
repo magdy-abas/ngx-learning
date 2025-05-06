@@ -54,13 +54,13 @@ export class WatsLoginDto {
   phone_code?: string;
   mobile?: string;
   otp?: string;
-  token?: string;
-  serial_number?: string;
-  os?: string;
+  token?: string = '123';
+  serial_number: string = '123';
+  os: string = 'desktop';
 }
 export class SendOtpDto {
   phone_code?: string;
   mobile?: string;
-  serial_number?: string;
-  os?: string;
+  serial_number: string = '123';
+  os: string = 'desktop';
 }

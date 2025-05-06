@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UpdateInfoResponse } from '../Dtos/profile.models';
+import { UpdateInfoResponse } from '../interfaces/profile.interface';
 import { baseUrl } from '../../environment/environment.local';
-import { UpdateProfileDto } from '../interfaces/Dtos/profileDtos';
+import { UpdateProfileDto } from '../Dtos/profileDtos';
 
 @Injectable({
   providedIn: 'root',

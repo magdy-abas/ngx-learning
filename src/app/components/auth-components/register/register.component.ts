@@ -26,14 +26,14 @@ import {
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 import { AuthService } from '../../../core/service/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RegisterDto } from '../../../core/interfaces/Dtos/AuthDtos';
+import { RegisterDto } from '../../../core/Dtos/AuthDtos';
 import { scrollToTop } from '../../../shared/utils/ui-utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   AuthResponse,
   ErrorAuthData,
   ErrorAuthResponse,
-} from '../../../core/Dtos/auth.models';
+} from '../../../core/interfaces/auth.interface';
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
 
 @Component({

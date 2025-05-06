@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { IBanner } from '../../../../core/Dtos/dynamic-home.models';
-import { Banner } from '../../../../core/Dtos/dynamic-home.models';
+import { IBanner } from '../../../../core/interfaces/dynamic-home.interface';
+import { Banner } from '../../../../core/interfaces/dynamic-home.interface';
 
 @Component({
   selector: 'app-home-banner',
