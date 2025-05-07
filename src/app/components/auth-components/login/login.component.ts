@@ -31,6 +31,7 @@ import {
 } from '../../../core/interfaces/auth.interface';
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
 import { CodeInputModule } from 'angular-code-input';
+import { OtpCodeInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
 
 @Component({
   selector: 'app-login',
@@ -44,8 +45,7 @@ import { CodeInputModule } from 'angular-code-input';
     AlertErrorComponent,
     TranslateModule,
     PhoneInputComponent,
-
-    CodeInputModule,
+    OtpCodeInputComponent,
   ],
 
   templateUrl: './login.component.html',
@@ -127,10 +127,7 @@ export class LoginComponent implements OnInit {
   );
   sendCode: FormGroup = this._FormBuilder.group(
     {
-      code: [
-        '',
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)],
-      ],
+      code: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
     },
     {}
   );
@@ -228,25 +225,41 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  onResendCode() {
+    console.log('Resend clicked');
+    this.onSubmitWats();
+  }
+
   loginWithWatsApp() {
-    this.watsLoginDto.otp = this.sendCode.get('code')?.value;
+    const code = this.sendCode.get('code')?.value;
+
+    if (this.sendCode.invalid) {
+      this.sendCode.markAllAsTouched();
+      return;
+    }
+
+    this.watsLoginDto.otp = code;
     this.watsLoginDto.mobile = localStorage.getItem('mobile') || '';
     this.watsLoginDto.phone_code = localStorage.getItem('phone_code') || '';
+
     this._AuthService.watsLogin(this.watsLoginDto).subscribe({
       next: (res) => {
-        console.log(res);
         if (res.status === 1) {
           this._AuthService.saveToken(res.data.token);
           this._AuthService.saveUserData(res.data.user);
           this._Router.navigate(['/auth']);
         } else {
-          console.log(res);
+          if (res.message === 'Invalid OTP') {
+            this.sendCode.get('code')?.setErrors({ invalidOtp: true });
+          }
         }
       },
     });
   }
+
   public onCodeCompleted(code: string): void {
-    this.sendCode.patchValue({ code });
+    this.sendCode.get('code')?.setValue(code);
+    this.sendCode.get('code')?.markAsTouched();
     console.log(this.sendCode.value);
   }
 }

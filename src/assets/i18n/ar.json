@@ -55,7 +55,11 @@
     "namePlaceholder": "أدخل اسمك الكامل",
     "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
     "passwordPlaceholder": "أدخل كلمة المرور الخاصة بك",
-    "confirmPassPlaceholder": "أكد كلمة المرور الخاصة بك"
+    "confirmPassPlaceholder": "أكد كلمة المرور الخاصة بك",
+
+    "resendIn": "إعادة الإرسال في",
+    "resendCode": "إعادة إرسال الرمز",
+    "codeInvalid": "الرمز غير صالح"
   },
   "courses": {
     "home": "الرئيسية",

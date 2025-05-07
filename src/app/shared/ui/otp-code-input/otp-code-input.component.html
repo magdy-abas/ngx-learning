@@ -1,0 +1,15 @@
+<code-input class="code-input" [isCodeHidden]="isCodeHidden" [codeLength]="codeLength"
+  (codeCompleted)="onCodeCompleted($event)">
+</code-input>
+
+
+
+<div class="text-center my-3">
+  <ng-container *ngIf="!canResend">
+    <small> s{{timeLeft}} {{'auth.resendIn' | translate}} </small>
+  </ng-container>
+
+  <button class="btn btn-link p-0" *ngIf="canResend" (click)="onResend()">
+    {{'auth.resendCode' | translate}}
+  </button>
+</div>

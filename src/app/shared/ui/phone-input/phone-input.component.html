@@ -9,12 +9,10 @@
       [searchCountryFlag]="true" [preferredCountries]="preferredCountries" (blur)="onBlur()"
       (input)="onInputChange($event)">
     </ngx-intl-tel-input>
-    <ul class="m-0">
-      @if (formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched) {
-      <li class="fw-normal my-2 text-danger">
-        {{ 'auth.invalidPhoneNumber' | translate }}
-      </li>
-      }
-    </ul>
+    <div class="text-danger text-center mt-2"
+      *ngIf="formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched">
+      {{ 'auth.invalidPhoneNumber' | translate }}
+    </div>
+
   </div>
 </div>

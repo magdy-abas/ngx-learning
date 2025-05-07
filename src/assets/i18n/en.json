@@ -55,7 +55,11 @@
     "namePlaceholder": "Enter your full name",
     "emailPlaceholder": "Enter your email address",
     "passwordPlaceholder": "Enter your password",
-    "confirmPassPlaceholder": "Confirm your password"
+    "confirmPassPlaceholder": "Confirm your password",
+
+    "resendIn": "Resend in",
+    "resendCode": "Resend Code",
+    "codeInvalid": "Code is invalid"
   },
   "courses": {
     "home": "Home",

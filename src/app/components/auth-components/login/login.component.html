@@ -124,30 +124,25 @@
             <form [formGroup]="sendCode" (ngSubmit)="loginWithWatsApp()">
               <div class="form-group" *ngIf="watsStep === 2">
                 <label class="form-control-label">{{'auth.code' | translate}}</label>
-                <code-input style="text-align: left; direction: ltr; margin-bottom: 20px;" class="code-input"
-                  [isCodeHidden]="false" [codeLength]="4" controlName="code"
-                  (codeCompleted)="onCodeCompleted($event)"></code-input>
+                <app-otp-code-input style="direction: ltr;" [isCodeHidden]="false" [codeLength]="4"
+                  (codeCompleted)="onCodeCompleted($event)" (resendClicked)="onResendCode()">
+                </app-otp-code-input>
 
 
 
-                <ul class="m-0">
-                  @if (sendCode.get('code')?.invalid && sendCode.get('code')?.touched) {
-
-                  <li class="fw-normal my-2 text-danger"> {{'auth.codeRequired' | translate}}</li>
-
-                  }
-                </ul>
-                <div class="forgot">
-                  <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
-                      }}</a></span>
+                <div class="text-danger text-center my-2"
+                  *ngIf="sendCode.get('code')?.invalid && sendCode.get('code')?.touched">
+                  <div *ngIf="sendCode.get('code')?.errors?.['required']">
+                    {{ 'auth.codeRequired' | translate }}
+                  </div>
+                  <div *ngIf="sendCode.get('code')?.errors?.['pattern']">
+                    {{ 'auth.codeRequired' | translate }}
+                  </div>
+                  <div *ngIf="sendCode.get('code')?.errors?.['invalidOtp']">
+                    {{ 'auth.codeInvalid' | translate }}
+                  </div>
                 </div>
 
-                <div class="form-check remember-me">
-                  <label class="form-check-label mb-0">
-                    {{ 'auth.rememberMe' | translate }}
-                    <input class="form-check-input input-box" type="checkbox" name="radio">
-                  </label>
-                </div>
 
 
 
