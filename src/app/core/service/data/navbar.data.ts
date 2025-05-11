@@ -36,6 +36,13 @@ export const navbarMenu: MainMenuItem[] = [
     translationKey: 'navbar.home',
   },
   {
+    tittle: 'categories',
+    route: '/categories',
+    base: 'categories',
+    separateRoute: true,
+    translationKey: 'navbar.categories',
+  },
+  {
     tittle: 'Courses',
     route: '/auth/courses',
     base: 'courses',
@@ -43,8 +50,8 @@ export const navbarMenu: MainMenuItem[] = [
     translationKey: 'navbar.courses',
     menu: [
       {
-        menuValue: 'All Courses',
-        route: '/courses/all',
+        menuValue: 'my Courses',
+        route: 'my-courses',
         base: 'courses',
         page: 'all',
         hasSubRoute: false,
@@ -87,6 +94,13 @@ export const navbarAuthMenu: MainMenuItem[] = [
     base: 'home',
     separateRoute: true,
     translationKey: 'navbar.home',
+  },
+  {
+    tittle: 'categories',
+    route: '/categories',
+    base: 'categories',
+    separateRoute: true,
+    translationKey: 'navbar.categories',
   },
   {
     tittle: 'Courses',

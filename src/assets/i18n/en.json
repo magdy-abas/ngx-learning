@@ -6,7 +6,8 @@
     "login": "Login",
     "signUp": "Sign Up",
     "logout": "Logout",
-    "allCourses": "All Courses"
+    "allCourses": "My Courses",
+    "categories": "Categories"
   },
   "auth": {
     "backToHome": "Back to Home",

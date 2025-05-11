@@ -6,7 +6,8 @@
     "login": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
     "signOut": "تسجيل الخروج",
-    "allCourses": "كل الكورسات"
+    "allCourses": "كورساتي",
+    "categories": "الأقسام"
   },
   "auth": {
     "backToHome": "الرجوع إلى الرئيسيه",

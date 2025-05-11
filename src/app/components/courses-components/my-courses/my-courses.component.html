@@ -1,0 +1,131 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="settings-widget">
+        <div class="settings-inner-blk p-0">
+          <div class="sell-course-head comman-space">
+            <h3>My Courses</h3>
+            <p>Manage your courses and its update like live, draft and insight.</p>
+          </div>
+          <div class="comman-space pb-0">
+            <div class="instruct-search-blk">
+              <div class="show-filter choose-search-blk">
+                <form action="#">
+                  <div class="row gx-2 align-items-center">
+                    <div class="col-md-6 col-item">
+                      <div class="search-group">
+                        <i-feather name="search"></i-feather>
+                        <input type="text" class="form-control" [(ngModel)]="searchDataValue" name="one"
+                          placeholder="Search our courses">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-item">
+                      <div class="form-group select-form mb-0">
+                        <mat-select class="form-select select" [(ngModel)]="selectedValue" name="selectedValue"
+                          (selectionChange)="getMyCourses(selectedValue)">
+                          <mat-option value="all courses">All Courses</mat-option>
+                          <mat-option value="accepted">Ongoing</mat-option>
+                          <mat-option value="rejected">Rejected</mat-option>
+                          <mat-option value="pending">Pending</mat-option>
+                          <mat-option value="completed">Completed</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="settings-tickets-blk course-instruct-blk">
+              <div *ngIf="myCourses.length === 0" class="text-center py-5">
+                <p>No Courses available</p>
+              </div>
+              <table *ngIf="myCourses.length > 0" class="table mb-2 d-none d-lg-table">
+                <thead>
+                  <tr>
+                    <th>COURSES</th>
+                    <th>Doctor</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="myCourse_card" *ngFor="let data of myCourses">
+                    <td (click)="navigateToCourseDetails(data.id)">
+                      <div class="sell-table-group d-flex align-items-center">
+                        <div class="sell-group-img">
+                          <!-- [routerLink]="routes.page_course_details" -->
+                          <a>
+                            <img [src]="data.image" class="custom-img" alt="course_img"
+                              onerror="this.src='../../../../assets/img/course-placeholder.png'">
+                          </a>
+                        </div>
+                        <div class="sell-tabel-info ">
+                          <p><a class="card-courses-title"> {{ data.title }}</a></p>
+                          <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
+                            <div class="rating-img d-flex align-items-center">
+                              <img src="assets/img/icon/icon-01.svg" alt="">
+                              <p>{{ data.client_complete_percentage }}% Complete</p>
+                            </div>
+                            <div class="course-view d-flex align-items-center">
+                              <img src="assets/img/icon/timer-start.svg" alt="">
+                              <p>N/A</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ data.doctor }}</td>
+                    <td>
+                      <span class="badge" [ngClass]="{
+                        'info-low': data.client_status === 'ongoing',
+                        'info-inter': data.client_status === 'rejected',
+                        'info-medium': data.client_status === 'pending',
+                        'info-completed': data.complete_status === 'completed'
+                      }">
+                        {{ data.complete_status === 'completed' ? 'Completed' : (data.client_status === 'ongoing' ?
+                        'Ongoing' : data.client_status) }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="myCourses.length > 0" class="d-lg-none">
+                <div class="card mb-3" *ngFor="let data of myCourses" (click)="navigateToCourseDetails(data.id)">
+                  <div class="row g-0">
+                    <div class="col-4">
+                      <img [src]="data.image" class="custom-img" alt="Course Image"
+                        onerror="this.src='../../../../assets/img/course-placeholder.png'">
+                    </div>
+                    <div class="col-8">
+                      <div class="card-body">
+                        <h5 class="card-courses-title mb-2">
+                          {{ data.title }}
+                        </h5>
+                        <p class="card-text text-muted mb-1">Doctor: {{ data.doctor }}</p>
+                        <p class="card-text mb-1">
+                          <small class="text-success">{{ data.client_complete_percentage }}% Complete</small>
+                        </p>
+                        <p class="card-text mb-1">
+                          <small class="text-muted">Status:
+                            <span class="badge text-white" [ngClass]="{
+                              'info-low': data.client_status === 'ongoing',
+                              'info-inter': data.client_status === 'rejected',
+                              'info-medium': data.client_status === 'pending',
+                              'info-completed': data.complete_status === 'completed'
+                            }">
+                              {{ data.complete_status === 'completed' ? 'Completed' : (data.client_status === 'ongoing'
+                              ? 'Ongoing' : data.client_status) }}
+                            </span>
+                          </small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

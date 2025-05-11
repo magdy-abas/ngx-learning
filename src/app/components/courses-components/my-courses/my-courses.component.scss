@@ -1,0 +1,62 @@
+mat-select.form-select {
+  width: 250px;
+}
+
+.mat-mdc-select-arrow svg {
+  display: none;
+}
+
+.cdk-overlay-pane {
+  transform: translateX(-10px) !important;
+}
+
+.mat-mdc-select-panel {
+  width: 250px !important;
+}
+
+.mat-mdc-select-value {
+  font-size: 17px;
+}
+
+.table {
+  font-size: 14px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card-text {
+  font-size: 14px;
+}
+
+.sell-group-img img,
+.card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.custom-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.card-courses-title {
+  transition: color 0.5s ease;
+}
+.myCourse_card:hover .card-courses-title {
+  color: #ff725e !important;
+}
+.myCourse_card {
+  cursor: pointer;
+}

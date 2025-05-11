@@ -13,6 +13,8 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CoursesQuizComponent } from './components/courses-components/courses-quiz/courses-quiz.component';
 import { CoursesMettingComponent } from './components/courses-components/courses-metting/courses-metting.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { MyCoursesComponent } from './components/courses-components/my-courses/my-courses.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +29,11 @@ export const routes: Routes = [
         path: 'course-details/:id',
         component: CoursesDetailsComponent,
         title: 'course-details',
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent,
+        title: 'categories',
       },
     ],
   },
@@ -67,6 +74,16 @@ export const routes: Routes = [
         path: 'course-metting/:courseId/:mettingId/:shapterId',
         component: CoursesMettingComponent,
         title: 'metting',
+      },
+      {
+        path: 'my-courses',
+        component: MyCoursesComponent,
+        title: 'myCourses',
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent,
+        title: 'categories',
       },
     ],
   },

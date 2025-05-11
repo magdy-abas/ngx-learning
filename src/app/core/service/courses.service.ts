@@ -12,6 +12,7 @@ import {
   RequestJoinResponse,
 } from '../interfaces/courses.interface';
 import { RequestJoinDto, QuizDTO } from './../Dtos/coursesDtos';
+import { MyCoursesResponse } from '../interfaces/my-courses.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -28,6 +29,18 @@ export class CoursesService {
     );
   }
 
+  getMyCourses(
+    search?: string,
+    status: string = 'all',
+    paginateNumber: number = 10,
+    complete_status?: string
+  ): Observable<MyCoursesResponse> {
+    let url = `${baseUrl}courses/lite/my-courses/?search=${search}&status=${status}&paginate_number=${paginateNumber}`;
+    if (complete_status) {
+      url += `&complete_status=${complete_status}`;
+    }
+    return this._HttpClient.get<MyCoursesResponse>(url);
+  }
   getCoursesDetails(courseId: number): Observable<CourseDetailsResponse> {
     return this._HttpClient.get<CourseDetailsResponse>(
       `${baseUrl}chapters/v2/unsubscribed-course-content?course_id=${courseId}`

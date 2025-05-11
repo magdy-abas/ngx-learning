@@ -42,6 +42,7 @@ export class NavbarComponent {
   public routes = {
     home: '/home',
     login: '/login',
+
     page_course_message: '/course/message',
     page_course_details: '/course/details',
     page_notifications: '/notifications',

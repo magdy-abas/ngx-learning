@@ -15114,11 +15114,11 @@ input[type="password"]::-ms-clear {
 	25. Settings - Students Invoices
 ------------------------------------*/
 
-.settings-inner-blk table thead tr {
+.settings-inner-blk table thead tr th{
   font-size: 15px;
   font-weight: 500;
   background-color: #f0f0f0;
-  border-radius: 5px;
+
 }
 
 .settings-inner-blk .settings-invoice-blk table thead tr {
