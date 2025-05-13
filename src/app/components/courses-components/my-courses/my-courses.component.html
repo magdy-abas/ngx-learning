@@ -4,8 +4,8 @@
       <div class="settings-widget">
         <div class="settings-inner-blk p-0">
           <div class="sell-course-head comman-space">
-            <h3>My Courses</h3>
-            <p>Manage your courses and its update like live, draft and insight.</p>
+            <h3>{{ 'myCourses.title' | translate }}</h3>
+            <p>{{ 'myCourses.description' | translate }}</p>
           </div>
           <div class="comman-space pb-0">
             <div class="instruct-search-blk">
@@ -16,18 +16,18 @@
                       <div class="search-group">
                         <i-feather name="search"></i-feather>
                         <input type="text" class="form-control" [(ngModel)]="searchDataValue" name="one"
-                          placeholder="Search our courses">
+                          [placeholder]="'myCourses.searchPlaceholder' | translate">
                       </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-item">
                       <div class="form-group select-form mb-0">
                         <mat-select class="form-select select" [(ngModel)]="selectedValue" name="selectedValue"
                           (selectionChange)="getMyCourses(selectedValue)">
-                          <mat-option value="all courses">All Courses</mat-option>
-                          <mat-option value="accepted">Ongoing</mat-option>
-                          <mat-option value="rejected">Rejected</mat-option>
-                          <mat-option value="pending">Pending</mat-option>
-                          <mat-option value="completed">Completed</mat-option>
+                          <mat-option value="all courses">{{ 'myCourses.allCourses' | translate }}</mat-option>
+                          <mat-option value="accepted">{{ 'myCourses.ongoing' | translate }}</mat-option>
+                          <mat-option value="rejected">{{ 'myCourses.rejected' | translate }}</mat-option>
+                          <mat-option value="pending">{{ 'myCourses.pending' | translate }}</mat-option>
+                          <mat-option value="completed">{{ 'myCourses.completed' | translate }}</mat-option>
                         </mat-select>
                       </div>
                     </div>
@@ -37,14 +37,14 @@
             </div>
             <div class="settings-tickets-blk course-instruct-blk">
               <div *ngIf="myCourses.length === 0" class="text-center py-5">
-                <p>No Courses available</p>
+                <p>{{ 'myCourses.noCourses' | translate }}</p>
               </div>
               <table *ngIf="myCourses.length > 0" class="table mb-2 d-none d-lg-table">
                 <thead>
                   <tr>
-                    <th>COURSES</th>
-                    <th>Doctor</th>
-                    <th>STATUS</th>
+                    <th>{{ 'myCourses.coursesHeader' | translate }}</th>
+                    <th>{{ 'myCourses.doctorHeader' | translate }}</th>
+                    <th>{{ 'myCourses.statusHeader' | translate }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,22 +52,22 @@
                     <td (click)="navigateToCourseDetails(data.id)">
                       <div class="sell-table-group d-flex align-items-center">
                         <div class="sell-group-img">
-                          <!-- [routerLink]="routes.page_course_details" -->
                           <a>
                             <img [src]="data.image" class="custom-img" alt="course_img"
                               onerror="this.src='../../../../assets/img/course-placeholder.png'">
                           </a>
                         </div>
-                        <div class="sell-tabel-info ">
-                          <p><a class="card-courses-title"> {{ data.title }}</a></p>
+                        <div class="sell-tabel-info">
+                          <p><a class="card-courses-title">{{ data.title }}</a></p>
                           <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
                             <div class="rating-img d-flex align-items-center">
                               <img src="assets/img/icon/icon-01.svg" alt="">
-                              <p>{{ data.client_complete_percentage }}% Complete</p>
+                              <p>{{ data.client_complete_percentage }} {{ 'myCourses.completePercentage' | translate }}
+                              </p>
                             </div>
                             <div class="course-view d-flex align-items-center">
                               <img src="assets/img/icon/timer-start.svg" alt="">
-                              <p>N/A</p>
+                              <p>{{ 'myCourses.timePlaceholder' | translate }}</p>
                             </div>
                           </div>
                         </div>
@@ -81,8 +81,10 @@
                         'info-medium': data.client_status === 'pending',
                         'info-completed': data.complete_status === 'completed'
                       }">
-                        {{ data.complete_status === 'completed' ? 'Completed' : (data.client_status === 'ongoing' ?
-                        'Ongoing' : data.client_status) }}
+                        {{ data.complete_status === 'completed' ? ('myCourses.completed' | translate) :
+                        (data.client_status === 'ongoing' ? ('myCourses.ongoing' | translate) :
+                        (data.client_status === 'rejected' ? ('myCourses.rejected' | translate) :
+                        ('myCourses.pending' | translate))) }}
                       </span>
                     </td>
                   </tr>
@@ -90,7 +92,7 @@
               </table>
               <div *ngIf="myCourses.length > 0" class="d-lg-none">
                 <div class="card mb-3" *ngFor="let data of myCourses" (click)="navigateToCourseDetails(data.id)">
-                  <div class="row g-0">
+                  <div class="row g-0 d-flex justify-content-center align-items-center">
                     <div class="col-4">
                       <img [src]="data.image" class="custom-img" alt="Course Image"
                         onerror="this.src='../../../../assets/img/course-placeholder.png'">
@@ -100,20 +102,24 @@
                         <h5 class="card-courses-title mb-2">
                           {{ data.title }}
                         </h5>
-                        <p class="card-text text-muted mb-1">Doctor: {{ data.doctor }}</p>
+                        <p class="card-text text-muted mb-1">{{ 'myCourses.doctorLabel' | translate }}: {{ data.doctor
+                          }}</p>
                         <p class="card-text mb-1">
-                          <small class="text-success">{{ data.client_complete_percentage }}% Complete</small>
+                          <small class="text-success">{{ data.client_complete_percentage }} {{
+                            'myCourses.completePercentage' | translate }}</small>
                         </p>
                         <p class="card-text mb-1">
-                          <small class="text-muted">Status:
+                          <small class="text-muted">{{ 'myCourses.statusLabel' | translate }}:
                             <span class="badge text-white" [ngClass]="{
                               'info-low': data.client_status === 'ongoing',
                               'info-inter': data.client_status === 'rejected',
                               'info-medium': data.client_status === 'pending',
                               'info-completed': data.complete_status === 'completed'
                             }">
-                              {{ data.complete_status === 'completed' ? 'Completed' : (data.client_status === 'ongoing'
-                              ? 'Ongoing' : data.client_status) }}
+                              {{ data.complete_status === 'completed' ? ('myCourses.completed' | translate) :
+                              (data.client_status === 'ongoing' ? ('myCourses.ongoing' | translate) :
+                              (data.client_status === 'rejected' ? ('myCourses.rejected' | translate) :
+                              ('myCourses.pending' | translate))) }}
                             </span>
                           </small>
                         </p>

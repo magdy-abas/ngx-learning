@@ -1,23 +1,34 @@
 import { Component, Input } from '@angular/core';
-import { category } from '../../../../core/service/data/data.service';
-import { NgClass, NgFor } from '@angular/common';
-import { HomeData } from '../../data';
-
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/service/auth.service';
 import { Category } from '../../../../core/interfaces/dynamic-home.interface';
+import { NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-home-categories',
   standalone: true,
-  imports: [NgFor, NgClass],
+  imports: [NgClass, NgFor],
   templateUrl: './home-categories.component.html',
   styleUrl: './home-categories.component.scss',
 })
 export class HomeCategoriesComponent {
-  public Category: category[] = [];
   @Input() categoriesData: Category[] = [];
   @Input() categoriesTitle: string = '';
   @Input() categoriesShortTitle: string = '';
-  constructor(public data: HomeData) {
-    this.Category = this.data.Category;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  onCategoryClick(category: Category): void {
+    const path = this.authService.isAuthenticated() ? 'auth' : '';
+
+    if (category.has_sub_categories === 1) {
+      this.router.navigate([`/${path}/categories`], {
+        queryParams: { categoryId: category.id },
+      });
+    } else {
+      this.router.navigate([`/${path}/courses`], {
+        queryParams: { categoryId: category.id },
+      });
+    }
   }
 }

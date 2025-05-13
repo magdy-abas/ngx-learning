@@ -1,7 +1,7 @@
 {
   "navbar": {
     "home": "الرئيسيه",
-    "courses": "الكورسات",
+    "courses": "الدورات",
     "language": "اللغة",
     "login": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
@@ -75,7 +75,20 @@
     "clear": "مسح",
     "searchPlaceholder": "ابحث في دوراتنا",
     "pending": "قيد الانتظار",
-    "buyNow": "اشترِي الآن"
+    "buyNow": "اشترِي الآن",
+    "viewAll": "عرض جميع الدورات",
+    "courses": "الدورات",
+    "subscribeNow": "اشترك الآن",
+    "lessonsCount": "دروس",
+    "noLessons": "لا توجد دروس متاحة",
+    "noData": "لا توجد بيانات متاحة",
+    "courseProgram": "برنامج الدورة",
+    "notes": "ملاحظات",
+    "more": "المزيد",
+    "filesCount": "ملفات",
+    "noResources": "لا توجد موارد متاحة",
+    "introduction": "مقدمة",
+    "studentsEnrolled": "طالب مسجل"
   },
 
   "sweetAlerts": {
@@ -96,5 +109,30 @@
     "homeP": "الرائد في التعلم عبر الإنترنت",
     "homeTitle": "دورات إلكترونية جذابة وسهلة الوصول للجميع",
     "trustedUsers": "موثوق به من قبل أكثر من 15 ألف مستخدم حول العالم منذ 2022"
+  },
+  "categories": {
+    "button_text": "العودة إلى الأقسام",
+    "heading": "الأقسام",
+    "description": "تصفح دوراتنا حسب الأقسام"
+  },
+
+  "myCourses": {
+    "title": "دوراتي",
+    "description": "إدارة دوراتك وتحديثاتها مثل المباشرة، المسودة، والرؤى.",
+    "searchPlaceholder": "ابحث في دوراتنا",
+    "allCourses": "جميع الدورات",
+    "ongoing": "جارية",
+    "rejected": "مرفوضة",
+    "pending": "معلقة",
+    "completed": "مكتملة",
+    "noCourses": "لا توجد دورات متاحة",
+    "coursesHeader": "الدورات",
+    "doctorHeader": "الدكتور",
+    "statusHeader": "الحالة",
+    "completePercentage": "% مكتمل",
+    "timePlaceholder": "غير متاح",
+    "doctorLabel": "الدكتور",
+    "statusLabel": "الحالة",
+    "loading": "جاري التحميل..."
   }
 }

@@ -6,10 +6,13 @@
 
 <div class="text-center my-3">
   <ng-container *ngIf="!canResend">
-    <small> s{{timeLeft}} {{'auth.resendIn' | translate}} </small>
+    <small style="color: #221d1b;"> s{{timeLeft}} {{'auth.resendIn' | translate}} </small>
   </ng-container>
 
-  <button class="btn btn-link p-0" *ngIf="canResend" (click)="onResend()">
-    {{'auth.resendCode' | translate}}
-  </button>
+  <div class="forgot">
+    <button class="btn btn-link forgot-link p-0" style="color: #ff875a;" *ngIf="canResend" (click)="onResend()">
+      {{'auth.resendCode' | translate}}
+    </button>
+  </div>
+
 </div>

@@ -75,7 +75,20 @@
     "clear": "Clear",
     "searchPlaceholder": "Search our courses",
     "pending": "pending",
-    "buyNow": "Buy Now"
+    "buyNow": "Buy Now",
+    "viewAll": "View all courses",
+    "courses": "courses",
+    "subscribeNow": "Subscribe Now",
+    "lessonsCount": "Lessons",
+    "noLessons": "No available lessons",
+    "noData": "No Data available",
+    "courseProgram": "Course Program",
+    "notes": "Notes",
+    "more": "More",
+    "filesCount": "Files",
+    "noResources": "No resources available",
+    "introduction": "Introduction",
+    "studentsEnrolled": "students enrolled"
   },
 
   "sweetAlerts": {
@@ -96,5 +109,30 @@
     "homeP": "The Leader in Online Learning",
     "homeTitle": "Engaging & Accessible Online Courses For All",
     "trustedUsers": "Trusted by over 15K Users worldwide since 2022"
+  },
+
+  "categories": {
+    "button_text": "Back to Categories",
+    "heading": "Categories",
+    "description": "Browse Our Courses By Categories"
+  },
+  "myCourses": {
+    "title": "My Courses",
+    "description": "Manage your courses and its update like live, draft and insight.",
+    "searchPlaceholder": "Search our courses",
+    "allCourses": "All Courses",
+    "ongoing": "Ongoing",
+    "rejected": "Rejected",
+    "pending": "Pending",
+    "completed": "Completed",
+    "noCourses": "No Courses available",
+    "coursesHeader": "COURSES",
+    "doctorHeader": "Doctor",
+    "statusHeader": "STATUS",
+    "completePercentage": "% Complete",
+    "timePlaceholder": "N/A",
+    "doctorLabel": "Doctor",
+    "statusLabel": "Status",
+    "loading": "Loading..."
   }
 }

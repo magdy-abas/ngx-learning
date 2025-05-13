@@ -13,6 +13,7 @@ import { routes } from './../../../core/service/routes/routes';
 import { MatSelectModule } from '@angular/material/select';
 import { CoursesService } from '../../../core/service/courses.service';
 import { MyCourse } from '../../../core/interfaces/my-courses.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-my-courses',
@@ -21,7 +22,7 @@ import { MyCourse } from '../../../core/interfaces/my-courses.interface';
   imports: [
     NgClass,
     FeatherIconModule,
-
+    TranslateModule,
     NgFor,
     MatSelectModule,
     FormsModule,

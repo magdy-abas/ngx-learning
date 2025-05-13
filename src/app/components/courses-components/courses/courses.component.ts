@@ -41,7 +41,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   pagination: number = 9;
   pageNum: number = 1;
   coursesData: Course[] = [];
-
+  categoryId: string | null = null;
   isLoading: boolean = false;
   allDataLoaded: boolean = false;
   totalCourses: number = 0;
@@ -55,12 +55,16 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.categoryId = params.get('categoryId');
+
+      this.getCourses();
+    });
+
     this.route.queryParams.subscribe((params) => {
       if (params['search']) {
         this.searchValue = params['search'];
         this.searchCourses();
-      } else {
-        this.getCourses();
       }
     });
   }
@@ -107,7 +111,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const coursesSub = this._CoursesService
-      .getCourses(this.searchValue, this.pagination, this.pageNum)
+      .getCourses(
+        this.searchValue,
+        this.pagination,
+        this.pageNum,
+        this.categoryId
+      )
       .subscribe({
         next: (res) => {
           console.log(res);

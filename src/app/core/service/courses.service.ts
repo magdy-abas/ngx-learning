@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -22,11 +22,16 @@ export class CoursesService {
   getCourses(
     searchTerms: string,
     pagination: number,
-    pageNum: number
+    pageNum: number,
+    category_id: string | null
   ): Observable<CoursesResponse> {
-    return this._HttpClient.get<CoursesResponse>(
-      `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`
-    );
+    let url = `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`;
+
+    if (category_id) {
+      url += `&category_id=${category_id}`;
+    }
+
+    return this._HttpClient.get<CoursesResponse>(url);
   }
 
   getMyCourses(
@@ -35,12 +40,24 @@ export class CoursesService {
     paginateNumber: number = 10,
     complete_status?: string
   ): Observable<MyCoursesResponse> {
-    let url = `${baseUrl}courses/lite/my-courses/?search=${search}&status=${status}&paginate_number=${paginateNumber}`;
-    if (complete_status) {
-      url += `&complete_status=${complete_status}`;
+    let params = new HttpParams()
+      .set('status', status)
+      .set('paginate_number', paginateNumber.toString());
+
+    if (search) {
+      params = params.set('search', search);
     }
-    return this._HttpClient.get<MyCoursesResponse>(url);
+
+    if (complete_status) {
+      params = params.set('complete_status', complete_status);
+    }
+
+    return this._HttpClient.get<MyCoursesResponse>(
+      `${baseUrl}courses/lite/my-courses/`,
+      { params }
+    );
   }
+
   getCoursesDetails(courseId: number): Observable<CourseDetailsResponse> {
     return this._HttpClient.get<CourseDetailsResponse>(
       `${baseUrl}chapters/v2/unsubscribed-course-content?course_id=${courseId}`

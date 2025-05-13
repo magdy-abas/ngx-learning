@@ -3,6 +3,10 @@ body {
   font-family: "Cairo", serif;
 }
 
+button,
+a {
+  font-family: "Cairo", serif;
+}
 //navbar
 .header-navbar-rht > li {
   padding-left: 0;
@@ -126,4 +130,25 @@ body {
 
 .option-label:after {
   right: 22px;
+}
+
+//my courses
+
+.sell-group-img {
+  margin-left: 20px;
+}
+
+.choose-search-blk .form-group {
+  margin-right: auto;
+  margin-left: 0px;
+}
+.show-filter .search-group i-feather {
+  right: 9px;
+}
+.choose-search-blk.show-filter .form-control {
+  padding-right: 30px;
+}
+
+.cdk-overlay-pane {
+  transform: translateX(40px) !important;
 }

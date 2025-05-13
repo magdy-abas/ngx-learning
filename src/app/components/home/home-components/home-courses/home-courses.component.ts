@@ -5,11 +5,12 @@ import { HomeData } from '../../data';
 import { CoursesCardComponent } from '../../../../shared/ui/courses-card/courses-card.component';
 import { ICourse } from '../../../../core/interfaces/dynamic-home.interface';
 import { Course } from '../../../../core/interfaces/dynamic-home.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-courses',
   standalone: true,
-  imports: [CoursesCardComponent],
+  imports: [CoursesCardComponent, TranslateModule],
   templateUrl: './home-courses.component.html',
   styleUrl: './home-courses.component.scss',
 })

@@ -4,11 +4,12 @@ import { feature_instructors } from '../../../../core/service/data/data.service'
 import { NgFor } from '@angular/common';
 import { IDoctor } from '../../../../core/interfaces/dynamic-home.interface';
 import { Doctor } from '../../../../core/interfaces/dynamic-home.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-instructors',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, TranslateModule],
   templateUrl: './home-instructors.component.html',
   styleUrl: './home-instructors.component.scss',
 })

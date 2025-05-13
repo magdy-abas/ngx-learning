@@ -14,11 +14,18 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
 import { CourseDetailsResponse } from './../../../core/interfaces/courses-details.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-courses-details',
   standalone: true,
-  imports: [FeatherIconModule, NgIf, NgFor, PdfViewerComponent],
+  imports: [
+    FeatherIconModule,
+    NgIf,
+    NgFor,
+    PdfViewerComponent,
+    TranslateModule,
+  ],
 
   templateUrl: './courses-details.component.html',
   styleUrls: ['./courses-details.component.scss'],

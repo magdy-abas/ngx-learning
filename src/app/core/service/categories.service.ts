@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { baseUrl } from './../../environment/environment.local';
 import { Observable } from 'rxjs';
+import { CategoriesResponse } from '../interfaces/categories.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +10,22 @@ import { Observable } from 'rxjs';
 export class CategoriesService {
   constructor(private http: HttpClient) {}
 
-  getCategories(withSubCategories: number, id: number): Observable<any> {
-    return this.http.get(
-      `${baseUrl}categories?with_sub_categories=${withSubCategories}&id=${id}`
-    );
+  getCategories(
+    withSubCategories: number = 0,
+    id?: number,
+    page: number = 1
+  ): Observable<CategoriesResponse> {
+    let params = new HttpParams().set('page', page.toString());
+
+    if (withSubCategories !== undefined) {
+      params = params.set('with_sub_categories', withSubCategories.toString());
+    }
+    if (id !== undefined) {
+      params = params.set('id', id.toString());
+    }
+
+    return this.http.get<CategoriesResponse>(`${baseUrl}categories`, {
+      params,
+    });
   }
 }

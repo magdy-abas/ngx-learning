@@ -9,7 +9,7 @@
     <!-- Featured Instructor -->
     <div class="featured-instructor-two">
       <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" data-aos="fade-up" *ngFor="let data of instructorsData">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-aos="fade-up" *ngFor="let data of instructorsData">
           <div class="instructors-widget">
             <div class="instructors-img">
               <a href="javascript:;">
@@ -31,7 +31,7 @@
               <div class="course-info"></div>
               <div class="student-count d-flex justify-content-center">
                 <i class="fa-solid fa-laptop-file"></i>
-                <span>{{data.courses_count}} Courses</span>
+                <span>{{data.courses_count}} {{'courses.courses' | translate}}</span>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
     <!-- View all Category -->
     <div class="col-lg-12">
       <div class="more-details text-center" data-aos="fade-up">
-        <a href="javascript:;" class="discover-btn discover-btn">View all Instructors <i
+        <a href="javascript:;" class="discover-btn discover-btn">{{'courses.viewAll' | translate}} <i
             class="fas fa-arrow-right ms-2"></i></a>
       </div>
     </div>

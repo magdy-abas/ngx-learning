@@ -37,7 +37,7 @@ export const navbarMenu: MainMenuItem[] = [
   },
   {
     tittle: 'categories',
-    route: '/categories',
+    route: 'categories',
     base: 'categories',
     separateRoute: true,
     translationKey: 'navbar.categories',

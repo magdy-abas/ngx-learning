@@ -1,303 +1,115 @@
-import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, HostListener } from '@angular/core';
+import { CategoriesService } from '../../core/service/categories.service';
+import {
+  Category,
+  CategoriesResponse,
+} from '../../core/interfaces/categories.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { AuthService } from '../../core/service/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgClass, NgIf, TranslateModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
-export class CategoriesComponent {
-  public jobCategoryGraphics = [
-    {
-      img1: 'assets/img/category/category-01.jpg',
-      content1: 'Logo Design',
-      count1: '25',
-      img2: 'assets/img/category/category-02.jpg',
-      content2: 'Business Cards & Stationery',
-      count2: '25',
-      img3: 'assets/img/category/category-03.jpg',
-      content3: 'Brochure Design',
-      count3: '25',
-      img4: 'assets/img/category/category-04.jpg',
-      content4: 'Social Media Design',
-      count4: '25',
-      img5: 'assets/img/category/category-05.jpg',
-      content5: 'Graphics for Streamers',
-      count5: '25',
-      img6: 'assets/img/category/category-06.jpg',
-      content6: 'Photoshop Editing',
-      count6: '25',
-    },
-    {
-      img1: 'assets/img/category/category-07.jpg',
-      content1: 'Brand Style Guides',
-      count1: '25',
-      img2: 'assets/img/category/category-08.jpg',
-      content2: 'Illustration',
-      count2: '25',
-      img3: 'assets/img/category/category-09.jpg',
-      content3: 'Flyer Design',
-      count3: '25',
-      img4: 'assets/img/category/category-10.jpg',
-      content4: 'Icon Design',
-      count4: '25',
-      img5: 'assets/img/category/category-11.jpg',
-      content5: 'Presentation Design',
-      count5: '25',
-      img6: 'assets/img/category/category-12.jpg',
-      content6: 'Packaging & Label Design',
-      count6: '25',
-    },
-    {
-      img1: 'assets/img/category/category-13.jpg',
-      content1: 'Game Art',
-      count1: '25',
-      img2: 'assets/img/category/category-14.jpg',
-      content2: 'Pattern Design',
-      count2: '25',
-      img3: 'assets/img/category/category-15.jpg',
-      content3: 'Book Design',
-      count3: '25',
-      img4: 'assets/img/category/category-16.jpg',
-      content4: 'Invitation Design',
-      count4: '25',
-      img5: 'assets/img/category/category-17.jpg',
-      content5: 'UX Design',
-      count5: '25',
-      img6: 'assets/img/category/category-18.jpg',
-      content6: 'Infographic Design',
-      count6: '25',
-    },
-  ];
-  public jobCategoryprogramming = [
-    {
-      img1: 'assets/img/category/category-03.jpg',
-      content1: 'Brochure Design',
-      count1: '25',
-      img2: 'assets/img/category/category-04.jpg',
-      content2: 'Social Media Design',
-      count2: '25',
-      img3: 'assets/img/category/category-05.jpg',
-      content3: 'Graphics for Streamers',
-      count3: '25',
-      img4: 'assets/img/category/category-06.jpg',
-      content4: 'Photoshop Editing',
-      count4: '25',
-    },
-    {
-      img1: 'assets/img/category/category-07.jpg',
-      content1: 'Brand Style Guides',
-      count1: '25',
-      img2: 'assets/img/category/category-08.jpg',
-      content2: 'Illustration',
-      count2: '25',
-      img3: 'assets/img/category/category-09.jpg',
-      content3: 'Flyer Design',
-      count3: '25',
-      img4: 'assets/img/category/category-10.jpg',
-      content4: 'Icon Design',
-      count4: '25',
-      img5: 'assets/img/category/category-11.jpg',
-      content5: 'Presentation Design',
-      count5: '25',
-      img6: 'assets/img/category/category-12.jpg',
-      content6: 'Packaging & Label Design',
-      count6: '25',
-    },
-    {
-      img1: 'assets/img/category/category-13.jpg',
-      content1: 'Game Art',
-      count1: '25',
-      img2: 'assets/img/category/category-14.jpg',
-      content2: 'Pattern Design',
-      count2: '25',
-      img3: 'assets/img/category/category-15.jpg',
-      content3: 'Book Design',
-      count3: '25',
-      img4: 'assets/img/category/category-16.jpg',
-      content4: 'Invitation Design',
-      count4: '25',
-      img5: 'assets/img/category/category-17.jpg',
-      content5: 'UX Design',
-      count5: '25',
-      img6: 'assets/img/category/category-18.jpg',
-      content6: 'Infographic Design',
-      count6: '25',
-    },
-  ];
-  public jobCategorymarketing = [
-    {
-      img1: 'assets/img/category/category-04.jpg',
-      content1: 'Social Media Design',
-      count1: '25',
-      img2: 'assets/img/category/category-05.jpg',
-      content2: 'Graphics for Streamers',
-      count2: '25',
-      img3: 'assets/img/category/category-06.jpg',
-      content3: 'Photoshop Editing',
-      count3: '25',
-    },
-    {
-      img1: 'assets/img/category/category-07.jpg',
-      content1: 'Brand Style Guides',
-      count1: '25',
-      img2: 'assets/img/category/category-08.jpg',
-      content2: 'Illustration',
-      count2: '25',
-      img3: 'assets/img/category/category-09.jpg',
-      content3: 'Flyer Design',
-      count3: '25',
-      img4: 'assets/img/category/category-10.jpg',
-      content4: 'Icon Design',
-      count4: '25',
-      img5: 'assets/img/category/category-11.jpg',
-      content5: 'Presentation Design',
-      count5: '25',
-      img6: 'assets/img/category/category-12.jpg',
-      content6: 'Packaging & Label Design',
-      count6: '25',
-    },
-    {
-      img1: 'assets/img/category/category-13.jpg',
-      content1: 'Game Art',
-      count1: '25',
-      img2: 'assets/img/category/category-14.jpg',
-      content2: 'Pattern Design',
-      count2: '25',
-      img3: 'assets/img/category/category-15.jpg',
-      content3: 'Book Design',
-      count3: '25',
-      img4: 'assets/img/category/category-16.jpg',
-      content4: 'Invitation Design',
-      count4: '25',
-      img5: 'assets/img/category/category-17.jpg',
-      content5: 'UX Design',
-      count5: '25',
-      img6: 'assets/img/category/category-18.jpg',
-      content6: 'Infographic Design',
-      count6: '25',
-    },
-  ];
-  public jobCategoryanimation = [
-    {
-      img1: 'assets/img/category/category-04.jpg',
-      content1: 'Social Media Design',
-      count1: '25',
-      img2: 'assets/img/category/category-05.jpg',
-      content2: 'Graphics for Streamers',
-      count2: '25',
-      img3: 'assets/img/category/category-06.jpg',
-      content3: 'Photoshop Editing',
-      count3: '25',
-    },
-    {
-      img1: 'assets/img/category/category-07.jpg',
-      content1: 'Brand Style Guides',
-      count1: '25',
-      img2: 'assets/img/category/category-08.jpg',
-      content2: 'Illustration',
-      count2: '25',
-      img3: 'assets/img/category/category-09.jpg',
-      content3: 'Flyer Design',
-      count3: '25',
-      img4: 'assets/img/category/category-10.jpg',
-      content4: 'Icon Design',
-      count4: '25',
-      img5: 'assets/img/category/category-11.jpg',
-      content5: 'Presentation Design',
-      count5: '25',
-      img6: 'assets/img/category/category-12.jpg',
-      content6: 'Packaging & Label Design',
-      count6: '25',
-    },
-    {
-      img1: 'assets/img/category/category-13.jpg',
-      content1: 'Game Art',
-      count1: '25',
-      img2: 'assets/img/category/category-14.jpg',
-      content2: 'Pattern Design',
-      count2: '25',
-      img3: 'assets/img/category/category-15.jpg',
-      content3: 'Book Design',
-      count3: '25',
-      img4: 'assets/img/category/category-16.jpg',
-      content4: 'Invitation Design',
-      count4: '25',
-      img5: 'assets/img/category/category-17.jpg',
-      content5: 'UX Design',
-      count5: '25',
-      img6: 'assets/img/category/category-18.jpg',
-      content6: 'Infographic Design',
-      count6: '25',
-    },
-  ];
-  public courseStudent = [
-    {
-      img: 'assets/img/course/course-10.jpg',
-      content: 'Information About UI/UX Design Degree',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      progress: 'progress stip',
-      completion: '35% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-11.jpg',
-      content: 'Wordpress for Beginners - Master Wordpress Quickly',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-12.jpg',
-      content: 'Sketch from A to Z (2022): Become an app designer',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-13.jpg',
-      content: 'Learn Angular Fundamentals From ...',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-14.jpg',
-      content: 'Build Responsive Real World Websites with...',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-15.jpg',
-      content: 'C# Developers Double Your Coding Speed with ...',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-16.jpg',
-      content: 'Learn JavaScript and Express to become a ...',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-    {
-      img: 'assets/img/course/course-17.jpg',
-      content: 'Responsive Web Design Essentials HTML5 CSS3 ...',
-      rating1: '4.0',
-      rating2: 'Edit rating',
-      completion: '0% Completed',
-      lesson: 'Start Lesson',
-    },
-  ];
+export class CategoriesComponent implements OnInit {
+  categories: Category[] = [];
+  subCategories: Category[] = [];
+  currentPage: number = 1;
+  lastPage: number = 1;
+  isLoading: boolean = false;
+  isSubCategoryView: boolean = false;
+  categoryId: number | null = null;
+
+  private _CategoriesService = inject(CategoriesService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.categoryId = params['categoryId']
+        ? parseInt(params['categoryId'], 10)
+        : null;
+      if (this.categoryId) {
+        this.getCategories(1, this.categoryId);
+      } else {
+        this.getCategories(0);
+      }
+    });
+  }
+
+  getCategories(
+    withSubCategories: number = 0,
+    id?: number,
+    page: number = this.currentPage
+  ): void {
+    if (this.isLoading || this.currentPage > this.lastPage) return;
+
+    this.isLoading = true;
+
+    this._CategoriesService
+      .getCategories(withSubCategories, id, page)
+      .subscribe((res: CategoriesResponse) => {
+        if (withSubCategories === 1) {
+          this.subCategories = res.data[0]?.sub_categories || [];
+          this.isSubCategoryView = true;
+        } else {
+          this.categories.push(...res.data);
+        }
+
+        this.lastPage = res.meta.last_page;
+        this.currentPage++;
+        this.isLoading = false;
+      });
+  }
+
+  onCategoryClick(category: Category): void {
+    this.currentPage = 1;
+
+    if (category.has_sub_categories === 1) {
+      this.isSubCategoryView = true;
+      this.getCategories(1, category.id);
+    } else {
+      if (this.authService.isAuthenticated()) {
+        this.router.navigate([`/auth/courses`, { categoryId: category.id }]);
+      } else {
+        this.router.navigate([`/courses`, { categoryId: category.id }]);
+      }
+    }
+  }
+
+  onSubCategoryClick(subCategory: Category): void {
+    if (subCategory.has_sub_categories === 1) {
+      this.subCategories = subCategory.sub_categories || [];
+      this.isSubCategoryView = true;
+    } else {
+      if (this.authService.isAuthenticated()) {
+        this.router.navigate([`/auth/courses`, { categoryId: subCategory.id }]);
+      } else {
+        this.router.navigate([`/courses`, { categoryId: subCategory.id }]);
+      }
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if (
+      !this.isSubCategoryView &&
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
+    ) {
+      this.getCategories();
+    }
+  }
+
+  backToCategories(): void {
+    this.isSubCategoryView = false;
+    this.subCategories = [];
+    this.currentPage = 1;
+    this.getCategories(0);
+  }
 }
