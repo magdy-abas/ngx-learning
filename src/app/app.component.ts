@@ -4,6 +4,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SeoService } from './core/service/seo.service';
 import { SharedService } from './core/service/shared.service';
 import { CommonModule } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { initSweetAlertTranslations } from './shared/utils/SweetAlert.utils';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +20,14 @@ export class AppComponent implements OnInit {
   constructor(
     private seoService: SeoService,
     public sharedService: SharedService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    // Initialize SweetAlert translations
+    initSweetAlertTranslations(this.translate);
+
     // Show spinner immediately
     this.spinner.show();
 

@@ -134,5 +134,31 @@
     "doctorLabel": "Doctor",
     "statusLabel": "Status",
     "loading": "Loading..."
+  },
+  "sweetalert": {
+    "login": {
+      "title": "Please Login to Buy the Course",
+      "confirm": "Go to Login",
+      "cancel": "Cancel"
+    },
+    "purchase": {
+      "title": "Confirm Purchase",
+      "text": "Are you sure you want to buy this course?",
+      "confirm": "Yes, Buy it!",
+      "cancel": "Cancel"
+    },
+    "code": {
+      "title": "Enter Course Code",
+      "placeholder": "Enter your code here",
+      "confirm": "Submit",
+      "cancel": "Cancel",
+      "error": "Please enter a code!"
+    },
+    "success": {
+      "title": "Success!"
+    },
+    "error": {
+      "title": "Error!"
+    }
   }
 }

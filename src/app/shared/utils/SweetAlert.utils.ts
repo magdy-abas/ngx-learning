@@ -1,6 +1,12 @@
 import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
-// Common custom classes object
+let translateService: TranslateService;
+
+export function initSweetAlertTranslations(translate: TranslateService) {
+  translateService = translate;
+}
+
 const commonCustomClasses = {
   popup: 'custom-swal-popup',
   title: 'custom-swal-title',
@@ -12,11 +18,11 @@ export const SweetAlertUtils = {
   // Auth related alerts
   showLoginRequired() {
     return Swal.fire({
-      title: 'Please Login to Buy the Course',
+      title: translateService.instant('sweetalert.login.title'),
       icon: 'info',
       showCancelButton: true,
-      confirmButtonText: 'Go to Login',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: translateService.instant('sweetalert.login.confirm'),
+      cancelButtonText: translateService.instant('sweetalert.login.cancel'),
       width: '450px',
       customClass: {
         ...commonCustomClasses,
@@ -28,13 +34,30 @@ export const SweetAlertUtils = {
 
   // Course purchase related alerts
   showPurchaseConfirmation() {
+    if (!translateService) {
+      console.error('TranslateService not initialized in SweetAlert utils');
+      // Fallback to default English text
+      return Swal.fire({
+        title: 'Confirm Purchase',
+        text: 'Are you sure you want to buy this course?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Buy it!',
+        cancelButtonText: 'Cancel',
+        width: '450px',
+        customClass: commonCustomClasses,
+      });
+    }
+
     return Swal.fire({
-      title: 'Confirm Purchase',
-      text: 'Are you sure you want to buy this course?',
+      title: translateService.instant('sweetalert.purchase.title'),
+      text: translateService.instant('sweetalert.purchase.text'),
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Yes, Buy it!',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: translateService.instant(
+        'sweetalert.purchase.confirm'
+      ),
+      cancelButtonText: translateService.instant('sweetalert.purchase.cancel'),
       width: '450px',
       customClass: commonCustomClasses,
     });
@@ -42,15 +65,15 @@ export const SweetAlertUtils = {
 
   showCodeInputDialog() {
     return Swal.fire({
-      title: 'Enter Course Code',
+      title: translateService.instant('sweetalert.code.title'),
       input: 'text',
-      inputPlaceholder: 'Enter your code here',
+      inputPlaceholder: translateService.instant('sweetalert.code.placeholder'),
       showCancelButton: true,
-      confirmButtonText: 'Submit',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: translateService.instant('sweetalert.code.confirm'),
+      cancelButtonText: translateService.instant('sweetalert.code.cancel'),
       inputValidator: (value) => {
         if (!value) {
-          return 'Please enter a code!';
+          return translateService.instant('sweetalert.code.error');
         }
         return null;
       },
@@ -65,7 +88,7 @@ export const SweetAlertUtils = {
   // Success alerts
   showSuccessAlert(message: string) {
     return Swal.fire({
-      title: 'Success!',
+      title: translateService.instant('sweetalert.success.title'),
       text: message,
       icon: 'success',
       customClass: commonCustomClasses,
@@ -75,7 +98,7 @@ export const SweetAlertUtils = {
   // Error alerts
   showErrorAlert(errorMessage: string) {
     return Swal.fire({
-      title: 'Error!',
+      title: translateService.instant('sweetalert.error.title'),
       text: errorMessage,
       icon: 'error',
       customClass: commonCustomClasses,
