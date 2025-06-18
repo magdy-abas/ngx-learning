@@ -89,7 +89,10 @@
     "noResources": "لا توجد موارد متاحة",
     "introduction": "مقدمة",
     "studentsEnrolled": "طالب مسجل",
-    "showCourse": "عرض الدورة"
+    "showCourse": "عرض الدورة",
+    "startNow": "ابدأ الآن",
+    "subscribed": "مشترك",
+    "rejected": "مرفوض"
   },
 
   "sweetAlerts": {
@@ -183,5 +186,23 @@
       "good": "عمل جيد! استمر في التدريب لتحسين مستواك أكثر.",
       "bad": "واصل التدريب! ستتحسن في المرة القادمة."
     }
+  },
+  "PLAYER": {
+    "play": "تشغيل",
+    "pause": "إيقاف",
+    "rewind": "ترجيع {seektime}s",
+    "fastForward": "تقديم {seektime}s",
+    "mute": "كتم الصوت",
+    "unmute": "إلغاء كتم الصوت",
+    "volume": "الصوت",
+    "enterFullscreen": "ملء الشاشة",
+    "exitFullscreen": "الخروج من ملء الشاشة",
+    "settings": "الإعدادات",
+    "speed": "السرعة",
+    "normal": "عادي",
+    "seek": "الانتقال",
+    "seekLabel": "الانتقال لـ {currentTime} من {duration}",
+    "currentTime": "الوقت الحالي",
+    "duration": "المدة"
   }
 }

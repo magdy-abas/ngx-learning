@@ -1,222 +1,172 @@
-<!-- Breadcrumb -->
-<!-- <div class="breadcrumb-bar">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 col-12">
-        <div class="breadcrumb-list">
-          <nav aria-label="breadcrumb" class="page-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="routes.home">Home</a></li>
-              <li class="breadcrumb-item" aria-current="page">Courses</li>
-              <li class="breadcrumb-item" aria-current="page">All Courses</li>
-              <li class="breadcrumb-item" aria-current="page">The Complete Web Developer Course 2.0</li>
-            </ol>
-          </nav>
-        </div>
+<div *ngIf="courseDetails" class="container my-4">
+  <div class="row align-items-start">
+    <!-- video -->
+    <div class="col-lg-8 col-md-7 col-sm-12 mb-3">
+      <div class="video-wrapper">
+        <ng-container *ngIf="!videoLoaded; else showVideo">
+          <div class="video-placeholder">
+            <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
+            <button class="start-btn" (click)="startFirstLesson()">
+              {{ 'courses.startNow' | translate }}
+            </button>
+
+          </div>
+        </ng-container>
+
+        <ng-template #showVideo>
+          <app-hls-player [src]="videoUrl"></app-hls-player>
+        </ng-template>
       </div>
     </div>
-  </div>
-</div> -->
-<!-- /Breadcrumb -->
+    <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
+      <!-- Card doctor -->
+      <div class="shadow-sm rounded-4 p-3 text-center bg-white mb-3">
+        <div class="mb-2"
+          style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 2px solid #ff875a; box-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: auto;">
+          <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
+            onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img" class="w-100 h-100"
+            style="object-fit: cover;">
+        </div>
+        <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
+        <h5 class="fw-bold mb-2" style="color: #ff875a;">{{ courseDetails.course.title }}</h5>
 
-<div *ngIf="courseDetails">
-  <!-- Inner Banner -->
-  <div class="inner-banner">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="instructor-wrap border-bottom-0 m-0">
-            <div class="about-instructor align-items-center">
-              <div class="abt-instructor-img">
-                <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
-                  onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img" class="img-fluid">
-              </div>
-              <div class="instructor-detail me-3">
-                <h5><a>{{courseDetails.course.doctor}}</a></h5>
-                <p></p>
-              </div>
-              <div class="rating mb-0">
-                <i class="fas fa-star filled me-1"></i>
-                <i class="fas fa-star filled me-1"></i>
-                <i class="fas fa-star filled me-1"></i>
-                <i class="fas fa-star filled me-1"></i>
-                <i class="fas fa-star me-1"></i>
-                <span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
-              </div>
-            </div>
-            <div *ngIf="courseDetails?.course?.client_status !== 'accepted'">
-              <button *ngIf="courseDetails?.course?.client_status !== 'pending'"
-                (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
-                class="web-badge mb-3 btn">
-                {{ 'courses.subscribeNow' | translate }}
-              </button>
-              <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="web-badge mb-3 btn">
-                {{ 'courses.pending' | translate }}
-              </button>
-            </div>
-          </div>
-          <h2>{{courseDetails.course.title}}</h2>
-          <p></p>
-          <div class="course-info d-flex align-items-center border-bottom-0 m-0 p-0">
-            <div class="cou-info">
-              <img src="assets/img/icon/icon-01.svg" alt="">
-              <p>12+ {{ 'courses.lessonsCount' | translate }}</p>
-            </div>
-            <div class="cou-info">
-              <img src="assets/img/icon/timer-icon.svg" alt="">
-              <p>9hr 30min</p>
-            </div>
-            <div class="cou-info">
-              <img src="assets/img/icon/people.svg" alt="">
-              <p>32 {{ 'courses.studentsEnrolled' | translate }}</p>
-            </div>
-          </div>
+        <!-- btns-->
+        <div>
+          <!-- subscribe -->
+          <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
+            disabled>
+            {{ 'courses.subscribed' | translate }}
+          </button>
+
+          <!-- rekected -->
+          <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
+            disabled>
+            {{ 'courses.rejected' | translate }}
+          </button>
+
+          <!-- pending -->
+          <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="btn btn-secondary btn-sm px-4 py-2"
+            disabled>
+            {{ 'courses.pending' | translate }}
+          </button>
+
+          <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
+            (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
+            class="btn btn-sm px-4 py-2" style="background-color: #ff875a; color: white;">
+            {{ 'courses.subscribeNow' | translate }}
+          </button>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- /Inner Banner -->
 
-  <!-- Course Lesson -->
-  <section class="page-content course-sec course-lesson">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="category-tab tickets-tab-blk">
-            <ul class="nav">
-              <li class="nav-item">
-                <a href="#program" class="nav-link active" data-bs-toggle="tab">
-                  {{ 'courses.courseProgram' | translate }}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#notes" class="nav-link" data-bs-toggle="tab">
-                  {{ 'courses.notes' | translate }}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#more" class="nav-link" data-bs-toggle="tab">
-                  {{ 'courses.more' | translate }}
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="tab-content">
-            <!-- Course Lesson -->
-            <div class="lesson-group tab-pane fade show active" id="program">
-              @if (courseDetails.data.length > 0) {
-              @for (chapter of courseDetails.data; track $index; let first = $first) {
-              <div class="course-card">
-                <h6 class="cou-title">
-                  <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index">
-                    {{chapter.title}} <span>{{chapter.lessons.length}} {{ 'courses.lessonsCount' | translate }}</span>
-                  </a>
-                </h6>
-                <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
-                  <div class="student-percent lesson-percent"></div>
-                  <ul *ngIf="chapter.lessons?.length; else noLessons">
-                    <li *ngFor="let lesson of chapter.lessons"
-                      (click)="redirectToLesson(lesson.id, lesson.type, chapter.id)">
-                      <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">{{lesson.title}}</p>
-                      <div>
-                        <img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;">
-                      </div>
-                    </li>
-                  </ul>
-                  <ng-template #noLessons>
-                    <p class="text-center py-3">{{ 'courses.noLessons' | translate }}</p>
-                  </ng-template>
-                </div>
-              </div>
-              }
-              } @else {
-              <div class="course-card">
-                <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-                  {{ 'courses.noData' | translate }}
-                </h4>
-              </div>
-              }
-            </div>
-            <!-- /Course Lesson -->
 
-            <!-- Course Notes -->
-            <div class="lesson-group tab-pane fade" id="notes">
-              <div class="course-card">
-                <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-                  {{ 'courses.noData' | translate }}
-                </h4>
-              </div>
-            </div>
-            <!-- /Course Notes -->
+      <!-- category tab -->
+      <div class="category-tab tickets-tab-blk">
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="#program" class="nav-link active" data-bs-toggle="tab">
+              {{ 'courses.courseProgram' | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#notes" class="nav-link" data-bs-toggle="tab">
+              {{ 'courses.notes' | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#more" class="nav-link" data-bs-toggle="tab">
+              {{ 'courses.more' | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <div class="lesson-group tab-pane fade show active" id="program">
+          @if (courseDetails.data.length > 0) {
+          @for (chapter of courseDetails.data; track $index; let first = $first) {
+          <div class="course-card">
+            <h6 class="cou-title">
+              <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index">
+                {{chapter.title}}
 
-            <!-- Course More -->
-            <div class="lesson-group tab-pane fade" id="more">
-              @for (chapter of resources; track chapter.id; let first = $first) {
-              <div class="course-card">
-                <h6 class="cou-title">
-                  <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index"
-                    aria-expanded="true">
-                    {{chapter.title}} <span>{{chapter.resources.length}} {{ 'courses.filesCount' | translate }}</span>
-                  </a>
-                </h6>
-                <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
-                  <div class="student-percent lesson-percent"></div>
-                  <div class="chapter-section csr-pointer mb-3" [class.more-section]="CourseSubscribe">
-                    <ul>
-                      @for (resource of chapter.resources; track resource.id) {
-                      <li (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title)">
-                        <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
-                        <div>
-                          @if (CourseSubscribe == false) {
-                          <img [src]="resource.is_free ? 'assets/img/icon/file.svg' : 'assets/img/icon/lock.svg'"
-                            alt="file">
-                          }
-                          <img src='assets/img/icon/file.svg' alt="file">
-                        </div>
-                      </li>
-                      }
-                    </ul>
+                <span class="">{{chapter.lessons.length}} {{ 'courses.lessonsCount' | translate
+                  }}</span>
+              </a>
+            </h6>
+            <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
+              <ul *ngIf="chapter.lessons?.length; else noLessons">
+                <li *ngFor="let lesson of chapter.lessons"
+                  (click)="redirectToLesson(lesson.id, lesson.type, chapter.id)">
+                  <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">{{lesson.title}}</p>
+                  <div>
+                    <img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;">
                   </div>
-                </div>
-              </div>
-              }
-              @if (!resources.length) {
-              <div class="course-card">
-                <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-                  {{ 'courses.noData' | translate }}
-                </h4>
-              </div>
-              }
+                </li>
+              </ul>
+              <ng-template #noLessons>
+                <p class="text-center py-3">{{ 'courses.noLessons' | translate }}</p>
+              </ng-template>
             </div>
-            <!-- /Course More -->
+          </div>
+          }
+          } @else {
+          <div class="course-card">
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
+              {{ 'courses.noData' | translate }}
+            </h4>
+          </div>
+          }
+        </div>
+
+        <div class="lesson-group tab-pane fade" id="notes">
+          <div class="course-card">
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
+              {{ 'courses.noData' | translate }}
+            </h4>
           </div>
         </div>
-        <div class="col-lg-8">
-          <!-- Introduction -->
-          <!-- <div class="student-widget lesson-introduction">
-            <div class="lesson-widget-group">
-              <h4 class="tittle">{{ 'courses.introduction' | translate }}</h4>
-              <div class="introduct-video">
-                <a href="https://www.youtube.com/embed/1trvO6dqQUI" class="video-thumbnail" data-fancybox="">
-                  <div class="play-icon">
-                    <i class="fa-solid fa-play"></i>
+
+        <div class="lesson-group tab-pane fade" id="more">
+          @for (chapter of resources; track chapter.id; let first = $first) {
+          <div class="course-card">
+            <h6 class="cou-title">
+              <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index" aria-expanded="true">
+                {{chapter.title}} <span>{{chapter.resources.length}} {{ 'courses.filesCount' | translate }}</span>
+              </a>
+            </h6>
+            <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
+              <ul>
+                @for (resource of chapter.resources; track resource.id) {
+                <li (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title)">
+                  <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
+                  <div>
+                    @if (CourseSubscribe == false) {
+                    <img [src]="resource.is_free ? 'assets/img/icon/file.svg' : 'assets/img/icon/lock.svg'" alt="file">
+                    }
+                    <img src='assets/img/icon/file.svg' alt="file">
                   </div>
-                  <img class="" src="assets/img/video-img-01.jpg" alt="">
-                </a>
-              </div>
+                </li>
+                }
+              </ul>
             </div>
-          </div> -->
-          <app-hls-player [src]="'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'"></app-hls-player>
-
-
-
-
-          <!-- /Introduction -->
+          </div>
+          }
+          @if (!resources.length) {
+          <div class="course-card">
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
+              {{ 'courses.noData' | translate }}
+            </h4>
+          </div>
+          }
         </div>
       </div>
     </div>
-  </section>
-  <!-- /Course Lesson pdf-->
-  <app-pdf-viewer [pdfUrl]="pdfUrl" [showPdfViewer]="showPdfViewer" [resourceTitle]="currentResourceTitle"
-    (closePdfEvent)="closePdfViewer()"></app-pdf-viewer>
+
+
+
+  </div>
 </div>
+
+<!-- PDF Viewer component -->
+<app-pdf-viewer [pdfUrl]="pdfUrl" [showPdfViewer]="showPdfViewer" [resourceTitle]="currentResourceTitle"
+  (closePdfEvent)="closePdfViewer()">
+</app-pdf-viewer>

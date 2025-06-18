@@ -49,6 +49,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   userInfo!: any;
   resourceId!: number;
   chapterId!: number;
+  public videoUrl: string = '';
+  public videoLoaded: boolean = false;
   public resources: any[] = [];
   isAuth!: boolean;
   reqData: RequestJoinDto = new RequestJoinDto();
@@ -288,6 +290,25 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  startFirstLesson(): void {
+    if (
+      !this.courseDetails ||
+      !this.courseDetails.data ||
+      this.courseDetails.data.length === 0
+    ) {
+      return;
+    }
+
+    const firstChapter = this.courseDetails.data[0];
+    if (!firstChapter.lessons || firstChapter.lessons.length === 0) {
+      return;
+    }
+
+    const firstLesson = firstChapter.lessons[0];
+
+    this.redirectToLesson(firstLesson.id, firstLesson.type, firstChapter.id);
+  }
+
   sendData(buyWith: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this._CoursesService.makeRequest(this.reqData).subscribe({
@@ -317,11 +338,12 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
           const decryptedUrl = this.encryptionService.decryptData(
             response.data.file_data,
             this.userInfo.id,
-            chapterId, // خد الـ chapterId من البراميتر مش من الـ this.shapterId
+            chapterId,
             lessonId,
             this.userInfo.name
           );
-          window.open(decryptedUrl, '_blank');
+          this.videoUrl = decryptedUrl;
+          this.videoLoaded = true;
         }
       },
       error: (err) => console.error('Error fetching video:', err),

@@ -1,3 +1,7 @@
 <div class="video-container">
-  <video #videoPlayer playsinline controls></video>
+  <div *ngIf="showInitialLoader" class="video-loading-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <video #videoPlayer playsinline controls style="visibility: hidden;"></video>
 </div>

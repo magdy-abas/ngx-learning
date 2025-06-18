@@ -89,7 +89,10 @@
     "noResources": "No resources available",
     "introduction": "Introduction",
     "studentsEnrolled": "students enrolled",
-    "showCourse": "Show Course"
+    "showCourse": "Show Course",
+    "startNow": "Start Now",
+    "subscribed": "Subscribed",
+    "rejected": "Rejected"
   },
 
   "sweetAlerts": {
@@ -111,6 +114,7 @@
     "fetchFail": "Failed to fetch course details.",
     "somethingWentWrong": "Something went wrong."
   },
+
   "home": {
     "homeP": "The Leader in Online Learning",
     "homeTitle": "Engaging & Accessible Online Courses For All",
@@ -183,5 +187,23 @@
       "good": "Good job! Keep practicing to improve even more.",
       "bad": "Keep practicing! You'll get better next time."
     }
+  },
+  "PLAYER": {
+    "play": "Play",
+    "pause": "Pause",
+    "rewind": "Rewind {seektime}s",
+    "fastForward": "Forward {seektime}s",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "volume": "Volume",
+    "enterFullscreen": "Enter Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "settings": "Settings",
+    "speed": "Speed",
+    "normal": "Normal",
+    "seek": "Seek",
+    "seekLabel": "Seek to {currentTime} of {duration}",
+    "currentTime": "Current time",
+    "duration": "Duration"
   }
 }
