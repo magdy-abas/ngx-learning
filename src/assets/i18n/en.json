@@ -104,7 +104,12 @@
     "submit": "Submit",
     "pleaseEnterCode": "Please enter a code!",
     "success": "Success!",
-    "error": "Error!"
+    "error": "Error!",
+    "requestSuccess": "Your course request has been sent successfully.",
+    "codeSuccess": "Course code verified successfully.",
+    "invalidCourseId": "Invalid course ID.",
+    "fetchFail": "Failed to fetch course details.",
+    "somethingWentWrong": "Something went wrong."
   },
   "home": {
     "homeP": "The Leader in Online Learning",

@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { HomeData } from '../../data';
 import { feature_instructors } from '../../../../core/service/data/data.service';
 import { NgFor } from '@angular/common';
 import { IDoctor } from '../../../../core/interfaces/dynamic-home.interface';
 import { Doctor } from '../../../../core/interfaces/dynamic-home.interface';
 import { TranslateModule } from '@ngx-translate/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../../core/service/auth.service';
 
 @Component({
   selector: 'app-home-instructors',
@@ -18,9 +20,19 @@ export class HomeInstructorsComponent {
   @Input() instructorsData: Doctor[] = [];
   @Input() instructorsTitle: string = '';
   @Input() instructorsShortTitle: string = '';
+
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
   constructor(public data: HomeData) {
     this.feature_instructors = this.data.feature_instructors;
   }
 
-  ngOnInit(): void {}
+  goToDoctorCourses(doctorId: number) {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate([`/auth/courses/doctor/${doctorId}`]);
+    } else {
+      this.router.navigate([`/courses/doctor/${doctorId}`]);
+    }
+  }
 }

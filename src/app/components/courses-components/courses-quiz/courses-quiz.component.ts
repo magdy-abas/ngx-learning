@@ -11,6 +11,7 @@ import {
   QuizResponse,
 } from '../../../core/interfaces/courses.interface';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
@@ -40,7 +41,8 @@ export class CoursesQuizComponent implements AfterViewInit {
     private _CoursesService: CoursesService,
     private _route: ActivatedRoute,
     private _Router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinner: NgxSpinnerService
   ) {}
 
   /**
@@ -53,12 +55,15 @@ export class CoursesQuizComponent implements AfterViewInit {
     courseId ? (this.courseId = +courseId) : courseId;
     if (quizId) {
       this.quizId = +quizId;
+
+      this.getQuiz(this.quizId);
     }
   }
+
   startQuiz(): void {
     this.showIntro = false;
-    this.getQuiz(this.quizId); // Only fetch quiz when user starts
   }
+
   ngAfterViewInit(): void {}
 
   /**
@@ -222,12 +227,16 @@ export class CoursesQuizComponent implements AfterViewInit {
    * Close result view and reset quiz state
    */
   closeResult(): void {
+    this._Router.navigate([`auth/course-details/${this.courseId}`]).then(() => {
+      this.resetQuiz();
+    });
+  }
+  resetQuiz(): void {
     this.showResult = false;
+    this.showIntro = true;
     this.currentQuestion = 1;
     this.selectedAnswer = null;
-    this._Router.navigate([`auth/course-details/${this.courseId}`]);
   }
-
   /**
    * Show quiz results
    */
@@ -239,16 +248,23 @@ export class CoursesQuizComponent implements AfterViewInit {
    * Fetch quiz data from server
    */
   getQuiz(quizId: number): void {
+    this.spinner.show();
     this._CoursesService.getQuiz(quizId).subscribe({
       next: (data) => {
         if (data.status === 1) {
           this.quizData = data.data;
           this.quizResponse = data;
 
-          console.log(this.quizResponse);
+          if (this.quizResponse.can_show_answers) {
+            this.showIntro = false;
+          }
         }
+        this.spinner.hide();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+        this.spinner.hide();
+      },
     });
   }
 

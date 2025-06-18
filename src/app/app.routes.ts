@@ -16,26 +16,77 @@ import { CoursesMettingComponent } from './components/courses-components/courses
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MyCoursesComponent } from './components/courses-components/my-courses/my-courses.component';
 
+const publicRoutes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, title: 'home' },
+  { path: 'courses', component: CoursesComponent, title: 'courses' },
+  {
+    path: 'courses/category/:categoryId',
+    component: CoursesComponent,
+    title: 'courses-category',
+  },
+  {
+    path: 'courses/doctor/:doctorId',
+    component: CoursesComponent,
+    title: 'courses-doctor',
+  },
+  {
+    path: 'course-details/:id',
+    component: CoursesDetailsComponent,
+    title: 'course-details',
+  },
+  { path: 'categories', component: CategoriesComponent, title: 'categories' },
+  {
+    path: 'categories/:categoryId',
+    component: CategoriesComponent,
+    title: 'categories-sub',
+  },
+];
+
+const authRoutes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, title: 'home' },
+  { path: 'courses', component: CoursesComponent, title: 'courses' },
+  {
+    path: 'courses/category/:categoryId',
+    component: CoursesComponent,
+    title: 'courses-category',
+  },
+  {
+    path: 'courses/doctor/:doctorId',
+    component: CoursesComponent,
+    title: 'courses-doctor',
+  },
+  {
+    path: 'course-details/:id',
+    component: CoursesDetailsComponent,
+    title: 'course-details',
+  },
+  {
+    path: 'course-quiz/:courseId/:quizId',
+    component: CoursesQuizComponent,
+    title: 'quiz',
+  },
+  {
+    path: 'course-metting/:courseId/:mettingId/:shapterId',
+    component: CoursesMettingComponent,
+    title: 'metting',
+  },
+  { path: 'my-courses', component: MyCoursesComponent, title: 'myCourses' },
+  { path: 'categories', component: CategoriesComponent, title: 'categories' },
+  {
+    path: 'categories/:categoryId',
+    component: CategoriesComponent,
+    title: 'categories-sub',
+  },
+];
+
 export const routes: Routes = [
   {
     path: '',
     component: PublicLayoutComponent,
     canActivate: [publicGuard],
-    children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, title: 'home' },
-      { path: 'courses', component: CoursesComponent, title: 'courses' },
-      {
-        path: 'course-details/:id',
-        component: CoursesDetailsComponent,
-        title: 'course-details',
-      },
-      {
-        path: 'categories',
-        component: CategoriesComponent,
-        title: 'categories',
-      },
-    ],
+    children: publicRoutes,
   },
   {
     path: '',
@@ -55,37 +106,7 @@ export const routes: Routes = [
     path: 'auth',
     component: MainLayoutComponent,
     canActivate: [authGuard],
-    children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, title: 'home' },
-      { path: 'courses', component: CoursesComponent, title: 'courses' },
-
-      {
-        path: 'course-details/:id',
-        component: CoursesDetailsComponent,
-        title: 'course-details',
-      },
-      {
-        path: 'course-quiz/:courseId/:quizId',
-        component: CoursesQuizComponent,
-        title: 'quiz',
-      },
-      {
-        path: 'course-metting/:courseId/:mettingId/:shapterId',
-        component: CoursesMettingComponent,
-        title: 'metting',
-      },
-      {
-        path: 'my-courses',
-        component: MyCoursesComponent,
-        title: 'myCourses',
-      },
-      {
-        path: 'categories',
-        component: CategoriesComponent,
-        title: 'categories',
-      },
-    ],
+    children: authRoutes,
   },
   { path: '**', component: NotFoundComponent, title: 'not found' },
 ];

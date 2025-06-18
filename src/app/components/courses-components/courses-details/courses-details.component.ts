@@ -14,7 +14,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
 import { CourseDetailsResponse } from './../../../core/interfaces/courses-details.interface';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-courses-details',
@@ -58,7 +59,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private _CoursesService: CoursesService,
     private _route: ActivatedRoute,
     private _Router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private spinner: NgxSpinnerService,
+    private translate: TranslateService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -66,6 +69,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     this.currentResourceTitle = '';
   }
   ngOnInit(): void {
+    this.spinner.show();
     // Get course ID from route parameters
     this.isAuth = this._AuthService.isAuthenticated();
     const courseId = this._route.snapshot.paramMap.get('id');
@@ -118,13 +122,15 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       .substring(0, 16);
 
     try {
-      const decrypted = CryptoJS.AES.decrypt(
+      const decryptedBytes = CryptoJS.AES.decrypt(
         encryptedText,
         CryptoJS.enc.Utf8.parse(key),
         {
           iv: CryptoJS.enc.Utf8.parse(iv),
         }
-      ).toString(CryptoJS.enc.Utf8);
+      );
+
+      const decrypted = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
       return decrypted;
     } catch (error) {
@@ -195,27 +201,49 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       0
     );
   }
-
   fetchCourseDetails(courseId: number): void {
     const courseDetailsSub = this._CoursesService
       .getCoursesDetails(courseId)
       .subscribe({
-        next: (data) => {
+        next: async (data) => {
+          if (!data || !data.course) {
+            const result = await SweetAlertUtils.showErrorAlert(
+              this.translate.instant('sweetAlerts.somethingWentWrong')
+            );
+            if (result.isConfirmed || result.isDismissed) {
+              this.redirectToCourses();
+            }
+            return;
+          }
           this.courseDetails = data;
-
           this.isLoading = false;
           this.isClientSubscribe();
         },
-        error: (err) => {
-          this.errorMessage = 'Failed to fetch course details.';
+        error: async (err) => {
           console.error(err);
           this.isLoading = false;
+          const result = await SweetAlertUtils.showErrorAlert(
+            this.translate.instant('sweetAlerts.somethingWentWrong')
+          );
+          if (result.isConfirmed || result.isDismissed) {
+            this.redirectToCourses();
+          }
+        },
+        complete: () => {
+          this.spinner.hide();
         },
       });
 
     this.subscriptions.push(courseDetailsSub);
   }
 
+  redirectToCourses(): void {
+    if (this._AuthService.isAuthenticated()) {
+      this._Router.navigate(['/auth/courses']);
+    } else {
+      this._Router.navigate(['/courses']);
+    }
+  }
   getResources(courseId: any) {
     this._CoursesService.getResources(courseId).subscribe({
       next: (data: any) => {
@@ -257,7 +285,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
                 this.courseDetails.course.client_status = 'pending';
               }
               await SweetAlertUtils.showSuccessAlert(
-                'Course request sent successfully'
+                this.translate.instant('sweetAlerts.requestSuccess')
               );
             }
           } catch (error) {
@@ -280,7 +308,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
               this.courseDetails.course.client_status = 'pending';
             }
             await SweetAlertUtils.showSuccessAlert(
-              'Course code verified successfully'
+              this.translate.instant('sweetAlerts.codeSuccess')
             );
           }
         } catch (error) {

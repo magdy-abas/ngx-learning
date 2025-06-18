@@ -23,12 +23,17 @@ export class CoursesService {
     searchTerms: string,
     pagination: number,
     pageNum: number,
-    category_id: string | null
+    category_id: string | null,
+    doctor_id: string | null
   ): Observable<CoursesResponse> {
     let url = `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`;
 
     if (category_id) {
       url += `&category_id=${category_id}`;
+    }
+
+    if (doctor_id) {
+      url += `&doctor_id=${doctor_id}`;
     }
 
     return this._HttpClient.get<CoursesResponse>(url);

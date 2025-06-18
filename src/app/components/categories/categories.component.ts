@@ -31,10 +31,11 @@ export class CategoriesComponent implements OnInit {
   private authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.categoryId = params['categoryId']
-        ? parseInt(params['categoryId'], 10)
+    this.route.paramMap.subscribe((params) => {
+      this.categoryId = params.get('categoryId')
+        ? parseInt(params.get('categoryId')!, 10)
         : null;
+
       if (this.categoryId) {
         this.getCategories(1, this.categoryId);
       } else {
@@ -76,9 +77,9 @@ export class CategoriesComponent implements OnInit {
       this.getCategories(1, category.id);
     } else {
       if (this.authService.isAuthenticated()) {
-        this.router.navigate([`/auth/courses`, { categoryId: category.id }]);
+        this.router.navigate([`/auth/courses/category/${category.id}`]);
       } else {
-        this.router.navigate([`/courses`, { categoryId: category.id }]);
+        this.router.navigate([`/courses/category/${category.id}`]);
       }
     }
   }
@@ -89,9 +90,9 @@ export class CategoriesComponent implements OnInit {
       this.isSubCategoryView = true;
     } else {
       if (this.authService.isAuthenticated()) {
-        this.router.navigate([`/auth/courses`, { categoryId: subCategory.id }]);
+        this.router.navigate([`/auth/courses/category/${subCategory.id}`]);
       } else {
-        this.router.navigate([`/courses`, { categoryId: subCategory.id }]);
+        this.router.navigate([`/courses/category/${subCategory.id}`]);
       }
     }
   }

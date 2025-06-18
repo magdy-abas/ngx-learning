@@ -104,7 +104,12 @@
     "submit": "إرسال",
     "pleaseEnterCode": "الرجاء إدخال الرمز!",
     "success": "تم بنجاح!",
-    "error": "خطأ!"
+    "error": "خطأ!",
+    "requestSuccess": "تم إرسال طلب الاشتراك بنجاح.",
+    "codeSuccess": "تم التحقق من كود الدورة بنجاح.",
+    "invalidCourseId": "معرّف الدورة غير صالح.",
+    "fetchFail": "فشل تحميل بيانات الدورة.",
+    "somethingWentWrong": "حدث خطأ ما."
   },
   "home": {
     "homeP": "الرائد في التعلم عبر الإنترنت",

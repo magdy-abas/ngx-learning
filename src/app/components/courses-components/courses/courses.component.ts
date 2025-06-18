@@ -42,6 +42,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   pageNum: number = 1;
   coursesData: Course[] = [];
   categoryId: string | null = null;
+  doctorId: string | null = null;
   isLoading: boolean = false;
   allDataLoaded: boolean = false;
   totalCourses: number = 0;
@@ -57,15 +58,17 @@ export class CoursesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.categoryId = params.get('categoryId');
+      this.doctorId = params.get('doctorId');
+
+      this.pageNum = 1;
+      this.coursesData = [];
+      this.allDataLoaded = false;
 
       this.getCourses();
     });
 
     this.route.queryParams.subscribe((params) => {
-      if (params['search']) {
-        this.searchValue = params['search'];
-        this.searchCourses();
-      }
+      this.searchValue = params['search'] || '';
     });
   }
 
@@ -115,7 +118,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.searchValue,
         this.pagination,
         this.pageNum,
-        this.categoryId
+        this.categoryId,
+        this.doctorId
       )
       .subscribe({
         next: (res) => {

@@ -9,7 +9,8 @@
     <!-- Featured Instructor -->
     <div class="featured-instructor-two">
       <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-aos="fade-up" *ngFor="let data of instructorsData">
+        <div (click)="goToDoctorCourses(data.id)" class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-aos="fade-up"
+          *ngFor="let data of instructorsData">
           <div class="instructors-widget">
             <div class="instructors-img">
               <a href="javascript:;">
