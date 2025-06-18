@@ -10,10 +10,11 @@ import {
   QuestionData,
   QuizResponse,
 } from '../../../core/interfaces/courses.interface';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, TranslateModule],
 
   templateUrl: './courses-quiz.component.html',
   styleUrl: './courses-quiz.component.scss',
@@ -38,7 +39,8 @@ export class CoursesQuizComponent implements AfterViewInit {
     private _AuthService: AuthService,
     private _CoursesService: CoursesService,
     private _route: ActivatedRoute,
-    private _Router: Router
+    private _Router: Router,
+    private translate: TranslateService
   ) {}
 
   /**
@@ -194,9 +196,13 @@ export class CoursesQuizComponent implements AfterViewInit {
    */
   getResultMessage(): string {
     const score = this.getScorePercentage();
-    if (score >= 80) return 'عمل ممتاز! لقد أتقنت هذا الموضوع!';
-    if (score >= 60) return 'عمل جيد! استمر في التدريب لتحسين مستواك أكثر.';
-    return 'واصل التدريب! ستتحسن في المرة القادمة.';
+    if (score >= 80) {
+      return this.translate.instant('quiz.result.excellent');
+    }
+    if (score >= 60) {
+      return this.translate.instant('quiz.result.good');
+    }
+    return this.translate.instant('quiz.result.bad');
   }
 
   getResulimoji(): boolean {

@@ -1,60 +1,61 @@
-import { inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalTranslateService {
-  private readonly _Renderer2 = inject(RendererFactory2).createRenderer(
-    null,
-    null
-  );
-  private styleLinks: HTMLLinkElement[] = [];
+  private renderer: Renderer2;
+  public language$: BehaviorSubject<'ar' | 'en'>;
 
   constructor(
-    private _TranslateService: TranslateService,
-    private spinner: NgxSpinnerService
+    private translateService: TranslateService,
+    private spinner: NgxSpinnerService,
+    private rendererFactory: RendererFactory2
   ) {
-    let lang = localStorage.getItem('lang') || 'ar';
-    this._TranslateService.setDefaultLang('ar');
-    this._TranslateService.use(lang);
-    this.changeDirection();
+    this.renderer = this.rendererFactory.createRenderer(null, null);
 
-    const htmlElement = document.documentElement;
-    htmlElement.classList.remove('lang-ar', 'lang-en');
-    htmlElement.classList.add(`lang-${lang}`);
+    const storedLang = localStorage.getItem('lang') as 'ar' | 'en' | null;
+    const savedLang: 'ar' | 'en' = storedLang === 'en' ? 'en' : 'ar';
+
+    this.language$ = new BehaviorSubject<'ar' | 'en'>(savedLang);
+    this.translateService.setDefaultLang('ar');
+    this.initializeLanguage();
   }
 
-  changeDirection(): void {
-    let lang = localStorage.getItem('lang') || 'ar';
-    const htmlElement = document.documentElement;
+  private initializeLanguage(): void {
+    const lang = this.language$.value;
+    this.translateService.use(lang);
+    this.updateDocumentDirection(lang);
+  }
 
+  private updateDocumentDirection(lang: 'ar' | 'en'): void {
+    const htmlElement = document.documentElement;
     htmlElement.classList.remove('lang-ar', 'lang-en');
 
     if (lang === 'en') {
-      this._Renderer2.setAttribute(htmlElement, 'dir', 'ltr');
-      this._Renderer2.setAttribute(htmlElement, 'lang', 'en');
+      this.renderer.setAttribute(htmlElement, 'dir', 'ltr');
+      this.renderer.setAttribute(htmlElement, 'lang', 'en');
       htmlElement.classList.add('lang-en');
-    } else if (lang === 'ar') {
-      this._Renderer2.setAttribute(htmlElement, 'dir', 'rtl');
-      this._Renderer2.setAttribute(htmlElement, 'lang', 'ar');
+    } else {
+      this.renderer.setAttribute(htmlElement, 'dir', 'rtl');
+      this.renderer.setAttribute(htmlElement, 'lang', 'ar');
       htmlElement.classList.add('lang-ar');
     }
-
-    document.body.style.display = 'none';
-    document.body.offsetHeight;
-    document.body.style.display = '';
   }
 
   async changeLanguage(lang: 'en' | 'ar'): Promise<void> {
     try {
       await this.spinner.show();
-      localStorage.setItem('lang', lang);
-      await this._TranslateService.use(lang).toPromise();
-      this.changeDirection();
 
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      localStorage.setItem('lang', lang);
+      await this.translateService.use(lang).toPromise();
+      this.language$.next(lang);
+      this.updateDocumentDirection(lang);
+
+      window.location.reload();
     } finally {
       await this.spinner.hide();
     }

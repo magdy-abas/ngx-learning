@@ -88,7 +88,8 @@
     "filesCount": "Files",
     "noResources": "No resources available",
     "introduction": "Introduction",
-    "studentsEnrolled": "students enrolled"
+    "studentsEnrolled": "students enrolled",
+    "showCourse": "Show Course"
   },
 
   "sweetAlerts": {
@@ -159,6 +160,23 @@
     },
     "error": {
       "title": "Error!"
+    }
+  },
+  "quiz": {
+    "welcome": "Welcome to the Quiz!",
+    "introShowAnswers": "Questions and answers will be displayed once you click the button",
+    "introWarning": "Please read the questions carefully before answering as you cannot go back after answering",
+    "start": "Start Quiz",
+    "showResult": "Show Result",
+    "question": "Question",
+    "next": "Next",
+    "back": "Back",
+    "resultTitle": "Your Result",
+    "close": "Close",
+    "result": {
+      "excellent": "Excellent work! You have mastered this topic!",
+      "good": "Good job! Keep practicing to improve even more.",
+      "bad": "Keep practicing! You'll get better next time."
     }
   }
 }

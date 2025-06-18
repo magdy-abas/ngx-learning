@@ -1,5 +1,5 @@
 <!-- Breadcrumb -->
-<div class="breadcrumb-bar">
+<!-- <div class="breadcrumb-bar">
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-12">
@@ -14,14 +14,14 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- /Breadcrumb -->
 
 <!-- Course -->
 <section class="course-content">
   <div class="container">
     <div class="row">
-      <div class="col-lg-9">
+      <div class="col-lg-12">
 
         <!-- Filter -->
         <div class="showing-list">
@@ -43,19 +43,19 @@
               <div class="show-filter add-course-info mat-style  d-flex    " style="place-self: end;">
 
 
-                <div class="  me-2">
+                <div class="me-2 d-flex align-content-center align-items-center">
                   <div class=" search-group">
                     <i-feather name="search"></i-feather>
                     <input type="text" [(ngModel)]="searchValue" name="one" class="form-control"
                       [placeholder]="'courses.searchPlaceholder' | translate">
 
                   </div>
+                  <div class=" ">
+                    <button class="btn-action-method btn " (click)="searchCourses()"> {{ 'courses.search' | translate
+                      }}</button>
+                  </div>
+                </div>
 
-                </div>
-                <div class=" ">
-                  <button class="btn-action-method btn " (click)="searchCourses()"> {{ 'courses.search' | translate
-                    }}</button>
-                </div>
 
 
               </div>
@@ -89,151 +89,7 @@
 
 
       </div>
-      <div class="col-lg-3 theiaStickySidebar">
-        <div class="stickybar">
-          <div class="filter-clear">
-            <div class="clear-filter d-flex align-items-center">
-              <h4><i-feather name="filter"></i-feather>{{ 'courses.filters' | translate }}</h4>
-              <div class="clear-text">
 
-                <a (click)="ClearSearch()" class="btn btn-danger">{{ 'courses.clear' | translate }} </a>
-              </div>
-            </div>
-
-            <!-- Search Filter -->
-            <div class="card search-filter">
-              <div class="card-body">
-                <div class="filter-widget mb-0">
-                  <div class="categories-head d-flex align-items-center">
-                    <h4>Course categories</h4>
-                    <i class="fas fa-angle-down"></i>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Backend (3)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      CSS (2)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Frontend (2)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      General (2)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      IT & Software (2)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Photography (2)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Programming Language (3)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Technology (2)
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /Search Filter -->
-
-            <!-- Search Filter -->
-            <div class="card search-filter">
-              <div class="card-body">
-                <div class="filter-widget mb-0">
-                  <div class="categories-head d-flex align-items-center">
-                    <h4>Instructors</h4>
-                    <i class="fas fa-angle-down"></i>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Keny White (10)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Hinata Hyuga (5)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      John Doe (3)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input input-box" type="checkbox" name="select_specialist" />
-                      Nicole Brown
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /Search Filter -->
-
-            <!-- Search Filter -->
-            <div class="card search-filter ">
-              <div class="card-body">
-                <div class="filter-widget mb-0">
-                  <div class="categories-head d-flex align-items-center">
-                    <h4>Price</h4>
-                    <i class="fas fa-angle-down"></i>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input radio-box" type="checkbox" name="select_specialist" />
-                      All (18)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input radio-box" type="checkbox" name="select_specialist" />
-                      Free (3)
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input radio-box" type="checkbox" name="select_specialist" />
-                      Paid (15)
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /Search Filter -->
-
-
-
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>

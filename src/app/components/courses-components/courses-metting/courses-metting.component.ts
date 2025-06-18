@@ -65,7 +65,7 @@ export class CoursesMettingComponent {
         .substring(0, 16);
 
       const encryptedText =
-        'f7ooGQS3AvfV9S8g/XCgrkmsclG9mUVmh9KNWhLpmLrH2hOlNd211QscOkzpREPQ/zEUughyjLieWe4P6wnTQW/Z51HMbgeYqmHV4/N5Inh8T0QbOzqEn+Yvnb/pZ7JlMqxpfIrX8Krfc12+JHqgfsSEtYWYKG2KUbAvkT0582wI151oFtuZ+kkzywwjDI3EylECY4D/ewh+idfm9n394Q=='; // النص المشفر الفعلي
+        'f7ooGQS3AvfV9S8g/XCgrkmsclG9mUVmh9KNWhLpmLrH2hOlNd211QscOkzpREPQ/zEUughyjLieWe4P6wnTQW/Z51HMbgeYqmHV4/N5Inh8T0QbOzqEn+Yvnb/pZ7JlMqxpfIrX8Krfc12+JHqgfsSEtYWYKG2KUbAvkT0582wI151oFtuZ+kkzywwjDI3EylECY4D/ewh+idfm9n394Q==';
 
       const bytes = CryptoJS.AES.decrypt(
         encryptedText,

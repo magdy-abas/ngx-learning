@@ -6,31 +6,30 @@
           @if (showIntro) {
           <div class="quiz-box">
             <div class="card-header border-bottom text-center pb-3">
-              <h2 class="fs-4 mb-0">Welcome to the Quiz!</h2>
+              <h2 class="fs-4 mb-0">{{ 'quiz.welcome' | translate }}</h2>
             </div>
             <div class="d-flex flex-column align-items-center p-4">
               @if (showResult) { <p class="text-center mb-4">
-                سيتم اظهار الاسئلة والاجابات بمجرد الضعط علي الزر
+                {{ 'quiz.introShowAnswers' | translate }}
               </p>
 
 
 
               }
               <p class="text-center mb-4">
-                الرجاء قرائة الاسئلة جيدا قبل الاجابة لان لايمكن العودة للسؤال بعد الاجابة
-              </p>
+                {{ 'quiz.introWarning' | translate }} </p>
 
               @if (showResult) {
               <button type="button" class="next-btn btn" (click)="startQuiz()">
 
-                show Result
+                {{ 'quiz.showResult' | translate }}
               </button>
 
 
               }
               <button type="button" class="next-btn btn" (click)="startQuiz()">
 
-                Start Quiz
+                {{ 'quiz.start' | translate }}
               </button>
             </div>
           </div>
@@ -40,7 +39,7 @@
           @if (!showResult) {
           <div class="quiz-box">
             <div class="question-number text-end">
-              Question <span class="fw-bold">{{currentQuestion}}</span>/{{quizData.length}}
+              {{ 'quiz.question' | translate }} <span class="fw-bold">{{currentQuestion}}</span>/{{quizData.length}}
             </div>
 
             <!-- Question Display -->
@@ -81,13 +80,13 @@
             <div class="quiz-btns">
               @if (quizResponse.can_show_answers && currentQuestion > 1) {
               <button type="button" class="back-btn btn mx-2" (click)="previousQuestion()">
-                Back
+                {{ 'quiz.back' | translate }}
               </button>
               }
 
               <button type="button" class="next-btn btn" (click)="nextQuestion()" [disabled]="!canProceed()">
 
-                Next
+                {{ 'quiz.next' | translate }}
 
               </button>
             </div>
@@ -103,7 +102,7 @@
                 <div class="container">
                   <div class="result-card" [ngClass]="getResultClass()">
                     <div class="card-header border-bottom">
-                      <h2 class="fs-5 mb-0">نتيجتك</h2>
+                      <h2 class="fs-5 mb-0"> {{ 'quiz.resultTitle' | translate }}</h2>
                       <span class="fs-6">
                         <span class="fw-bold fs-5">{{getCorrectAnswersCount()}}</span>/{{quizData.length}}
                       </span>
@@ -120,7 +119,7 @@
 
                     </div>
                     <p class="result-message">{{getResultMessage()}}</p>
-                    <button class="next-btn btn col-12" (click)="closeResult()">Close</button>
+                    <button class="next-btn btn col-12" (click)="closeResult()">{{ 'quiz.close' | translate }}</button>
                   </div>
                 </div>
               </div>

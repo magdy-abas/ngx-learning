@@ -39,12 +39,11 @@ export class AppComponent implements OnInit {
       'https://yourwebsite.com/og-image.jpg'
     );
 
-    // Hide spinner when initialization is complete
     this.sharedService.initialized$.subscribe((isInitialized) => {
       if (isInitialized) {
         setTimeout(() => {
           this.spinner.hide();
-        }, 500); // Small delay to ensure all components are ready
+        }, 500);
       }
     });
   }

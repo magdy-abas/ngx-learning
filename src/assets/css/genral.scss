@@ -108,6 +108,7 @@ code-input.code-input {
 }
 
 // courses card
+
 .product-img-courses {
   height: 200px;
   object-fit: cover;
@@ -998,7 +999,10 @@ li {
 // }
 
 // mycourses
-
+.btn-action-method {
+  padding: 0 20px;
+  min-height: 40px !important;
+}
 mat-select.form-select {
   width: 250px;
 }
