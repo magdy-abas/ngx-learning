@@ -104,7 +104,7 @@
           <div class="tab-content">
             <!-- Course Lesson -->
             <div class="lesson-group tab-pane fade show active" id="program">
-              @if (courseDetails.data) {
+              @if (courseDetails.data.length > 0) {
               @for (chapter of courseDetails.data; track $index; let first = $first) {
               <div class="course-card">
                 <h6 class="cou-title">
@@ -181,7 +181,11 @@
               </div>
               }
               @if (!resources.length) {
-              <p class="text-center py-3">{{ 'courses.noResources' | translate }}</p>
+              <div class="course-card">
+                <h4 class="text-center py-5 tittle" style="color: #ff875a;">
+                  {{ 'courses.noData' | translate }}
+                </h4>
+              </div>
               }
             </div>
             <!-- /Course More -->
@@ -189,7 +193,7 @@
         </div>
         <div class="col-lg-8">
           <!-- Introduction -->
-          <div class="student-widget lesson-introduction">
+          <!-- <div class="student-widget lesson-introduction">
             <div class="lesson-widget-group">
               <h4 class="tittle">{{ 'courses.introduction' | translate }}</h4>
               <div class="introduct-video">
@@ -201,13 +205,18 @@
                 </a>
               </div>
             </div>
-          </div>
+          </div> -->
+          <app-hls-player [src]="'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'"></app-hls-player>
+
+
+
+
           <!-- /Introduction -->
         </div>
       </div>
     </div>
   </section>
-  <!-- /Course Lesson -->
+  <!-- /Course Lesson pdf-->
   <app-pdf-viewer [pdfUrl]="pdfUrl" [showPdfViewer]="showPdfViewer" [resourceTitle]="currentResourceTitle"
     (closePdfEvent)="closePdfViewer()"></app-pdf-viewer>
 </div>

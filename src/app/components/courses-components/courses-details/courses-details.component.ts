@@ -16,6 +16,8 @@ import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
 import { CourseDetailsResponse } from './../../../core/interfaces/courses-details.interface';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { EncryptionService } from '../../../core/service/encryption.service';
+import { HlsPlayerComponent } from '../../hls-player/hls-player.component';
 
 @Component({
   selector: 'app-courses-details',
@@ -26,6 +28,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     NgFor,
     PdfViewerComponent,
     TranslateModule,
+    HlsPlayerComponent,
   ],
 
   templateUrl: './courses-details.component.html',
@@ -61,7 +64,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private _Router: Router,
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private encryptionService: EncryptionService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -83,60 +87,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     }
   }
-  handleResourceClick(
-    chapterId: number,
-    resourceId: number,
-    encryptedUrl: string,
-    resourceTitle: string
-  ): void {
-    // Set the IDs needed for decryption
-    this.chapterId = chapterId;
-    this.resourceId = resourceId;
 
-    // Get and log the decrypted URL
-    const decryptedUrl = this.getResourceUrl(encryptedUrl);
-
-    if (decryptedUrl) {
-      this.pdfUrl = String(decryptedUrl);
-      this.currentResourceTitle = resourceTitle;
-      this.showPdfViewer = true;
-
-      // Scroll to the top
-      this.scrollToTop();
-    }
-  }
   private scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  getResourceUrl(encryptedText: string): string {
-    if (!encryptedText) return '';
-
-    const $secret_key = `${this.userInfo.id}-${this.chapterId}-${this.VIDEO_ENCRYPTION_KEY}-${this.resourceId}-${this.userInfo.name}`;
-    const $secret_iv = `${this.userInfo.id}-${this.chapterId}-${this.VIDEO_ENCRYPTION_IV}-${this.resourceId}-${this.userInfo.name}`;
-
-    const key = CryptoJS.SHA256($secret_key)
-      .toString(CryptoJS.enc.Hex)
-      .substring(0, 32);
-    const iv = CryptoJS.SHA256($secret_iv)
-      .toString(CryptoJS.enc.Hex)
-      .substring(0, 16);
-
-    try {
-      const decryptedBytes = CryptoJS.AES.decrypt(
-        encryptedText,
-        CryptoJS.enc.Utf8.parse(key),
-        {
-          iv: CryptoJS.enc.Utf8.parse(iv),
-        }
-      );
-
-      const decrypted = decryptedBytes.toString(CryptoJS.enc.Utf8);
-
-      return decrypted;
-    } catch (error) {
-      console.error('Decryption error:', error);
-      return '';
-    }
   }
 
   ngOnDestroy(): void {
@@ -148,22 +101,29 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this.CourseSubscribe = true;
     }
   }
-  redirectToLesson(id: number, type: string, shapterId: number): void {
-    if (type === 'quiz') {
-      if (this._AuthService.isAuthenticated() && this.CourseSubscribe) {
+  redirectToLesson(id: number, type: string, chapterId: number): void {
+    const lessonType = type.toLowerCase();
+
+    if (!this._AuthService.isAuthenticated() || !this.CourseSubscribe) return;
+
+    switch (lessonType) {
+      case 'quiz':
         this._Router.navigate([`/auth/course-quiz/${this.courseId}/${id}`]);
-      }
-    }
-    if (type === 'meeting') {
-      if (this._AuthService.isAuthenticated() && this.CourseSubscribe) {
-        this._Router.navigate([
-          `/auth/course-metting/${this.courseId}/${id}/${shapterId}`,
-        ]);
-      }
-    }
-    if (type === 'video') {
+        break;
+
+      case 'video':
+        this.handleVideo(id, chapterId);
+        break;
+
+      case 'meeting':
+        this.handleMeeting(id, chapterId);
+        break;
+
+      default:
+        console.warn('Unknown lesson type:', lessonType);
     }
   }
+
   getDisplayIcon(lesson: any): string {
     // For free lessons,
     if (lesson.is_free) {
@@ -216,6 +176,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
             return;
           }
           this.courseDetails = data;
+          console.log(data);
+
           this.isLoading = false;
           this.isClientSubscribe();
         },
@@ -244,6 +206,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this._Router.navigate(['/courses']);
     }
   }
+
   getResources(courseId: any) {
     this._CoursesService.getResources(courseId).subscribe({
       next: (data: any) => {
@@ -344,5 +307,66 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
         },
       });
     });
+  }
+
+  //vedio
+  private handleVideo(lessonId: number, chapterId: number): void {
+    this._CoursesService.getVideo(lessonId).subscribe({
+      next: (response) => {
+        if (response.status === 1 && response.data?.file_data) {
+          const decryptedUrl = this.encryptionService.decryptData(
+            response.data.file_data,
+            this.userInfo.id,
+            chapterId, // خد الـ chapterId من البراميتر مش من الـ this.shapterId
+            lessonId,
+            this.userInfo.name
+          );
+          window.open(decryptedUrl, '_blank');
+        }
+      },
+      error: (err) => console.error('Error fetching video:', err),
+    });
+  }
+
+  //meeting
+  private handleMeeting(lessonId: number, chapterId: number): void {
+    this._CoursesService.joinMeeting(lessonId).subscribe({
+      next: (data) => {
+        if (data.status === 1 && data.data?.join_url) {
+          const decryptedJoinUrl = this.encryptionService.decryptData(
+            data.data.join_url,
+            this.userInfo.id,
+            chapterId,
+            lessonId,
+            this.userInfo.name
+          );
+          window.open(decryptedJoinUrl, '_blank');
+        }
+      },
+      error: (err) => console.error('Error joining meeting:', err),
+    });
+  }
+
+  //resourses
+  handleResourceClick(
+    chapterId: number,
+    resourceId: number,
+    encryptedUrl: string,
+    resourceTitle: string
+  ): void {
+    const decryptedUrl = this.encryptionService.decryptData(
+      encryptedUrl,
+      this.userInfo.id,
+      chapterId,
+      resourceId,
+      this.userInfo.name
+    );
+
+    if (decryptedUrl) {
+      this.pdfUrl = decryptedUrl;
+      this.currentResourceTitle = resourceTitle;
+      this.showPdfViewer = true;
+      this.scrollToTop();
+    }
   }
 }

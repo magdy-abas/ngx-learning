@@ -3,6 +3,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { CoursesService } from '../../../core/service/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { EncryptionService } from '../../../core/service/encryption.service';
 
 @Component({
   selector: 'app-courses-metting',
@@ -27,7 +28,8 @@ export class CoursesMettingComponent {
     private _AuthService: AuthService,
     private _CoursesService: CoursesService,
     private _route: ActivatedRoute,
-    private _Router: Router
+    private _Router: Router,
+    private encryptionService: EncryptionService
   ) {}
 
   ngAfterViewInit(): void {

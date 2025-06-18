@@ -13,6 +13,7 @@ import {
 } from '../interfaces/courses.interface';
 import { RequestJoinDto, QuizDTO } from './../Dtos/coursesDtos';
 import { MyCoursesResponse } from '../interfaces/my-courses.interface';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -99,6 +100,14 @@ export class CoursesService {
   joinMeeting(lessonId: number): Observable<any> {
     return this._HttpClient.post(`${baseUrl}lessons/join-meeting`, {
       meeting_id: lessonId,
+    });
+  }
+
+  //video
+
+  getVideo(lesson_id: number): Observable<any> {
+    return this._HttpClient.post(`${baseUrl}lessons/show`, {
+      lesson_id: lesson_id,
     });
   }
 }
