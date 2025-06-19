@@ -12,15 +12,14 @@ import {
 } from '@angular/core';
 import Hls from 'hls.js';
 import Plyr from 'plyr';
-import { TranslateService } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-hls-player',
   standalone: true,
   templateUrl: './hls-player.component.html',
   styleUrls: ['./hls-player.component.scss'],
-  imports: [NgIf],
+  imports: [NgIf, NgFor],
 })
 export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('videoPlayer') videoElement!: ElementRef<HTMLVideoElement>;
@@ -30,17 +29,27 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() muted: boolean = false;
   @Input() preload: 'none' | 'metadata' | 'auto' = 'metadata';
 
+  @Input() qualities: string[] = ['360', '480', '720'];
+
   @Output() playerReady = new EventEmitter<void>();
   @Output() error = new EventEmitter<any>();
 
   private hls: Hls | null = null;
   private player: Plyr | null = null;
   public showInitialLoader: boolean = true;
+  public currentQuality: string = '720';
+  public isQualityChanging: boolean = false;
+  public isQualitySwitching: boolean = false;
 
-  constructor(private translate: TranslateService) {}
+  public showQualityMenu = false;
+  public availableQualities: string[] = [];
+  public qualityUrls: any = {};
+
+  constructor() {}
 
   ngAfterViewInit(): void {
     if (this.src) {
+      this.generateQualityUrls(this.src);
       this.initializePlayer();
     }
   }
@@ -49,9 +58,34 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     if (changes['src'] && !changes['src'].firstChange) {
       this.destroyPlayer();
       if (this.src) {
+        this.generateQualityUrls(this.src);
         this.initializePlayer();
       }
     }
+  }
+
+  private generateQualityUrls(baseUrl: string) {
+    const match = baseUrl.match(/(.*\/)(\d+)(\/index\.m3u8)/);
+    if (match) {
+      const prefix = match[1];
+      const suffix = match[3];
+      this.availableQualities = this.qualities;
+      this.qualityUrls = {};
+      for (let q of this.qualities) {
+        this.qualityUrls[q] = `${prefix}${q}${suffix}`;
+      }
+    } else {
+      console.warn('Failed to parse source URL format.');
+    }
+  }
+
+  toggleQualityMenu() {
+    this.showQualityMenu = !this.showQualityMenu;
+  }
+
+  selectQuality(quality: string) {
+    this.showQualityMenu = false;
+    this.changeQuality(quality);
   }
 
   private initializePlayer(): void {
@@ -71,7 +105,8 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private initializeHls(): void {
     const video = this.videoElement.nativeElement;
-    this.hls = new Hls({ debug: false });
+
+    this.hls = new Hls();
     this.hls.loadSource(this.src);
     this.hls.attachMedia(video);
 
@@ -79,7 +114,7 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
       this.initializePlyr();
     });
 
-    this.hls.on(Hls.Events.ERROR, (_, data) => {
+    this.hls.on(Hls.Events.ERROR, (event, data) => {
       this.handleHlsError(data);
     });
   }
@@ -97,31 +132,11 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     });
   }
 
-  private async initializePlyr(): Promise<void> {
+  private initializePlyr(): void {
     const video = this.videoElement.nativeElement;
     if (this.player) {
       this.player.destroy();
     }
-
-    const translations = await this.translate.get('PLAYER').toPromise();
-    const i18nTexts: any = {
-      play: translations.play,
-      pause: translations.pause,
-      rewind: translations.rewind,
-      fastForward: translations.fastForward,
-      mute: translations.mute,
-      unmute: translations.unmute,
-      volume: translations.volume,
-      enterFullscreen: translations.enterFullscreen,
-      exitFullscreen: translations.exitFullscreen,
-      settings: translations.settings,
-      speed: translations.speed,
-      normal: translations.normal,
-      seek: translations.seek,
-      seekLabel: translations.seekLabel,
-      currentTime: translations.currentTime,
-      duration: translations.duration,
-    };
 
     this.player = new Plyr(video, {
       controls: [
@@ -137,35 +152,55 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
         'settings',
         'fullscreen',
       ],
-      settings: ['captions', 'speed'],
-      autoplay: this.autoplay,
-      muted: this.muted,
-      hideControls: false,
-      clickToPlay: true,
-      keyboard: { focused: true, global: false },
-      speed: {
-        selected: 1,
-        options: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
-      },
-      fullscreen: { enabled: true },
-      ratio: '16:9',
-      tooltips: { controls: true, seek: true },
-      captions: { active: false },
-      i18n: i18nTexts,
     });
 
-    this.player.on('ready', () => {
+    this.player.once('ready', () => {
       this.showInitialLoader = false;
       video.style.visibility = 'visible';
       this.playerReady.emit();
     });
   }
 
+  private async changeQuality(quality: string): Promise<void> {
+    if (this.isQualityChanging || !this.qualityUrls[quality]) return;
+
+    this.isQualityChanging = true;
+    this.isQualitySwitching = true;
+
+    const video = this.videoElement.nativeElement;
+    const savedTime = video.currentTime;
+    const wasPaused = video.paused;
+
+    try {
+      if (this.hls) {
+        this.hls.destroy();
+        this.hls = null;
+        await new Promise((res) => setTimeout(res, 300));
+
+        this.hls = new Hls();
+        this.hls.loadSource(this.qualityUrls[quality]);
+        this.hls.attachMedia(video);
+
+        await new Promise<void>((resolve) => {
+          this.hls?.on(Hls.Events.MANIFEST_PARSED, () => resolve());
+        });
+
+        video.currentTime = savedTime;
+        if (!wasPaused) await video.play();
+
+        this.currentQuality = quality;
+        console.log(`Switched to: ${quality}p`);
+      }
+    } catch (err) {
+      console.error('Error switching quality', err);
+    } finally {
+      this.isQualityChanging = false;
+      this.isQualitySwitching = false;
+    }
+  }
+
   private handleHlsError(data: any): void {
     console.error('HLS Error:', data);
-    if (data.fatal) {
-      this.handleError('Fatal HLS error', data);
-    }
   }
 
   private handleError(message: string, details?: any): void {

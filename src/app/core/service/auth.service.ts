@@ -104,7 +104,7 @@ export class AuthService {
 
   clearUserData(): void {
     this.cookieService.delete('token', '/'); // Delete the token cookie
-    localStorage.removeItem('userData'); // Remove user data from localStorage
+    localStorage.removeItem('userData');
     this.userData = null;
     this.auth.set(false);
   }

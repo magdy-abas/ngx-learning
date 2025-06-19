@@ -334,6 +334,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   private handleVideo(lessonId: number, chapterId: number): void {
     this._CoursesService.getVideo(lessonId).subscribe({
       next: (response) => {
+        console.log('Video response:', response);
+
         if (response.status === 1 && response.data?.file_data) {
           const decryptedUrl = this.encryptionService.decryptData(
             response.data.file_data,
@@ -390,5 +392,16 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this.showPdfViewer = true;
       this.scrollToTop();
     }
+  }
+  onQualityChanged(quality: string) {
+    console.log('Quality changed to:', quality);
+  }
+
+  onPlayerReady() {
+    console.log('Player is ready');
+  }
+
+  onPlayerError(error: any) {
+    console.error('Player error:', error);
   }
 }

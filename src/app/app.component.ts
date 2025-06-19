@@ -16,6 +16,7 @@ import { initSweetAlertTranslations } from './shared/utils/SweetAlert.utils';
 })
 export class AppComponent implements OnInit {
   title = 'e-learning';
+  tooltipText = 'تواصل معنا';
 
   constructor(
     private seoService: SeoService,
@@ -46,5 +47,10 @@ export class AppComponent implements OnInit {
         }, 500);
       }
     });
+  }
+
+  openWhatsApp(): void {
+    const whatsappUrl = `https://wa.me/+201129254200?text=اهلا`;
+    window.open(whatsappUrl, '_blank');
   }
 }
