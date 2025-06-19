@@ -44,7 +44,21 @@ export class AuthService {
   userData: UserData | null = null;
   auth = signal(false);
 
-  // login with watsapp
+  // logout
+  logout(): void {
+    this.cookieService.delete('token', '/');
+
+    localStorage.removeItem('userData');
+
+    this.userData = null;
+
+    this.auth.set(false);
+
+    this._Router.navigate(['/login']);
+  }
+
+  // login with
+  // watsapp
   checkLoginMethod(): Observable<CheckResponse> {
     return this._HttpClient.get<CheckResponse>(
       `${baseUrl}mobile-versions/last-version`

@@ -101,7 +101,7 @@
             <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
               <ul *ngIf="chapter.lessons?.length; else noLessons">
                 <li *ngFor="let lesson of chapter.lessons"
-                  (click)="redirectToLesson(lesson.id, lesson.type, chapter.id)">
+                  (click)="redirectToLesson(lesson.id, lesson.type, chapter.id , lesson.is_free)">
                   <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">{{lesson.title}}</p>
                   <div>
                     <img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;">
@@ -142,7 +142,9 @@
             <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
               <ul>
                 @for (resource of chapter.resources; track resource.id) {
-                <li (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title)">
+                <li
+                  (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title, resource.is_free)">
+
                   <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
                   <div>
                     @if (CourseSubscribe == false) {

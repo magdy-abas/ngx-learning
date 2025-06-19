@@ -1,0 +1,53 @@
+import { Component, OnInit, inject } from '@angular/core';
+import { DoctorsService } from '../../core/service/doctors.service';
+import {
+  Doctor,
+  DoctorsResponse,
+} from '../../core/interfaces/doctors.interface';
+import { HomeInstructorsComponent } from '../home/home-components/home-instructors/home-instructors.component';
+import { NgIf } from '@angular/common';
+import Aos from 'aos';
+
+@Component({
+  selector: 'app-doctors',
+  standalone: true,
+  imports: [HomeInstructorsComponent],
+  templateUrl: './doctors.component.html',
+  styleUrl: './doctors.component.scss',
+})
+export class DoctorsComponent implements OnInit {
+  doctors: Doctor[] = [];
+  currentPage: number = 1;
+  lastPage: number = 1;
+  isLoading: boolean = false;
+
+  private _doctorsService = inject(DoctorsService);
+
+  ngOnInit(): void {
+    this.getDoctors();
+
+    Aos.init({
+      duration: 1200,
+      once: true,
+    });
+  }
+
+  getDoctors(page: number = this.currentPage): void {
+    if (this.isLoading || this.currentPage > this.lastPage) return;
+
+    this.isLoading = true;
+
+    this._doctorsService.getDoctors(page).subscribe({
+      next: (res: DoctorsResponse) => {
+        this.doctors = [...this.doctors, ...res.data];
+        this.lastPage = res.meta.last_page;
+        this.currentPage++;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching doctors:', error);
+        this.isLoading = false;
+      },
+    });
+  }
+}

@@ -76,14 +76,17 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.spinner.show();
-    // Get course ID from route parameters
     this.isAuth = this._AuthService.isAuthenticated();
     const courseId = this._route.snapshot.paramMap.get('id');
     if (courseId) {
       this.fetchCourseDetails(+courseId);
-      this.getResources(+courseId);
+
+      if (this.isAuth) {
+        this.getResources(+courseId);
+        this.userInfo = this._AuthService.userData;
+      }
+
       this.courseId = +courseId;
-      this.userInfo = this._AuthService.userData;
     } else {
       this.errorMessage = 'Invalid course ID';
       this.isLoading = false;
@@ -103,22 +106,38 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this.CourseSubscribe = true;
     }
   }
-  redirectToLesson(id: number, type: string, chapterId: number): void {
+  redirectToLesson(
+    id: number,
+    type: string,
+    chapterId: number,
+    isFree: boolean
+  ): void {
     const lessonType = type.toLowerCase();
 
-    if (!this._AuthService.isAuthenticated() || !this.CourseSubscribe) return;
+    if (!isFree && !this._AuthService.isAuthenticated()) {
+      this.confirmBox();
+      return;
+    }
+
+    if (!isFree && !this.CourseSubscribe) {
+      return;
+    }
 
     switch (lessonType) {
       case 'quiz':
-        this._Router.navigate([`/auth/course-quiz/${this.courseId}/${id}`]);
+        if (this._AuthService.isAuthenticated()) {
+          this._Router.navigate([`/auth/course-quiz/${this.courseId}/${id}`]);
+        } else {
+          this._Router.navigate([`/course-quiz/${this.courseId}/${id}`]);
+        }
         break;
 
       case 'video':
-        this.handleVideo(id, chapterId);
+        this.handleVideo(id, chapterId, isFree);
         break;
 
       case 'meeting':
-        this.handleMeeting(id, chapterId);
+        this.handleMeeting(id, chapterId, isFree);
         break;
 
       default:
@@ -137,7 +156,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       // If user bought the course
       return this.getLessonTypeIcon(lesson.type);
     } else {
-      // If user hasn't bought the course, show lock icon
+      // If user hasn't bought the course
       return 'assets/img/icon/lock.svg';
     }
   }
@@ -306,7 +325,12 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
     const firstLesson = firstChapter.lessons[0];
 
-    this.redirectToLesson(firstLesson.id, firstLesson.type, firstChapter.id);
+    this.redirectToLesson(
+      firstLesson.id,
+      firstLesson.type,
+      firstChapter.id,
+      firstLesson.is_free
+    );
   }
 
   sendData(buyWith: string): Promise<boolean> {
@@ -331,19 +355,23 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
 
   //vedio
-  private handleVideo(lessonId: number, chapterId: number): void {
+  private handleVideo(
+    lessonId: number,
+    chapterId: number,
+    isFree: boolean
+  ): void {
     this._CoursesService.getVideo(lessonId).subscribe({
       next: (response) => {
-        console.log('Video response:', response);
-
         if (response.status === 1 && response.data?.file_data) {
-          const decryptedUrl = this.encryptionService.decryptData(
-            response.data.file_data,
-            this.userInfo.id,
-            chapterId,
-            lessonId,
-            this.userInfo.name
-          );
+          const decryptedUrl = isFree
+            ? response.data.file_data
+            : this.encryptionService.decryptData(
+                response.data.file_data,
+                this.userInfo?.id || 0,
+                chapterId,
+                lessonId,
+                this.userInfo?.name || 'Guest'
+              );
           this.videoUrl = decryptedUrl;
           this.videoLoaded = true;
         }
@@ -353,17 +381,23 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
 
   //meeting
-  private handleMeeting(lessonId: number, chapterId: number): void {
+  private handleMeeting(
+    lessonId: number,
+    chapterId: number,
+    isFree: boolean
+  ): void {
     this._CoursesService.joinMeeting(lessonId).subscribe({
       next: (data) => {
         if (data.status === 1 && data.data?.join_url) {
-          const decryptedJoinUrl = this.encryptionService.decryptData(
-            data.data.join_url,
-            this.userInfo.id,
-            chapterId,
-            lessonId,
-            this.userInfo.name
-          );
+          const decryptedJoinUrl = isFree
+            ? data.data.join_url
+            : this.encryptionService.decryptData(
+                data.data.join_url,
+                this.userInfo?.id || 0,
+                chapterId,
+                lessonId,
+                this.userInfo?.name || 'Guest'
+              );
           window.open(decryptedJoinUrl, '_blank');
         }
       },
@@ -376,15 +410,18 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     chapterId: number,
     resourceId: number,
     encryptedUrl: string,
-    resourceTitle: string
+    resourceTitle: string,
+    isFree: boolean
   ): void {
-    const decryptedUrl = this.encryptionService.decryptData(
-      encryptedUrl,
-      this.userInfo.id,
-      chapterId,
-      resourceId,
-      this.userInfo.name
-    );
+    const decryptedUrl = isFree
+      ? encryptedUrl
+      : this.encryptionService.decryptData(
+          encryptedUrl,
+          this.userInfo?.id || 0,
+          chapterId,
+          resourceId,
+          this.userInfo?.name || 'Guest'
+        );
 
     if (decryptedUrl) {
       this.pdfUrl = decryptedUrl;
@@ -393,6 +430,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this.scrollToTop();
     }
   }
+
   onQualityChanged(quality: string) {
     console.log('Quality changed to:', quality);
   }
