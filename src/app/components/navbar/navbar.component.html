@@ -1,408 +1,226 @@
-<!-- Header -->
-<header class="header header-page auth-navbar" [ngClass]="{'menu-opened': isMenuOpened}">
+<div class="">
+  <div class="auth-nav  ">
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" #overlay [class.active]="isMenuOpened"></div>
 
-  <div class="header-fixed">
-    <nav class="navbar navbar-expand-lg header-nav scroll-sticky">
-      <div class="container header-border">
-        <div class="navbar-header">
-          <a (click)="toggleSidebar()" id="mobile_btn" href="javascript:;">
-            <span class="bar-icon">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </a>
-          <a [routerLink]="routes.home" class="navbar-brand logo">
-            <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
-          </a>
+    <!-- Main Navigation -->
+    <nav #navbar [class.scrolled]="isScrolled" [class.transparent]="isTransparent" [class.home-page]="isHomePage"
+      [class.other-page]="!isHomePage">
+      <div class="container d-flex  justify-content-between justify-content-lg-start align-items-center">
+        <!-- Logo -->
+        <div class="logo" routerLink="/home">
+          <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
+
         </div>
-        <div class="main-menu-wrapper" [ngClass]="{'active': isMenuOpened}">
-          <div class="menu-header">
-            <a [routerLink]="routes.home" class="menu-logo">
-              <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+
+        <!-- Desktop Menu -->
+        <div class="menu">
+
+          <div class="menu-item" *ngFor="let item of menuItems">
+            <!-- Menu item with dropdown -->
+            <div *ngIf="item.hasDropdown">
+              <a href="#" class="menu-link has-dropdown" (click)="$event.preventDefault()">
+                {{ item.translationKey | translate }}
+                <i class="fas fa-chevron-down"></i>
+              </a>
+
+              <!-- Dropdown menu -->
+              <div class="dropdown" *ngIf="item.submenu">
+                <ng-container *ngFor="let subItem of item.submenu">
+
+                  <!-- Simple dropdown item -->
+                  <a *ngIf="!subItem.hasDropdown" [routerLink]="subItem.route" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    {{ subItem.translationKey | translate }}
+                  </a>
+
+                  <!-- Dropdown item with submenu -->
+                  <div *ngIf="subItem.hasDropdown" class="submenu-item">
+                    <a href="#" (click)="$event.preventDefault()">
+                      {{ subItem.translationKey | translate }}
+                      <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <div class="submenu-box" *ngIf="subItem.submenu">
+                      <a *ngFor="let subSubItem of subItem.submenu" [routerLink]="subSubItem.route"
+                        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        {{ subSubItem.translationKey | translate }}
+                      </a>
+                    </div>
+                  </div>
+
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- Simple menu item -->
+            <a *ngIf="!item.hasDropdown" [routerLink]="item.route || '#'" class="menu-link"
+              [class.active]="item.route && isActiveRoute(item.route)" (click)="item.route && navigateTo(item.route)">
+              {{ item.translationKey | translate }}
             </a>
-            <a (click)="hideSidebar()" class="menu-close" href="javascript:;">
-              <i class="fas fa-times"></i>
-            </a>
+
           </div>
-          <ul class="main-nav mobile-header-items">
-            <ng-container *ngFor="let mainMenus of sidebar">
-              <!-- Main menu with separate route -->
-              <ng-container *ngIf="mainMenus.separateRoute === true">
-                <li [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route">{{ mainMenus.translationKey | translate }}</a>
-                </li>
-              </ng-container>
-
-              <!-- Main menu with submenu -->
-              <ng-container *ngIf="mainMenus.separateRoute === false">
-                <li class="has-submenu" [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route" href="javascript:;"
-                    (click)="mainMenus.showAsTab = !mainMenus.showAsTab">
-                    {{ mainMenus.translationKey | translate }}
-                    <i class="fas fa-chevron-down"></i>
-                  </a>
-                  <ul class="submenu" [ngClass]="{'show-sub-menu': mainMenus.showAsTab === true}">
-                    <ng-container *ngFor="let menu of mainMenus.menu">
-                      <!-- Regular submenu items -->
-                      <ng-container *ngIf="menu.hasSubRoute === false">
-                        <li [class.active]="base === menu.base && page === menu.page">
-                          <a [routerLink]="menu.route">{{ menu.translationKey | translate }}</a>
-                        </li>
-                      </ng-container>
-
-                      <!-- Submenu items with nested submenu -->
-                      <ng-container *ngIf="menu.hasSubRoute === true">
-                        <li class="has-submenu" [class.active]="page === menu.page">
-                          <a (click)="menu.showSubRoute = !menu.showSubRoute" [routerLink]="menu.route">
-                            {{ menu.translationKey | translate }}
-                          </a>
-                          <ul class="submenu" [ngClass]="{'show-sub-menu': menu.showSubRoute === true}">
-                            <ng-container *ngFor="let subMenu of menu.subMenus">
-                              <li
-                                [class.active]="base === subMenu.base && page === subMenu.page && last === subMenu.last">
-                                <a [routerLink]="subMenu.route">{{ subMenu.translationKey | translate }}</a>
-                              </li>
-                            </ng-container>
-                          </ul>
-                        </li>
-                      </ng-container>
-                    </ng-container>
-                  </ul>
-                </li>
-              </ng-container>
-            </ng-container>
-
-            <!-- mobile  -->
 
 
 
-
-            <ng-container *ngFor="let mainMenus of mobileSidebar ">
-              <ng-container *ngIf="mainMenus.separateRoute === true">
-                <li class=" mobile-items" [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route">{{ mainMenus.translationKey | translate }}</a>
-                </li>
-              </ng-container>
-              <ng-container *ngIf="mainMenus.separateRoute === false">
-                <li class="has-submenu mobile-items" [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route" href="javascript:;"
-                    (click)="mainMenus.showAsTab = !mainMenus.showAsTab">
-                    {{ mainMenus.translationKey | translate }}
-                    <i class="fas fa-chevron-down"></i>
-                  </a>
-                  <ul class="submenu" [ngClass]="{'show-sub-menu': mainMenus.showAsTab === true}">
-                    <ng-container *ngFor="let menu of mainMenus.menu">
-                      <ng-container *ngIf="menu.hasSubRoute === false">
-                        <li [class.active]="base === menu.base && page === menu.page">
-                          <a [routerLink]="menu.route">{{ menu.translationKey | translate }}</a>
-                        </li>
-                      </ng-container>
-                      <ng-container *ngIf="menu.hasSubRoute === true">
-                        <li class="has-submenu" [class.active]="page === menu.page">
-                          <a (click)="menu.showSubRoute = !menu.showSubRoute" [routerLink]="menu.route">
-                            {{ menu.translationKey | translate }}
-                          </a>
-                          <ul class="submenu" [ngClass]="{'show-sub-menu': menu.showSubRoute === true}">
-                            <ng-container *ngFor="let subMenu of menu.subMenus">
-                              <li
-                                [class.active]="base === subMenu.base && page === subMenu.page && last === subMenu.last">
-                                <a [routerLink]="subMenu.route">{{ subMenu.translationKey | translate }}</a>
-                              </li>
-                            </ng-container>
-                          </ul>
-                        </li>
-                      </ng-container>
-                    </ng-container>
-                  </ul>
-                </li>
-              </ng-container>
-            </ng-container>
-
-
-            <!-- mobile  -->
-
-
-
-          </ul>
         </div>
-
-
-        <ul class="nav header-navbar-rht">
-          <div class="lang-toggle first-header">
+        <!-- Language switcher + User dropdown -->
+        <div class="nav-actions d-flex align-items-center">
+          <!-- زر تغيير اللغة -->
+          <div class="lang-toggle me-3 d-none d-lg-block">
             <app-btn-lang></app-btn-lang>
           </div>
-          <!-- <li class="nav-item">
-            <a [routerLink]="routes.page_course_message"><img src="assets/img/icon/messages.svg" alt="img"></a>
-          </li> -->
-          <li class="nav-item cart-nav">
-            <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
-              <img src="assets/img/icon/cart.svg" alt="img">
-            </a>
-            <div class="wishes-list dropdown-menu dropdown-menu-right">
-              <div class="wish-header">
-                <a href="javascript:;">View Cart</a>
-                <a href="javascript:void(0)" class="float-end">Checkout</a>
-              </div>
-              <div class="wish-content">
-                <ul>
-                  <li>
-                    <div class="media">
-                      <div class="d-flex media-wide">
-                        <div class="avatar">
-                          <a [routerLink]="routes.page_course_details">
-                            <img alt="" src="assets/img/course/course-04.jpg">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h6><a [routerLink]="routes.page_course_details">Learn
-                              Angular...</a></h6>
-                          <p>By Dave Franco</p>
-                          <h5>$200 <span>$99.00</span></h5>
-                        </div>
-                      </div>
-                      <div class="remove-btn">
-                        <a href="javascript:;" class="btn">Remove</a>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media">
-                      <div class="d-flex media-wide">
-                        <div class="avatar">
-                          <a [routerLink]="routes.page_course_details">
-                            <img alt="" src="assets/img/course/course-14.jpg">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h6><a [routerLink]="routes.page_course_details">Build Responsive
-                              Real...</a></h6>
-                          <p>Jenis R.</p>
-                          <h5>$200 <span>$99.00</span></h5>
-                        </div>
-                      </div>
-                      <div class="remove-btn">
-                        <a href="javascript:;" class="btn">Remove</a>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media">
-                      <div class="d-flex media-wide">
-                        <div class="avatar">
-                          <a [routerLink]="routes.page_course_details">
-                            <img alt="" src="assets/img/course/course-15.jpg">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h6><a [routerLink]="routes.page_course_details">C# Developers
-                              Double ...</a></h6>
-                          <p>Jesse Stevens</p>
-                          <h5>$200 <span>$99.00</span></h5>
-                        </div>
-                      </div>
-                      <div class="remove-btn">
-                        <a href="javascript:;" class="btn">Remove</a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <div class="total-item">
-                  <h6>Subtotal : $ 600</h6>
-                  <h5>Total : $ 600</h5>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="nav-item wish-nav">
-            <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
-              <img src="assets/img/icon/wish.svg" alt="img">
-            </a>
-            <div class="wishes-list dropdown-menu dropdown-menu-right">
-              <div class="wish-content">
-                <ul>
-                  <li>
-                    <div class="media">
-                      <div class="d-flex media-wide">
-                        <div class="avatar">
-                          <a [routerLink]="">
-                            <img alt="" src="assets/img/course/course-04.jpg">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h6><a [routerLink]="">Learn
-                              Angular...</a></h6>
-                          <p>By Dave Franco</p>
-                          <h5>$200 <span>$99.00</span></h5>
-                          <div class="remove-btn">
-                            <a href="javascript:;" class="btn">Add to cart</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media">
-                      <div class="d-flex media-wide">
-                        <div class="avatar">
-                          <a [routerLink]="">
-                            <img alt="" src="assets/img/course/course-14.jpg">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h6><a [routerLink]="">Build Responsive
-                              Real...</a></h6>
-                          <p>Jenis R.</p>
-                          <h5>$200 <span>$99.00</span></h5>
-                          <div class="remove-btn">
-                            <a href="javascript:;" class="btn">Add to cart</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media">
-                      <div class="d-flex media-wide">
-                        <div class="avatar">
-                          <a [routerLink]="">
-                            <img alt="" src="assets/img/course/course-15.jpg">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h6><a [routerLink]="">C# Developers
-                              Double ...</a></h6>
-                          <p>Jesse Stevens</p>
-                          <h5>$200 <span>$99.00</span></h5>
-                          <div class="remove-btn">
-                            <a href="javascript:;" class="btn">Remove</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-          <!-- <li class="nav-item noti-nav">
-            <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
-              <img src="assets/img/icon/notification.svg" alt="img">
-            </a>
-            <div class="notifications dropdown-menu dropdown-menu-right">
-              <div class="topnav-dropdown-header">
-                <span class="notification-title">Notifications
-                  <select>
-                    <option>All</option>
-                    <option>Unread</option>
-                  </select>
-                </span>
-                <a href="javascript:void(0)" class="clear-noti">Mark all as read <i
-                    class="fa-solid fa-circle-check"></i></a>
-              </div>
-              <div class="noti-content">
-                <ul class="notification-list">
-                  <li class="notification-message">
-                    <div class="media d-flex">
-                      <div>
-                        <a [routerLink]="routes.page_notifications" class="avatar">
-                          <img class="avatar-img" alt="" src="assets/img/user/user1.jpg">
-                        </a>
-                      </div>
-                      <div class="media-body">
-                        <h6><a [routerLink]="routes.page_notifications">Lex Murphy requested
-                            <span>access to</span> UNIX directory tree hierarchy </a></h6>
-                        <button class="btn btn-accept me-1">Accept</button>
-                        <button class="btn btn-reject">Reject</button>
-                        <p>Today at 9:42 AM</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="notification-message">
-                    <div class="media d-flex">
-                      <div>
-                        <a [routerLink]="routes.page_notifications" class="avatar">
-                          <img class="avatar-img" alt="" src="assets/img/user/user2.jpg">
-                        </a>
-                      </div>
-                      <div class="media-body">
-                        <h6><a [routerLink]="routes.page_notifications">Ray Arnold left 6
-                            <span>comments on</span> Isla Nublar SOC2 compliance report</a>
-                        </h6>
-                        <p>Yesterday at 11:42 PM</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="notification-message">
-                    <div class="media d-flex">
-                      <div>
-                        <a [routerLink]="routes.page_notifications" class="avatar">
-                          <img class="avatar-img" alt="" src="assets/img/user/user3.jpg">
-                        </a>
-                      </div>
-                      <div class="media-body">
-                        <h6><a [routerLink]="routes.page_notifications">Dennis Nedry <span>commented
-                              on</span> Isla Nublar SOC2 compliance report</a></h6>
-                        <p class="noti-details">“Oh, I finished de-bugging the phones, but the
-                          system's compiling for eighteen minutes, or twenty. So, some minor
-                          systems may go on and off for a while.”</p>
-                        <p>Yesterday at 5:42 PM</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="notification-message">
-                    <div class="media d-flex">
-                      <div>
-                        <a [routerLink]="routes.page_notifications" class="avatar">
-                          <img class="avatar-img" alt="" src="assets/img/user/user1.jpg">
-                        </a>
-                      </div>
-                      <div class="media-body">
-                        <h6><a [routerLink]="routes.page_notifications">John Hammond
-                            <span>created</span> Isla Nublar SOC2 compliance report </a>
-                        </h6>
-                        <p>Last Wednesday at 11:15 AM</p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li> -->
-          <li class="nav-item user-nav">
+
+
+          <!-- user -->
+          <li class="nav-item user-nav list-unstyled m-0">
             <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
               <span class="user-img">
                 <img src="assets/img/user/user11.jpg" alt="">
                 <span class="status online"></span>
               </span>
             </a>
+
             <div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
-              <div class="user-header">
+              <div class="user-header d-flex align-items-center gap-2 px-3 py-2 border-bottom">
                 <div class="avatar avatar-sm">
                   <img src="assets/img/user/user11.jpg" alt="User Image" class="avatar-img rounded-circle">
                 </div>
                 <div class="user-text">
-                  <h6>Rolands R</h6>
+                  <h6 class="mb-0">Rolands R</h6>
                   <p class="text-muted mb-0">Student</p>
                 </div>
               </div>
-              <a class="dropdown-item" [routerLink]=""><i-feather name="user" class="me-1"></i-feather> Profile</a>
-              <a class="dropdown-item" [routerLink]=""><i-feather name="star" class="me-1"></i-feather> Subscription</a>
-              <div class="dropdown-item night-mode">
-                <span><i-feather name="moon" class="me-1"></i-feather> Night Mode </span>
-                <div class="form-check form-switch check-on m-0">
-                  <input class="form-check-input" type="checkbox" id="night-mode">
+
+              <a class="dropdown-item" [routerLink]="'/profile'">
+                <i class="fas fa-user me-1"></i>
+                {{ 'navbar.profile' | translate }}
+              </a>
+
+
+
+              <div style="cursor: pointer"
+                class="dropdown-item night-mode d-flex justify-content-between align-items-center"
+                (click)="toggleDarkMode($event)">
+                <span>
+                  <i class="fas fa-moon me-1"></i> {{ 'navbar.nightMode' | translate }}
+                </span>
+                <div class="form-check form-switch m-0">
+                  <input class="form-check-input" type="checkbox" id="night-mode" [checked]="isDarkMode" readonly />
                 </div>
               </div>
+
+
               <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
-                <i-feather name="log-out" class="me-1"></i-feather>
-                {{"navbar.logout"| translate}}
+                <i class="fas fa-sign-out-alt me-1"></i>
+                {{ 'navbar.logout' | translate }}
               </a>
             </div>
           </li>
-        </ul>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger  " #hamburgerBtn>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
       </div>
+
     </nav>
+
+
+    <!-- Mobile Side Menu -->
+    <div class=" side-menu " style=" position: fixed;" #sideMenu [class.active]="isMenuOpened">
+
+      <!-- Side Menu Header -->
+      <div class="side-menu-header ">
+        <div class="logo" routerLink="/home">
+          <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
+
+        </div>
+        <button class="close-btn" #closeBtn>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Side Menu Items -->
+      <ul>
+        <li *ngFor="let item of menuItems">
+
+          <!-- Menu item with submenu -->
+          <div *ngIf="item.hasDropdown">
+            <a (click)="toggleSubmenu(item.title, $event)" [class.active]="isSubmenuActive(item.title)">
+              {{ item.translationKey | translate }}
+              <i class="fas fa-chevron-down"
+                [style.transform]="isSubmenuActive(item.title) ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
+            </a>
+
+            <!-- Mobile Submenu -->
+            <div class="submenu" [class.active-sub]="isSubmenuActive(item.title)" *ngIf="item.submenu">
+
+              <ng-container *ngFor="let subItem of item.submenu">
+
+                <!-- Simple submenu item -->
+                <a *ngIf="!subItem.hasDropdown" [routerLink]="subItem.route || '#'"
+                  [class.active]="subItem.route && isActiveRoute(subItem.route)"
+                  (click)="subItem.route && navigateTo(subItem.route)">
+                  {{ subItem.translationKey | translate }}
+                </a>
+
+                <!-- Submenu item with nested submenu -->
+                <div *ngIf="subItem.hasDropdown" class="submenu-item">
+                  <div (click)="toggleSubmenu(item.title + '_' + subItem.title, $event)"
+                    style="cursor: pointer; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 14px;">
+                    {{ subItem.translationKey | translate }}
+                    <i class="fas fa-chevron-down"
+                      [style.transform]="isSubmenuActive(item.title + '_' + subItem.title) ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
+                  </div>
+
+                  <!-- Nested submenu -->
+                  <div class="submenu" [class.active-sub]="isSubmenuActive(item.title + '_' + subItem.title)"
+                    *ngIf="subItem.submenu">
+                    <a *ngFor="let subSubItem of subItem.submenu" [routerLink]="subSubItem.route || '#'"
+                      [class.active]="subSubItem.route && isActiveRoute(subSubItem.route)"
+                      (click)="subSubItem.route && navigateTo(subSubItem.route)">
+                      {{ subSubItem.translationKey | translate }}
+                    </a>
+                  </div>
+                </div>
+
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Simple menu item -->
+          <div *ngIf="!item.hasDropdown">
+            <a [routerLink]="item.route || '#'" [class.active]="item.route && isActiveRoute(item.route)"
+              (click)="item.route && navigateTo(item.route)">
+              {{ item.translationKey | translate }}
+            </a>
+          </div>
+
+        </li>
+        <!-- Language Dropdown in Sidebar -->
+        <li class="sidebar-lang" (click)="toggleLangDropdown($event)" style="cursor: pointer;">
+          <div class="d-flex justify-content-between align-items-center px-3 py-2">
+            <span>{{ 'navbar.language' | translate }}</span>
+            <i class="fas fa-chevron-down"
+              [style.transform]="isLangDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
+          </div>
+
+          <ul class="lang-options ps-3 pe-3 pb-2" *ngIf="isLangDropdownOpen">
+            <li class="py-1" (click)="switchLanguage('ar')">العربية</li>
+            <li class="py-1" (click)="switchLanguage('en')">English</li>
+          </ul>
+        </li>
+
+
+        <!-- Mobile Auth Links -->
+
+        <li><a routerLink="/signup" (click)="navigateTo('/signup')">{{ 'navbar.logout' | translate }}</a></li>
+      </ul>
+
+    </div>
   </div>
-</header>
-<!-- /Header -->
+</div>

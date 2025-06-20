@@ -1,164 +1,193 @@
-<!-- auth-navbar.component.html -->
-<header class="header header-two " [ngClass]="{
-  'menu-opened': isMenuOpened,
-  'header-page': !isHomePage ||
-                 base === 'blog' ||
-                 page === 'notifications' ||
-                 page === 'faq' ||
-                 page === 'pricing-plan' ||
-                 page === 'wishlist' ||
-                 page === 'support' ||
-                 page === 'job-category' ||
-                 page === 'term-condition' ||
-                 page === 'privacy-policy' ||
-                 page === 'help-center' ||
-                 page === 'pricing-plan2'
-}">
-  <div class="add-header-bg first-header py-2">
-    <div class=" container ">
-      <div class="d-flex justify-content-between ">
-        <div class="lang-toggle">
-          <app-btn-lang></app-btn-lang>
-        </div>
-
-
-        <ul class="nav header-navbar-rht">
-          <li class="nav-item">
-            <a class="login-head button" routerLink="login">{{ 'navbar.login' | translate }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="signin-head" routerLink="signup">{{ 'navbar.signUp' | translate }}</a>
-          </li>
-        </ul>
+<div class="add-header-bg first-header py-2">
+  <div class=" container ">
+    <div class="d-flex justify-content-between ">
+      <div class="lang-toggle">
+        <app-btn-lang></app-btn-lang>
       </div>
+
+
+      <ul class="nav header-navbar-rht">
+        <li class="nav-item">
+          <a class="login-head button" routerLink="login">{{ 'navbar.login' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="signin-head" routerLink="signup">{{ 'navbar.signUp' | translate }}</a>
+        </li>
+      </ul>
     </div>
   </div>
-  <div class="header-fixed">
+</div>
 
 
+<div class="">
+  <div class="auth-nav  ">
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" #overlay [class.active]="isMenuOpened"></div>
 
+    <!-- Main Navigation -->
+    <nav #navbar [class.scrolled]="isScrolled" [class.transparent]="isTransparent" [class.home-page]="isHomePage"
+      [class.other-page]="!isHomePage">
+      <div class="container d-flex  justify-content-between justify-content-lg-start">
+        <!-- Logo -->
+        <div class="logo" routerLink="/home">
+          <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
 
-    <nav class="navbar navbar-expand-lg header-nav scroll-sticky" [ngClass]="{
-      'add-header-bg': white_bg === true
-    }">
-      <div class="container ">
-
-        <div class="navbar-header">
-          <a (click)="toggleSidebar()" id="mobile_btn" href="javascript:;">
-            <span class="bar-icon">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </a>
-          <a routerLink="/home" class="navbar-brand logo">
-            <img src="assets/img/logo.svg" class="img-fluid" alt="Logo" />
-          </a>
         </div>
-        <div class="main-menu-wrapper">
-          <div class="menu-header">
-            <a routerLink="/home" class="menu-logo">
-              <img src="assets/img/logo.svg" class="img-fluid" alt="Logo" />
+
+        <!-- Desktop Menu -->
+        <div class="menu">
+          <div class="menu-item" *ngFor="let item of menuItems">
+
+            <!-- Menu item with dropdown -->
+            <div *ngIf="item.hasDropdown">
+              <a href="#" class="menu-link has-dropdown" [class.active]="item.route && isActiveRoute(item.route)"
+                (click)="$event.preventDefault()">
+                {{ item.translationKey | translate }}
+                <i class="fas fa-chevron-down"></i>
+              </a>
+
+              <!-- Dropdown menu -->
+              <div class="dropdown" *ngIf="item.submenu">
+                <ng-container *ngFor="let subItem of item.submenu">
+
+                  <!-- Simple dropdown item -->
+                  <a *ngIf="!subItem.hasDropdown" [routerLink]="subItem.route || '#'"
+                    [class.active]="subItem.route && isActiveRoute(subItem.route)"
+                    (click)="subItem.route && navigateTo(subItem.route)">
+                    {{ subItem.translationKey | translate }}
+                  </a>
+
+                  <!-- Dropdown item with submenu -->
+                  <div *ngIf="subItem.hasDropdown" class="submenu-item">
+                    <a href="#" (click)="$event.preventDefault()">
+                      {{ subItem.translationKey | translate }}
+                      <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <div class="submenu-box" *ngIf="subItem.submenu">
+                      <a *ngFor="let subSubItem of subItem.submenu" [routerLink]="subSubItem.route || '#'"
+                        [class.active]="subSubItem.route && isActiveRoute(subSubItem.route)"
+                        (click)="subSubItem.route && navigateTo(subSubItem.route)">
+                        {{ subSubItem.translationKey | translate }}
+                      </a>
+                    </div>
+                  </div>
+
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- Simple menu item -->
+            <a *ngIf="!item.hasDropdown" [routerLink]="item.route || '#'" class="menu-link"
+              [class.active]="item.route && isActiveRoute(item.route)" (click)="item.route && navigateTo(item.route)">
+              {{ item.translationKey | translate }}
             </a>
-            <a (click)="hideSidebar()" class="menu-close" href="javascript:;">
-              <i class="fas fa-times"></i>
-            </a>
+
           </div>
-          <ul class="main-nav mobile-header-items">
-            <ng-container *ngFor="let mainMenus of sidebar">
-              <ng-container *ngIf="mainMenus.separateRoute === true">
-                <li [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route">{{ mainMenus.translationKey | translate }}</a>
-                </li>
-              </ng-container>
-              <ng-container *ngIf="mainMenus.separateRoute === false">
-                <li class="has-submenu" [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route" href="javascript:;"
-                    (click)="mainMenus.showAsTab = !mainMenus.showAsTab">
-                    {{ mainMenus.translationKey | translate }}
-                    <i class="fas fa-chevron-down"></i>
-                  </a>
-                  <ul class="submenu" [ngClass]="{'show-sub-menu': mainMenus.showAsTab === true}">
-                    <ng-container *ngFor="let menu of mainMenus.menu">
-                      <ng-container *ngIf="menu.hasSubRoute === false">
-                        <li [class.active]="base === menu.base && page === menu.page">
-                          <a [routerLink]="menu.route">{{ menu.translationKey | translate }}</a>
-                        </li>
-                      </ng-container>
-                      <ng-container *ngIf="menu.hasSubRoute === true">
-                        <li class="has-submenu" [class.active]="page === menu.page">
-                          <a (click)="menu.showSubRoute = !menu.showSubRoute" [routerLink]="menu.route">
-                            {{ menu.translationKey | translate }}
-                          </a>
-                          <ul class="submenu" [ngClass]="{'show-sub-menu': menu.showSubRoute === true}">
-                            <ng-container *ngFor="let subMenu of menu.subMenus">
-                              <li
-                                [class.active]="base === subMenu.base && page === subMenu.page && last === subMenu.last">
-                                <a [routerLink]="subMenu.route">{{ subMenu.translationKey | translate }}</a>
-                              </li>
-                            </ng-container>
-                          </ul>
-                        </li>
-                      </ng-container>
-                    </ng-container>
-                  </ul>
-                </li>
-              </ng-container>
-            </ng-container>
-
-            <!-- mobile  -->
-
-            <ng-container *ngFor="let mainMenus of mobileSidebar ">
-              <ng-container *ngIf="mainMenus.separateRoute === true">
-                <li class=" mobile-items" [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route">{{ mainMenus.translationKey | translate }}</a>
-                </li>
-              </ng-container>
-              <ng-container *ngIf="mainMenus.separateRoute === false">
-                <li class="has-submenu mobile-items" [class.active]="base === mainMenus.base">
-                  <a [routerLink]="mainMenus.route" href="javascript:;"
-                    (click)="mainMenus.showAsTab = !mainMenus.showAsTab">
-                    {{ mainMenus.translationKey | translate }}
-                    <i class="fas fa-chevron-down"></i>
-                  </a>
-                  <ul class="submenu" [ngClass]="{'show-sub-menu': mainMenus.showAsTab === true}">
-                    <ng-container *ngFor="let menu of mainMenus.menu">
-                      <ng-container *ngIf="menu.hasSubRoute === false">
-                        <li [class.active]="base === menu.base && page === menu.page">
-                          <a [routerLink]="menu.route">{{ menu.translationKey | translate }}</a>
-                        </li>
-                      </ng-container>
-                      <ng-container *ngIf="menu.hasSubRoute === true">
-                        <li class="has-submenu" [class.active]="page === menu.page">
-                          <a (click)="menu.showSubRoute = !menu.showSubRoute" [routerLink]="menu.route">
-                            {{ menu.translationKey | translate }}
-                          </a>
-                          <ul class="submenu" [ngClass]="{'show-sub-menu': menu.showSubRoute === true}">
-                            <ng-container *ngFor="let subMenu of menu.subMenus">
-                              <li
-                                [class.active]="base === subMenu.base && page === subMenu.page && last === subMenu.last">
-                                <a [routerLink]="subMenu.route">{{ subMenu.translationKey | translate }}</a>
-                              </li>
-                            </ng-container>
-                          </ul>
-                        </li>
-                      </ng-container>
-                    </ng-container>
-                  </ul>
-                </li>
-              </ng-container>
-            </ng-container>
-
-
-
-          </ul>
         </div>
 
 
-
-
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger" #hamburgerBtn>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
       </div>
+
     </nav>
+
+
+    <!-- Mobile Side Menu -->
+    <div class="side-menu " style="position: fixed;" #sideMenu [class.active]="isMenuOpened">
+
+      <!-- Side Menu Header -->
+      <div class="side-menu-header ">
+        <div class="logo" routerLink="/home">
+          <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
+
+        </div>
+        <button class="close-btn" #closeBtn>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Side Menu Items -->
+      <ul>
+        <li *ngFor="let item of menuItems">
+
+          <!-- Menu item with submenu -->
+          <div *ngIf="item.hasDropdown">
+            <a (click)="toggleSubmenu(item.title, $event)" [class.active]="isSubmenuActive(item.title)">
+              {{ item.translationKey | translate }}
+              <i class="fas fa-chevron-down"
+                [style.transform]="isSubmenuActive(item.title) ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
+            </a>
+
+            <!-- Mobile Submenu -->
+            <div class="submenu" [class.active-sub]="isSubmenuActive(item.title)" *ngIf="item.submenu">
+
+              <ng-container *ngFor="let subItem of item.submenu">
+
+                <!-- Simple submenu item -->
+                <a *ngIf="!subItem.hasDropdown" [routerLink]="subItem.route || '#'"
+                  [class.active]="subItem.route && isActiveRoute(subItem.route)"
+                  (click)="subItem.route && navigateTo(subItem.route)">
+                  {{ subItem.translationKey | translate }}
+                </a>
+
+                <!-- Submenu item with nested submenu -->
+                <div *ngIf="subItem.hasDropdown" class="submenu-item">
+                  <div (click)="toggleSubmenu(item.title + '_' + subItem.title, $event)"
+                    style="cursor: pointer; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 14px;">
+                    {{ subItem.translationKey | translate }}
+                    <i class="fas fa-chevron-down"
+                      [style.transform]="isSubmenuActive(item.title + '_' + subItem.title) ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
+                  </div>
+
+                  <!-- Nested submenu -->
+                  <div class="submenu" [class.active-sub]="isSubmenuActive(item.title + '_' + subItem.title)"
+                    *ngIf="subItem.submenu">
+                    <a *ngFor="let subSubItem of subItem.submenu" [routerLink]="subSubItem.route || '#'"
+                      [class.active]="subSubItem.route && isActiveRoute(subSubItem.route)"
+                      (click)="subSubItem.route && navigateTo(subSubItem.route)">
+                      {{ subSubItem.translationKey | translate }}
+                    </a>
+                  </div>
+                </div>
+
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Simple menu item -->
+          <div *ngIf="!item.hasDropdown">
+            <a [routerLink]="item.route || '#'" [class.active]="item.route && isActiveRoute(item.route)"
+              (click)="item.route && navigateTo(item.route)">
+              {{ item.translationKey | translate }}
+            </a>
+          </div>
+
+        </li>
+        <!-- Language Dropdown in Sidebar -->
+        <li class="sidebar-lang" (click)="toggleLangDropdown($event)" style="cursor: pointer;">
+          <div class="d-flex justify-content-between align-items-center px-3 py-2">
+            <span>{{ 'navbar.language' | translate }}</span>
+            <i class="fas fa-chevron-down"
+              [style.transform]="isLangDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
+          </div>
+
+          <ul class="lang-options ps-3 pe-3 pb-2" *ngIf="isLangDropdownOpen">
+            <li class="py-1" (click)="switchLanguage('ar')">العربية</li>
+            <li class="py-1" (click)="switchLanguage('en')">English</li>
+          </ul>
+        </li>
+
+        <!-- Mobile Auth Links -->
+        <li><a routerLink="/login" (click)="navigateTo('/login')">{{ 'navbar.login' | translate }}</a></li>
+        <li><a routerLink="/signup" (click)="navigateTo('/signup')">{{ 'navbar.signUp' | translate }}</a></li>
+      </ul>
+
+    </div>
   </div>
-</header>
+</div>

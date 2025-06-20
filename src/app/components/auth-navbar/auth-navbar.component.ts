@@ -1,149 +1,191 @@
-// auth-navbar.component.ts
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { CommonModule, NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import {
-  navbarMenu,
-  MainMenuItem,
-  navbarAuthMenu,
-  navbarAuthMobileMenu,
-} from '../../core/service/data/navbar.data';
 import {
   Component,
   ElementRef,
   HostListener,
   ViewChild,
   OnInit,
+  OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
+import { Subscription } from 'rxjs';
 
-// Update the interface to include translation keys
-interface SidebarMenu {
-  tittle: string;
+interface MenuItem {
+  title: string;
   route?: string;
-  base?: string;
-  base2?: string;
-  base3?: string;
-  base4?: string;
-  separateRoute: boolean;
-  showAsTab?: boolean;
-  translationKey: string; // Add translation key
-  menu?: {
-    menuValue: string;
-    route: string;
-    base: string;
-    page: string;
-    hasSubRoute: boolean;
-    showSubRoute?: boolean;
-    translationKey: string; // Add translation key
-    subMenus?: {
-      menuValue: string;
-      route: string;
-      base: string;
-      page: string;
-      last: string;
-      translationKey: string; // Add translation key
-    }[];
-  }[];
+  translationKey: string;
+  hasDropdown?: boolean;
+  submenu?: MenuItem[];
 }
 
 @Component({
   selector: 'app-auth-navbar',
   standalone: true,
-  imports: [
-    NgClass,
-    RouterLink,
-    CommonModule,
-    TranslateModule,
-    BtnLangComponent,
-  ],
+  imports: [RouterLink, CommonModule, TranslateModule, BtnLangComponent],
   templateUrl: './auth-navbar.component.html',
   styleUrls: ['./auth-navbar.component.scss'],
 })
-export class AuthNavbarComponent implements OnInit {
-  @ViewChild('stickyMenu') menuElement!: ElementRef;
+export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('navbar', { static: true }) navbar!: ElementRef;
+  @ViewChild('sideMenu', { static: true }) sideMenu!: ElementRef;
+  @ViewChild('overlay', { static: true }) overlay!: ElementRef;
+  @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
+  @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
+  public isLangDropdownOpen = false;
 
   public isMenuOpened = false;
+  public isTransparent = true;
+  public isScrolled = false;
   public isHomePage = false;
-  public sidebar: SidebarMenu[] = navbarAuthMenu;
-  public mobileSidebar: SidebarMenu[] = navbarAuthMobileMenu;
+  public activeSubmenu: { [key: string]: boolean } = {};
 
-  base = '';
-  page = '';
-  last = '';
-  sticky = false;
-  white_bg = false;
-  elementPosition: number = 0;
+  private routerSubscription!: Subscription;
+
+  public menuItems: MenuItem[] = [
+    { title: 'Home', translationKey: 'navbar.home', route: '/home' },
+    { title: 'courses', translationKey: 'navbar.courses', route: '/courses' },
+    {
+      title: 'categories',
+      translationKey: 'navbar.categories',
+      route: '/categories',
+    },
+  ];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService
-  ) {
-    // Monitor route changes to update active states
-    this.router.events
+  ) {}
+
+  ngOnInit() {
+    this.checkCurrentRoute();
+    this.handleNavbarState();
+
+    this.routerSubscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        const url = this.router.url;
-        const urlParts = url.split('/').filter((part) => part);
-
-        this.base = urlParts[0] || '';
-        this.page = urlParts[1] || '';
-        this.last = urlParts[2] || '';
-
-        this.checkIfHomePage();
+        this.closeMobileMenu();
+        this.checkCurrentRoute();
+        this.handleNavbarState();
       });
   }
 
-  ngOnInit(): void {
-    this.checkIfHomePage();
+  ngAfterViewInit() {
+    this.setupEventListeners();
   }
 
-  private checkIfHomePage(): void {
-    const url = this.router.url;
-    this.isHomePage = url === '/' || url === '/home';
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  private isDesktop(): boolean {
+    return window.innerWidth >= 992;
+  }
+
+  private handleNavbarState() {
+    if (!this.isDesktop()) {
+      this.isTransparent = false;
+      this.isScrolled = false;
+      this.isHomePage = false;
+      return;
+    }
+
+    if (this.isHomePage) {
+      if (window.scrollY === 0) {
+        this.isTransparent = true;
+        this.isScrolled = false;
+      } else {
+        this.isTransparent = false;
+        this.isScrolled = true;
+      }
+    } else {
+      this.isTransparent = false;
+      this.isScrolled = true;
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
-  handleScroll() {
-    const windowScroll = window.pageYOffset;
-    this.sticky = windowScroll >= this.elementPosition;
-    this.white_bg = windowScroll !== 0;
+  onWindowScroll() {
+    if (this.isDesktop()) {
+      this.handleNavbarState();
+    }
   }
 
-  public toggleSidebar(): void {
-    this.isMenuOpened = !this.isMenuOpened;
+  private checkCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.isHomePage =
+      currentUrl === '/' ||
+      currentUrl === '/home' ||
+      currentUrl.startsWith('/home?') ||
+      currentUrl.startsWith('/?');
   }
 
-  public hideSidebar(): void {
+  private setupEventListeners() {
+    if (this.hamburgerBtn) {
+      this.hamburgerBtn.nativeElement.addEventListener('click', () =>
+        this.openMobileMenu()
+      );
+    }
+    if (this.closeBtn) {
+      this.closeBtn.nativeElement.addEventListener('click', () =>
+        this.closeMobileMenu()
+      );
+    }
+    if (this.overlay) {
+      this.overlay.nativeElement.addEventListener('click', () =>
+        this.closeMobileMenu()
+      );
+    }
+  }
+
+  public openMobileMenu() {
+    this.isMenuOpened = true;
+    this.sideMenu?.nativeElement.classList.add('active');
+    this.overlay?.nativeElement.classList.add('active');
+  }
+
+  public closeMobileMenu() {
     this.isMenuOpened = false;
+    this.sideMenu?.nativeElement.classList.remove('active');
+    this.overlay?.nativeElement.classList.remove('active');
+    this.activeSubmenu = {};
   }
 
-  // Helper methods for active state
-  isMainMenuActive(mainMenu: SidebarMenu): boolean {
-    return (
-      this.base === mainMenu.base ||
-      this.base === mainMenu.base2 ||
-      this.base === mainMenu.base3 ||
-      this.base === mainMenu.base4
-    );
+  public toggleSubmenu(menuTitle: string, event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.activeSubmenu[menuTitle] = !this.activeSubmenu[menuTitle];
   }
 
-  isSubmenuActive(menu: any): boolean {
-    return this.base === menu.base && this.page === menu.page;
+  public isSubmenuActive(menuTitle: string): boolean {
+    return !!this.activeSubmenu[menuTitle];
   }
 
-  isSubSubmenuActive(subMenu: any): boolean {
-    return (
-      this.base === subMenu.base &&
-      this.page === subMenu.page &&
-      this.last === subMenu.last
-    );
+  public navigateTo(route: string) {
+    if (route) {
+      this.router.navigate([route]);
+    }
   }
 
-  switchLanguage(lang: string) {
+  public switchLanguage(lang: string) {
     this.translate.use(lang);
+  }
+
+  public isActiveRoute(route: string): boolean {
+    return this.router.url === route;
+  }
+
+  public toggleLangDropdown(event: Event): void {
+    event.stopPropagation();
+    this.isLangDropdownOpen = !this.isLangDropdownOpen;
   }
 }

@@ -6,8 +6,11 @@
     "login": "تسجيل الدخول",
     "signUp": "إنشاء حساب",
     "signOut": "تسجيل الخروج",
-    "allCourses": "كورساتي",
-    "categories": "الأقسام"
+    "allCourses": "دوراتي",
+    "categories": "الأقسام",
+    "profile": "الملف الشخصي",
+    "nightMode": "الوضع الليلي",
+    "logout": "تسجيل الخروج"
   },
   "auth": {
     "backToHome": "الرجوع إلى الرئيسيه",

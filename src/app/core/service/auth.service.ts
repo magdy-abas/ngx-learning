@@ -113,11 +113,11 @@ export class AuthService {
       secure: true,
       sameSite: 'Strict',
     });
-    this.auth.set(true); // Set auth flag to true after saving token
+    this.auth.set(true);
   }
 
   clearUserData(): void {
-    this.cookieService.delete('token', '/'); // Delete the token cookie
+    this.cookieService.delete('token', '/');
     localStorage.removeItem('userData');
     this.userData = null;
     this.auth.set(false);
