@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IBanner } from '../../../../core/interfaces/dynamic-home.interface';
+
 import { Banner } from '../../../../core/interfaces/dynamic-home.interface';
 
 @Component({
@@ -12,4 +12,8 @@ export class HomeBannerComponent {
   @Input() bannerData: Banner[] = [];
   @Input() bannerTitle: string = '';
   @Input() bannerShortTitle: string = '';
+
+  ngOnInit(): void {
+    console.log(this.bannerData);
+  }
 }

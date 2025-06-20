@@ -16,6 +16,7 @@ import { CoursesQuizComponent } from './components/courses-components/courses-qu
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MyCoursesComponent } from './components/courses-components/my-courses/my-courses.component';
 import { DoctorsComponent } from './components/doctors/doctors.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const publicRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -90,6 +91,11 @@ const authRoutes: Routes = [
     path: 'courses/doctor/:doctorId',
     component: CoursesComponent,
     title: 'courses-doctor',
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    title: 'profile',
   },
 ];
 

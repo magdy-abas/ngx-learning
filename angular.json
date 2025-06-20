@@ -32,7 +32,7 @@
               "node_modules/slick-carousel/slick/slick-theme.scss",
               "node_modules/aos/dist/aos.css",
               "node_modules/swiper/swiper-bundle.css",
-              "node_modules/filepond/dist/filepond.min.css",
+
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/brands.css",
               "node_modules/@fortawesome/fontawesome-free/css/solid.css",

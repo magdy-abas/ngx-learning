@@ -51,7 +51,7 @@ export class SectionTypeGuards {
    * @returns Type predicate confirming if data is IBanner[]
    */
   static isBannerData(data: any[]): data is IBanner[] {
-    return data?.length > 0 && 'start_date' in data[0] && 'video' in data[0];
+    return data?.length > 0 && 'image' in data[0] && 'title' in data[0];
   }
 }
 

@@ -44,19 +44,6 @@ export class AuthService {
   userData: UserData | null = null;
   auth = signal(false);
 
-  // logout
-  logout(): void {
-    this.cookieService.delete('token', '/');
-
-    localStorage.removeItem('userData');
-
-    this.userData = null;
-
-    this.auth.set(false);
-
-    this._Router.navigate(['/login']);
-  }
-
   // login with
   // watsapp
   checkLoginMethod(): Observable<CheckResponse> {
@@ -116,13 +103,18 @@ export class AuthService {
     this.auth.set(true);
   }
 
-  clearUserData(): void {
+  // logout
+  logout(): void {
     this.cookieService.delete('token', '/');
-    localStorage.removeItem('userData');
-    this.userData = null;
-    this.auth.set(false);
-  }
 
+    localStorage.removeItem('userData');
+
+    this.userData = null;
+
+    this.auth.set(false);
+
+    this._Router.navigate(['/login']);
+  }
   isAuthenticated(): boolean {
     return !!this.cookieService.get('token');
   }

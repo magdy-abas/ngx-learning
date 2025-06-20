@@ -9,7 +9,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { CountUpModule } from 'ngx-countup';
+
 import { Router } from '@angular/router';
 import AOS from 'aos';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -50,7 +50,7 @@ import { HomeSection } from '../../core/interfaces/dynamic-home.interface';
     FormsModule,
     MatSelectModule,
     CarouselModule,
-    CountUpModule,
+
     HomeInstructorsComponent,
     HomeCoursesComponent,
     HomeCategoriesComponent,

@@ -42,6 +42,10 @@ a {
 
 .home-slide-face {
   margin-right: 74px;
+
+  @media (max-width: 991.98px) {
+    margin-right: 0;
+  }
 }
 
 //courses-card
@@ -166,4 +170,8 @@ a {
 }
 .hamburger {
   margin-right: 20px;
+}
+// profile
+.profile .nav-item .nav-link i {
+  margin-left: 10px;
 }

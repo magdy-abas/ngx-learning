@@ -214,8 +214,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   logout(): void {
-    this.AuthService.clearUserData();
-    this.router.navigate(['/login']);
+    this.AuthService.logout();
   }
   @HostListener('document:click')
   closeUserDropdown() {
