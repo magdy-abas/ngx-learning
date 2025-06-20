@@ -132,6 +132,7 @@
   },
 
   "home": {
+    "searchPlaceholder": "What do you want to learn today?",
     "homeP": "The Leader in Online Learning",
     "homeTitle": "Engaging & Accessible Online Courses For All",
     "trustedUsers": "Trusted by over 15K Users worldwide since 2022"
