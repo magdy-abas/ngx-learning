@@ -17,23 +17,14 @@
 
                   <img src="assets/img/profile-bg.jpg" alt="">
                   <div class="profile-img position-relative text-center">
-                    <!-- الصورة -->
-                    <img [src]="imagePreview || 'assets/img/profile_img.png' " alt="User Image" class="rounded-circle"
-                      style="width: 120px; height: 120px; object-fit: cover;" />
-
-                    <label for="fileInput" tooltip="رفع صورة جديدة" placement="top" container="body"
-                      class="position-absolute bottom-0 end-0 bg-white rounded-circle shadow d-flex justify-content-center align-items-center"
-                      style="width: 30px; height: 30px; cursor: pointer;">
-                      <i class="fas fa-camera fs-6"></i>
-                    </label>
+                    <!-- profile-img -->
+                    <img [src]="imagePreview || '../../../assets/img/profile-img.png' " alt="User Image"
+                      class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;" />
 
 
 
 
 
-                    <!-- input file مخفي -->
-                    <input type="file" id="fileInput" #fileInput accept="image/*" hidden
-                      (change)="onFileSelected($event)" />
                   </div>
 
 
@@ -127,7 +118,7 @@
 
 
 
-                    <div class="col-lg-6 " [ngClass]="{ 'hide-flag': isPhoneDisabled }">
+                    <!-- <div class="col-lg-6 " [ngClass]="{ 'hide-flag': isPhoneDisabled }">
                       <div class="position-relative">
                         <app-phone-input [formGroup]="profileForm" controlName="phone"></app-phone-input>
                         <i class="fs-5 fas fa-pen position-absolute phone-edit input-edit-icon"
@@ -135,7 +126,7 @@
                           style="cursor: pointer;"></i>
                       </div>
 
-                    </div>
+                    </div> -->
 
 
 

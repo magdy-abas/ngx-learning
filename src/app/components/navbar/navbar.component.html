@@ -8,7 +8,7 @@
       [class.other-page]="!isHomePage">
       <div class="container d-flex  justify-content-between justify-content-lg-start align-items-center">
         <!-- Logo -->
-        <div class="logo" routerLink="/home">
+        <div class="logo" routerLink="/home" style="cursor: pointer;">
           <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
 
         </div>
@@ -65,7 +65,7 @@
         </div>
         <!-- Language switcher + User dropdown -->
         <div class="nav-actions d-flex align-items-center">
-          <!-- زر تغيير اللغة -->
+
           <div class="lang-toggle me-3 d-none d-lg-block">
             <app-btn-lang></app-btn-lang>
           </div>
@@ -75,7 +75,7 @@
           <li class="nav-item user-nav list-unstyled m-0">
             <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
               <span class="user-img">
-                <img src="assets/img/user/user11.jpg" alt="">
+                <img src="../../../assets/img/profile-img.png" alt="">
                 <span class="status online"></span>
               </span>
             </a>
@@ -83,7 +83,7 @@
             <div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
               <div class="user-header d-flex align-items-center gap-2 px-3 py-2 border-bottom">
                 <div class="avatar avatar-sm">
-                  <img src="assets/img/user/user11.jpg" alt="User Image" class="avatar-img rounded-circle">
+                  <img src="../../../assets/img/profile-img.png" alt="User Image" class="avatar-img rounded-circle">
                 </div>
                 <div class="user-text">
                   <h6 class="mb-0">Ahmed</h6>

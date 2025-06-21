@@ -29,7 +29,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NgClass,
     TranslateModule,
     ReactiveFormsModule,
-    PhoneInputComponent,
+
     TooltipModule,
   ],
   templateUrl: './profile.component.html',
