@@ -219,7 +219,7 @@
     "delete": "حذف",
     "personalDetails": "التفاصيل الشخصية",
     "personalIntro": "حرر معلوماتك الشخصية وعنوانك.",
-    "firstName": "الاسم الأول",
+    "firstName": "الاسم ",
     "lastName": "الاسم الأخير",
     "phone": "رقم الهاتف",
     "email": "البريد الإلكتروني",
@@ -238,6 +238,7 @@
     "firstNamePlaceholder": "أدخل اسمك الأول",
     "lastNamePlaceholder": "أدخل اسمك الأخير",
     "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "phonePlaceholder": "أدخل رقم الهاتف",
     "birthdayPlaceholder": "تاريخ الميلاد"
   }
 }

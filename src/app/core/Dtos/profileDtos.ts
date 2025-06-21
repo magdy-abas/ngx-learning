@@ -1,5 +1,5 @@
 export class UpdateProfileDto {
   name?: string;
-  photo?: string;
+  photo?: File;
   phone?: string;
 }

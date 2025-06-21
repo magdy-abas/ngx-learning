@@ -233,7 +233,7 @@
     "delete": "Delete",
     "personalDetails": "Personal Details",
     "personalIntro": "Edit your personal information and address.",
-    "firstName": "First Name",
+    "firstName": " Name",
     "lastName": "Last Name",
     "phone": "Phone",
     "email": "Email",
@@ -252,6 +252,7 @@
     "firstNamePlaceholder": "Enter your first Name",
     "lastNamePlaceholder": "Enter your last Name",
     "emailPlaceholder": "Enter your Email",
-    "birthdayPlaceholder": "Birth of Date"
+    "birthdayPlaceholder": "Birth of Date",
+    "phonePlaceholder": "Enter your phone number  "
   }
 }

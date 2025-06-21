@@ -11,10 +11,10 @@ import { UpdateProfileDto } from '../Dtos/profileDtos';
 export class ProfileService {
   constructor(private _HttpClient: HttpClient) {}
 
-  updateInfo(data: UpdateProfileDto): Observable<UpdateInfoResponse> {
+  updateInfo(body: any): Observable<UpdateInfoResponse> {
     return this._HttpClient.post<UpdateInfoResponse>(
       `${baseUrl}update-profile`,
-      data
+      body
     );
   }
 }

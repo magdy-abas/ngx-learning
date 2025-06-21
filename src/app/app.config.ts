@@ -20,6 +20,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { securityInterceptor } from './core/interceptor/security.interceptor';
 import { headerInterceptor } from './core/interceptor/header.interceptor';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,6 +47,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       CarouselModule,
       NgxSpinnerModule,
+      TooltipModule.forRoot(),
       TranslateModule.forRoot({
         defaultLanguage: 'ar',
         loader: {

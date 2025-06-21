@@ -33,3 +33,42 @@ body {
 .hamburger {
   margin-right: 20px;
 }
+// profile
+.phone-edit {
+  right: 15px;
+}
+.name-edit {
+  right: 15px;
+}
+.input-edit-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+
+  color: #6c757d;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.input-edit-icon:hover {
+  color: #000;
+}
+
+.phone-edit {
+  top: 44px;
+}
+.name-edit {
+  top: 10px;
+}
+
+.phone-edit {
+  right: 15px;
+}
+.name-edit {
+  right: 15px;
+}
+.profile-form-wrapper {
+  .iti__selected-flag {
+    transform: translateX(370px) !important;
+  }
+}

@@ -1,147 +1,163 @@
-<div class="page-content" style="transform: none;">
-  <div class="container" style="transform: none;">
-    <div class="row" style="transform: none;">
+<div class="profile-form-wrapper">
 
-      <!-- sidebar -->
-      <div class="col-xl-3 col-md-4 theiaStickySidebar"
-        style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+  <div class="page-content" style="transform: none;">
+    <div class="container" style="transform: none;">
+      <div class="row" style="transform: none;">
+
+        <!-- sidebar -->
+        <div class="col-xl-3 col-md-4 theiaStickySidebar"
+          style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
 
 
-        <div class="theiaStickySidebar profile"
-          style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
-          <div class="settings-widget dash-profile mb-3">
+          <div class="theiaStickySidebar profile"
+            style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
+            <div class="settings-widget dash-profile mb-3">
+              <div class="settings-menu p-0">
+                <div class="profile-bg">
+
+                  <img src="assets/img/profile-bg.jpg" alt="">
+                  <div class="profile-img position-relative text-center">
+                    <!-- الصورة -->
+                    <img [src]="imagePreview || 'assets/img/profile_img.png' " alt="User Image" class="rounded-circle"
+                      style="width: 120px; height: 120px; object-fit: cover;" />
+
+                    <label for="fileInput" tooltip="رفع صورة جديدة" placement="top" container="body"
+                      class="position-absolute bottom-0 end-0 bg-white rounded-circle shadow d-flex justify-content-center align-items-center"
+                      style="width: 30px; height: 30px; cursor: pointer;">
+                      <i class="fas fa-camera fs-6"></i>
+                    </label>
+
+
+
+
+
+                    <!-- input file مخفي -->
+                    <input type="file" id="fileInput" #fileInput accept="image/*" hidden
+                      (change)="onFileSelected($event)" />
+                  </div>
+
+
+                </div>
+                <div class="profile-group">
+                  <div class="profile-name text-center">
+                    <h4><a>{{userData.name}}</a></h4>
+
+                  </div>
+                  <!-- <div class="go-dashboard text-center">
+                    <button class="btn btn-primary" (click)="updateProfileImage()" [disabled]="!imageFile">
+                      تحديث الصورة
+                    </button>
+                  </div> -->
+
+                </div>
+              </div>
+            </div>
+            <div class="settings-widget account-settings">
+              <div class="settings-menu">
+                <h3>{{ 'profile.accountSettings' | translate }}</h3>
+                <ul>
+                  <li class="nav-item " [ngClass]="{ 'active': activeSection === 'profile' }" style="cursor: pointer;">
+                    <a (click)="switchSection('profile')" class="nav-link">
+                      <i class="fas fa-user-gear fs-6 "></i> {{ 'profile.editProfile' | translate }}
+                    </a>
+                  </li>
+                  <li class="nav-item " [ngClass]="{ 'active': activeSection === 'courses' }" style="cursor: pointer;">
+                    <a (click)="switchSection('courses')" class="nav-link">
+                      <i class="fas fa-book fs-6"></i> {{ 'profile.myCourses' | translate }}
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a (click)="logout()" class="nav-link" style="cursor: pointer;">
+                      <i class="fas fa-right-from-bracket fs-6"></i> {{ 'profile.signOut' | translate }}
+                    </a>
+                  </li>
+                </ul>
+
+
+              </div>
+            </div>
+            <div class="resize-sensor"
+              style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+              <div class="resize-sensor-expand"
+                style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                <div style="position: absolute; left: 0px; top: 0px; transition: all; width: 331px; height: 1295px;">
+                </div>
+              </div>
+              <div class="resize-sensor-shrink"
+                style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /sidebar -->
+
+        <!-- Profile Details -->
+        <div class="col-xl-9 col-md-8 " *ngIf="activeSection === 'profile'" data-aos="fade-up">
+          <div class="settings-widget profile-details">
             <div class="settings-menu p-0">
-              <div class="profile-bg">
-                <h5>Beginner</h5>
-                <img src="assets/img/profile-bg.jpg" alt="">
-                <div class="profile-img">
-                  <a href="student-profile.html"><img src="assets/img/user/user11.jpg" alt=""></a>
+              <div class="profile-heading">
+                <h3>{{ 'profile.profileDetails' | translate }}</h3>
+
+              </div>
+
+              <div class="checkout-form personal-address add-course-info ">
+                <div class="personal-info-head">
+                  <h4>{{ 'profile.personalDetails' | translate }}</h4>
+                  <p>{{ 'profile.personalIntro' | translate }}</p>
                 </div>
-              </div>
-              <div class="profile-group">
-                <div class="profile-name text-center">
-                  <h4><a href="student-profile.html">Rolands R</a></h4>
-                  <p>{{ 'profile.student' | translate }}</p>
-                </div>
-                <!-- <div class="go-dashboard text-center">
-                  <a href="deposit-student-dashboard.html" class="btn btn-primary">Go to Dashboard</a>
-                </div> -->
-              </div>
-            </div>
-          </div>
-          <div class="settings-widget account-settings">
-            <div class="settings-menu">
-              <h3>{{ 'profile.accountSettings' | translate }}</h3>
-              <ul>
-                <li class="nav-item " [ngClass]="{ 'active': activeSection === 'profile' }" style="cursor: pointer;">
-                  <a (click)="switchSection('profile')" class="nav-link">
-                    <i class="fas fa-user-gear fs-6 "></i> {{ 'profile.editProfile' | translate }}
-                  </a>
-                </li>
-                <li class="nav-item " [ngClass]="{ 'active': activeSection === 'courses' }" style="cursor: pointer;">
-                  <a (click)="switchSection('courses')" class="nav-link">
-                    <i class="fas fa-book fs-6"></i> {{ 'profile.myCourses' | translate }}
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a (click)="logout()" class="nav-link" style="cursor: pointer;">
-                    <i class="fas fa-right-from-bracket fs-6"></i> {{ 'profile.signOut' | translate }}
-                  </a>
-                </li>
-              </ul>
+                <form [formGroup]="profileForm" (ngSubmit)="updateUserInfor()">
+                  <div class="row">
+                    <div class="col-lg-6   ">
+                      <div class="form-group">
+                        <label class="form-control-label ">{{ 'profile.firstName' | translate
+                          }}</label>
+                        <div class="position-relative">
+                          <input dir="ltr" type="text" class="form-control " formControlName="name"
+                            [disabled]="!isEditingName" [placeholder]="'profile.firstNamePlaceholder' | translate" />
+                          <i class=" fs-5 fas fa-pen position-absolute name-edit input-edit-icon"
+                            (click)="toggleEdit('name')" tooltip="تعديل الاسم" placement="top" container="body"
+                            style="cursor: pointer;"></i>
+                        </div>
+
+                      </div>
 
 
-            </div>
-          </div>
-          <div class="resize-sensor"
-            style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
-            <div class="resize-sensor-expand"
-              style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
-              <div style="position: absolute; left: 0px; top: 0px; transition: all; width: 331px; height: 1295px;">
-              </div>
-            </div>
-            <div class="resize-sensor-shrink"
-              style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
-              <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /sidebar -->
+                    </div>
 
-      <!-- Profile Details -->
-      <div class="col-xl-9 col-md-8 " *ngIf="activeSection === 'profile'" data-aos="fade-up">
-        <div class="settings-widget profile-details">
-          <div class="settings-menu p-0">
-            <div class="profile-heading">
-              <h3>{{ 'profile.profileDetails' | translate }}</h3>
 
-            </div>
-            <div class="course-group mb-0 d-flex">
-              <div class="course-group-img d-flex align-items-center">
-                <a href="student-profile.html"><img src="assets/img/user/user11.jpg" alt="" class="img-fluid"></a>
-                <div class="course-name">
-                  <h4><a href="student-profile.html">{{ 'profile.avatarTitle' | translate }}</a></h4>
-                  <p>{{ 'profile.avatarNote' | translate }}</p>
-                </div>
-              </div>
-              <div class="profile-share d-flex align-items-center justify-content-center">
-                <a href="javascript:;" class="btn btn-success">{{ 'profile.update' | translate }}</a>
-                <a href="javascript:;" class="btn btn-danger">{{ 'profile.delete' | translate }}</a>
-              </div>
-            </div>
-            <div class="checkout-form personal-address add-course-info ">
-              <div class="personal-info-head">
-                <h4>{{ 'profile.personalDetails' | translate }}</h4>
-                <p>{{ 'profile.personalIntro' | translate }}</p>
-              </div>
-              <form action="#">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label">{{ 'profile.firstName' | translate }}</label>
-                      <input type="text" class="form-control"
-                        [placeholder]="'profile.firstNamePlaceholder' | translate">
+
+                    <div class="col-lg-6 " [ngClass]="{ 'hide-flag': isPhoneDisabled }">
+                      <div class="position-relative">
+                        <app-phone-input [formGroup]="profileForm" controlName="phone"></app-phone-input>
+                        <i class="fs-5 fas fa-pen position-absolute phone-edit input-edit-icon"
+                          (click)="toggleEdit('phone')" tooltip="تعديل رقم الهاتف" placement="top" container="body"
+                          style="cursor: pointer;"></i>
+                      </div>
+
+                    </div>
+
+
+
+                    <div class="update-profile">
+                      <button type="submit" class="btn btn-primary">
+                        {{ 'profile.updateProfile' | translate }}
+                      </button>
                     </div>
                   </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label">{{ 'profile.lastName' | translate }}</label>
-                      <input type="text" class="form-control" [placeholder]="'profile.lastNamePlaceholder' | translate">
-                    </div>
-                  </div>
+                </form>
 
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label">{{ 'profile.email' | translate }}</label>
-                      <input type="text" class="form-control" [placeholder]="'profile.emailPlaceholder' | translate">
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label">{{ 'profile.birthday' | translate }}</label>
-                      <input type="text" class="form-control" [placeholder]="'profile.birthdayPlaceholder' | translate">
-                    </div>
-                  </div>
-
-
-
-
-                  <div class="update-profile">
-                    <button type="button" class="btn btn-primary">{{ 'profile.updateProfile' | translate }}</button>
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
+        <!-- Profile Details -->
+        <!-- my courses -->
+        <div class="col-xl-9 col-md-8" *ngIf="activeSection === 'courses'" data-aos="fade-left">
+          <app-my-courses></app-my-courses>
+        </div>
+        <!-- my courses -->
       </div>
-      <!-- Profile Details -->
-      <!-- my courses -->
-      <div class="col-xl-9 col-md-8" *ngIf="activeSection === 'courses'" data-aos="fade-left">
-        <app-my-courses></app-my-courses>
-      </div>
-      <!-- my courses -->
     </div>
   </div>
 </div>
