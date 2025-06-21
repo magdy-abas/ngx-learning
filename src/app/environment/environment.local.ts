@@ -16,7 +16,8 @@ function getMainDomain(): string {
     main = parts[0];
   }
 
-  return 'farida';
+  return main;
+
   // return main;
 }
 
@@ -29,6 +30,9 @@ export const headers = {
 };
 
 export const mainDomain = getMainDomain();
+
+console.log('Main Domain:', mainDomain);
+console.log('Base URL:', baseUrl);
 
 // // city-center
 // //farida
