@@ -1,0 +1,59 @@
+name: farida
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  staging-deployment:
+    runs-on: ubuntu-latest
+    if: "github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.9.0'
+
+    - name: Install Dependencies
+      run: npm install --force
+
+    - name: Build Angular App
+      run: npm run build
+      
+    - name: Create .htaccess
+      run: |
+        echo "RewriteEngine On" > dist/wesal_frontend/.htaccess
+        echo "RewriteBase /" >> dist/wesal_frontend/.htaccess
+        echo "RewriteRule ^index\.html$ - [L]" >> dist/wesal_frontend/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> dist/wesal_frontend/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/wesal_frontend/.htaccess
+        echo "RewriteRule . index.html [L]" >> dist/wesal_frontend/.htaccess
+    
+    - name: Deploy to Server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        source: "dist/NGX_LEARNING/browser/*"
+        target: "/var/www/projects/farida"
+        strip_components: 2
+
+    - name: Discord Notification
+      if: ${{ success() }}
+      uses: Ilshidur/action-discord@master
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      with:
+        args: ':green_circle: The project **`${{ github.repository }}`** has been deployed to **`Staging`** by **`${{ github.actor }}`**.'
+
+    - name: Discord Notification (The job has failed)
+      if: ${{ failure() }}
+      uses: Ilshidur/action-discord@master
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      with:
+        args: ':red_circle: **`Staging`** deployment of the project **`${{ github.repository }}`** has been failed. CC: **`${{ github.actor }}`**.'
