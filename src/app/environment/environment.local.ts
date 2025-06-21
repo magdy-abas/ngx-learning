@@ -20,8 +20,8 @@ function getMainDomain(): string {
   // return main;
 }
 
-// export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
-export const baseUrl = `https://farida.stepsio.com/api/`;
+export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
+// export const baseUrl = `https://farida.stepsio.com/api/`;
 
 export const headers = {
   'Content-Type': 'application/json',

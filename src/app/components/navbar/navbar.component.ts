@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isScrolled = false;
   public isHomePage = false;
   public activeSubmenu: { [key: string]: boolean } = {};
+  public userName: string = 'Guest';
 
   private routerSubscription!: Subscription;
 
@@ -79,6 +80,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    this.loadUserData();
     this.checkCurrentRoute();
     this.handleNavbarState();
 
@@ -93,6 +95,14 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.setupEventListeners();
+  }
+
+  loadUserData() {
+    const userDataString = localStorage.getItem('userData');
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.userName = userData.name ? userData.name : `user${userData.id}`;
+    }
   }
 
   ngOnDestroy() {

@@ -235,6 +235,7 @@
     "personalDetails": "Personal Details",
     "personalIntro": "Edit your personal information and address.",
     "firstName": " Name",
+    "editNameTooltip": "Edit Name",
     "lastName": "Last Name",
     "phone": "Phone",
     "email": "Email",

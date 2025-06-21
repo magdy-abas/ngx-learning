@@ -10,7 +10,8 @@
     "categories": "الأقسام",
     "profile": "الملف الشخصي",
     "nightMode": "الوضع الليلي",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "student": "طالب"
   },
   "auth": {
     "backToHome": "الرجوع إلى الرئيسيه",
@@ -221,6 +222,7 @@
     "personalDetails": "التفاصيل الشخصية",
     "personalIntro": "حرر معلوماتك الشخصية وعنوانك.",
     "firstName": "الاسم ",
+    "editNameTooltip": "تعديل الاسم",
     "lastName": "الاسم الأخير",
     "phone": "رقم الهاتف",
     "email": "البريد الإلكتروني",

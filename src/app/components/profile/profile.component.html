@@ -18,8 +18,8 @@
                   <img src="assets/img/bg-profile.png" alt="" style="height: 100px;">
                   <div class="profile-img position-relative text-center">
                     <!-- profile-img -->
-                    <img [src]="imagePreview || '../../../assets/img/profile-img.png' " alt="User Image"
-                      class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;" />
+                    <img src="./assets/img/profile-img.png " alt="User Image" class="rounded-circle"
+                      style="width: 120px; height: 120px; object-fit: cover;" />
 
 
 
@@ -101,17 +101,21 @@
                   <div class="row">
                     <div class="col-lg-6   ">
                       <div class="form-group">
-                        <label class="form-control-label ">{{ 'profile.firstName' | translate
-                          }}</label>
+                        <label class="form-control-label ">{{ 'profile.firstName' | translate }}</label>
                         <div class="position-relative">
                           <input dir="ltr" type="text" class="form-control " formControlName="name"
                             [disabled]="!isEditingName" [placeholder]="'profile.firstNamePlaceholder' | translate" />
-                          <i class=" fs-5 fas fa-pen position-absolute name-edit input-edit-icon"
-                            (click)="toggleEdit('name')" tooltip="تعديل الاسم" placement="top" container="body"
-                            style="cursor: pointer;"></i>
-                        </div>
+                          <i class="fs-5 fas fa-pen position-absolute name-edit input-edit-icon" (click)="toggleEdit()"
+                            [tooltip]="'profile.editNameTooltip' | translate" placement="top" container="body"
+                            style="cursor: pointer;">
+                          </i>
 
+                        </div>
+                        <div *ngIf="errorMessage" class="text-danger mt-1">
+                          {{ errorMessage }}
+                        </div>
                       </div>
+
 
 
                     </div>
