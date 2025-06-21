@@ -29,7 +29,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NgClass,
     TranslateModule,
     ReactiveFormsModule,
-
     TooltipModule,
   ],
   templateUrl: './profile.component.html',
