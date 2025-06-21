@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, catchError, tap, of, map } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { SettingsResponse } from '../interfaces/settings.interface';
 import { baseUrl } from '../../environment/environment.local';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +50,20 @@ export class SharedService {
 
   isInitialized(): boolean {
     return this.initializationComplete.value;
+  }
+
+  settings(): Observable<SettingsResponse> {
+    return this._HttpClient.get<SettingsResponse>(`${baseUrl}settings`);
+  }
+
+  // New:  settings in localStorage
+  saveSettingsToLocalStorage(settings: SettingsResponse) {
+    localStorage.setItem('appSettings', JSON.stringify(settings));
+  }
+
+  //  Read from localStorage
+  getSettingsFromLocalStorage(): SettingsResponse | null {
+    const data = localStorage.getItem('appSettings');
+    return data ? JSON.parse(data) : null;
   }
 }

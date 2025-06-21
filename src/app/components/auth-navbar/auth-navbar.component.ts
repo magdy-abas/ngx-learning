@@ -37,6 +37,7 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
   @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
   public isLangDropdownOpen = false;
+  public logoUrl: string = '';
 
   public isMenuOpened = false;
   public isTransparent = true;
@@ -63,6 +64,7 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    this.loadSettings();
     this.checkCurrentRoute();
     this.handleNavbarState();
 
@@ -187,5 +189,17 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleLangDropdown(event: Event): void {
     event.stopPropagation();
     this.isLangDropdownOpen = !this.isLangDropdownOpen;
+  }
+
+  loadSettings() {
+    const settingsString = localStorage.getItem('appSettings');
+    if (settingsString) {
+      const settings = JSON.parse(settingsString);
+      if (settings.data && settings.data.logo) {
+        this.logoUrl = settings.data.logo;
+      }
+    } else {
+      console.warn('No settings found in localStorage');
+    }
   }
 }

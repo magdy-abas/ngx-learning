@@ -20,6 +20,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/service/auth.service';
+import { SharedService } from '../../core/service/shared.service';
 
 interface MenuItem {
   title: string;
@@ -55,6 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isHomePage = false;
   public activeSubmenu: { [key: string]: boolean } = {};
   public userName: string = 'Guest';
+  logoUrl: string = '';
 
   private routerSubscription!: Subscription;
 
@@ -76,11 +78,13 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
     this.loadUserData();
+    this.loadSettings();
     this.checkCurrentRoute();
     this.handleNavbarState();
 
@@ -108,6 +112,14 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
+    }
+  }
+  loadSettings() {
+    const settings = this.sharedService.getSettingsFromLocalStorage();
+    if (settings && settings.data.logo) {
+      this.logoUrl = settings.data.logo;
+    } else {
+      console.warn('No settings found in localStorage');
     }
   }
 

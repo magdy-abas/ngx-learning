@@ -17,6 +17,7 @@ import { initSweetAlertTranslations } from './shared/utils/SweetAlert.utils';
 export class AppComponent implements OnInit {
   title = 'e-learning';
   tooltipText = 'تواصل معنا';
+  whatsappNumber: string = '';
 
   constructor(
     private seoService: SeoService,
@@ -26,31 +27,46 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Initialize SweetAlert translations
+    this.loadSetting();
     initSweetAlertTranslations(this.translate);
-
-    // Show spinner immediately
     this.spinner.show();
 
-    // Update SEO meta tags
     this.seoService.updateMeta(
       'ELearning - Enhance Your Skills Online',
       'Explore our eLearning platform to enhance your skills with a wide variety of courses designed for learners at every level.',
       'eLearning, online learning, online courses, skill enhancement, education',
       'https://yourwebsite.com/og-image.jpg'
     );
-
-    this.sharedService.initialized$.subscribe((isInitialized) => {
-      if (isInitialized) {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 500);
-      }
-    });
   }
 
   openWhatsApp(): void {
-    const whatsappUrl = `https://wa.me/+201129254200?text=اهلا`;
+    const whatsappUrl = `https://wa.me/${this.whatsappNumber}?text=اهلا`;
     window.open(whatsappUrl, '_blank');
+  }
+
+  applySettings(settingsData: any): void {
+    if (settingsData.contact_us && settingsData.contact_us.whatsapp) {
+      this.whatsappNumber = settingsData.contact_us.whatsapp;
+    }
+  }
+
+  loadSetting() {
+    this.sharedService.settings().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.sharedService.saveSettingsToLocalStorage(response);
+          this.applySettings(response.data);
+          console.log(response);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching settings:', err);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 500);
+      },
+    });
   }
 }

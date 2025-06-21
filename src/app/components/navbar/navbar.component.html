@@ -9,7 +9,8 @@
       <div class="container d-flex  justify-content-between justify-content-lg-start align-items-center">
         <!-- Logo -->
         <div class="logo" routerLink="/home" style="cursor: pointer;">
-          <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
+          <img [src]="logoUrl" alt="Logo" class="logo-img">
+
 
         </div>
 
@@ -137,7 +138,7 @@
       <!-- Side Menu Header -->
       <div class="side-menu-header ">
         <div class="logo" routerLink="/home">
-          <img src="../../../assets/img/logo.png" alt="Logo" class="logo-img">
+          <img [src]="logoUrl" alt="Logo" class="logo-img">
 
         </div>
         <button class="close-btn" #closeBtn>
