@@ -24,8 +24,8 @@ jobs:
       
     - name: Create .htaccess
       run: |
-        echo "RewriteEngine On" > dist/wesal_frontend/.htaccess
-        echo "RewriteBase /" >> dist/wesal_frontend/.htaccess
+        echo "RewriteEngine On" > dist/NGX_LEARNING/.htaccess
+        echo "RewriteBase /" >> dist/NGX_LEARNING/.htaccess
         echo "RewriteRule ^index\.html$ - [L]" >> dist/wesal_frontend/.htaccess
         echo "RewriteCond %{REQUEST_FILENAME} !-f" >> dist/wesal_frontend/.htaccess
         echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/wesal_frontend/.htaccess
