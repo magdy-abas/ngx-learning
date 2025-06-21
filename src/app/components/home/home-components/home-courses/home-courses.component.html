@@ -91,12 +91,15 @@
       </div>
     </div>
     <!-- View all  Courses -->
-    <!-- <div class="col-lg-12" data-aos="fade-up">
-      <div class="more-details text-center">
-        <a href="javascript:;" class="discover-btn">{{ 'courses.viewAll' | translate}} <i
-            class="fas fa-arrow-right ms-2"></i></a>
+    <div class="col-lg-12" data-aos="fade-up">
+      <div class="more-details text-center" style="cursor: pointer;">
+        <a (click)="viewAllCourses()" class="discover-btn">
+          {{ 'courses.viewAll' | translate}}
+          <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+
       </div>
-    </div> -->
+    </div>
     <!-- /View all  Courses -->
   </div>
 </section>

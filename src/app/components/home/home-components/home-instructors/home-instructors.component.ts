@@ -28,6 +28,14 @@ export class HomeInstructorsComponent {
     this.feature_instructors = this.data.feature_instructors;
   }
 
+  viewAllDoctors() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/auth/doctors']);
+    } else {
+      this.router.navigate(['/doctors']);
+    }
+  }
+
   goToDoctorCourses(doctorId: number) {
     if (this.authService.isAuthenticated()) {
       this.router.navigate([`/auth/courses/doctor/${doctorId}`]);
