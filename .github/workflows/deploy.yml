@@ -24,12 +24,12 @@ jobs:
       
     - name: Create .htaccess
       run: |
-        echo "RewriteEngine On" > dist/wesal_frontend/.htaccess
-        echo "RewriteBase /" >> dist/wesal_frontend/.htaccess
-        echo "RewriteRule ^index\.html$ - [L]" >> dist/wesal_frontend/.htaccess
-        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> dist/wesal_frontend/.htaccess
-        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/wesal_frontend/.htaccess
-        echo "RewriteRule . index.html [L]" >> dist/wesal_frontend/.htaccess
+        echo "RewriteEngine On" > /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
+        echo "RewriteBase /" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
+        echo "RewriteRule ^index\.html$ - [L]" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
+        echo "RewriteRule . index.html [L]" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
     
     - name: Deploy to Server
       uses: appleboy/scp-action@master
@@ -38,7 +38,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-        source: "dist/NGX_LEARNING/browser/*"
+        source: "/home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/*"
         target: "/var/www/projects/farida"
         strip_components: 2
 
