@@ -64,7 +64,7 @@ jobs:
           echo "host_ip=${{ secrets[matrix.host] }}" >> $GITHUB_OUTPUT
   
       - name: Deploy to ${{ matrix.name }}
-        uses: appleboy/ssh-action@master
+        uses: appleboy/scp-action@master
         with:
           host: ${{ steps.get_host.outputs.host_ip }}
           username: ${{ secrets.SSH_USERNAME }}
