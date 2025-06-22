@@ -14,10 +14,13 @@ import { CodeInputModule } from 'angular-code-input';
 import { AuthService } from '../../../core/service/auth.service';
 import {
   DataService,
-  forgotPassword,
+  Lang,
+  WelcomeSlideView,
 } from '../../../core/service/data/data.service';
+
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { DarkModeService } from '../../../core/service/dark-mode.service';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -35,8 +38,11 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ForgotPasswordComponent implements OnInit {
   public routes = routes;
-  public forgotPassword: forgotPassword[] = []; // Slider data
-  public forgotStep: number = 1; // Start with step 1
+  public forgotPassword: WelcomeSlideView[] = [];
+  public logoUrl: string = '';
+  public appName: string = '';
+
+  public forgotStep: number = 1;
   errMsg: string = '';
 
   // FormGroups
@@ -66,11 +72,9 @@ export class ForgotPasswordComponent implements OnInit {
     private fb: FormBuilder,
     private _AuthService: AuthService,
     private router: Router,
-    private DataService: DataService
+    private DataService: DataService,
+    private darkModeService: DarkModeService
   ) {
-    // Slider data initialization
-    this.forgotPassword = this.DataService.forgotPassword;
-
     // Forms Initialization
     this.emailForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -95,10 +99,24 @@ export class ForgotPasswordComponent implements OnInit {
       { validators: this.passwordMatchValidator }
     );
   }
-
   ngOnInit(): void {
-    // Initialize animations
     Aos.init();
+
+    this.darkModeService.applyMode();
+
+    const settingsString = localStorage.getItem('appSettings');
+    if (settingsString) {
+      const settings = JSON.parse(settingsString);
+      this.logoUrl = this.darkModeService.getLogo(settings);
+
+      const lang = (settings.lang || 'en') as Lang;
+      this.appName = settings.data.app_name?.[lang] || '';
+
+      this.forgotPassword = this.DataService.getWelcomeSlides(
+        this.appName,
+        lang
+      );
+    }
   }
 
   private passwordMatchValidator(

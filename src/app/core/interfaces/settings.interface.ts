@@ -1,4 +1,4 @@
-export interface SettingsResponse {
+export interface SettingResponse {
   status: number;
   message: string;
   success: boolean;
@@ -20,6 +20,14 @@ export interface SettingsResponse {
       youtube: string | null;
       snapchat: string | null;
     };
-    logo: string | null;
+    dark_mode_logo: string | null;
+    light_mode_logo: string | null;
+    icon: string | null;
+    application_images: (string | null)[];
+    application_links: {
+      app_store_url: string | null;
+      google_play_url: string | null;
+      huawei_url: string | null;
+    };
   };
 }

@@ -6,7 +6,7 @@
       <div class="row w-100">
         <div class="col-md-12">
           <owl-carousel-o [options]="registerOwlOptions">
-            <ng-container *ngFor="let slide of register">
+            <ng-container *ngFor="let slide of welcomeLogin">
               <ng-template carouselSlide>
                 <div class="welcome-login">
                   <div class="login-banner">
@@ -30,7 +30,7 @@
       <div class="login-wrapper">
         <div class="loginbox">
           <div class="img-logo">
-            <img src="assets/img/logo.svg" class="img-fluid" alt="Logo" />
+            <img [src]="logoUrl" class="img-fluid logo" alt="Logo">
             <div class="back-home">
               <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
             </div>
@@ -127,22 +127,12 @@
           </form>
         </div>
         <div class="google-bg text-center">
-          <span><a href="javascript:;">{{ 'auth.orSignInWith' | translate }}</a></span>
-          <div class="sign-google">
-            <ul>
-              <li>
-                <a href="javascript:;"><img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo" />
-                  {{ 'auth.signInWithGoogle' | translate }}</a>
-              </li>
-              <li>
-                <a href="javascript:;"><img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo" />
-                  {{ 'auth.signInWithFacebook' | translate }}</a>
-              </li>
-            </ul>
-          </div>
 
+          <div class="sign-google">
+
+          </div>
           <p class="mb-0">
-            {{ 'auth.alreadyHaveAccount' | translate }} <a routerLink="/login">{{ 'auth.signIn' | translate }}</a>
+            {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
           </p>
         </div>
       </div>

@@ -21,6 +21,7 @@ import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/service/auth.service';
 import { SharedService } from '../../core/service/shared.service';
+import { DarkModeService } from '../../core/service/dark-mode.service';
 
 interface MenuItem {
   title: string;
@@ -79,10 +80,14 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private AuthService: AuthService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private darkModeService: DarkModeService
   ) {}
 
   ngOnInit() {
+    this.darkModeService.applyMode();
+    this.isDarkMode = this.darkModeService.isDarkMode();
+
     this.loadUserData();
     this.loadSettings();
     this.checkCurrentRoute();
@@ -112,14 +117,6 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
-    }
-  }
-  loadSettings() {
-    const settings = this.sharedService.getSettingsFromLocalStorage();
-    if (settings && settings.data.logo) {
-      this.logoUrl = settings.data.logo;
-    } else {
-      console.warn('No settings found in localStorage');
     }
   }
 
@@ -246,15 +243,33 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isDarkMode = false;
   toggleDarkMode(event: Event): void {
     event.stopPropagation();
-    this.isDarkMode = !this.isDarkMode;
+    this.darkModeService.toggleDarkMode();
+    this.isDarkMode = this.darkModeService.isDarkMode();
+    this.loadSettings();
+  }
 
-    if (this.isDarkMode) {
-      document.body.classList.add('dark-mode');
+  loadSettings() {
+    const settings = this.sharedService.getSettingsFromLocalStorage();
+    if (settings) {
+      this.logoUrl = this.darkModeService.getLogo(settings);
+
+      if (settings.data.icon) {
+        this.setFavicon(settings.data.icon);
+      }
     } else {
-      document.body.classList.remove('dark-mode');
+      console.warn('No settings found in localStorage');
     }
+  }
 
-    localStorage.setItem('darkMode', this.isDarkMode.toString());
+  setFavicon(iconUrl: string) {
+    let link: HTMLLinkElement | null =
+      document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    link.href = iconUrl;
   }
 
   toggleLangDropdown(event: Event) {

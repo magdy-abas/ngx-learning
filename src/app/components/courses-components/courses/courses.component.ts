@@ -1,9 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
-import {
-  courseGrid,
-  DataService,
-} from '../../../core/service/data/data.service';
+import { DataService } from '../../../core/service/data/data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { routes } from '../../../core/service/routes/routes';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';

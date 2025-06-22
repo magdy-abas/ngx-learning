@@ -13,16 +13,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
 import AOS from 'aos';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import {
-  DataService,
-  Featured_Courses,
-  blog,
-  category,
-  feature_instructors,
-  real_reviews,
-  trending_Courses,
-  universitiesCompanies,
-} from './../../core/service/data/data.service';
+import { DataService } from './../../core/service/data/data.service';
 import { routes } from '../../app.routes';
 import { HomeData } from './data';
 import { EventManager } from '@angular/platform-browser';
@@ -68,13 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public routes = routes;
   selected = '1';
   isAuthenticated: boolean = false;
-  public universitiesCompanies: universitiesCompanies[] = [];
-  public Category: category[] = [];
-  public Featured_Courses: Featured_Courses[] = [];
-  public trending_Courses: trending_Courses[] = [];
-  public feature_instructors: feature_instructors[] = [];
-  public real_reviews: real_reviews[] = [];
-  public blog: blog[] = [];
+
   private subscriptions: Subscription[] = [];
   constructor(
     private DataService: DataService,
@@ -82,15 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     public data: HomeData,
     private _DynamicHomeService: DynamicHomeService,
     private _AuthService: AuthService
-  ) {
-    this.universitiesCompanies = this.DataService.universitiesCompanies;
-    this.Category = this.data.Category;
-    this.Featured_Courses = this.data.Featured_Courses;
-    this.trending_Courses = this.data.trending_Courses;
-    this.feature_instructors = this.data.feature_instructors;
-    this.real_reviews = this.data.real_reviews;
-    this.blog = this.data.blog;
-  }
+  ) {}
 
   // Type guard functions
   protected readonly getSliderData = SectionDataHelpers.getSliderData;

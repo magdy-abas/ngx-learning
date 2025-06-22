@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 import { Subscription } from 'rxjs';
+import { DarkModeService } from '../../core/service/dark-mode.service';
 
 interface MenuItem {
   title: string;
@@ -60,10 +61,12 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private darkModeService: DarkModeService
   ) {}
 
   ngOnInit() {
+    this.darkModeService.applyMode();
     this.loadSettings();
     this.checkCurrentRoute();
     this.handleNavbarState();
@@ -195,8 +198,8 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     const settingsString = localStorage.getItem('appSettings');
     if (settingsString) {
       const settings = JSON.parse(settingsString);
-      if (settings.data && settings.data.logo) {
-        this.logoUrl = settings.data.logo;
+      if (settings && settings.data) {
+        this.logoUrl = this.darkModeService.getLogo(settings);
       }
     } else {
       console.warn('No settings found in localStorage');

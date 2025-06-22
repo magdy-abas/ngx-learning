@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { HomeData } from '../../data';
-import { feature_instructors } from '../../../../core/service/data/data.service';
+
 import { NgFor, NgIf } from '@angular/common';
 import { IDoctor } from '../../../../core/interfaces/dynamic-home.interface';
 import { Doctor } from '../../../../core/interfaces/dynamic-home.interface';
@@ -16,7 +16,6 @@ import { AuthService } from '../../../../core/service/auth.service';
   styleUrl: './home-instructors.component.scss',
 })
 export class HomeInstructorsComponent {
-  public feature_instructors: feature_instructors[] = [];
   @Input() instructorsData: Doctor[] = [];
   @Input() instructorsTitle: string = '';
   @Input() instructorsShortTitle: string = '';
@@ -24,9 +23,7 @@ export class HomeInstructorsComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  constructor(public data: HomeData) {
-    this.feature_instructors = this.data.feature_instructors;
-  }
+  constructor(public data: HomeData) {}
 
   viewAllDoctors() {
     if (this.authService.isAuthenticated()) {

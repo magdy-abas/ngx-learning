@@ -36,7 +36,8 @@
         <div class="loginbox">
           <div class="w-100">
             <div class="img-logo">
-              <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+              <img [src]="logoUrl" class="img-fluid logo" alt="Logo">
+
               <div class="back-home">
                 <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
               </div>
@@ -158,22 +159,9 @@
         </div>
 
         <div class="google-bg text-center">
-          <span><a href="javascript:;">{{ 'auth.orSignInWith' | translate }}</a></span>
+
           <div class="sign-google">
-            <ul>
-              <li>
-                <a href="javascript:;">
-                  <img src="assets/img/net-icon-01.png" class="img-fluid" alt="Logo">
-                  {{ 'auth.signInWithGoogle' | translate }}
-                </a>
-              </li>
-              <li>
-                <a href="javascript:;">
-                  <img src="assets/img/net-icon-02.png" class="img-fluid" alt="Logo">
-                  {{ 'auth.signInWithFacebook' | translate }}
-                </a>
-              </li>
-            </ul>
+
           </div>
           <p class="mb-0">
             {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>

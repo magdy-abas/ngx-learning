@@ -10,9 +10,8 @@ import {
 } from '@angular/forms';
 import {
   DataService,
-  Mainregister,
-  passwordResponce,
-  register,
+  Lang,
+  WelcomeSlideView,
 } from '../../../core/service/data/data.service';
 import { routes } from '../../../core/service/routes/routes';
 import { Router, RouterLink } from '@angular/router';
@@ -35,7 +34,13 @@ import {
   ErrorAuthResponse,
 } from '../../../core/interfaces/auth.interface';
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
-
+import { DarkModeService } from '../../../core/service/dark-mode.service';
+type passwordResponce = {
+  passwordResponceText?: string;
+  passwordResponceImage?: string;
+  passwordResponceKey?: string;
+};
+export
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -55,13 +60,14 @@ import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+class RegisterComponent {
   public routes = routes;
   RegisterDto: RegisterDto = new RegisterDto();
   public passwordResponce: passwordResponce = {};
   msgError: string = '';
   isLoading: boolean = false;
-  public register: register[] = [];
+  public logoUrl: string = '';
+  public welcomeLogin: WelcomeSlideView[] = [];
 
   separateDialCode: boolean = true;
   preferredCountries: CountryISO[] = [
@@ -117,11 +123,24 @@ export class RegisterComponent {
     private DataService: DataService,
     private _FormBuilder: FormBuilder,
     private _AuthService: AuthService,
-    private _Router: Router
-  ) {
-    this.register = this.DataService.register;
-  }
+    private _Router: Router,
+    private darkModeService: DarkModeService
+  ) {}
 
+  ngOnInit(): void {
+    this.darkModeService.applyMode();
+
+    const settingsString = localStorage.getItem('appSettings');
+    if (settingsString) {
+      const settings = JSON.parse(settingsString);
+      this.logoUrl = this.darkModeService.getLogo(settings);
+      const lang = (localStorage.getItem('lang') || 'en') as Lang;
+      this.welcomeLogin = this.DataService.getWelcomeSlides(
+        settings.data.app_name[lang],
+        lang
+      );
+    }
+  }
   regForm: FormGroup = this._FormBuilder.group(
     {
       name: [null, [Validators.required, Validators.minLength(3)]],

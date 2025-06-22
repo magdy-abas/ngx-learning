@@ -629,6 +629,14 @@ body.dark-mode {
 }
 
 //home
+// logo
+.logo {
+  display: inline-block;
+  align-content: center;
+  cursor: pointer;
+  margin-right: 30px;
+  width: 130px;
+}
 .home-two-slide {
   position: relative;
   background-image: url(../img/bg/home-main.png);

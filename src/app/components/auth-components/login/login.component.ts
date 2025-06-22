@@ -4,8 +4,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { Router, RouterLink } from '@angular/router';
 import {
   DataService,
-  Mainlogin,
-  welcomeLogin,
+  Lang,
+  WelcomeSlideView,
 } from './../../../core/service/data/data.service';
 import { CommonModule } from '@angular/common';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
@@ -24,7 +24,7 @@ import {
   SendOtpDto,
   WatsLoginDto,
 } from '../../../core/Dtos/AuthDtos';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   AuthResponse,
   ErrorAuthData,
@@ -32,6 +32,7 @@ import {
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
 import { CodeInputModule } from 'angular-code-input';
 import { OtpCodeInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
+import { DarkModeService } from '../../../core/service/dark-mode.service';
 
 @Component({
   selector: 'app-login',
@@ -62,7 +63,10 @@ export class LoginComponent implements OnInit {
   password = 'password';
   show = true;
   msgError: string = '';
-  public welcomeLogin: welcomeLogin[] = [];
+
+  public logoUrl: string = '';
+  public appName: string = '';
+  public welcomeLogin: WelcomeSlideView[] = [];
 
   public welcomeLoginOwlOptions: OwlOptions = {
     margin: 25,
@@ -86,16 +90,26 @@ export class LoginComponent implements OnInit {
     private DataService: DataService,
     public _Router: Router,
     private _AuthService: AuthService,
-    private _FormBuilder: FormBuilder
-  ) {
-    this.welcomeLogin = this.DataService.welcomeLogin;
-  }
-
+    private _FormBuilder: FormBuilder,
+    private darkModeService: DarkModeService,
+    private translate: TranslateService
+  ) {}
   ngOnInit(): void {
+    this.darkModeService.applyMode();
+
+    const settingsString = localStorage.getItem('appSettings');
+    if (settingsString) {
+      const settings = JSON.parse(settingsString);
+      this.logoUrl = this.darkModeService.getLogo(settings);
+
+      const lang = (this.translate.currentLang || 'en') as Lang;
+      this.appName = settings.data.app_name?.[lang] || 'App Name';
+
+      this.welcomeLogin = this.DataService.getWelcomeSlides(this.appName, lang);
+    }
+
     this._AuthService.checkLoginMethod().subscribe({
       next: (res) => {
-        console.log(res);
-
         if (res.status === 1) {
           this.loading = true;
           if (res.data.settings.auth_login_with === 'mobile_whatsapp') {

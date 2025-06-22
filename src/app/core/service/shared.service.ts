@@ -1,5 +1,5 @@
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
-import { SettingsResponse } from '../interfaces/settings.interface';
+import { SettingResponse } from '../interfaces/settings.interface';
 import { baseUrl } from '../../environment/environment.local';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -52,17 +52,17 @@ export class SharedService {
     return this.initializationComplete.value;
   }
 
-  settings(): Observable<SettingsResponse> {
-    return this._HttpClient.get<SettingsResponse>(`${baseUrl}settings`);
+  settings(): Observable<SettingResponse> {
+    return this._HttpClient.get<SettingResponse>(`${baseUrl}settings`);
   }
 
   // New:  settings in localStorage
-  saveSettingsToLocalStorage(settings: SettingsResponse) {
+  saveSettingsToLocalStorage(settings: SettingResponse) {
     localStorage.setItem('appSettings', JSON.stringify(settings));
   }
 
   //  Read from localStorage
-  getSettingsFromLocalStorage(): SettingsResponse | null {
+  getSettingsFromLocalStorage(): SettingResponse | null {
     const data = localStorage.getItem('appSettings');
     return data ? JSON.parse(data) : null;
   }

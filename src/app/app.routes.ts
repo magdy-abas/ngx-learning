@@ -19,8 +19,9 @@ import { DoctorsComponent } from './components/doctors/doctors.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 const publicRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, title: 'home' },
+  { path: '', component: HomeComponent, title: 'home' },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
+
   { path: 'courses', component: CoursesComponent, title: 'courses' },
   {
     path: 'courses/category/:categoryId',
@@ -51,8 +52,9 @@ const publicRoutes: Routes = [
 ];
 
 const authRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, title: 'home' },
+  { path: '', component: HomeComponent, title: 'home' },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
+
   { path: 'courses', component: CoursesComponent, title: 'courses' },
   {
     path: 'courses/category/:categoryId',
