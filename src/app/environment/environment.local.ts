@@ -7,7 +7,7 @@ function getMainDomain(): string {
     return parts[parts.length - 3];
   }
 
-  return parts[0]; //
+  return parts[0];
   // return 'farida';
 }
 // export const baseUrl = `https://farida.stepsio.com/api/`;

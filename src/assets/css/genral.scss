@@ -1080,7 +1080,7 @@ code-input.code-input {
 }
 
 .doctor-card {
-  background-color: #ffffff;
+  background-color: #f9f9f9;
 }
 
 .doctor-img-wrapper {
@@ -2141,22 +2141,19 @@ mat-select.form-select {
 }
 
 // ---- Start courses-details specific styling ----
+.category-tab ul.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.category-tab .nav-item {
+  width: 100%;
+}
+.category-tab .nav-item .nav-link {
+  width: 100%;
+  text-align: center;
+}
 @media (max-width: 768px) {
-  .category-tab ul.nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .category-tab .nav-item {
-    width: 100%;
-  }
-
-  .category-tab .nav-item .nav-link {
-    width: 100%;
-    text-align: center;
-  }
-
   .course-card ul li {
     display: flex;
     justify-content: space-between;
