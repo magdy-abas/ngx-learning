@@ -381,7 +381,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  //meeting
   private handleMeeting(
     lessonId: number,
     chapterId: number,
@@ -401,6 +400,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
                 lessonId,
                 this.userInfo?.name || 'Guest'
               );
+
+          console.log('Decrypted Join URL:', decryptedJoinUrl);
+
           window.open(decryptedJoinUrl, '_blank');
         }
       },

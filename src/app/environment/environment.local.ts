@@ -3,26 +3,14 @@ function getMainDomain(): string {
 
   const parts = hostname.split('.');
 
-  let main: string;
-
-  if (parts[0] === 'www') {
-    // www.farida.com case
-    main = parts[1];
-  } else if (parts.length > 2) {
-    // dev.farida.com case
-    main = parts[1];
-  } else {
-    // farida.com case
-    main = parts[0];
+  if (parts.length >= 3) {
+    return parts[parts.length - 3];
   }
 
-  return main;
-
-  // return main;
+  return parts[0]; //
 }
-
-export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
 // export const baseUrl = `https://farida.stepsio.com/api/`;
+export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
 
 export const headers = {
   'Content-Type': 'application/json',
