@@ -75,7 +75,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-        source: "angular-build/*"
+        source: "*"
         target: "/var/www/html/steps-front-deploying"
 
     - name: Finalize deployment on remote
