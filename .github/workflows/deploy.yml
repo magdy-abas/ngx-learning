@@ -46,23 +46,25 @@ jobs:
       matrix:
         include:
           - name: steps-node-1
-            host_secret: SSH_HOST_NODE_1
+            host: SSH_HOST_NODE_1
           - name: steps-node-2
-            host_secret: SSH_HOST_NODE_2
+            host: SSH_HOST_NODE_2
           - name: steps-node-3
-            host_secret: SSH_HOST_NODE_3
+            host: SSH_HOST_NODE_3
           - name: steps-node-4
-            host_secret: SSH_HOST_NODE_4
+            host: SSH_HOST_NODE_4
 
     steps:
-      - uses: actions/checkout@v4
-  
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
       - name: Set Host IP from secret
         id: get_host
-        run: echo "host_ip=${{ secrets[matrix.host_secret] }}" >> $GITHUB_OUTPUT
+        run: |
+          echo "host_ip=${{ secrets[matrix.host] }}" >> $GITHUB_OUTPUT
   
-      - name: Upload to temporary folder in ${{ matrix.name }}
-        uses: appleboy/scp-action@master
+      - name: Deploy to ${{ matrix.name }}
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ steps.get_host.outputs.host_ip }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -86,7 +88,6 @@ jobs:
               rm -rf /var/www/html/steps-front-backup
               mv /var/www/html/steps-front /var/www/html/steps-front-backup
             fi
-  
             # Move the new build into place
             mv /var/www/html/steps-front-deployed /var/www/html/steps-front
 
