@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      build_path: ${{ steps.set-path.outputs.build_path }}
+      build_path: dist/e-learning/browser
 
     steps:
     - uses: actions/checkout@v4
@@ -37,10 +37,6 @@ jobs:
         echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/e-learning/browser/.htaccess
         echo "RewriteRule . index.html [L]" >> dist/e-learning/browser/.htaccess
 
-    - name: Set build path
-      id: set-path
-      run: echo "build_path=dist/e-learning/browser" >> $GITHUB_OUTPUT
-
   deploy:
     name: Deploy to ${{ matrix.name }}
     needs: build
@@ -49,24 +45,24 @@ jobs:
     strategy:
       matrix:
         include:
+          - name: steps-node-1
+            host_secret: SSH_HOST_NODE_1
           - name: steps-node-2
-            host: HOST_NODE_2
+            host_secret: SSH_HOST_NODE_2
           - name: steps-node-3
-            host: HOST_NODE_3
+            host_secret: SSH_HOST_NODE_3
           - name: steps-node-4
-            host: HOST_NODE_4
+            host_secret: SSH_HOST_NODE_4
 
     steps:
-    - name: Upload to temporary folder
-      uses: appleboy/scp-action@master
-        
+    - uses: actions/checkout@v4
+
     - name: Set Host IP from secret
       id: get_host
-      run: |
-        echo "host_ip=${{ secrets[matrix.host] }}" >> $GITHUB_OUTPUT
-        
-    - name: Deploy to ${{ matrix.name }}
-      uses: appleboy/ssh-action@master  
+      run: echo "host_ip=${{ secrets[matrix.host_secret] }}" >> $GITHUB_OUTPUT
+
+    - name: Upload to temporary folder
+      uses: appleboy/scp-action@master
       with:
         host: ${{ steps.get_host.outputs.host_ip }}
         username: ${{ secrets.SSH_USERNAME }}
@@ -94,18 +90,10 @@ jobs:
           # Move the new build into place
           mv /var/www/html/steps-front-deployed /var/www/html/steps-front
 
-    - name: Discord Notification
-      if: ${{ success() }}
-      uses: Ilshidur/action-discord@master
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      with:
-        args: ':green_circle: The project **`${{ github.repository }}`** has been safely deployed by **`${{ github.actor }}`**.'
-
     - name: Discord Notification (The job has failed)
       if: ${{ failure() }}
       uses: Ilshidur/action-discord@master
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
-        args: ':red_circle: Deployment **failed** for project **`${{ github.repository }}`**. Old version is still active. CC: **`${{ github.actor }}`**.'
+        args: ':red_circle: Deployment **failed** to **`${{ matrix.name }}`**. CC: **`${{ github.actor }}`**.'
