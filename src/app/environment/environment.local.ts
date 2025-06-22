@@ -16,7 +16,7 @@ function getMainDomain(): string {
     main = parts[0];
   }
 
-  return main;
+  return 'farida';
 
   // return main;
 }

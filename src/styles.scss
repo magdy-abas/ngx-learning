@@ -9,6 +9,45 @@
 // Include the common styles for Angular Material
 @include mat.core();
 
+:root {
+  --color-primary: #ff875a;
+  --color-secondery: #f66962;
+  --color-dark-blue: #392c7d;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-error: #dc3545;
+  --color-muted: #555;
+  --color-black: #0000;
+  --color-white: #fff;
+  --black-color: #22100d;
+}
+.darkmode {
+  --color-primary: #a18bff;
+  --color-bg-main: #1e1b2e;
+  --color-bg-secondary: #2c2944;
+  --color-bg-muted: #26233a;
+  --gradient-home-slide: linear-gradient(180deg, #1e1b2e 0%, #29263e 100%);
+  --color-text-main: #e4e4e7;
+  --color-link: #cfc8ff;
+  --color-link-hover: #a18bff;
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-placeholder: #a7a7b5;
+  --color-shadow-card: rgba(161, 139, 255, 0.1);
+  --color-navbar-bg: #231f39;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-bg-success-light: #4cd96452;
+  --color-error: #c62828;
+}
+
+body {
+  background-color: #fff;
+  color: #22100d;
+  font-size: 16px;
+  height: 100%;
+  overflow-x: hidden;
+}
 // Define the palettes for your theme
 $dreams-lms-primary: mat.define-palette(mat.$indigo-palette);
 $dreams-lms-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
@@ -41,6 +80,73 @@ $dreams-lms-theme: mat.define-light-theme(
   display: block;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #22100d;
+  font-weight: 500;
+}
+
+a {
+  color: #22100d;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-secondery);
+}
+
+//btns
+
+// btn outline
+.all-category .btn-primary {
+  color: #392c7d;
+  border: 3px solid #b4a7f5;
+  -webkit-backdrop-filter: blur(151.39px);
+  backdrop-filter: blur(151.39px);
+  border-radius: 46.9159px;
+  background: transparent;
+  border-radius: 46.9159px;
+  min-width: 150px;
+  padding: 10px 15px;
+  font-weight: 500;
+}
+
+.all-category .btn-primary:hover {
+  background-color: #917cf6;
+  border-color: #917cf6;
+  color: #fff;
+}
+
+// main btn
+
+.discover-btn {
+  font-size: 16px;
+  display: inline-block;
+  border: 1px solid rgb(255, 96, 46);
+  background: rgb(255, 96, 46);
+  border-radius: 5px;
+  text-align: center;
+  padding: 12px 45px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-transform: initial;
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px inset;
+  transition: 0.5s;
+  font-weight: 700 !important;
+  color: rgb(255, 255, 255) !important;
+}
+.discover-btn:hover {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(57, 44, 125);
+  box-shadow: rgb(255, 255, 255) 0px 50px 0px 0px inset;
+  transition: 0.5s;
+  color: rgb(57, 44, 125) !important;
+}
 // Import your custom components last
 @import "assets/components/all";
 

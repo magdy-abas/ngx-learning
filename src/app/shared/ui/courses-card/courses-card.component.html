@@ -1,122 +1,122 @@
 <!-- Course -->
-
-<div class="row " [ngClass]="fromHome && coursesData.length < 4 ? 'justify-content-center' : ''">
-
-
-
-  <div class="    d-flex" *ngFor="let data of coursesData; let i = index"
-    [ngClass]="fromHome ? 'col-lg-3 col-md-4  col-sm-6' : 'col-lg-3 col-md-4  col-sm-6'">
-
-    <div class="course-box course-design d-flex" [routerLink]="getRouterLink(data.id)" style="cursor: pointer;">
-      <div class="product">
+<div class="course-card-cover">
+  <div class="row  " [ngClass]="fromHome && coursesData.length < 4 ? 'justify-content-center' : ''">
 
 
-        <div class="product-img">
-          <a href="javascript:;">
-            <div class="product-img-courses">
-              <img class="img-fluid" alt="" [src]="data.image || '../../../../assets/img/course-placeholder.png'"
-                onerror="this.src='../../../../assets/img/course-placeholder.png'">
+
+    <div class="    d-flex" *ngFor="let data of coursesData; let i = index"
+      [ngClass]="fromHome ? 'col-lg-3 col-md-4  col-sm-6' : 'col-lg-3 col-md-4  col-sm-6'">
+
+      <div class="course-box course-design d-flex" [routerLink]="getRouterLink(data.id)" style="cursor: pointer;">
+        <div class="product">
+
+
+          <div class="product-img">
+            <a href="javascript:;">
+              <div class="product-img-courses">
+                <img class="img-fluid" alt="" [src]="data.image || '../../../../assets/img/course-placeholder.png'"
+                  onerror="this.src='../../../../assets/img/course-placeholder.png'">
+              </div>
+
+            </a>
+            <!-- [ngClass]="{'combo': data.idle === 'FREE'}" -->
+
+
+            @if (data.price) {
+            <div class="price">
+              <!-- <h3>{{data.doctor}}</h3> -->
+              <h3>{{ data.price | currency:'GBP':'symbol' }}</h3>
+
+              <!-- <span>200</span> -->
             </div>
 
-          </a>
-          <!-- [ngClass]="{'combo': data.idle === 'FREE'}" -->
+            }
 
 
-          @if (data.price) {
-          <div class="price">
-            <!-- <h3>{{data.doctor}}</h3> -->
-            <h3>{{ data.price | currency:'GBP':'symbol' }}</h3>
 
-            <!-- <span>200</span> -->
           </div>
+          <div class="product-content">
+            <h3 class="title"><a href="javascript:;">{{data.title}}</a></h3>
+            <div class="course-group d-flex">
 
-          }
-
-
-
-        </div>
-        <div class="product-content">
-          <h3 class="title"><a href="javascript:;">{{data.title}}</a></h3>
-          <div class="course-group d-flex">
-
-            <div class="course-group-img d-flex">
-              <div class="courses-doctor-img rounded-circle">
-                <img [src]="data.doctor_image || './assets/img/course/doctor.png'"
-                  onerror="this.src='./assets/img/course/doctor.png'" alt="img-doctor" class="img-fluid">
+              <div class="course-group-img d-flex">
+                <div class="courses-doctor-img rounded-circle">
+                  <img [src]="data.doctor_image || './assets/img/course/doctor.png'"
+                    onerror="this.src='./assets/img/course/doctor.png'" alt="img-doctor" class="img-fluid">
+                </div>
+                <div class="course-name align-content-center">
+                  <!-- <h4><a href="javascript:;">{{data.doctor}}</a></h4> -->
+                  <p>{{data.doctor}}</p>
+                </div>
               </div>
-              <div class="course-name align-content-center">
-                <!-- <h4><a href="javascript:;">{{data.doctor}}</a></h4> -->
-                <p>{{data.doctor}}</p>
-              </div>
-            </div>
-            <div class="course-share d-flex align-items-center justify-content-center">
-              <!-- <a href="javascript:void(0)"><i class="fa-heart" (click)="toggleClass(data)"
+              <div class="course-share d-flex align-items-center justify-content-center">
+                <!-- <a href="javascript:void(0)"><i class="fa-heart" (click)="toggleClass(data)"
                           [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a> -->
-            </div>
-          </div>
-
-          <div class="course-info d-flex align-items-center">
-            <div class="rating-img d-flex align-items-center">
-              <img src="assets/img/icon/icon-01.svg" alt="icon-01">
-              <p>13+ Lesson</p>
-            </div>
-            <div class="course-view d-flex align-items-center">
-              <img src="assets/img/icon/icon-02.svg" alt="icon-02">
-              <p>10hr 30min
-
-              </p>
-            </div>
-          </div>
-
-          <div class="footer-course-card"
-            [ngClass]="{'d-flex justify-content-between align-items-center': data.client_status !== 'accepted'}">
-            <div class="rating" [ngClass]="{'d-none': data.client_status === 'accepted'}">
-              @if (data.rate !== 0) {
-              <!-- Display actual rating -->
-              <div class="d-flex">
-                <div *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))">
-                  <i class="fas fa-star filled me-1"></i>
-                </div>
-                @if (data.rate % 1 !== 0) {
-                <div>
-                  <i class="fa-solid filled fa-star-half-stroke me-1 "></i>
-                </div>
-
-                }
-                <span class="d-inline-block average-rating"><span>{{ data.rate }}</span></span>
               </div>
-              } @else {
+            </div>
+
+            <div class="course-info d-flex align-items-center">
+              <div class="rating-img d-flex align-items-center">
+                <img src="assets/img/icon/icon-01.svg" alt="icon-01">
+                <p>13+ Lesson</p>
+              </div>
+              <div class="course-view d-flex align-items-center">
+                <img src="assets/img/icon/icon-02.svg" alt="icon-02">
+                <p>10hr 30min
+
+                </p>
+              </div>
+            </div>
+
+            <div class="footer-course-card"
+              [ngClass]="{'d-flex justify-content-between align-items-center': data.client_status !== 'accepted'}">
+              <div class="rating" [ngClass]="{'d-none': data.client_status === 'accepted'}">
+                @if (data.rate !== 0) {
+                <!-- Display actual rating -->
+                <div class="d-flex">
+                  <div *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))">
+                    <i class="fas fa-star filled me-1"></i>
+                  </div>
+                  @if (data.rate % 1 !== 0) {
+                  <div>
+                    <i class="fa-solid filled fa-star-half-stroke me-1 "></i>
+                  </div>
+
+                  }
+                  <span class="d-inline-block average-rating"><span>{{ data.rate }}</span></span>
+                </div>
+                } @else {
+
+                <div>
+                  <div *ngFor="let item of [1, 2, 3, 4]">
+                    <i class="fas fa-star filled me-1"></i>
+                  </div>
+                  <i class="fa-solid filled fa-star-half-stroke me-1"></i>
+                  <span class="d-inline-block average-rating"><span>4.5</span></span>
+                </div>
+                }
+              </div>
 
               <div>
-                <div *ngFor="let item of [1, 2, 3, 4]">
-                  <i class="fas fa-star filled me-1"></i>
-                </div>
-                <i class="fa-solid filled fa-star-half-stroke me-1"></i>
-                <span class="d-inline-block average-rating"><span>4.5</span></span>
+
               </div>
-              }
-            </div>
-
-            <div>
-
-            </div>
 
 
-            @if (data.client_status === 'accepted') {
-            <div class="course-card-progress-bar">
-              <div class="progress-container">
-                <div class="progress-fill" [style.width.%]="course.progress">
-                  <span class="progress-text">{{course.progress}}%</span>
+              @if (data.client_status === 'accepted') {
+              <div class="course-card-progress-bar">
+                <div class="progress-container">
+                  <div class="progress-fill" [style.width.%]="course.progress">
+                    <span class="progress-text">{{course.progress}}%</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
 
 
 
-            }@else {
-            <div class="all-btn   all-category ">
-              <!-- <button [disabled]="data.client_status === 'pending'"
+              }@else {
+              <div class="all-btn   all-category ">
+                <!-- <button [disabled]="data.client_status === 'pending'"
                 [ngClass]="{'pending-btn': data.client_status === 'pending'}"
                 (click)="buyCourse($event, data.id , data.way_to_by_course_in_app , data.client_status)"
                 class="btn cst-course-btn btn-primary"> {{ data.client_status === 'pending' ? ('courses.pending' |
@@ -124,19 +124,21 @@
                 }}</button> -->
 
 
-              <button class="btn cst-course-btn btn-primary">
-                {{"courses.showCourse" | translate}}
-              </button>
+                <button class="btn cst-course-btn btn-primary">
+                  {{"courses.showCourse" | translate}}
+                </button>
+              </div>
+
+              }
+
             </div>
 
-            }
-
           </div>
-
         </div>
       </div>
     </div>
   </div>
+
 </div>
 
 <!-- /Course -->

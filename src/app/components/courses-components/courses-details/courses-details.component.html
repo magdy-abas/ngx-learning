@@ -26,17 +26,17 @@
     </div>
     <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
       <!-- Card doctor -->
-      <div class="shadow-sm rounded-4 p-3 text-center bg-white mb-3">
-        <div class="mb-2"
-          style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 2px solid #ff875a; box-shadow: 0 2px 5px rgba(0,0,0,0.2); margin: auto;">
+      <div class="doctor-card shadow-sm rounded-4 p-3 text-center mb-3">
+        <div class="doctor-img-wrapper mb-2">
           <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
             onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img" class="w-100 h-100"
             style="object-fit: cover;">
         </div>
-        <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
-        <h5 class="fw-bold mb-2" style="color: #ff875a;">{{ courseDetails.course.title }}</h5>
 
-        <!-- btns-->
+        <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
+        <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
+
+        <!-- btns -->
         <div>
           <!-- subscribe -->
           <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
@@ -44,7 +44,7 @@
             {{ 'courses.subscribed' | translate }}
           </button>
 
-          <!-- rekected -->
+          <!-- rejected -->
           <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
             disabled>
             {{ 'courses.rejected' | translate }}
@@ -58,7 +58,7 @@
 
           <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
             (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
-            class="btn btn-sm px-4 py-2" style="background-color: #ff875a; color: white;">
+            class="btn btn-orange btn-sm px-4 py-2">
             {{ 'courses.subscribeNow' | translate }}
           </button>
         </div>
