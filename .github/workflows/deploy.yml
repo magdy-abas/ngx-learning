@@ -27,12 +27,12 @@ jobs:
 
     - name: Create .htaccess
       run: |
-        echo "RewriteEngine On" > dist/e-learning/.htaccess
-        echo "RewriteBase /" >> dist/e-learning/.htaccess
-        echo "RewriteRule ^index\.html$ - [L]" >> dist/e-learning/.htaccess
-        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> dist/e-learning/.htaccess
-        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/e-learning/.htaccess
-        echo "RewriteRule . index.html [L]" >> dist/e-learning/.htaccess
+        echo "RewriteEngine On" > dist/e-learning/browser/.htaccess
+        echo "RewriteBase /" >> dist/e-learning/browser/.htaccess
+        echo "RewriteRule ^index\.html$ - [L]" >> dist/e-learning/browser/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> dist/e-learning/browser/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/e-learning/browser/.htaccess
+        echo "RewriteRule . index.html [L]" >> dist/e-learning/browser/.htaccess
 
     - name: Upload build to temporary deploy folder
       uses: appleboy/scp-action@master
@@ -41,7 +41,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-        source: "dist/e-learning/*"
+        source: "dist/e-learning/browser/*"
         target: "/var/www/html/steps-front-deploying"
 
     - name: Finalize deployment (backup & switch folders)
