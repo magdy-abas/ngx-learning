@@ -1,13 +1,16 @@
 name: farida
+
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+
 jobs:
   staging-deployment:
     runs-on: ubuntu-latest
     if: "github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[ci skip]')"
+
     steps:
     - uses: actions/checkout@v4
 
@@ -21,26 +24,44 @@ jobs:
 
     - name: Build Angular App
       run: npm run build
-      
+
     - name: Create .htaccess
       run: |
-        echo "RewriteEngine On" > /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
-        echo "RewriteBase /" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
-        echo "RewriteRule ^index\.html$ - [L]" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
-        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
-        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
-        echo "RewriteRule . index.html [L]" >> /home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/.htaccess
-    
-    - name: Deploy to Server
+        echo "RewriteEngine On" > dist/e-learning/browser/.htaccess
+        echo "RewriteBase /" >> dist/e-learning/browser/.htaccess
+        echo "RewriteRule ^index\.html$ - [L]" >> dist/e-learning/browser/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-f" >> dist/e-learning/browser/.htaccess
+        echo "RewriteCond %{REQUEST_FILENAME} !-d" >> dist/e-learning/browser/.htaccess
+        echo "RewriteRule . index.html [L]" >> dist/e-learning/browser/.htaccess
+
+    - name: Upload build to temporary deploy folder
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets.SSH_HOST }}
+        host: ${{ secrets.SSH_HOST_NODE_1 }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-        source: "/home/runner/work/NGX_LEARNING/NGX_LEARNING/dist/e-learning/*"
-        target: "/var/www/projects/farida"
-        strip_components: 2
+        source: "dist/e-learning/browser/*"
+        target: "/var/www/html/steps-front-deploying"
+
+    - name: Finalize deployment (backup & switch folders)
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST_NODE_1 }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        script: |
+          mv /var/www/html/steps-front-deploying/dist/e-learning/browser /var/www/html/steps-front-deployed
+          rm -rf /var/www/html/steps-front-deploying
+          # Make backup of current app if it exists
+          if [ -d "/var/www/html/steps-front" ]; then
+            rm -rf /var/www/html/steps-front-backup
+            mv /var/www/html/steps-front /var/www/html/steps-front-backup
+          fi
+
+          # Move the new build into place
+          mv /var/www/html/steps-front-deployed /var/www/html/steps-front
 
     - name: Discord Notification
       if: ${{ success() }}
@@ -48,7 +69,7 @@ jobs:
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
-        args: ':green_circle: The project **`${{ github.repository }}`** has been deployed to **`Staging`** by **`${{ github.actor }}`**.'
+        args: ':green_circle: The project **`${{ github.repository }}`** has been safely deployed by **`${{ github.actor }}`**.'
 
     - name: Discord Notification (The job has failed)
       if: ${{ failure() }}
@@ -56,4 +77,4 @@ jobs:
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
-        args: ':red_circle: **`Staging`** deployment of the project **`${{ github.repository }}`** has been failed. CC: **`${{ github.actor }}`**.'
+        args: ':red_circle: Deployment **failed** for project **`${{ github.repository }}`**. Old version is still active. CC: **`${{ github.actor }}`**.'
