@@ -8,6 +8,7 @@ function getMainDomain(): string {
   }
 
   return parts[0]; //
+  // return 'farida';
 }
 // export const baseUrl = `https://farida.stepsio.com/api/`;
 export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
