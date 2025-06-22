@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
   activeSection: 'profile' | 'courses' = 'profile';
   isEditingName = false;
   userData: any = { name: '' };
-  errorMessage: string = ''; // لحفظ رسالة الخطأ
+  errorMessage: string = '';
 
   private _AuthService = inject(AuthService);
   private _ProfileService = inject(ProfileService);
@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
     this.isEditingName = !this.isEditingName;
     const nameControl = this.profileForm.get('name');
     if (this.isEditingName) {
-      this.errorMessage = ''; // نمسح الرسالة لما يبدأ التعديل
+      this.errorMessage = '';
       nameControl?.enable();
     } else {
       nameControl?.disable();
@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
     const nameValue = this.profileForm.get('name')?.value;
 
     if (nameValue === this.userData.name) {
-      return; // مفيش أي تغيير
+      return;
     }
 
     const updateBody = { name: nameValue };

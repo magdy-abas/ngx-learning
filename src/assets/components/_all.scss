@@ -870,25 +870,6 @@ button.bg-danger:hover {
   border-color: #1e88e5;
 }
 
-.dropdown-menu {
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  box-shadow: inherit;
-  font-size: 14px;
-  transform-origin: left top 0;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-  background-color: #f7f7f7;
-}
-
-.navbar-nav .open .dropdown-menu {
-  border: 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-}
 
 .card {
   border: 1px solid #e9ecef;

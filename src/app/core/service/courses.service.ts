@@ -97,9 +97,10 @@ export class CoursesService {
   }
 
   //metting
-  joinMeeting(lessonId: number): Observable<any> {
+  joinMeeting(lessonId: number, leaveUrl: string): Observable<any> {
     return this._HttpClient.post(`${baseUrl}lessons/join-meeting`, {
       meeting_id: lessonId,
+      leave_url: leaveUrl,
     });
   }
 

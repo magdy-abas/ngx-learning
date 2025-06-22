@@ -52,6 +52,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   public videoUrl: string = '';
   public videoLoaded: boolean = false;
   public resources: any[] = [];
+
   isAuth!: boolean;
   reqData: RequestJoinDto = new RequestJoinDto();
   VIDEO_ENCRYPTION_KEY: string =
@@ -386,7 +387,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     chapterId: number,
     isFree: boolean
   ): void {
-    this._CoursesService.joinMeeting(lessonId).subscribe({
+    const leaveUrl = `${window.location.origin}/auth/course-details/${this.courseId}`;
+
+    this._CoursesService.joinMeeting(lessonId, leaveUrl).subscribe({
       next: (data) => {
         if (data.status === 1 && data.data?.join_url) {
           const decryptedJoinUrl = isFree

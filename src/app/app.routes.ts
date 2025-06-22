@@ -1,132 +1,237 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guard/auth.guard';
 import { publicGuard } from './core/guard/public.guard';
-import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
-import { HomeComponent } from './components/home/home.component';
-import { CoursesComponent } from './components/courses-components/courses/courses.component';
-import { CoursesDetailsComponent } from './components/courses-components/courses-details/courses-details.component';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { LoginComponent } from './components/auth-components/login/login.component';
-import { RegisterComponent } from './components/auth-components/register/register.component';
-import { ForgotPasswordComponent } from './components/auth-components/forgot-password/forgot-password.component';
-import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { CoursesQuizComponent } from './components/courses-components/courses-quiz/courses-quiz.component';
-
-import { CategoriesComponent } from './components/categories/categories.component';
-import { MyCoursesComponent } from './components/courses-components/my-courses/my-courses.component';
-import { DoctorsComponent } from './components/doctors/doctors.component';
-import { ProfileComponent } from './components/profile/profile.component';
-
-const publicRoutes: Routes = [
-  { path: '', component: HomeComponent, title: 'home' },
-  { path: 'home', redirectTo: '', pathMatch: 'full' },
-
-  { path: 'courses', component: CoursesComponent, title: 'courses' },
-  {
-    path: 'courses/category/:categoryId',
-    component: CoursesComponent,
-    title: 'courses-category',
-  },
-  {
-    path: 'courses/doctor/:doctorId',
-    component: CoursesComponent,
-    title: 'courses-doctor',
-  },
-  {
-    path: 'course-details/:id',
-    component: CoursesDetailsComponent,
-    title: 'course-details',
-  },
-  { path: 'categories', component: CategoriesComponent, title: 'categories' },
-  {
-    path: 'categories/:categoryId',
-    component: CategoriesComponent,
-    title: 'categories-sub',
-  },
-  {
-    path: 'course-quiz/:courseId/:quizId',
-    component: CoursesQuizComponent,
-    title: 'quiz',
-  },
-];
-
-const authRoutes: Routes = [
-  { path: '', component: HomeComponent, title: 'home' },
-  { path: 'home', redirectTo: '', pathMatch: 'full' },
-
-  { path: 'courses', component: CoursesComponent, title: 'courses' },
-  {
-    path: 'courses/category/:categoryId',
-    component: CoursesComponent,
-    title: 'courses-category',
-  },
-  {
-    path: 'doctors',
-    component: DoctorsComponent,
-    title: 'doctors',
-  },
-  {
-    path: 'courses/doctor/:doctorId',
-    component: CoursesComponent,
-    title: 'courses-doctor',
-  },
-  {
-    path: 'course-details/:id',
-    component: CoursesDetailsComponent,
-    title: 'course-details',
-  },
-  {
-    path: 'course-quiz/:courseId/:quizId',
-    component: CoursesQuizComponent,
-    title: 'quiz',
-  },
-
-  { path: 'my-courses', component: MyCoursesComponent, title: 'myCourses' },
-  { path: 'categories', component: CategoriesComponent, title: 'categories' },
-  {
-    path: 'categories/:categoryId',
-    component: CategoriesComponent,
-    title: 'categories-sub',
-  },
-  {
-    path: 'courses/doctor/:doctorId',
-    component: CoursesComponent,
-    title: 'courses-doctor',
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    title: 'profile',
-  },
-];
+import { authGuard } from './core/guard/auth.guard';
 
 export const routes: Routes = [
+  // Public routes
   {
     path: '',
-    component: PublicLayoutComponent,
     canActivate: [publicGuard],
-    children: publicRoutes,
-  },
-  {
-    path: '',
-    component: AuthLayoutComponent,
-    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./layouts/public-layout/public-layout.component').then(
+        (m) => m.PublicLayoutComponent
+      ),
     children: [
-      { path: 'login', component: LoginComponent, title: 'Login' },
-      { path: 'signup', component: RegisterComponent, title: 'Signup' },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+        title: 'home',
+      },
+      {
+        path: 'home',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+      {
+        path: 'courses',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses/courses.component'
+          ).then((m) => m.CoursesComponent),
+        title: 'courses',
+      },
+      {
+        path: 'courses/category/:categoryId',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses/courses.component'
+          ).then((m) => m.CoursesComponent),
+        title: 'courses-category',
+      },
+      {
+        path: 'courses/doctor/:doctorId',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses/courses.component'
+          ).then((m) => m.CoursesComponent),
+        title: 'courses-doctor',
+      },
+      {
+        path: 'course-details/:id',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses-details/courses-details.component'
+          ).then((m) => m.CoursesDetailsComponent),
+        title: 'course-details',
+      },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./components/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+        title: 'categories',
+      },
+      {
+        path: 'categories/:categoryId',
+        loadComponent: () =>
+          import('./components/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+        title: 'categories-sub',
+      },
+      {
+        path: 'course-quiz/:courseId/:quizId',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses-quiz/courses-quiz.component'
+          ).then((m) => m.CoursesQuizComponent),
+        title: 'quiz',
+      },
+    ],
+  },
+
+  // Auth routes (login, register, forgot)
+  {
+    path: '',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./layouts/auth-layout/auth-layout.component').then(
+        (m) => m.AuthLayoutComponent
+      ),
+    children: [
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./components/auth-components/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+        title: 'Login',
+      },
+      {
+        path: 'signup',
+        loadComponent: () =>
+          import(
+            './components/auth-components/register/register.component'
+          ).then((m) => m.RegisterComponent),
+        title: 'Signup',
+      },
       {
         path: 'forgotpass',
-        component: ForgotPasswordComponent,
+        loadComponent: () =>
+          import(
+            './components/auth-components/forgot-password/forgot-password.component'
+          ).then((m) => m.ForgotPasswordComponent),
         title: 'Forgot Password',
       },
     ],
   },
+
+  // Protected routes
   {
     path: 'auth',
-    component: MainLayoutComponent,
     canActivate: [authGuard],
-    children: authRoutes,
+    loadComponent: () =>
+      import('./layouts/main-layout/main-layout.component').then(
+        (m) => m.MainLayoutComponent
+      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+        title: 'home',
+      },
+      {
+        path: 'home',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+      {
+        path: 'courses',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses/courses.component'
+          ).then((m) => m.CoursesComponent),
+        title: 'courses',
+      },
+      {
+        path: 'courses/category/:categoryId',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses/courses.component'
+          ).then((m) => m.CoursesComponent),
+        title: 'courses-category',
+      },
+      {
+        path: 'courses/doctor/:doctorId',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses/courses.component'
+          ).then((m) => m.CoursesComponent),
+        title: 'courses-doctor',
+      },
+      {
+        path: 'course-details/:id',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses-details/courses-details.component'
+          ).then((m) => m.CoursesDetailsComponent),
+        title: 'course-details',
+      },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./components/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+        title: 'categories',
+      },
+      {
+        path: 'categories/:categoryId',
+        loadComponent: () =>
+          import('./components/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+        title: 'categories-sub',
+      },
+      {
+        path: 'course-quiz/:courseId/:quizId',
+        loadComponent: () =>
+          import(
+            './components/courses-components/courses-quiz/courses-quiz.component'
+          ).then((m) => m.CoursesQuizComponent),
+        title: 'quiz',
+      },
+      {
+        path: 'my-courses',
+        loadComponent: () =>
+          import(
+            './components/courses-components/my-courses/my-courses.component'
+          ).then((m) => m.MyCoursesComponent),
+        title: 'myCourses',
+      },
+      {
+        path: 'doctors',
+        loadComponent: () =>
+          import('./components/doctors/doctors.component').then(
+            (m) => m.DoctorsComponent
+          ),
+        title: 'doctors',
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+        title: 'profile',
+      },
+    ],
   },
-  { path: '**', component: NotFoundComponent, title: 'not found' },
+
+  // Not Found route
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./components/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
+    title: 'not found',
+  },
 ];
