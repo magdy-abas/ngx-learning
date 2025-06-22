@@ -75,7 +75,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
-        source: "*"
+        source: "angular-build/*"
         target: "/var/www/html/steps-front-deploying"
 
     - name: Finalize deployment on remote
@@ -86,6 +86,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
+          mv /var/www/html/steps-front-deploying/angular-build /var/www/html/steps-front-deployed
+          rm -rf /var/www/html/steps-front-deploying
           # Backup current
           if [ -d "/var/www/html/steps-front" ]; then
             rm -rf /var/www/html/steps-front-backup
@@ -93,7 +95,7 @@ jobs:
           fi
 
           # Move new build into place
-          mv /var/www/html/steps-front-deploying /var/www/html/steps-front
+          mv /var/www/html/steps-front-deployed /var/www/html/steps-front
 
     - name: Discord Notification on Failure
       if: ${{ failure() }}
