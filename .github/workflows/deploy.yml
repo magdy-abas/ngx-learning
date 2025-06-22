@@ -52,6 +52,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
+          mv /var/www/html/steps-front-deploying/dist/e-learning/browser /var/www/html/steps-front-deployed
+          rm -rf /var/www/html/steps-front-deploying
           # Make backup of current app if it exists
           if [ -d "/var/www/html/steps-front" ]; then
             rm -rf /var/www/html/steps-front-backup
@@ -59,7 +61,7 @@ jobs:
           fi
 
           # Move the new build into place
-          mv /var/www/html/steps-front-deploying /var/www/html/steps-front
+          mv /var/www/html/steps-front-deployed /var/www/html/steps-front
 
     - name: Discord Notification
       if: ${{ success() }}
