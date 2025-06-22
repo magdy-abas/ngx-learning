@@ -73,23 +73,59 @@ jobs:
           source: "dist/e-learning/browser/*"
           target: "/var/www/html/steps-front-deploying"
 
-      - name: Finalize deployment
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ steps.get_host.outputs.host_ip }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          script: |
-            mv /var/www/html/steps-front-deploying/dist/e-learning/browser /var/www/html/steps-front-deployed
-            rm -rf /var/www/html/steps-front-deploying
-            # Make backup of current app if it exists
-            if [ -d "/var/www/html/steps-front" ]; then
-              rm -rf /var/www/html/steps-front-backup
-              mv /var/www/html/steps-front /var/www/html/steps-front-backup
-            fi
-            # Move the new build into place
-            mv /var/www/html/steps-front-deployed /var/www/html/steps-front
+  # deploy:
+  #   name: Deploy to ${{ matrix.name }}
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - name: steps-node-1
+  #           host: SSH_HOST_NODE_1
+  #         - name: steps-node-2
+  #           host: SSH_HOST_NODE_2
+  #         - name: steps-node-3
+  #           host: SSH_HOST_NODE_3
+  #         - name: steps-node-4
+  #           host: SSH_HOST_NODE_4
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+        
+  #     - name: Set Host IP from secret
+  #       id: get_host
+  #       run: |
+  #         echo "host_ip=${{ secrets[matrix.host] }}" >> $GITHUB_OUTPUT
+  
+  #     - name: Deploy to ${{ matrix.name }}
+  #       uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{ steps.get_host.outputs.host_ip }}
+  #         username: ${{ secrets.SSH_USERNAME }}
+  #         key: ${{ secrets.SSH_KEY }}
+  #         port: 22
+  #         source: "dist/e-learning/browser/*"
+  #         target: "/var/www/html/steps-front-deploying"
+
+  #     - name: Finalize deployment
+  #       uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{ steps.get_host.outputs.host_ip }}
+  #         username: ${{ secrets.SSH_USERNAME }}
+  #         key: ${{ secrets.SSH_KEY }}
+  #         port: 22
+  #         script: |
+  #           mv /var/www/html/steps-front-deploying/dist/e-learning/browser /var/www/html/steps-front-deployed
+  #           rm -rf /var/www/html/steps-front-deploying
+  #           # Make backup of current app if it exists
+  #           if [ -d "/var/www/html/steps-front" ]; then
+  #             rm -rf /var/www/html/steps-front-backup
+  #             mv /var/www/html/steps-front /var/www/html/steps-front-backup
+  #           fi
+  #           # Move the new build into place
+  #           mv /var/www/html/steps-front-deployed /var/www/html/steps-front
 
       - name: Discord Notification (The job has failed)
         if: ${{ failure() }}
