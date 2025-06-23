@@ -25,7 +25,7 @@ export class GlobalTranslateService {
     this.initializeLanguage();
   }
 
-  private initializeLanguage(): void {
+  initializeLanguage(): void {
     const lang = this.language$.value;
     this.translateService.use(lang);
     this.updateDocumentDirection(lang);

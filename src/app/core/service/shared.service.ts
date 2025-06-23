@@ -9,6 +9,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SharedService {
+  private settingsData: SettingResponse | null = null;
+
   private isSecurityChecked = new BehaviorSubject<boolean>(false);
   private initializationComplete = new BehaviorSubject<boolean>(false);
   securityStatus$ = this.isSecurityChecked.asObservable();
@@ -56,14 +58,28 @@ export class SharedService {
     return this._HttpClient.get<SettingResponse>(`${baseUrl}settings`);
   }
 
-  // New:  settings in localStorage
+  //  settings in localStorage
   saveSettingsToLocalStorage(settings: SettingResponse) {
     localStorage.setItem('appSettings', JSON.stringify(settings));
   }
 
-  //  Read from localStorage
-  getSettingsFromLocalStorage(): SettingResponse | null {
-    const data = localStorage.getItem('appSettings');
-    return data ? JSON.parse(data) : null;
+  loadSettings(): Promise<void> {
+    return this.settings()
+      .toPromise()
+      .then((response) => {
+        if (response) {
+          this.settingsData = response;
+          this.saveSettingsToLocalStorage(response);
+        } else {
+          console.warn('Settings API returned undefined');
+        }
+      });
+  }
+  getSettings(): SettingResponse | null {
+    if (this.settingsData) {
+      return this.settingsData;
+    }
+    const local = localStorage.getItem('appSettings');
+    return local ? JSON.parse(local) : null;
   }
 }

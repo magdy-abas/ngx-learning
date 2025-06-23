@@ -15,6 +15,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 import { Subscription } from 'rxjs';
 import { DarkModeService } from '../../core/service/dark-mode.service';
+import { SharedService } from '../../core/service/shared.service';
 
 interface MenuItem {
   title: string;
@@ -37,6 +38,7 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
   @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
   @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
+
   public isLangDropdownOpen = false;
   public logoUrl: string = '';
 
@@ -62,12 +64,18 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
-    private darkModeService: DarkModeService
+    private darkModeService: DarkModeService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit() {
     this.darkModeService.applyMode();
-    this.loadSettings();
+
+    const settings = this.sharedService.getSettings();
+    if (settings) {
+      this.logoUrl = this.darkModeService.getLogo(settings);
+    }
+
     this.checkCurrentRoute();
     this.handleNavbarState();
 
@@ -192,17 +200,5 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleLangDropdown(event: Event): void {
     event.stopPropagation();
     this.isLangDropdownOpen = !this.isLangDropdownOpen;
-  }
-
-  loadSettings() {
-    const settingsString = localStorage.getItem('appSettings');
-    if (settingsString) {
-      const settings = JSON.parse(settingsString);
-      if (settings && settings.data) {
-        this.logoUrl = this.darkModeService.getLogo(settings);
-      }
-    } else {
-      console.warn('No settings found in localStorage');
-    }
   }
 }

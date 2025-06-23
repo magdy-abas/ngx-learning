@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  APP_INITIALIZER,
+  importProvidersFrom,
+} from '@angular/core';
 import {
   provideRouter,
   withInMemoryScrolling,
@@ -21,9 +25,17 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { securityInterceptor } from './core/interceptor/security.interceptor';
 import { headerInterceptor } from './core/interceptor/header.interceptor';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { GlobalTranslateService } from './core/service/global-translate.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+// هنا بنضيف الـ APP_INITIALIZER
+export function initLanguage(
+  globalTranslateService: GlobalTranslateService
+): () => void {
+  return () => globalTranslateService.initializeLanguage();
 }
 
 export const appConfig: ApplicationConfig = {
@@ -57,5 +69,11 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initLanguage,
+      deps: [GlobalTranslateService],
+      multi: true,
+    },
   ],
 };

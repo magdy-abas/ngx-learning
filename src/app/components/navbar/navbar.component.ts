@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
   @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
   @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
+
   public isLangDropdownOpen = false;
   public isMenuOpened = false;
   public isTransparent = true;
@@ -57,7 +58,9 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isHomePage = false;
   public activeSubmenu: { [key: string]: boolean } = {};
   public userName: string = 'Guest';
-  logoUrl: string = '';
+  public logoUrl: string = '';
+  public isDarkMode = false;
+  public isUserDropdownOpen = false;
 
   private routerSubscription!: Subscription;
 
@@ -75,6 +78,12 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     },
   ];
 
+  public user = {
+    name: 'Rolands R',
+    role: 'Student',
+    image: '',
+  };
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -89,7 +98,15 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isDarkMode = this.darkModeService.isDarkMode();
 
     this.loadUserData();
-    this.loadSettings();
+
+    const settings = this.sharedService.getSettings();
+    if (settings) {
+      this.logoUrl = this.darkModeService.getLogo(settings);
+      if (settings.data.icon) {
+        this.setFavicon(settings.data.icon);
+      }
+    }
+
     this.checkCurrentRoute();
     this.handleNavbarState();
 
@@ -219,48 +236,29 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.router.url === route;
   }
 
-  public isUserDropdownOpen = false;
-
-  public user = {
-    name: 'Rolands R',
-    role: 'Student',
-    image: '',
-  };
-
   public toggleUserDropdown(event: Event): void {
     event.stopPropagation();
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
   }
 
-  logout(): void {
-    this.AuthService.logout();
-  }
   @HostListener('document:click')
   closeUserDropdown() {
     this.isUserDropdownOpen = false;
   }
 
-  public isDarkMode = false;
   toggleDarkMode(event: Event): void {
     event.stopPropagation();
     this.darkModeService.toggleDarkMode();
     this.isDarkMode = this.darkModeService.isDarkMode();
-    this.loadSettings();
-  }
 
-  loadSettings() {
-    const settings = this.sharedService.getSettingsFromLocalStorage();
+    const settings = this.sharedService.getSettings();
     if (settings) {
       this.logoUrl = this.darkModeService.getLogo(settings);
-
-      if (settings.data.icon) {
-        this.setFavicon(settings.data.icon);
-      }
-    } else {
-      console.warn('No settings found in localStorage');
     }
   }
-
+  logout(): void {
+    this.AuthService.logout();
+  }
   setFavicon(iconUrl: string) {
     let link: HTMLLinkElement | null =
       document.querySelector("link[rel~='icon']");

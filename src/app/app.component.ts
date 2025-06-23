@@ -27,7 +27,11 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadSetting();
+    const settings = this.sharedService.getSettings();
+    if (settings) {
+      this.applySettings(settings.data);
+    }
+
     initSweetAlertTranslations(this.translate);
     this.spinner.show();
 
@@ -37,6 +41,10 @@ export class AppComponent implements OnInit {
       'eLearning, online learning, online courses, skill enhancement, education',
       'https://yourwebsite.com/og-image.jpg'
     );
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
   }
 
   openWhatsApp(): void {
