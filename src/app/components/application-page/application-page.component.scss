@@ -1,0 +1,81 @@
+.app-page {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #6f42c1;
+  color: white;
+  overflow-x: hidden;
+}
+
+.app-page h1 {
+  color: white;
+}
+.app-page nav {
+  background-color: transparent;
+}
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0 80px 0;
+  background: linear-gradient(
+      135deg,
+      rgba(111, 66, 193, 0.85),
+      rgba(111, 66, 193, 0.85)
+    ),
+    url("../../../assets/img/welcome-bg-2.jpg") no-repeat center center/cover;
+}
+
+.hero-thumb img {
+  max-width: 80%;
+  height: auto;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.button-group img {
+  height: 50px;
+  margin-right: 15px;
+  transition: transform 0.3s;
+}
+
+.button-group img:hover {
+  transform: scale(1.1);
+}
+
+/* Social Icons */
+.social-icons a {
+  color: white;
+  font-size: 22px;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ffc107;
+}
+
+.navbar-brand img {
+  height: 50px;
+}
+
+@media (max-width: 768px) {
+  .hero-thumb img {
+    max-width: 90%;
+  }
+}

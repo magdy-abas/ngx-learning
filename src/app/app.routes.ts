@@ -49,6 +49,7 @@ export const routes: Routes = [
           ).then((m) => m.CoursesComponent),
         title: 'courses-doctor',
       },
+
       {
         path: 'course-details/:id',
         loadComponent: () =>
@@ -83,7 +84,23 @@ export const routes: Routes = [
       },
     ],
   },
-
+  {
+    path: 'app',
+    loadComponent: () =>
+      import('./layouts/app-layout/app-layout.component').then(
+        (m) => m.AppLayoutComponent
+      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './components/application-page/application-page.component'
+          ).then((m) => m.ApplicationPageComponent),
+        title: 'app-landing',
+      },
+    ],
+  },
   // Auth routes (login, register, forgot)
   {
     path: '',
