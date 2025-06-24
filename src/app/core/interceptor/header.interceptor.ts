@@ -33,7 +33,7 @@ export const headerInterceptor: HttpInterceptorFn = (
   return next(modifiedReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403) {
-        router.navigate(['/mobile']);
+        router.navigate(['/app']);
       }
       return throwError(() => error);
     })
