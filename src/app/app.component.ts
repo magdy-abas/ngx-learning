@@ -25,15 +25,12 @@ export class AppComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private translate: TranslateService
   ) {}
-
   ngOnInit(): void {
-    const settings = this.sharedService.getSettings();
-    if (settings) {
-      this.applySettings(settings.data);
-    }
+    this.spinner.show();
+
+    this.loadSetting();
 
     initSweetAlertTranslations(this.translate);
-    this.spinner.show();
 
     this.seoService.updateMeta(
       'ELearning - Enhance Your Skills Online',
@@ -41,10 +38,6 @@ export class AppComponent implements OnInit {
       'eLearning, online learning, online courses, skill enhancement, education',
       'https://yourwebsite.com/og-image.jpg'
     );
-
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 500);
   }
 
   openWhatsApp(): void {
@@ -63,8 +56,11 @@ export class AppComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.sharedService.saveSettingsToLocalStorage(response);
+
           this.applySettings(response.data);
-          console.log(response);
+          if (response.data.icon) {
+            this.setFavicon(response.data.icon);
+          }
         }
       },
       error: (err) => {
@@ -76,5 +72,17 @@ export class AppComponent implements OnInit {
         }, 500);
       },
     });
+  }
+
+  setFavicon(iconUrl: string) {
+    document
+      .querySelectorAll("link[rel~='icon']")
+      .forEach((link) => link.remove());
+
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = iconUrl + '?v=' + new Date().getTime();
+    document.head.appendChild(link);
   }
 }

@@ -100,11 +100,9 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadUserData();
 
     const settings = this.sharedService.getSettings();
+
     if (settings) {
       this.logoUrl = this.darkModeService.getLogo(settings);
-      if (settings.data.icon) {
-        this.setFavicon(settings.data.icon);
-      }
     }
 
     this.checkCurrentRoute();
@@ -118,7 +116,6 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
         this.handleNavbarState();
       });
   }
-
   ngAfterViewInit() {
     this.setupEventListeners();
   }
@@ -258,16 +255,6 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   logout(): void {
     this.AuthService.logout();
-  }
-  setFavicon(iconUrl: string) {
-    let link: HTMLLinkElement | null =
-      document.querySelector("link[rel~='icon']");
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'icon';
-      document.getElementsByTagName('head')[0].appendChild(link);
-    }
-    link.href = iconUrl;
   }
 
   toggleLangDropdown(event: Event) {
