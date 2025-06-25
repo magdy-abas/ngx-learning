@@ -1,30 +1,8 @@
 <div *ngIf="courseDetails" class="container my-4">
-  <div class="row align-items-start">
-    <!-- video -->
-    <div class="col-lg-8 col-md-7 col-sm-12 mb-3">
-      <div class="video-wrapper">
-        <ng-container *ngIf="!videoLoaded; else showVideo">
-          <div class="video-placeholder">
-            <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
-            <button class="start-btn" (click)="startFirstLesson()">
-              {{ 'courses.startNow' | translate }}
-            </button>
 
-          </div>
-        </ng-container>
-
-        <ng-template #showVideo>
-          <app-hls-player [src]="videoUrl" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
-            (error)="onPlayerError($event)">
-          </app-hls-player>
-
-
-
-        </ng-template>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
-      <!-- Card doctor -->
+  <!-- Doctor card for mobile -->
+  <div class="row d-lg-none mb-3">
+    <div class="col-12">
       <div class="doctor-card shadow-sm rounded-4 p-3 text-center mb-3">
         <div class="doctor-img-wrapper mb-2">
           <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
@@ -35,55 +13,92 @@
         <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
         <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
 
-        <!-- btns -->
         <div>
-          <!-- subscribe -->
           <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
-            disabled>
-            {{ 'courses.subscribed' | translate }}
-          </button>
+            disabled>{{ 'courses.subscribed' | translate }}</button>
 
-          <!-- rejected -->
           <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
-            disabled>
-            {{ 'courses.rejected' | translate }}
-          </button>
+            disabled>{{ 'courses.rejected' | translate }}</button>
 
-          <!-- pending -->
           <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="btn btn-secondary btn-sm px-4 py-2"
-            disabled>
-            {{ 'courses.pending' | translate }}
-          </button>
+            disabled>{{ 'courses.pending' | translate }}</button>
 
           <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
             (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
-            class="btn btn-orange btn-sm px-4 py-2">
-            {{ 'courses.subscribeNow' | translate }}
-          </button>
+            class="btn btn-orange btn-sm px-4 py-2">{{ 'courses.subscribeNow' | translate }}</button>
         </div>
       </div>
+    </div>
+  </div>
 
+  <!-- Main layout -->
+  <div class="row align-items-start">
+
+    <!-- video -->
+    <div class="col-lg-8 col-md-7 col-sm-12 mb-3">
+      <div class="video-wrapper">
+        <ng-container *ngIf="!videoLoaded; else showVideo">
+          <div class="video-placeholder">
+            <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
+            <button class="start-btn" (click)="startFirstLesson()">
+              {{ 'courses.startNow' | translate }}
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-template #showVideo>
+          <app-hls-player [src]="videoUrl" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
+            (error)="onPlayerError($event)"></app-hls-player>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Doctor card + tabs for desktop -->
+    <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
+
+      <!-- Doctor card for desktop -->
+      <div class="doctor-card shadow-sm rounded-4 p-3 text-center mb-3 d-none d-lg-block">
+        <div class="doctor-img-wrapper mb-2">
+          <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
+            onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img" class="w-100 h-100"
+            style="object-fit: cover;">
+        </div>
+
+        <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
+        <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
+
+        <div>
+          <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
+            disabled>{{ 'courses.subscribed' | translate }}</button>
+
+          <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
+            disabled>{{ 'courses.rejected' | translate }}</button>
+
+          <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="btn btn-secondary btn-sm px-4 py-2"
+            disabled>{{ 'courses.pending' | translate }}</button>
+
+          <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
+            (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
+            class="btn btn-orange btn-sm px-4 py-2">{{ 'courses.subscribeNow' | translate }}</button>
+        </div>
+      </div>
 
       <!-- category tab -->
       <div class="category-tab tickets-tab-blk">
         <ul class="nav">
           <li class="nav-item">
-            <a href="#program" class="nav-link active" data-bs-toggle="tab">
-              {{ 'courses.courseProgram' | translate }}
-            </a>
+            <a href="#program" class="nav-link active" data-bs-toggle="tab">{{ 'courses.courseProgram' | translate
+              }}</a>
           </li>
           <li class="nav-item">
-            <a href="#notes" class="nav-link" data-bs-toggle="tab">
-              {{ 'courses.notes' | translate }}
-            </a>
+            <a href="#notes" class="nav-link" data-bs-toggle="tab">{{ 'courses.notes' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a href="#more" class="nav-link" data-bs-toggle="tab">
-              {{ 'courses.more' | translate }}
-            </a>
+            <a href="#more" class="nav-link" data-bs-toggle="tab">{{ 'courses.more' | translate }}</a>
           </li>
         </ul>
       </div>
+
       <div class="tab-content">
         <div class="lesson-group tab-pane fade show active" id="program">
           @if (courseDetails.data.length > 0) {
@@ -92,9 +107,7 @@
             <h6 class="cou-title">
               <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index">
                 {{chapter.title}}
-
-                <span class="">{{chapter.lessons.length}} {{ 'courses.lessonsCount' | translate
-                  }}</span>
+                <span class="">{{chapter.lessons.length}} {{ 'courses.lessonsCount' | translate }}</span>
               </a>
             </h6>
             <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
@@ -102,9 +115,7 @@
                 <li *ngFor="let lesson of chapter.lessons"
                   (click)="redirectToLesson(lesson.id, lesson.type, chapter.id , lesson.is_free)">
                   <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">{{lesson.title}}</p>
-                  <div>
-                    <img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;">
-                  </div>
+                  <div><img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;"></div>
                 </li>
               </ul>
               <ng-template #noLessons>
@@ -115,18 +126,14 @@
           }
           } @else {
           <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-              {{ 'courses.noData' | translate }}
-            </h4>
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">{{ 'courses.noData' | translate }}</h4>
           </div>
           }
         </div>
 
         <div class="lesson-group tab-pane fade" id="notes">
           <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-              {{ 'courses.noData' | translate }}
-            </h4>
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">{{ 'courses.noData' | translate }}</h4>
           </div>
         </div>
 
@@ -143,7 +150,6 @@
                 @for (resource of chapter.resources; track resource.id) {
                 <li
                   (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title, resource.is_free)">
-
                   <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
                   <div>
                     @if (CourseSubscribe == false) {
@@ -159,17 +165,14 @@
           }
           @if (!resources.length) {
           <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-              {{ 'courses.noData' | translate }}
-            </h4>
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">{{ 'courses.noData' | translate }}</h4>
           </div>
           }
         </div>
+
       </div>
+
     </div>
-
-
-
   </div>
 </div>
 

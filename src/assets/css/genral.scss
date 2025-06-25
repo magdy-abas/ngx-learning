@@ -2190,6 +2190,7 @@ mat-select.form-select {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-content: center;
 }
 .category-tab .nav-item {
   width: 100%;
@@ -2623,8 +2624,11 @@ nav {
   background: #fff;
   color: #333;
 
-  .logo span {
+  .logo-img span {
     color: var(--color-secondery);
+  }
+  .logo-img {
+    width: 130px !important;
   }
 }
 
@@ -2755,6 +2759,7 @@ nav {
 @media (max-width: 768px) {
   .logo {
     font-size: 18px;
+    margin-right: -10px !important;
   }
 
   .side-menu {

@@ -3404,6 +3404,7 @@ html.menu-opened body {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left: 1px solid #f4f4f4;
+  margin-right: 10px;
 }
 .home-two .sub-btn {
   background: #ff602e;
@@ -14081,7 +14082,7 @@ input[type="password"]::-ms-clear {
 
 .category-tab ul li {
   display: inline-block;
-  margin: 0 20px 10px 0;
+  // margin: 0 20px 10px 0;
 }
 
 .category-tab ul li a {
