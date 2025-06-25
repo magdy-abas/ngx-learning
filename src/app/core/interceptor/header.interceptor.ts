@@ -36,7 +36,6 @@ export const headerInterceptor: HttpInterceptorFn = (
         localStorage.setItem('errorData', JSON.stringify(error.error));
 
         router.navigate(['/app']);
-        return throwError(() => error);
       }
       return throwError(() => error);
     })
