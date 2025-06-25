@@ -1,7 +1,7 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="medium" color="#ff602e" type="ball-spin-fade" [fullScreen]="true">
   <!-- <p style="color: #ff602e">Loading...</p> -->
 </ngx-spinner>
-<div class="whatsapp-float" (click)="openWhatsApp()">
+<div *ngIf="whatsappNumber" class="whatsapp-float" (click)="openWhatsApp()">
   <div class="whatsapp-tooltip">{{ tooltipText }}</div>
   <svg class="whatsapp-icon" viewBox="0 0 24 24">
     <path

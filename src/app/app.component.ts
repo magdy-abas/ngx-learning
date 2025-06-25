@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   title = 'e-learning';
   tooltipText = 'تواصل معنا';
   whatsappNumber: string = '';
-
+  showWhatsApp: boolean = true;
   constructor(
     private seoService: SeoService,
     public sharedService: SharedService,
@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
     this.sharedService.settings().subscribe({
       next: (response) => {
         if (response.success) {
+          console.log(response);
           this.sharedService.saveSettingsToLocalStorage(response);
 
           this.applySettings(response.data);

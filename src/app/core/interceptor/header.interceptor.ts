@@ -33,7 +33,10 @@ export const headerInterceptor: HttpInterceptorFn = (
   return next(modifiedReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403) {
+        localStorage.setItem('errorData', JSON.stringify(error.error));
+
         router.navigate(['/app']);
+        return throwError(() => error);
       }
       return throwError(() => error);
     })

@@ -18,19 +18,14 @@ export const securityInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   return sharedService.initialized$.pipe(
-    take(1), // Only take first emission
+    take(1),
 
     tap((initialized) => {
       if (!initialized) {
         throw new Error('Waiting for initialization');
       }
     }),
-    retryWhen((errors) =>
-      errors.pipe(
-        delay(100),
-        take(20) // Reduced retry attempts
-      )
-    ),
+    retryWhen((errors) => errors.pipe(delay(100), take(20))),
     switchMap(() => {
       if (sharedService.getSecurityStatus()) {
         return next(req);
