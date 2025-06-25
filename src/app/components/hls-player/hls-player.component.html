@@ -1,20 +1,7 @@
 <div class="video-container">
   <video #videoPlayer playsinline controls crossorigin></video>
 
-  <div class="custom-quality-control">
-    <button (click)="toggleQualityMenu()" class="quality-button">
-      {{ currentQuality }}p ▾
-    </button>
+  <div *ngIf="showInitialLoader" class="initial-loader">
 
-    <ul *ngIf="showQualityMenu" class="quality-menu">
-      <li *ngFor="let q of availableQualities" (click)="selectQuality(q)">
-        {{ q }}p
-      </li>
-    </ul>
   </div>
-
-  <div *ngIf="isQualitySwitching" class="quality-loader">
-    <div class="spinner"></div>
-  </div>
-
 </div>

@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       'ELearning - Enhance Your Skills Online',
       'Explore our eLearning platform to enhance your skills with a wide variety of courses designed for learners at every level.',
       'eLearning, online learning, online courses, skill enhancement, education',
-      'https://yourwebsite.com/og-image.jpg'
+      'https:.com/og-image.jpg'
     );
   }
 

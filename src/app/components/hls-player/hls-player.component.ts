@@ -12,14 +12,14 @@ import {
 } from '@angular/core';
 import Hls from 'hls.js';
 import Plyr from 'plyr';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-hls-player',
   standalone: true,
   templateUrl: './hls-player.component.html',
   styleUrls: ['./hls-player.component.scss'],
-  imports: [NgIf, NgFor],
+  imports: [NgIf],
 })
 export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('videoPlayer') videoElement!: ElementRef<HTMLVideoElement>;
@@ -29,27 +29,17 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() muted: boolean = false;
   @Input() preload: 'none' | 'metadata' | 'auto' = 'metadata';
 
-  @Input() qualities: string[] = ['360', '480', '720'];
-
   @Output() playerReady = new EventEmitter<void>();
   @Output() error = new EventEmitter<any>();
 
   private hls: Hls | null = null;
   private player: Plyr | null = null;
   public showInitialLoader: boolean = true;
-  public currentQuality: string = '720';
-  public isQualityChanging: boolean = false;
-  public isQualitySwitching: boolean = false;
-
-  public showQualityMenu = false;
-  public availableQualities: string[] = [];
-  public qualityUrls: any = {};
 
   constructor() {}
 
   ngAfterViewInit(): void {
     if (this.src) {
-      this.generateQualityUrls(this.src);
       this.initializePlayer();
     }
   }
@@ -58,34 +48,9 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     if (changes['src'] && !changes['src'].firstChange) {
       this.destroyPlayer();
       if (this.src) {
-        this.generateQualityUrls(this.src);
         this.initializePlayer();
       }
     }
-  }
-
-  private generateQualityUrls(baseUrl: string) {
-    const match = baseUrl.match(/(.*\/)(\d+)(\/index\.m3u8)/);
-    if (match) {
-      const prefix = match[1];
-      const suffix = match[3];
-      this.availableQualities = this.qualities;
-      this.qualityUrls = {};
-      for (let q of this.qualities) {
-        this.qualityUrls[q] = `${prefix}${q}${suffix}`;
-      }
-    } else {
-      console.warn('Failed to parse source URL format.');
-    }
-  }
-
-  toggleQualityMenu() {
-    this.showQualityMenu = !this.showQualityMenu;
-  }
-
-  selectQuality(quality: string) {
-    this.showQualityMenu = false;
-    this.changeQuality(quality);
   }
 
   private initializePlayer(): void {
@@ -111,7 +76,13 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     this.hls.attachMedia(video);
 
     this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      this.initializePlyr();
+      const availableQualities = (this.hls?.levels || [])
+        .map((level) => level.height)
+        .sort((a, b) => b - a);
+
+      const defaultQuality = availableQualities ? availableQualities[0] : 720;
+
+      this.initializePlyr(availableQualities, defaultQuality);
     });
 
     this.hls.on(Hls.Events.ERROR, (event, data) => {
@@ -119,20 +90,10 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     });
   }
 
-  private initializeSafariHls(): void {
-    const video = this.videoElement.nativeElement;
-    video.src = this.src;
-
-    video.addEventListener('loadedmetadata', () => {
-      this.initializePlyr();
-    });
-
-    video.addEventListener('error', (e) => {
-      this.handleError('Safari HLS error', e);
-    });
-  }
-
-  private initializePlyr(): void {
+  private initializePlyr(
+    availableQualities: number[],
+    defaultQuality: number
+  ): void {
     const video = this.videoElement.nativeElement;
     if (this.player) {
       this.player.destroy();
@@ -152,6 +113,20 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
         'settings',
         'fullscreen',
       ],
+      settings: ['quality', 'speed', 'captions'],
+      quality: {
+        default: defaultQuality,
+        options: availableQualities,
+        forced: true,
+        onChange: (newQuality: number) => {
+          const levelIndex = this.hls?.levels.findIndex(
+            (level) => level.height === newQuality
+          );
+          if (levelIndex !== -1 && levelIndex != null) {
+            this.hls!.currentLevel = levelIndex;
+          }
+        },
+      },
     });
 
     this.player.once('ready', () => {
@@ -161,42 +136,17 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     });
   }
 
-  private async changeQuality(quality: string): Promise<void> {
-    if (this.isQualityChanging || !this.qualityUrls[quality]) return;
-
-    this.isQualityChanging = true;
-    this.isQualitySwitching = true;
-
+  private initializeSafariHls(): void {
     const video = this.videoElement.nativeElement;
-    const savedTime = video.currentTime;
-    const wasPaused = video.paused;
+    video.src = this.src;
 
-    try {
-      if (this.hls) {
-        this.hls.destroy();
-        this.hls = null;
-        await new Promise((res) => setTimeout(res, 300));
+    video.addEventListener('loadedmetadata', () => {
+      this.initializePlyr([], 720);
+    });
 
-        this.hls = new Hls();
-        this.hls.loadSource(this.qualityUrls[quality]);
-        this.hls.attachMedia(video);
-
-        await new Promise<void>((resolve) => {
-          this.hls?.on(Hls.Events.MANIFEST_PARSED, () => resolve());
-        });
-
-        video.currentTime = savedTime;
-        if (!wasPaused) await video.play();
-
-        this.currentQuality = quality;
-        console.log(`Switched to: ${quality}p`);
-      }
-    } catch (err) {
-      console.error('Error switching quality', err);
-    } finally {
-      this.isQualityChanging = false;
-      this.isQualitySwitching = false;
-    }
+    video.addEventListener('error', (e) => {
+      this.handleError('Safari HLS error', e);
+    });
   }
 
   private handleHlsError(data: any): void {

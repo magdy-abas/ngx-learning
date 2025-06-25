@@ -14,11 +14,10 @@
         </ng-container>
 
         <ng-template #showVideo>
-          <app-hls-player
-            [src]="'https://total.stepsio.com/api/vd-stream/db5303cd-1e61-4020-98e4-04d8dd2c0a7d/720/index.m3u8'"
-            [qualities]="['360','480','720']" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
+          <app-hls-player [src]="videoUrl" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
             (error)="onPlayerError($event)">
           </app-hls-player>
+
 
 
         </ng-template>
