@@ -50,12 +50,6 @@ jobs:
         include:
           - name: steps-node-1
             host: SSH_HOST_NODE_1
-          - name: steps-node-2
-            host: SSH_HOST_NODE_2
-          - name: steps-node-3
-            host: SSH_HOST_NODE_3
-          - name: steps-node-4
-            host: SSH_HOST_NODE_4
 
     steps:
     - name: Download build artifact
