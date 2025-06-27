@@ -22,6 +22,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../core/service/auth.service';
 import { SharedService } from '../../core/service/shared.service';
 import { DarkModeService } from '../../core/service/dark-mode.service';
+import { GlobalTranslateService } from '../../core/service/global-translate.service';
 
 interface MenuItem {
   title: string;
@@ -90,7 +91,8 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private AuthService: AuthService,
     private sharedService: SharedService,
-    private darkModeService: DarkModeService
+    private darkModeService: DarkModeService,
+    private _GlobalTranslateService: GlobalTranslateService
   ) {}
 
   ngOnInit() {
@@ -223,8 +225,8 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public switchLanguage(lang: string) {
-    this.translate.use(lang);
+  public switchLanguage(lang: 'en' | 'ar') {
+    this._GlobalTranslateService.changeLanguage(lang);
   }
 
   public isActiveRoute(route: string): boolean {

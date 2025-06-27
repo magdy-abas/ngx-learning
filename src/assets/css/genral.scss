@@ -566,7 +566,7 @@ code-input.code-input {
   display: inline-block;
   align-content: center;
   cursor: pointer;
-  margin-right: 30px;
+  // margin-right: 30px;
   width: 130px;
 }
 .home-two-slide {
@@ -1689,8 +1689,13 @@ nav {
     gap: 15px;
   }
 }
-
+.show-mobile {
+  display: flex;
+}
 @media (min-width: 992px) {
+  .show-mobile {
+    display: none;
+  }
   .side-menu {
     display: none !important;
   }

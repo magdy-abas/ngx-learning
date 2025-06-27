@@ -1,18 +1,26 @@
 <div class="add-header-bg first-header py-2">
   <div class=" container ">
     <div class="d-flex justify-content-between ">
-      <div class="lang-toggle">
-        <app-btn-lang></app-btn-lang>
+
+
+      <div class="logo" routerLink="/home">
+        <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
       </div>
 
 
+
       <ul class="nav header-navbar-rht">
+        <div class="lang-toggle">
+          <app-btn-lang></app-btn-lang>
+        </div>
         <li class="nav-item">
           <a class="login-head button" routerLink="login">{{ 'navbar.login' | translate }}</a>
         </li>
         <li *ngIf="!loginWithWats" class="nav-item">
           <a class="signin-head" routerLink="signup">{{ 'navbar.signUp' | translate }}</a>
         </li>
+
+
       </ul>
     </div>
   </div>
@@ -29,7 +37,7 @@
       [class.other-page]="!isHomePage">
       <div class="container d-flex  justify-content-between justify-content-lg-start">
         <!-- Logo -->
-        <div class="logo" routerLink="/home">
+        <div class="logo show-mobile" routerLink="/home">
           <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
         </div>
 

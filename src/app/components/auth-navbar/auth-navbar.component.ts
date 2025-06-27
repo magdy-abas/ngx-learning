@@ -6,6 +6,8 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, take } from 'rxjs/operators';
@@ -17,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { DarkModeService } from '../../core/service/dark-mode.service';
 import { SharedService } from '../../core/service/shared.service';
 import { AuthService } from '../../core/service/auth.service';
+import { GlobalTranslateService } from '../../core/service/global-translate.service';
 
 interface MenuItem {
   title: string;
@@ -68,7 +71,9 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private translate: TranslateService,
     private darkModeService: DarkModeService,
     private sharedService: SharedService,
-    private _AuthService: AuthService
+    private _AuthService: AuthService,
+    private cdr: ChangeDetectorRef,
+    private _GlobalTranslateService: GlobalTranslateService
   ) {}
 
   ngOnInit() {
@@ -200,8 +205,8 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public switchLanguage(lang: string) {
-    this.translate.use(lang);
+  public switchLanguage(lang: 'en' | 'ar') {
+    this._GlobalTranslateService.changeLanguage(lang);
   }
 
   public isActiveRoute(route: string): boolean {
