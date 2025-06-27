@@ -24,7 +24,6 @@ export class ApplicationPageComponent implements OnInit {
 
     setTimeout(() => {
       const storedData = localStorage.getItem('errorData');
-      console.log(storedData);
 
       if (storedData) this.appData = JSON.parse(storedData);
       this.whatsappNumber =

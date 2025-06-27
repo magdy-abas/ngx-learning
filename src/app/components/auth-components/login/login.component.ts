@@ -33,6 +33,8 @@ import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.
 import { CodeInputModule } from 'angular-code-input';
 import { OtpCodeInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
+import { SharedService } from '../../../core/service/shared.service';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -92,34 +94,30 @@ export class LoginComponent implements OnInit {
     private _AuthService: AuthService,
     private _FormBuilder: FormBuilder,
     private darkModeService: DarkModeService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private sharedService: SharedService
   ) {}
   ngOnInit(): void {
     this.darkModeService.applyMode();
+    this.sharedService.initialized$.pipe(take(1)).subscribe((initialized) => {
+      if (initialized) {
+        const method = this.sharedService.getLoginMethod();
 
-    const settingsString = localStorage.getItem('appSettings');
-    if (settingsString) {
-      const settings = JSON.parse(settingsString);
-      this.logoUrl = this.darkModeService.getLogo(settings);
+        this.loginWithWats = method === 'mobile_whatsapp';
+      }
+    });
+    this.sharedService.settings$.subscribe((settings) => {
+      if (settings?.data) {
+        this.logoUrl = this.darkModeService.getLogo(settings);
 
-      const lang = (this.translate.currentLang || 'en') as Lang;
-      this.appName = settings.data.app_name?.[lang] || 'App Name';
+        const lang = (this.translate.currentLang || 'en') as Lang;
+        this.appName = settings.data.app_name?.[lang] || 'App Name';
 
-      this.welcomeLogin = this.DataService.getWelcomeSlides(this.appName, lang);
-    }
-
-    this._AuthService.checkLoginMethod().subscribe({
-      next: (res) => {
-        if (res.status === 1) {
-          this.loading = true;
-          if (res.data.settings.auth_login_with === 'mobile_whatsapp') {
-            this.loginWithWats = true;
-          }
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
+        this.welcomeLogin = this.DataService.getWelcomeSlides(
+          this.appName,
+          lang
+        );
+      }
     });
   }
 
@@ -216,7 +214,6 @@ export class LoginComponent implements OnInit {
       this.loginWatsForm.markAllAsTouched();
       return;
     }
-    console.log(this.loginWatsForm.value);
 
     const dialCode = this.loginWatsForm.get('phone')?.value.dialCode;
     this.SendOtpDto.phone_code = dialCode ? dialCode.replace('+', '') : '';

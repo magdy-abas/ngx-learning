@@ -26,6 +26,8 @@ import { securityInterceptor } from './core/interceptor/security.interceptor';
 import { headerInterceptor } from './core/interceptor/header.interceptor';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { GlobalTranslateService } from './core/service/global-translate.service';
+import { SharedService } from './core/service/shared.service';
+import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -35,6 +37,9 @@ export function initLanguage(
   globalTranslateService: GlobalTranslateService
 ): () => void {
   return () => globalTranslateService.initializeLanguage();
+}
+export function initApp(sharedService: SharedService): () => Promise<any> {
+  return () => firstValueFrom(sharedService.checkApiStatus());
 }
 
 export const appConfig: ApplicationConfig = {
@@ -72,6 +77,12 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initLanguage,
       deps: [GlobalTranslateService],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [SharedService],
       multi: true,
     },
   ],

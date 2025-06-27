@@ -96,14 +96,12 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.darkModeService.applyMode();
     this.isDarkMode = this.darkModeService.isDarkMode();
-
+    this.sharedService.settings$.subscribe((settings) => {
+      if (settings?.data) {
+        this.logoUrl = this.darkModeService.getLogo(settings);
+      }
+    });
     this.loadUserData();
-
-    const settings = this.sharedService.getSettings();
-
-    if (settings) {
-      this.logoUrl = this.darkModeService.getLogo(settings);
-    }
 
     this.checkCurrentRoute();
     this.handleNavbarState();

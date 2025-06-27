@@ -8,7 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { BtnLangComponent } from '../../shared/ui/btn-lang/btn-lang.component';
 import { Subscription } from 'rxjs';
 import { DarkModeService } from '../../core/service/dark-mode.service';
 import { SharedService } from '../../core/service/shared.service';
+import { AuthService } from '../../core/service/auth.service';
 
 interface MenuItem {
   title: string;
@@ -41,6 +42,7 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public isLangDropdownOpen = false;
   public logoUrl: string = '';
+  loginWithWats: boolean = false;
 
   public isMenuOpened = false;
   public isTransparent = true;
@@ -65,16 +67,25 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private darkModeService: DarkModeService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private _AuthService: AuthService
   ) {}
 
   ngOnInit() {
     this.darkModeService.applyMode();
 
-    const settings = this.sharedService.getSettings();
-    if (settings) {
-      this.logoUrl = this.darkModeService.getLogo(settings);
-    }
+    this.sharedService.settings$.subscribe((settings) => {
+      if (settings) {
+        this.logoUrl = this.darkModeService.getLogo(settings);
+      }
+    });
+
+    this.sharedService.initialized$.pipe(take(1)).subscribe((initialized) => {
+      if (initialized) {
+        const method = this.sharedService.getLoginMethod();
+        this.loginWithWats = method === 'mobile_whatsapp';
+      }
+    });
 
     this.checkCurrentRoute();
     this.handleNavbarState();

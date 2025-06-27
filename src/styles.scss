@@ -10,43 +10,359 @@
 @include mat.core();
 
 :root {
+  --body-bg: #ffffff;
+  --body-text: #22100d;
+  --body-font-size: 16px;
+
+  /* Text Styles */
+  --heading-color: #22100d;
+  --text-main: #303030;
+  --text-muted: #6c757d;
+  --link-color: #392c7d;
+  --link-hover: #ff875a;
+  // Primary Palette
   --color-primary: #ff875a;
   --color-secondery: #f66962;
   --color-dark-blue: #392c7d;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  --color-error: #dc3545;
-  --color-muted: #555;
-  --color-black: #0000;
-  --color-white: #fff;
-  --black-color: #22100d;
-}
-.darkmode {
-  --color-primary: #a18bff;
-  --color-bg-main: #1e1b2e;
-  --color-bg-secondary: #2c2944;
-  --color-bg-muted: #26233a;
-  --gradient-home-slide: linear-gradient(180deg, #1e1b2e 0%, #29263e 100%);
-  --color-text-main: #e4e4e7;
-  --color-link: #cfc8ff;
-  --color-link-hover: #a18bff;
-  --color-border-light: rgba(255, 255, 255, 0.1);
-  --color-placeholder: #a7a7b5;
-  --color-shadow-card: rgba(161, 139, 255, 0.1);
-  --color-navbar-bg: #231f39;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  --color-danger: #dc3545;
-  --color-bg-success-light: #4cd96452;
-  --color-error: #c62828;
+
+  // Common Colors
+  --color-white: #ffffff;
+  --color-light-bg: #fbfcff;
+  --color-light-border: #e0ebff;
+  --color-dark-border: rgba(0, 0, 0, 0.1);
+  --color-black: #000000;
+  --color-gray-text: #4f4f4f;
+  // btns color
+  --btn-primary-bg: #ff602e;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: #ff602e;
+
+  --btn-secondary-bg: #392c7d;
+  --btn-secondary-text: #ffffff;
+  --btn-secondary-border: #392c7d;
+
+  --btn-hover-bg: #ffffff;
+  --btn-hover-text-dark: #392c7d;
+  --btn-hover-border-dark: #392c7d;
+
+  --btn-outline-border: #b4a7f5;
+  --btn-outline-hover-bg: #917cf6;
+  --btn-outline-hover-text: #ffffff;
+
+  --btn-shadow-hover: inset 0 50px 0 0 #ffffff;
+  // btn lang switch
+
+  --toggle-wrapper-bg: #f3f4f6;
+  --toggle-wrapper-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  --toggle-btn-text: #6b7280;
+  --toggle-hover-text: #374151;
+
+  --toggle-active-bg: #ffffff;
+  --toggle-active-text: #324fa2;
+  --toggle-active-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  // input label
+  --input-bg: #ffffff;
+  --input-border: #ffdeda;
+  --input-focus-border: #eb9481;
+  --input-text: #333333;
+  --input-placeholder: #999999;
+  --label-color: #444;
+
+  // iti drop down
+  --iti-bg: #fff;
+  --iti-border: #ccc;
+  --iti-item-hover-bg: #f7f7f7;
+  --iti-item-hover-color: #000;
+  --iti-dial-color: #555;
+
+  //owl dots
+  --owl-dot-default: #ff875a;
+  --owl-dot-hover: #ffb54a;
+  --owl-dot-active: #ffb54a;
+
+  // sweet alets
+  /* General */
+  --swal-bg: #ffffff;
+  --swal-text: #444444;
+  --swal-title: var(--color-primary);
+  --swal-border-radius: 8px;
+
+  /* Buttons */
+  --swal-confirm-bg: var(--color-primary);
+  --swal-confirm-hover-bg: #dd754f;
+
+  --swal-cancel-bg: #d33;
+  --swal-cancel-hover-bg: #a72020;
+
+  /* Icons */
+  --swal-icon-info: var(--color-primary);
+  --swal-icon-warning: #ffc107;
+  --swal-icon-success: #28a745;
+  --swal-icon-error: #dc3545;
+
+  //home
+  --hero-title-color: #324fa2;
+  --hero-subtitle-color: #ff602e;
+  --hero-description-color: #324fa2;
+
+  // instractor
+  --instructors-section-bg: #ffffff;
+  --instructors-card-bg: #ffffff;
+  --instructors-card-border: #e9ecef;
+  --instructors-card-border-radius: 10px;
+  --instructors-card-shadow: 0px 5px 13px 6px rgba(212, 211, 254, 0.23);
+  --instructors-card-info-border: #e0ebff;
+  --instructors-card-icon-color: #ff602e;
+  --instructors-card-text-color: #ff602e;
+
+  // Courses Section
+  --courses-section-bg: #fafafa;
+  --courses-section-bg-image: url(./assets/img/bg/home-main.png);
+
+  // Course Card
+  --course-card-bg: #ffffff;
+  --course-card-radius: 10px;
+  --course-card-padding: 20px;
+  --course-card-text-color: #000000;
+  --course-card-subtext-color: #685f78;
+
+  --course-card-hover-icon: #ff5364;
+  --course-card-hover-link: var(--color-secondery);
+
+  --pending-btn-bg: #ccc;
+  --pending-btn-text: #ffc107;
+  --pending-btn-border: #ffc107;
+
+  --progress-bg: #e9ecef;
+  --progress-fill-gradient: linear-gradient(45deg, #007bff, #0056b3, #007bff);
+  --progress-text-color: #ffffff;
+
+  --course-card-separator: #f4f4f4;
+
+  --course-section-bg: #fafafa;
+  --course-design-border: #e9ecef;
+
+  // Course page
+
+  --course-page-title-color: #bcbccc;
+  --course-view-icon-hover: #ff6575;
+
+  //categories
+  /* Section */
+  --categories-section-bg: #fbfcff;
+
+  /* Card */
+  --categories-card-bg: #ffffff;
+  --categories-card-border: #e0ebff;
+  --categories-card-shadow: 0px 4px 34px #e0ebff;
+  --categories-card-radius: 10px;
+
+  /* Content */
+  --categories-card-title-color: #392c7d;
+
+  /* Hover */
+  --categories-card-hover-bg: #413655;
+  --categories-card-hover-border: #413655;
+  --categories-card-hover-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  --categories-card-hover-title-color: #ffffff;
+  --categories-card-hover-text-color: #ffffff;
+
+  /*categories Page */
+  --categories-header-title: #392c7d;
+  --categories-header-border: rgba(199, 199, 199, 0.25);
+  --categories-header-text: #303030;
+
+  // courses-details
+
+  --doctor-card-bg: #f9f9f9;
+  --doctor-img-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  --lesson-card-bg: #ffffff;
+  --lesson-card-border: #e5e5e5;
+  --lesson-card-radius: 10px;
+
+  --lesson-percent-border: #e5e5e5;
+  --lesson-widget-bg: #ffffff;
+
+  --category-tab-bg: #e0e0e0;
+  --category-tab-text: #000000;
+  --category-tab-active-bg: #ff5364;
+  --category-tab-active-text: #ffffff;
+
+  // quiz courses-drtails
+  --quiz-primary-color: var(--color-primary);
+
+  /* Buttons */
+  --quiz-btn-bg: var(--color-primary);
+  --quiz-btn-text: #ffffff;
+  --quiz-btn-hover-bg: #333333;
+  --quiz-btn-hover-text: #ffffff;
+
+  --quiz-back-btn-bg: #ffffff;
+  --quiz-back-btn-text: var(--color-primary);
+  --quiz-back-btn-hover-bg: var(--color-primary);
+  --quiz-back-btn-hover-text: #ffffff;
+
+  --quiz-disabled-bg: #d9d9d9;
+
+  /* Quiz Box */
+  --quiz-card-bg: #ffffff;
+  --quiz-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  /* Questions */
+  --quiz-question-number-color: #6e6e73;
+
+  /* Options */
+  --quiz-option-bg: #fcfcfc;
+  --quiz-option-border: transparent;
+  --quiz-option-checked-border: var(--color-primary);
+  --quiz-option-focus-shadow: rgba(0, 0, 0, 0.1);
+
+  --quiz-radio-border: #ccc;
+  --quiz-radio-inner: var(--color-primary);
+
+  --quiz-answer-correct-bg: rgba(0, 255, 0, 0.1);
+  --quiz-answer-wrong-bg: rgba(255, 0, 0, 0.1);
+
+  --quiz-option-correct-border: #4cd96452;
+  --quiz-option-wrong-border: #c62828;
+
+  /* Results */
+  --quiz-result-bg: #ffffff;
+  --quiz-result-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --quiz-result-border-success: #28a745;
+  --quiz-result-border-warning: #ffc107;
+  --quiz-result-border-danger: #dc3545;
+  // nav
+  --navbar-bg: #ffffff;
+  --navbar-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+
+  --side-bg: var(--color-secondery);
+  --side-text: #ffffff;
+  --side-divider: rgba(255, 255, 255, 0.15);
+  --side-hover: rgba(255, 255, 255, 0.1);
+  --side-submenu-bg: rgba(255, 255, 255, 0.08);
+  --side-submenu-hover: rgba(255, 255, 255, 0.12);
+
+  --side-header-bg: #ffffff;
+  --side-header-text: #333333;
+  --side-close-color: #333333;
+  // dropdown
+  --dropdown-bg: #fff;
+  --dropdown-text: #333;
+  --dropdown-subtext: #777;
+  --dropdown-border: #eee;
+  --dropdown-hover-bg: #f7f7f7;
+  --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  // verdio player
+  --video-bg: #2c3e2d;
+  --video-placeholder-bg: #f9f9f9;
+  --video-shadow-light: rgba(0, 0, 0, 0.1);
+  --video-shadow-medium: rgba(0, 0, 0, 0.35);
+  --video-shadow-strong: rgba(0, 0, 0, 0.5);
+  --video-overlay-bg: rgba(0, 0, 0, 0.4);
+  --video-player-main: #ff6b7a;
+  --video-btn-text: #ffffff;
+
+  // my courses
+  --mycourses-card-border: #ddd;
+  --mycourses-card-radius: 8px;
+  --mycourses-card-bg: #ffffff;
+  --mycourses-hover-title: #ff725e;
+
+  // profile
+
+  --profile-tooltip-bg: #ffffff;
+  --profile-tooltip-text: var(--color-primary);
+  --profile-icon-default: #6c757d;
+  --profile-input-disabled-bg: #f5f5f5;
+  --profile-input-disabled-text: #6c757d;
+
+  --profile-card-border: #e9ecef;
+  --profile-card-bg: #ffffff;
+  --profile-card-title: #392c7d;
+  --profile-card-subtitle: #303030;
+  --profile-card-border-light: rgba(199, 199, 199, 0.25);
+
+  --profile-active-hover-bg: rgba(255, 222, 218, 0.25);
+  --profile-active-border: #ff5364;
+  --profile-icon-active: #ff875a;
+
+  --profile-btn-bg: #392c7d;
+  --profile-btn-border: #392c7d;
+  --profile-btn-text: #ffffff;
+
+  --profile-label-bg: #ffffff;
+  --profile-label-text: #000000;
+
+  --profile-user-border: #ffffff;
+  --profile-user-subtext: #685f78;
+
+  --profile-section-border: rgba(199, 199, 199, 0.25);
 }
 
 body {
-  background-color: #fff;
-  color: #22100d;
-  font-size: 16px;
+  background-color: var(--body-bg);
+  color: var(--body-text);
+  font-size: var(--body-font-size);
   height: 100%;
   overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.login-wrapper h1,
+h2 {
+  color: var(--heading-color) !important;
+}
+p,
+span,
+label,
+li {
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.text-muted,
+small {
+  color: var(--text-muted) !important;
+}
+
+a {
+  color: var(--link-color) !important;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--link-hover) !important;
+  text-decoration: underline;
+}
+
+strong,
+b {
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+hr {
+  border-color: var(--color-light-border);
+}
+
+body.dark-mode hr {
+  border-color: rgba(255, 255, 255, 0.1);
 }
 // Define the palettes for your theme
 $dreams-lms-primary: mat.define-palette(mat.$indigo-palette);
@@ -99,59 +415,9 @@ a:hover {
   color: var(--color-secondery);
 }
 
-//btns
-
-// btn outline
-.all-category .btn-primary {
-  color: #392c7d;
-  border: 3px solid #b4a7f5;
-  -webkit-backdrop-filter: blur(151.39px);
-  backdrop-filter: blur(151.39px);
-  border-radius: 46.9159px;
-  background: transparent;
-  border-radius: 46.9159px;
-  min-width: 150px;
-  padding: 10px 15px;
-  font-weight: 500;
-}
-
-.all-category .btn-primary:hover {
-  background-color: #917cf6;
-  border-color: #917cf6;
-  color: #fff;
-}
-
-// main btn
-
-.discover-btn {
-  font-size: 16px;
-  display: inline-block;
-  border: 1px solid rgb(255, 96, 46);
-  background: rgb(255, 96, 46);
-  border-radius: 5px;
-  text-align: center;
-  padding: 12px 45px;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  text-transform: initial;
-  box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px inset;
-  transition: 0.5s;
-  font-weight: 700 !important;
-  color: rgb(255, 255, 255) !important;
-}
-.discover-btn:hover {
-  background-color: rgb(255, 255, 255);
-  border-color: rgb(57, 44, 125);
-  box-shadow: rgb(255, 255, 255) 0px 50px 0px 0px inset;
-  transition: 0.5s;
-  color: rgb(57, 44, 125) !important;
-}
-
-// Import your custom components last
 @import "assets/components/all";
-
 @import "assets/css/genral.scss";
+@import "assets/css/darkmode.scss";
 
 .lang-en {
   @import "assets/css/eng.scss";

@@ -10,8 +10,6 @@ const bootstrap = async () => {
   const sharedService = app.injector.get(SharedService);
   await firstValueFrom(sharedService.checkApiStatus());
 
-  await sharedService.loadSettings();
-
   return app;
 };
 

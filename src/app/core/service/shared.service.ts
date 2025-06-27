@@ -10,11 +10,13 @@ import { Injectable } from '@angular/core';
 })
 export class SharedService {
   private settingsData: SettingResponse | null = null;
-
+  private settingsSubject = new BehaviorSubject<SettingResponse | null>(null);
+  public settings$ = this.settingsSubject.asObservable();
   private isSecurityChecked = new BehaviorSubject<boolean>(false);
   private initializationComplete = new BehaviorSubject<boolean>(false);
   securityStatus$ = this.isSecurityChecked.asObservable();
   initialized$ = this.initializationComplete.asObservable();
+  private loginMethod: string | null = null;
 
   constructor(private _HttpClient: HttpClient, private router: Router) {}
 
@@ -28,6 +30,7 @@ export class SharedService {
         if (response.status === 1) {
           this.isSecurityChecked.next(true);
           this.initializationComplete.next(true);
+          this.setLoginMethod(response.data.settings.auth_login_with);
         } else {
           this.isSecurityChecked.next(false);
           this.initializationComplete.next(true);
@@ -38,12 +41,22 @@ export class SharedService {
       catchError((error) => {
         this.isSecurityChecked.next(false);
         this.initializationComplete.next(true);
+
         if (error.status === 404) {
           this.router.navigate(['/notfound']);
         }
+
         return of(false);
       })
     );
+  }
+
+  setLoginMethod(method: string) {
+    this.loginMethod = method;
+  }
+
+  getLoginMethod(): string | null {
+    return this.loginMethod;
   }
 
   getSecurityStatus(): boolean {
@@ -70,11 +83,13 @@ export class SharedService {
         if (response) {
           this.settingsData = response;
           this.saveSettingsToLocalStorage(response);
+          this.settingsSubject.next(response);
         } else {
           console.warn('Settings API returned undefined');
         }
       });
   }
+
   getSettings(): SettingResponse | null {
     if (this.settingsData) {
       return this.settingsData;

@@ -20,9 +20,6 @@ export const headers = {
 
 export const mainDomain = getMainDomain();
 
-console.log('Main Domain:', mainDomain);
-console.log('Base URL:', baseUrl);
-
 // // city-center
 // //farida
 // //total //categories page

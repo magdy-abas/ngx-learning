@@ -35,6 +35,7 @@ import {
 } from '../../../core/interfaces/auth.interface';
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
+import { SharedService } from '../../../core/service/shared.service';
 type passwordResponce = {
   passwordResponceText?: string;
   passwordResponceImage?: string;
@@ -124,22 +125,26 @@ class RegisterComponent {
     private _FormBuilder: FormBuilder,
     private _AuthService: AuthService,
     private _Router: Router,
-    private darkModeService: DarkModeService
+    private darkModeService: DarkModeService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
     this.darkModeService.applyMode();
 
-    const settingsString = localStorage.getItem('appSettings');
-    if (settingsString) {
-      const settings = JSON.parse(settingsString);
-      this.logoUrl = this.darkModeService.getLogo(settings);
-      const lang = (localStorage.getItem('lang') || 'en') as Lang;
-      this.welcomeLogin = this.DataService.getWelcomeSlides(
-        settings.data.app_name[lang],
-        lang
-      );
-    }
+    this.sharedService.settings$.subscribe((settings) => {
+      if (settings?.data) {
+        this.logoUrl = this.darkModeService.getLogo(settings);
+        const lang = (localStorage.getItem('lang') || 'en') as Lang;
+        this.welcomeLogin = this.DataService.getWelcomeSlides(
+          settings.data.app_name[lang] ?? 'App Name',
+
+          lang
+        );
+      } else {
+        console.log('setting error ');
+      }
+    });
   }
   regForm: FormGroup = this._FormBuilder.group(
     {
@@ -259,7 +264,6 @@ class RegisterComponent {
       this.RegisterDto.serial_number = '123';
       this.RegisterDto.os = 'ios';
 
-      console.log(this.RegisterDto);
       this._AuthService.register(this.RegisterDto).subscribe({
         next: (res: AuthResponse) => {
           if (res.status === 1) {

@@ -28,7 +28,18 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
 
-    this.loadSetting();
+    this.sharedService.loadSettings().then(() => {
+      const settings = this.sharedService.getSettings();
+
+      if (settings?.data) {
+        this.setFavicon(settings.data.icon ?? 'assets/default-favicon.png');
+        this.applySettings(settings.data);
+      } else {
+        console.warn('Settings were invalid. Using fallback settings.');
+      }
+
+      this.spinner.hide();
+    });
 
     initSweetAlertTranslations(this.translate);
 
@@ -49,30 +60,6 @@ export class AppComponent implements OnInit {
     if (settingsData.contact_us && settingsData.contact_us.whatsapp) {
       this.whatsappNumber = settingsData.contact_us.whatsapp;
     }
-  }
-
-  loadSetting() {
-    this.sharedService.settings().subscribe({
-      next: (response) => {
-        if (response.success) {
-          console.log(response);
-          this.sharedService.saveSettingsToLocalStorage(response);
-
-          this.applySettings(response.data);
-          if (response.data.icon) {
-            this.setFavicon(response.data.icon);
-          }
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching settings:', err);
-      },
-      complete: () => {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 500);
-      },
-    });
   }
 
   setFavicon(iconUrl: string) {

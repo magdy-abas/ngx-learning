@@ -165,7 +165,6 @@ export class ForgotPasswordComponent implements OnInit {
       // Reset password
       this._AuthService.resetPassword(payload).subscribe({
         next: (res) => {
-          console.log('Password reset successful:', res);
           if (res.status === 1) {
             this.router.navigate(['/login']);
           } else {
