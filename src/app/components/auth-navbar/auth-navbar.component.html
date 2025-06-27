@@ -35,7 +35,7 @@
     <!-- Main Navigation -->
     <nav #navbar [class.scrolled]="isScrolled" [class.transparent]="isTransparent" [class.home-page]="isHomePage"
       [class.other-page]="!isHomePage">
-      <div class="container d-flex  justify-content-between justify-content-lg-start">
+      <div class="container d-flex  justify-content-between justify-content-lg-start" style=" align-items: inherit;">
         <!-- Logo -->
         <div class="logo show-mobile" routerLink="/home">
           <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
