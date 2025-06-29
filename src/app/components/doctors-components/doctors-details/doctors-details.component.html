@@ -1,0 +1,161 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper instructor-profile-cst">
+
+
+
+
+  <!-- Breadcrumb -->
+  <div class=" instructor-bg-blk py-4" style="background-color: #f5f5f5;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="profile-info-blk">
+            <a href="javascript:;" class="profile-info-img" style="overflow: hidden;">
+              <img [src]="doctor.image || './assets/img/course/doctor.png'" alt="" class="img-fluid">
+
+            </a>
+            <h4><a href="javascript:;">{{doctor.name}}</a></h4>
+
+            <p style="color: #392C7D;">{{ 'instructor.courses_number' | translate: { count: courses.length } }}</p>
+
+            <ul class="list-unstyled inline-inline profile-info-social">
+              <li class="list-inline-item">
+                <a [href]="doctor.facebook">
+                  <i class="fa-brands fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a [href]="doctor.telegram">
+                  <i class="fa-brands fa-telegram"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a [href]="doctor.phone_number">
+                  <i class="fa-solid fa-phone-volume"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a [href]="doctor.whatsapp">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Breadcrumb -->
+
+  <!-- Course Content -->
+  <section class="page-content course-sec">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+
+          <!-- Overview -->
+          <div class="card overview-sec">
+            <div class="card-body">
+              <h5 class="subs-title">{{ 'instructor.bio_title'| translate }}</h5>
+              <p *ngIf="doctor.bio; else noBio">
+                {{ doctor.bio }}
+              </p>
+              <ng-template #noBio>
+                <p class="text-muted fst-italic">
+                  {{ 'instructor.no_bio'| translate }}
+                </p>
+              </ng-template>
+
+
+            </div>
+          </div>
+          <!-- /Overview -->
+
+
+
+          <!-- Overview -->
+          <div class="card overview-sec">
+            <div class="card-body">
+              <h5 class="subs-title"> {{ 'instructor.experience_title'| translate }} </h5>
+              <p *ngIf="doctor.experience; else noExperience">
+                {{ doctor.experience }}
+              </p>
+              <ng-template #noExperience>
+                <p class="text-muted fst-italic">
+                  {{ 'instructor.no_experience'| translate }} </p>
+              </ng-template>
+
+
+
+            </div>
+          </div>
+          <!-- /Overview -->
+
+
+
+
+
+
+
+
+        </div>
+
+        <div class="col-lg-4">
+
+          <!-- Right Sidebar Tags Label -->
+          <div class="card overview-sec">
+            <div class="card-body overview-sec-body">
+              <h5 class="subs-title"> {{ 'instructor.certifications_title' | translate }} </h5>
+              <p *ngIf="doctor.certifications; else noCerts">
+                {{ doctor.certifications }}
+              </p>
+              <ng-template #noCerts>
+                <p class="text-muted fst-italic">
+                  {{ 'instructor.no_certifications' | translate }}
+                </p>
+              </ng-template>
+
+            </div>
+          </div>
+          <!-- /Right Sidebar Tags Label -->
+
+
+
+
+
+        </div>
+
+
+        <!-- Courses Content -->
+        <div class=" education-sec">
+          <div class="card-body pb-0">
+            <h5 class="subs-title"> {{ 'instructor.courses_title' | translate }} </h5>
+            <div class="row">
+              <ng-container *ngIf="courses.length > 0; else noCourses">
+                <app-courses-card [coursesData]="courses" [fromHome]="false" />
+              </ng-container>
+
+              <div class="loading d-flex justify-content-center" *ngIf="isLoading">
+                <div class="loader"></div>
+
+              </div>
+              <ng-template #noCourses>
+                <div class="col-12 text-center text-muted py-4">
+                  <p class="fst-italic">
+                    {{ 'instructor.no_courses' | translate}}
+                  </p>
+                </div>
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+        <!-- /Courses Content -->
+      </div>
+    </div>
+  </section>
+  <!-- /Pricing Plan -->
+
+
+
+</div>

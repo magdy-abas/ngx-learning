@@ -243,5 +243,16 @@
     "emailPlaceholder": "أدخل بريدك الإلكتروني",
     "phonePlaceholder": "أدخل رقم الهاتف",
     "birthdayPlaceholder": "تاريخ الميلاد"
+  },
+  "instructor": {
+    "courses_number": "عدد الدورات: {{count}}",
+    "bio_title": "معلومات عن المحاضر",
+    "no_bio": "لم يقم المحاضر بإضافة معلومات شخصية حتى الآن.",
+    "experience_title": "الخبرة",
+    "no_experience": "سيتم إضافة تفاصيل الخبرة قريبًا.",
+    "certifications_title": "الشهادات",
+    "no_certifications": "لا توجد شهادات مضافة حتى الآن.",
+    "courses_title": "الدورات",
+    "no_courses": "لا توجد دورات متاحة لهذا المدرس حاليًا."
   }
 }

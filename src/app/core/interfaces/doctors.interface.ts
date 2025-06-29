@@ -1,5 +1,8 @@
 export interface Doctor {
   id: number;
+  bio: string;
+  experience: string;
+  certifications: string;
   name: string;
   courses_count: number;
   image: string;

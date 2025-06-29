@@ -11,11 +11,13 @@ import { DoctorsResponse } from '../interfaces/doctors.interface';
 export class DoctorsService {
   constructor(private http: HttpClient) {}
 
-  getDoctors(page: number = 1): Observable<DoctorsResponse> {
+  getDoctors(page: number = 1, id?: number): Observable<DoctorsResponse> {
     let params = new HttpParams().set('page', page.toString());
 
-    return this.http.get<DoctorsResponse>(`${baseUrl}doctors`, {
-      params,
-    });
+    if (id !== undefined) {
+      params = params.set('id', id.toString());
+    }
+
+    return this.http.get<DoctorsResponse>(`${baseUrl}doctors`, { params });
   }
 }

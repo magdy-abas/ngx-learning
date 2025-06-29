@@ -31,6 +31,7 @@ export interface Doctor {
   name: string;
   courses_count: number;
   image: string;
+
   facebook?: string | null;
   telegram?: string | null;
   whatsapp?: string | null;

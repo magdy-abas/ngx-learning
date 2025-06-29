@@ -1,17 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { DoctorsService } from '../../core/service/doctors.service';
+import { DoctorsService } from './../../../core/service/doctors.service';
 import {
   Doctor,
   DoctorsResponse,
-} from '../../core/interfaces/doctors.interface';
-import { HomeInstructorsComponent } from '../home/home-components/home-instructors/home-instructors.component';
-import { NgIf } from '@angular/common';
+} from './../../../core/interfaces/doctors.interface';
+
 import Aos from 'aos';
+import { HomeInstructorsComponent } from '../../home/home-components/home-instructors/home-instructors.component';
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
   imports: [HomeInstructorsComponent],
+
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.scss',
 })

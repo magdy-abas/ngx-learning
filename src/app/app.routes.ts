@@ -82,6 +82,22 @@ export const routes: Routes = [
           ).then((m) => m.CoursesQuizComponent),
         title: 'quiz',
       },
+      {
+        path: 'instructors',
+        loadComponent: () =>
+          import(
+            './components/doctors-components/doctors/doctors.component'
+          ).then((m) => m.DoctorsComponent),
+        title: 'instructors',
+      },
+      {
+        path: 'instructor-profile/:id',
+        loadComponent: () =>
+          import(
+            './components/doctors-components/doctors-details/doctors-details.component'
+          ).then((m) => m.DoctorsDetailsComponent),
+        title: 'instructor profile',
+      },
     ],
   },
   {
@@ -224,12 +240,20 @@ export const routes: Routes = [
         title: 'myCourses',
       },
       {
-        path: 'doctors',
+        path: 'instructors',
         loadComponent: () =>
-          import('./components/doctors/doctors.component').then(
-            (m) => m.DoctorsComponent
-          ),
-        title: 'doctors',
+          import(
+            './components/doctors-components/doctors/doctors.component'
+          ).then((m) => m.DoctorsComponent),
+        title: 'instructors',
+      },
+      {
+        path: 'instructors-profile/:id',
+        loadComponent: () =>
+          import(
+            './components/doctors-components/doctors-details/doctors-details.component'
+          ).then((m) => m.DoctorsDetailsComponent),
+        title: 'instructor profile',
       },
       {
         path: 'profile',

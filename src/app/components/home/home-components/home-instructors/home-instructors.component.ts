@@ -27,17 +27,19 @@ export class HomeInstructorsComponent {
 
   viewAllDoctors() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/auth/doctors']);
+      this.router.navigate(['/auth/instructors']);
     } else {
-      this.router.navigate(['/doctors']);
+      this.router.navigate(['/instructors']);
     }
   }
 
-  goToDoctorCourses(doctorId: number) {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate([`/auth/courses/doctor/${doctorId}`]);
-    } else {
-      this.router.navigate([`/courses/doctor/${doctorId}`]);
-    }
+  goToDoctorProfile(doctor: Doctor) {
+    const route = this.authService.isAuthenticated()
+      ? `/auth/instructors-profile/${doctor.id}`
+      : `/instructor-profile/${doctor.id}`;
+
+    this.router.navigate([route], {
+      state: { doctor },
+    });
   }
 }

@@ -256,5 +256,17 @@
     "emailPlaceholder": "Enter your Email",
     "birthdayPlaceholder": "Birth of Date",
     "phonePlaceholder": "Enter your phone number  "
+  },
+
+  "instructor": {
+    "courses_number": "Courses Number: {{count}}",
+    "bio_title": "Bio",
+    "no_bio": "The instructor hasn’t added their bio yet.",
+    "experience_title": "Experience",
+    "no_experience": "Experience details will be added soon.",
+    "certifications_title": "Certifications",
+    "no_certifications": "No certifications provided yet.",
+    "courses_title": "Courses",
+    "no_courses": "No courses available for this instructor at the moment."
   }
 }

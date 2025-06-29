@@ -181,3 +181,18 @@ a {
 .name-edit {
   right: 15px;
 }
+// instructor-profile
+.instructor-profile-cst {
+  .profile-info-blk {
+    .list-unstyled.inline-inline.profile-info-social {
+      padding-right: 0 !important;
+      padding-left: 5px !important;
+    }
+    .fa-whatsapp {
+      margin-right: 14px !important;
+    }
+    .fa-facebook {
+      margin-right: 0 !important;
+    }
+  }
+}
