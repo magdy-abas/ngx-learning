@@ -1195,7 +1195,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  background: var(--navbar-bg) !important;
+  background: var(--navbar-bg);
   padding: 30px 40px;
   display: flex;
 
@@ -2795,4 +2795,7 @@ mat-select.form-select {
 .settings-inner-blk {
   background-color: var(--profile-card-bg);
   border-radius: 10px;
+}
+.nav.transparent {
+  background-color: transparent !important;
 }
