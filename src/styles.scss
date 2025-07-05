@@ -116,7 +116,15 @@
   --instructors-card-info-border: #e0ebff;
   --instructors-card-icon-color: #ff602e;
   --instructors-card-text-color: #ff602e;
-
+  /* Instructor Profile Background */
+  --instructor-profile-bg: linear-gradient(135deg, #ece9ff, #f3f0ff);
+  --instructor-profile-circle: radial-gradient(
+    circle,
+    #d4c2ff 0%,
+    #7f5af0 100%
+  );
+  --instructor-profile-circle-opacity: 0.3;
+  --instructor-profile-circle-blur: 40px;
   // Courses Section
   --courses-section-bg: #fafafa;
   --courses-section-bg-image: url(./assets/img/bg/home-main.png);
@@ -135,7 +143,7 @@
   --pending-btn-text: #ffc107;
   --pending-btn-border: #ffc107;
 
-  --progress-bg: #e9ecef;
+  --progress-bg: #cccccc;
   --progress-fill-gradient: linear-gradient(45deg, #007bff, #0056b3, #007bff);
   --progress-text-color: #ffffff;
 
@@ -146,7 +154,7 @@
 
   // Course page
 
-  --course-page-title-color: #bcbccc;
+  --course-page-title-color: var(--heading-color);
   --course-view-icon-hover: #ff6575;
 
   //categories

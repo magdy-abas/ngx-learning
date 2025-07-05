@@ -103,7 +103,15 @@ body.dark-mode {
   --instructors-card-info-border: rgba(255, 255, 255, 0.05);
   --instructors-card-icon-color: #a18bff;
   --instructors-card-text-color: #a18bff;
-
+  /* Instructors profile */
+  --instructor-profile-bg: linear-gradient(135deg, #2c2944, #1e1b2e);
+  --instructor-profile-circle: radial-gradient(
+    circle,
+    #6f5cd1 0%,
+    #392c7d 100%
+  );
+  --instructor-profile-circle-opacity: 0.2;
+  --instructor-profile-circle-blur: 60px;
   /* Courses Section */
   --courses-section-bg: #1e1b2e;
   --courses-section-bg-image: none;

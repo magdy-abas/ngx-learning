@@ -1,27 +1,49 @@
 <div class="add-header-bg first-header py-2">
   <div class=" container ">
-    <div class="d-flex justify-content-between ">
+    <div class="">
 
-
+      <!--
       <div class="logo" routerLink="/home">
         <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
-      </div>
+      </div> -->
 
 
 
-      <ul class="nav header-navbar-rht">
-        <div class="lang-toggle">
+      <ul class="nav header-navbar-rht d-flex justify-content-between">
+        <div class="lang-toggle d-flex align-items-center gap-2">
           <app-btn-lang></app-btn-lang>
+          |
+          <!-- Contact Us Link -->
+
+
+
+          <div class="theme-toggle position-relative">
+            <a href="javascript:;" (click)="toggleThemeDropdown()" class="theme-icon">
+              <i class="fas fa-sun" *ngIf="!isDarkMode"></i>
+              <i class="fas fa-moon" *ngIf="isDarkMode"></i>
+            </a>
+
+            <!-- Dropdown -->
+            <div class="theme-dropdown" *ngIf="isThemeDropdownOpen">
+              <a style="cursor: pointer;" (click)="switchTheme('light')">
+                ☀️ {{ 'navbar.lightMode' | translate }}
+              </a>
+              <a style="cursor: pointer;" (click)="switchTheme('dark')">
+                🌙 {{ 'navbar.darkMode' | translate }}
+              </a>
+            </div>
+          </div>
+
         </div>
+
         <li class="nav-item">
           <a class="login-head button" routerLink="login">{{ 'navbar.login' | translate }}</a>
         </li>
         <li *ngIf="!loginWithWats" class="nav-item">
           <a class="signin-head" routerLink="signup">{{ 'navbar.signUp' | translate }}</a>
         </li>
-
-
       </ul>
+
     </div>
   </div>
 </div>
@@ -37,13 +59,13 @@
       [class.other-page]="!isHomePage">
       <div class="container d-flex  justify-content-between justify-content-lg-start" style=" align-items: inherit;">
         <!-- Logo -->
-        <div class="logo show-mobile" routerLink="/home">
+        <div class="logo " routerLink="/home">
           <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
         </div>
 
 
         <!-- Desktop Menu -->
-        <div class="menu">
+        <div class="menu " style="margin-inline:25px;">
           <div class="menu-item" *ngFor="let item of menuItems">
 
             <!-- Menu item with dropdown -->
@@ -93,13 +115,34 @@
           </div>
         </div>
 
+        <div class="d-flex justify-content-center align-items-center">
 
-        <!-- Mobile Hamburger Button -->
-        <button class="hamburger" #hamburgerBtn>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+
+
+          <div class="theme-toggle position-relative show-mobile" style="margin-inline:15px;">
+            <a href="javascript:;" (click)="toggleThemeDropdown()" class="theme-icon">
+              <i class="fas fa-sun" *ngIf="!isDarkMode"></i>
+              <i class="fas fa-moon" *ngIf="isDarkMode"></i>
+            </a>
+
+            <!-- Dropdown -->
+            <div class="theme-dropdown" *ngIf="isThemeDropdownOpen">
+              <a style="cursor: pointer;" (click)="switchTheme('light')">
+                ☀️ {{ 'navbar.lightMode' | translate }}
+              </a>
+              <a style="cursor: pointer;" (click)="switchTheme('dark')">
+                🌙 {{ 'navbar.darkMode' | translate }}
+              </a>
+            </div>
+          </div>
+
+          <!-- Mobile Hamburger Button -->
+          <button class="hamburger" #hamburgerBtn>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
 
       </div>
 

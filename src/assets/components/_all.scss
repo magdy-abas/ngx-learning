@@ -2612,9 +2612,9 @@ html.menu-opened body {
   margin-right: 10px;
 }
 
-.course-share {
-  margin-left: auto;
-}
+// .course-share {
+//   margin-left: auto;
+// }
 
 .color-active {
   color: red;
@@ -5181,13 +5181,13 @@ html.menu-opened body {
   width: 38px;
 }
 .night-mode .form-switch .form-check-input:focus {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ff5364'/%3e%3c/svg%3e") !important;
 }
 .night-mode .form-switch .form-check-input:checked {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ff5364'/%3e%3c/svg%3e") !important;
 }
 .night-mode .form-switch .form-check-input {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ff5364'/%3e%3c/svg%3e") !important;
   background-color: #e0e0e0;
   border-color: #e0e0e0;
 }
@@ -13097,13 +13097,6 @@ input[type="password"]::-ms-clear {
 	13. Course Details
 -----------------------*/
 
-.subs-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #392c7d;
-  margin-bottom: 20px;
-}
-
 .course-sec p {
   font-size: 14px;
 }
@@ -14224,7 +14217,7 @@ input[type="password"]::-ms-clear {
 .profile-info-blk p {
   font-size: 16px;
   font-weight: 400;
-  color: #fff;
+  // color: #fff;
 }
 
 .profile-info-social {

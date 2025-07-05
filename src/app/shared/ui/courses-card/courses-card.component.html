@@ -37,65 +37,59 @@
           </div>
           <div class="product-content">
             <h3 class="title"><a href="javascript:;">{{data.title}}</a></h3>
-            <div class="course-group d-flex">
+            <div class="course-group d-flex justify-content-between">
 
-              <div class="course-group-img d-flex">
-                <div class="courses-doctor-img rounded-circle">
+              <div class="course-group-img d-flex ">
+                <!-- <div class="courses-doctor-img rounded-circle">
                   <img [src]="data.doctor_image || './assets/img/course/doctor.png'"
                     onerror="this.src='./assets/img/course/doctor.png'" alt="img-doctor" class="img-fluid">
-                </div>
+                </div> -->
                 <div class="course-name align-content-center">
                   <!-- <h4><a href="javascript:;">{{data.doctor}}</a></h4> -->
                   <p>{{data.doctor}}</p>
                 </div>
+
+
               </div>
               <div class="course-share d-flex align-items-center justify-content-center">
-                <!-- <a href="javascript:void(0)"><i class="fa-heart" (click)="toggleClass(data)"
-                          [ngClass]="data.active ? 'fa-solid' : 'fa-regular'"></i></a> -->
+
+                <div class="rating" [ngClass]="{'d-none': data.client_status === 'accepted'}">
+                  @if (data.rate !== '0.0') {
+                  <!-- Display actual rating -->
+                  <div class="d-flex">
+                    <div *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))">
+                      <i class="fas fa-star filled me-1"></i>
+                    </div>
+                    @if (data.rate % 1 !== 0) {
+                    <div>
+                      <i class="fa-solid filled fa-star-half-stroke me-1 "></i>
+                    </div>
+
+                    }
+                    <span class="d-inline-block average-rating"><span style="margin-inline: 5px;">{{ data.rate
+                        }}</span></span>
+                  </div>
+                  } @else {
+
+                  <!-- <div>
+                    <div *ngFor="let item of [1, 2, 3, 4]">
+                      <i class="fas fa-star filled me-1"></i>
+                    </div>
+                    <i class="fa-solid filled fa-star-half-stroke me-1"></i>
+                    <span class="d-inline-block average-rating"><span>4.5</span></span>
+                  </div> -->
+                  }
+                </div>
               </div>
             </div>
 
             <div class="course-info d-flex align-items-center">
-              <div class="rating-img d-flex align-items-center">
-                <img src="assets/img/icon/icon-01.svg" alt="icon-01">
-                <p>13+ Lesson</p>
-              </div>
-              <div class="course-view d-flex align-items-center">
-                <img src="assets/img/icon/icon-02.svg" alt="icon-02">
-                <p>10hr 30min
 
-                </p>
-              </div>
             </div>
 
             <div class="footer-course-card"
               [ngClass]="{'d-flex justify-content-between align-items-center': data.client_status !== 'accepted'}">
-              <div class="rating" [ngClass]="{'d-none': data.client_status === 'accepted'}">
-                @if (data.rate !== 0) {
-                <!-- Display actual rating -->
-                <div class="d-flex">
-                  <div *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))">
-                    <i class="fas fa-star filled me-1"></i>
-                  </div>
-                  @if (data.rate % 1 !== 0) {
-                  <div>
-                    <i class="fa-solid filled fa-star-half-stroke me-1 "></i>
-                  </div>
 
-                  }
-                  <span class="d-inline-block average-rating"><span>{{ data.rate }}</span></span>
-                </div>
-                } @else {
-
-                <div>
-                  <div *ngFor="let item of [1, 2, 3, 4]">
-                    <i class="fas fa-star filled me-1"></i>
-                  </div>
-                  <i class="fa-solid filled fa-star-half-stroke me-1"></i>
-                  <span class="d-inline-block average-rating"><span>4.5</span></span>
-                </div>
-                }
-              </div>
 
               <div>
 
@@ -104,9 +98,10 @@
 
               @if (data.client_status === 'accepted') {
               <div class="course-card-progress-bar">
+                <span class="progress-text">{{data.client_complete_percentage }}%</span>
                 <div class="progress-container">
-                  <div class="progress-fill" [style.width.%]="course.progress">
-                    <span class="progress-text">{{course.progress}}%</span>
+                  <div class="progress-fill" [style.width.%]="data.client_complete_percentage ">
+
                   </div>
                 </div>
               </div>
@@ -115,7 +110,7 @@
 
 
               }@else {
-              <div class="all-btn   all-category ">
+              <div class="all-btn   all-category col-12 ">
                 <!-- <button [disabled]="data.client_status === 'pending'"
                 [ngClass]="{'pending-btn': data.client_status === 'pending'}"
                 (click)="buyCourse($event, data.id , data.way_to_by_course_in_app , data.client_status)"
@@ -124,7 +119,7 @@
                 }}</button> -->
 
 
-                <button class="btn cst-course-btn btn-primary">
+                <button class="btn cst-course-btn btn-primary w-100">
                   {{"courses.showCourse" | translate}}
                 </button>
               </div>

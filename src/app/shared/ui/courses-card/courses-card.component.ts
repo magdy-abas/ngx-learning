@@ -47,9 +47,6 @@ export class CoursesCardComponent implements OnInit {
 
   isAuth!: boolean;
   reqData: RequestJoinDto = new RequestJoinDto();
-  course = {
-    progress: 75,
-  };
 
   getFloorValue(value: number): number {
     return Math.floor(value);

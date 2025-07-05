@@ -101,8 +101,16 @@ a {
   --iti-arrow-padding: 30px !important;
 }
 
+.iti__country-list {
+  left: auto !important;
+  right: 0 !important;
+  text-align: right;
+}
 .dropdown-menu.country-dropdown {
-  transform: translateX(100%) !important;
+  left: auto !important;
+  right: 0 !important;
+  text-align: right;
+  direction: rtl;
 }
 .btn-danger {
   margin-right: 10px;
@@ -194,5 +202,12 @@ a {
     .fa-facebook {
       margin-right: 0 !important;
     }
+  }
+}
+// them toggle
+
+.theme-toggle {
+  .theme-dropdown {
+    left: 0 !important;
   }
 }

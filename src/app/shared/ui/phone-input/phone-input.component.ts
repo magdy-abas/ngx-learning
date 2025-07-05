@@ -1,4 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -41,12 +42,12 @@ export class PhoneInputComponent implements OnInit {
 
   preferredCountries: CountryISO[] = [
     CountryISO.SaudiArabia,
+    CountryISO.Egypt,
     CountryISO.UnitedArabEmirates,
     CountryISO.Kuwait,
     CountryISO.Bahrain,
     CountryISO.Oman,
     CountryISO.Qatar,
-    CountryISO.Egypt,
     CountryISO.Iraq,
     CountryISO.Jordan,
     CountryISO.Lebanon,

@@ -250,7 +250,7 @@ export interface Course {
   image: string;
   client_complete_percentage: string;
   complete_status: string | null;
-  client_status: 'pending' | 'not_asked' | 'accepted';
+  client_status: 'pending' | 'not_asked' | 'accepted' | 'pending';
   doctor: string;
 }
 

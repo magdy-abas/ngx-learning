@@ -42,7 +42,8 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
   @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
   @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
-
+  public isThemeDropdownOpen = false;
+  isDarkMode: boolean = false;
   public isLangDropdownOpen = false;
   public logoUrl: string = '';
   loginWithWats: boolean = false;
@@ -216,5 +217,24 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public toggleLangDropdown(event: Event): void {
     event.stopPropagation();
     this.isLangDropdownOpen = !this.isLangDropdownOpen;
+  }
+
+  toggleThemeDropdown() {
+    this.isThemeDropdownOpen = !this.isThemeDropdownOpen;
+  }
+
+  switchTheme(mode: 'light' | 'dark') {
+    if (mode === 'dark') {
+      this.darkModeService.setDarkMode(true);
+    } else {
+      this.darkModeService.setDarkMode(false);
+    }
+    this.isDarkMode = this.darkModeService.isDarkMode();
+    this.isThemeDropdownOpen = false;
+
+    const settings = this.sharedService.getSettings();
+    if (settings) {
+      this.logoUrl = this.darkModeService.getLogo(settings);
+    }
   }
 }

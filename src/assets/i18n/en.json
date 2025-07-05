@@ -23,7 +23,10 @@
     "login": "Login",
     "signUp": "Sign Up",
 
-    "nightMode": "Night Mode"
+    "nightMode": "Night Mode",
+    "contactUs": "contact us",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
   },
   "auth": {
     "backToHome": "Back to Home",

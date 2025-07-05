@@ -5,7 +5,7 @@
 
 
   <!-- Breadcrumb -->
-  <div class=" instructor-bg-blk py-4" style="background-color: #f5f5f5;">
+  <div class=" instructor-bg-blk py-4">
     <div class="container">
       <div class="row">
         <div class="col-md-12 col-12">
@@ -14,29 +14,30 @@
               <img [src]="doctor.image || './assets/img/course/doctor.png'" alt="" class="img-fluid">
 
             </a>
-            <h4><a href="javascript:;">{{doctor.name}}</a></h4>
+            <h4><a href="javascript:;" style="cursor: text;">{{doctor.name}}</a></h4>
 
-            <p style="color: #392C7D;">{{ 'instructor.courses_number' | translate: { count: courses.length } }}</p>
+            <p class="subs-title">{{ 'instructor.courses_number' | translate: { count: doctor.courses_count } }}
+            </p>
 
             <ul class="list-unstyled inline-inline profile-info-social">
-              <li class="list-inline-item">
+              <li *ngIf="doctor.facebook" class="list-inline-item">
                 <a [href]="doctor.facebook">
-                  <i class="fa-brands fa-facebook"></i>
+                  <i class="fa-brands fa-facebook mx-1"></i>
                 </a>
               </li>
-              <li class="list-inline-item">
+              <li *ngIf="doctor.telegram" class="list-inline-item">
                 <a [href]="doctor.telegram">
-                  <i class="fa-brands fa-telegram"></i>
+                  <i class="fa-brands fa-telegram mx-1"></i>
                 </a>
               </li>
-              <li class="list-inline-item">
+              <li *ngIf="doctor.phone_number" class="list-inline-item">
                 <a [href]="doctor.phone_number">
-                  <i class="fa-solid fa-phone-volume"></i>
+                  <i class="fa-solid fa-phone-volume mx-1"></i>
                 </a>
               </li>
-              <li class="list-inline-item">
+              <li *ngIf="doctor.whatsapp" class="list-inline-item">
                 <a [href]="doctor.whatsapp">
-                  <i class="fa-brands fa-whatsapp"></i>
+                  <i class="fa-brands fa-whatsapp mx-1"></i>
                 </a>
               </li>
             </ul>
@@ -54,17 +55,17 @@
         <div class="col-lg-8">
 
           <!-- Overview -->
-          <div class="card overview-sec">
+          <div class="card overview-sec" *ngIf="doctor.bio; ">
             <div class="card-body">
               <h5 class="subs-title">{{ 'instructor.bio_title'| translate }}</h5>
-              <p *ngIf="doctor.bio; else noBio">
+              <p>
                 {{ doctor.bio }}
               </p>
-              <ng-template #noBio>
+              <!-- <ng-template #noBio>
                 <p class="text-muted fst-italic">
                   {{ 'instructor.no_bio'| translate }}
                 </p>
-              </ng-template>
+              </ng-template> -->
 
 
             </div>
@@ -74,16 +75,16 @@
 
 
           <!-- Overview -->
-          <div class="card overview-sec">
+          <div class="card overview-sec" *ngIf="doctor.experience; ">
             <div class="card-body">
               <h5 class="subs-title"> {{ 'instructor.experience_title'| translate }} </h5>
-              <p *ngIf="doctor.experience; else noExperience">
+              <p>
                 {{ doctor.experience }}
               </p>
-              <ng-template #noExperience>
+              <!-- <ng-template #noExperience>
                 <p class="text-muted fst-italic">
                   {{ 'instructor.no_experience'| translate }} </p>
-              </ng-template>
+              </ng-template> -->
 
 
 
@@ -103,17 +104,17 @@
         <div class="col-lg-4">
 
           <!-- Right Sidebar Tags Label -->
-          <div class="card overview-sec">
+          <div class="card overview-sec" *ngIf="doctor.certifications; ">
             <div class="card-body overview-sec-body">
               <h5 class="subs-title"> {{ 'instructor.certifications_title' | translate }} </h5>
-              <p *ngIf="doctor.certifications; else noCerts">
+              <p>
                 {{ doctor.certifications }}
               </p>
-              <ng-template #noCerts>
+              <!-- <ng-template #noCerts>
                 <p class="text-muted fst-italic">
                   {{ 'instructor.no_certifications' | translate }}
                 </p>
-              </ng-template>
+              </ng-template> -->
 
             </div>
           </div>
@@ -131,7 +132,7 @@
           <div class="card-body pb-0">
             <h5 class="subs-title"> {{ 'instructor.courses_title' | translate }} </h5>
             <div class="row">
-              <ng-container *ngIf="courses.length > 0; else noCourses">
+              <ng-container *ngIf="courses.length > 0;  else noCourses">
                 <app-courses-card [coursesData]="courses" [fromHome]="false" />
               </ng-container>
 

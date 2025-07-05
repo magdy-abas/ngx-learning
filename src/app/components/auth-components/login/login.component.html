@@ -41,6 +41,7 @@
               <div class="back-home">
                 <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
               </div>
+
             </div>
             <h1>{{ 'auth.signIntoYourAccount' | translate }}</h1>
 
@@ -49,8 +50,8 @@
             </div>
 
             <!-- regular reg email and password fields  -->
-            <form *ngIf="loading" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <div *ngIf="!loginWithWats">
+            <form *ngIf="!loginWithWats" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div>
                 <div class="form-group">
                   <label class="form-control-label">{{ 'auth.email' | translate }}</label>
                   <input type="email" class="form-control" [placeholder]="'auth.emailPlaceholder' | translate"
@@ -80,11 +81,17 @@
                         *ngIf="!show"></i-feather>
                     </span>
                   </div>
+                  <div class="forgot mt-3">
+                    <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
+                        }}</a></span>
+                  </div>
                   <div>
                     <app-alert-error controlName="password" [formName]="loginForm"></app-alert-error>
                   </div>
                 </div>
-
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-start" type="submit">{{ 'auth.signIn' | translate }}</button>
+                </div>
               </div>
             </form>
             <!-- wats version  reg   -->
@@ -92,10 +99,7 @@
               <div *ngIf="watsStep === 1">
                 <app-phone-input [formGroup]="loginWatsForm" controlName="phone"></app-phone-input>
 
-                <!-- <div class="forgot">
-                  <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
-                      }}</a></span>
-                </div> -->
+
 
                 <!-- <div class="form-check remember-me">
                   <label class="form-check-label mb-0">

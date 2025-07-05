@@ -26,12 +26,13 @@ body {
 .cdk-overlay-pane {
   transform: translateX(-10px) !important;
 }
+
 // nav
 // .menu {
 //   margin-left: 100px;
 // }
 .hamburger {
-  margin-right: 20px;
+  margin-left: 20px;
 }
 // profile
 .phone-edit {
@@ -62,5 +63,12 @@ body {
 .profile-form-wrapper {
   .iti__selected-flag {
     transform: translateX(370px) !important;
+  }
+}
+// them toggle
+
+.theme-toggle {
+  .theme-dropdown {
+    right: 0 !important;
   }
 }

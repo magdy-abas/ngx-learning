@@ -82,7 +82,7 @@ label {
   color: var(--iti-item-hover-color);
 }
 .dropdown-menu.country-dropdown {
-  width: 50% !important;
+  width: 250px !important;
 }
 
 .iti__country {
@@ -100,6 +100,9 @@ label {
 
 .iti__flag {
   margin-right: 25px;
+}
+.iti {
+  position: relative;
 }
 
 // code-input
@@ -455,12 +458,12 @@ code-input.code-input {
   background: var(--btn-secondary-bg);
   color: var(--btn-secondary-text) !important;
   border: 1px solid var(--btn-secondary-border);
-  font-weight: 700 !important;
-
-  border-radius: 5px;
+  // font-weight: 700 !important;
+  font-size: 14px !important;
+  border-radius: 50px;
   text-align: center;
-  padding: 10px;
-  min-width: 165px;
+  padding: 10px 10px;
+  min-width: 130px;
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -664,7 +667,7 @@ code-input.code-input {
 }
 
 .instructors-img {
-  height: 300px;
+  height: 250px;
 }
 // ======================================
 // 1.2  Categories Section
@@ -830,11 +833,11 @@ code-input.code-input {
 
 .course-card-progress-bar .progress-container {
   width: 100%;
-  height: 20px;
+  height: 10px;
   background-color: var(--progress-bg);
   border-radius: 10px;
   overflow: hidden;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .course-card-progress-bar .progress-fill {
@@ -848,10 +851,14 @@ code-input.code-input {
   align-items: center;
   justify-content: center;
   position: relative;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 .course-card-progress-bar .progress-text {
-  color: var(--progress-text-color);
+  color: var(--progress-fill-gradient);
   font-weight: 500;
   font-size: 12px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -937,7 +944,7 @@ code-input.code-input {
 .view-icons a.active {
   background-color: var(--course-view-icon-hover);
   border-color: var(--course-view-icon-hover);
-  color: var(--color-white);
+  color: var(--color-white) !important;
 }
 
 @media (max-width: 768px) {
@@ -993,8 +1000,8 @@ code-input.code-input {
 // ======================================
 
 .course-content .cst-course-btn {
-  min-width: 100px !important;
   padding: 8px 12px !important;
+  margin: 0 !important;
 }
 
 .center-btn {
@@ -2798,4 +2805,87 @@ mat-select.form-select {
 }
 .nav.transparent {
   background-color: transparent !important;
+}
+
+// dark mode toggler
+.theme-toggle {
+  position: relative;
+
+  .theme-icon {
+    font-size: 18px;
+    color: var(--link-color);
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .theme-dropdown {
+    position: absolute;
+    top: 30px;
+
+    background: var(--dropdown-bg);
+    border: 1px solid var(--dropdown-border);
+    border-radius: 5px;
+    padding: 5px 0;
+    min-width: 140px;
+    z-index: 10;
+    box-shadow: var(--dropdown-shadow);
+
+    a {
+      display: block;
+      padding: 6px 12px;
+      color: var(--dropdown-text);
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.3s, color 0.3s;
+
+      &:hover {
+        background: var(--dropdown-hover-bg);
+        color: var(--link-hover);
+      }
+    }
+  }
+}
+// ======================================
+//  4-  instractor Profile page
+// ======================================
+.instructor-bg-blk {
+  position: relative;
+  background: var(--instructor-profile-bg);
+  overflow: hidden;
+  z-index: 0;
+}
+
+.instructor-bg-blk::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background: var(--instructor-profile-circle);
+  border-radius: 50%;
+  opacity: var(--instructor-profile-circle-opacity);
+  filter: blur(var(--instructor-profile-circle-blur));
+  z-index: 0;
+}
+
+.instructor-bg-blk::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  background: var(--instructor-profile-circle);
+  border-radius: 50%;
+  opacity: var(--instructor-profile-circle-opacity);
+  filter: blur(var(--instructor-profile-circle-blur));
+  z-index: 0;
+}
+
+.subs-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-dark-blue);
+  margin-bottom: 20px;
 }
