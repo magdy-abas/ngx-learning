@@ -1,3 +1,64 @@
+<!-- Top Info Bar -->
+<div class="add-header-bg first-header py-2 top-info-bar">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap">
+    <!-- Left Section: Social + Phone + Email -->
+    <div class="d-flex align-items-center flex-wrap gap-3">
+      <!-- Social Icons -->
+      <div class="d-flex gap-2 social-icons">
+        <a *ngIf="setting.data.social.facebook" [href]="setting.data.social.facebook" target="_blank" rel="noopener">
+          <i class="fa-brands fa-facebook fs-6"></i>
+        </a>
+
+        <a *ngIf="setting.data.social.instagram" [href]="setting.data.social.instagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram fs-6"></i>
+        </a>
+
+        <a *ngIf="setting?.data?.contact_us?.whatsapp"
+          [href]="'https://wa.me/' + formatWhatsappNumber(setting.data.contact_us.whatsapp)" target="_blank"
+          rel="noopener">
+          <i class="fa-brands fa-whatsapp fs-5"></i>
+        </a>
+
+
+        <a *ngIf="setting.data.social.youtube" [href]="setting.data.social.youtube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube fs-6"></i>
+        </a>
+        <a *ngIf="setting.data.social.snapchat" [href]="setting.data.social.snapchat" target="_blank" rel="noopener">
+          <i class="fa-brands fa-snapchat fs-6"></i>
+        </a>
+        <a *ngIf="setting.data.social.twitter" [href]="setting.data.social.twitter" target="_blank" rel="noopener">
+          <i class="fa-brands fa-twitter fs-6"></i>
+        </a>
+
+      </div>
+      <!-- Phone -->
+      <div class="d-flex align-items-center gap-1 contact-info">
+        <i class="fas fa-phone-alt fs-6"></i>
+        <span>{{setting.data.contact_us.call_number}}</span>
+      </div>
+      <!-- Email -->
+      <div class="d-flex align-items-center gap-1 contact-info">
+        <i class="fas fa-envelope fs-6"></i>
+        <span>{{setting.data.contact_us.email}}</span>
+      </div>
+    </div>
+
+    <!-- Right Section: Links -->
+    <div class="d-flex align-items-center gap-3 flex-wrap top-links">
+      <div class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
+        <div class="moon" [class.sun]="!isDarkMode"></div>
+      </div>
+
+
+
+
+
+      <app-btn-lang></app-btn-lang>
+    </div>
+  </div>
+</div>
+
+
 <div class="">
   <div class="auth-nav  ">
     <!-- Overlay for mobile menu -->
@@ -6,7 +67,7 @@
     <!-- Main Navigation -->
     <nav #navbar [class.scrolled]="isScrolled" [class.transparent]="isTransparent" [class.home-page]="isHomePage"
       [class.other-page]="!isHomePage">
-      <div class="container d-flex  justify-content-between justify-content-lg-start align-items-center">
+      <div class="container d-flex  justify-content-between  align-items-center">
         <!-- Logo -->
         <div class="logo" routerLink="/home">
           <img [src]="logoUrl" alt="Logo" class="logo-img logo">
@@ -60,15 +121,70 @@
             </a>
 
           </div>
+          <a (click)="openSearchPopup()" class="csr-pointer">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </a>
+          <div class="nav-actions d-flex align-items-center">
+
+            <div class="lang-toggle me-3 d-none d-lg-block">
+
+            </div>
 
 
+            <!-- user -->
+            <li class="nav-item user-nav list-unstyled m-0">
+              <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
+                <span class="user-img">
+                  <img src="../../../assets/img/profile-img.png" alt="">
+                  <span class="status online"></span>
+                </span>
+              </a>
+
+              <div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
+                <div class="user-header d-flex align-items-center gap-2 px-3 py-2 border-bottom">
+                  <div class="avatar avatar-sm">
+                    <img src="../../../assets/img/profile-img.png" alt="User Image" class="avatar-img rounded-circle">
+                  </div>
+                  <div class="user-text">
+                    <h6 class="mb-0">{{ userName }}</h6>
+                    <p class="text-muted mb-0"> {{ 'navbar.student' | translate }}</p>
+
+                  </div>
+                </div>
+
+                <a class="dropdown-item" [routerLink]="'/auth/profile'">
+                  <i class="fas fa-user me-1"></i>
+                  {{ 'navbar.profile' | translate }}
+                </a>
+
+
+
+                <div style="cursor: pointer"
+                  class="dropdown-item night-mode d-flex justify-content-between align-items-center"
+                  (click)="toggleDarkMode($event)">
+                  <a>
+                    <i class="fas fa-moon me-1"></i> {{ 'navbar.nightMode' | translate }}
+                  </a>
+                  <div class="form-check form-switch m-0">
+                    <input class="form-check-input" type="checkbox" id="night-mode" [checked]="isDarkMode" readonly />
+                  </div>
+                </div>
+
+
+                <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+                  <i class="fas fa-sign-out-alt me-1"></i>
+                  {{ 'navbar.logout' | translate }}
+                </a>
+              </div>
+            </li>
+          </div>
 
         </div>
-        <!-- Language switcher + User dropdown -->
-        <div class="nav-actions d-flex align-items-center">
+
+        <div class="nav-actions d-flex align-items-center show-mobile">
 
           <div class="lang-toggle me-3 d-none d-lg-block">
-            <app-btn-lang></app-btn-lang>
+
           </div>
 
 
@@ -216,7 +332,11 @@
             <li class="py-2" (click)="switchLanguage('en')">English</li>
           </ul>
         </li>
-
+        <li>
+          <a (click)="openSearchPopup()" class="csr-pointer">
+            {{ 'navbar.search' | translate }}
+          </a>
+        </li>
 
         <!-- Mobile Auth Links -->
 

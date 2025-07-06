@@ -1,3 +1,13 @@
-<a style="cursor: pointer;" (click)="toggleLanguage()" class="lang-toggle-link">
-  {{ currentLangShort }}
-</a>
+<div class="btn-lang">
+
+  <a href="javascript:void(0)" (click)="switchTo('ar')"
+    [ngClass]="{ 'text-decoration-none': true, 'active': isCurrentLang('ar') }">
+    Ar
+  </a>
+  <span>|</span>
+
+  <a href="javascript:void(0)" (click)="switchTo('en')"
+    [ngClass]="{ 'text-decoration-none': true, 'active': isCurrentLang('en') }">
+    En
+  </a>
+</div>

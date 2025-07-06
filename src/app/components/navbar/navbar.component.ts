@@ -23,6 +23,8 @@ import { AuthService } from '../../core/service/auth.service';
 import { SharedService } from '../../core/service/shared.service';
 import { DarkModeService } from '../../core/service/dark-mode.service';
 import { GlobalTranslateService } from '../../core/service/global-translate.service';
+import { SettingResponse } from '../../core/interfaces/settings.interface';
+import { SweetAlertUtils } from '../../shared/utils/SweetAlert.utils';
 
 interface MenuItem {
   title: string;
@@ -51,7 +53,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
   @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
   @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
-
+  setting!: SettingResponse;
   public isLangDropdownOpen = false;
   public isMenuOpened = false;
   public isTransparent = true;
@@ -100,6 +102,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isDarkMode = this.darkModeService.isDarkMode();
     this.sharedService.settings$.subscribe((settings) => {
       if (settings?.data) {
+        this.setting = settings;
         this.logoUrl = this.darkModeService.getLogo(settings);
       }
     });
@@ -253,6 +256,16 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
       this.logoUrl = this.darkModeService.getLogo(settings);
     }
   }
+
+  toggleThemeManually() {
+    this.isDarkMode = !this.isDarkMode;
+    this.darkModeService.setDarkMode(this.isDarkMode);
+
+    const settings = this.sharedService.getSettings();
+    if (settings) {
+      this.logoUrl = this.darkModeService.getLogo(settings);
+    }
+  }
   logout(): void {
     this.AuthService.logout();
   }
@@ -260,5 +273,23 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   toggleLangDropdown(event: Event) {
     event.stopPropagation();
     this.isLangDropdownOpen = !this.isLangDropdownOpen;
+  }
+  formatWhatsappNumber(number: any): string {
+    return number.replace(/[^0-9]/g, '');
+  }
+  sarchInCourses(searchInput: string) {
+    if (searchInput) {
+      this.router.navigate(['/auth/courses'], {
+        queryParams: { search: searchInput },
+      });
+    }
+  }
+
+  openSearchPopup() {
+    SweetAlertUtils.showSearchDialog().then((result) => {
+      if (result.isConfirmed && result.value) {
+        this.sarchInCourses(result.value);
+      }
+    });
   }
 }

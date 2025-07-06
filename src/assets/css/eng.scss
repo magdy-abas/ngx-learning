@@ -30,7 +30,10 @@ body {
 // nav
 // .menu {
 //   margin-left: 100px;
-// }
+// }.
+.top-info-bar::before {
+  left: 0;
+}
 .hamburger {
   margin-left: 20px;
 }

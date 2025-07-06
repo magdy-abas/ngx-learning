@@ -104,4 +104,28 @@ export const SweetAlertUtils = {
       customClass: commonCustomClasses,
     });
   },
+
+  showSearchDialog() {
+    return Swal.fire({
+      title: translateService.instant('sweetAlerts.search.title'),
+      input: 'text',
+      inputPlaceholder: translateService.instant(
+        'sweetAlerts.search.placeholder'
+      ),
+      showCancelButton: true,
+      confirmButtonText: translateService.instant('sweetAlerts.search.confirm'),
+      cancelButtonText: translateService.instant('sweetAlerts.search.cancel'),
+      inputValidator: (value) => {
+        if (!value) {
+          return translateService.instant('sweetAlerts.search.error');
+        }
+        return null;
+      },
+      width: '450px',
+      customClass: {
+        ...commonCustomClasses,
+        input: 'custom-swal-input',
+      },
+    });
+  },
 };

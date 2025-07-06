@@ -10,7 +10,7 @@
 @include mat.core();
 
 :root {
-  --body-bg: #ffffff;
+  --body-bg: #f5f3fc;
   --body-text: #22100d;
   --body-font-size: 16px;
 
@@ -27,7 +27,7 @@
 
   // Common Colors
   --color-white: #ffffff;
-  --color-light-bg: #fbfcff;
+  --color-light-bg: #f5f3fc;
   --color-light-border: #e0ebff;
   --color-dark-border: rgba(0, 0, 0, 0.1);
   --color-black: #000000;
@@ -108,7 +108,7 @@
   --hero-description-color: #324fa2;
 
   // instractor
-  --instructors-section-bg: #ffffff;
+  --instructors-section-bg: #f5f3fc;
   --instructors-card-bg: #ffffff;
   --instructors-card-border: #e9ecef;
   --instructors-card-border-radius: 10px;
@@ -125,8 +125,9 @@
   );
   --instructor-profile-circle-opacity: 0.3;
   --instructor-profile-circle-blur: 40px;
+  --instructor-profile-bg: #fff;
   // Courses Section
-  --courses-section-bg: #fafafa;
+  --courses-section-bg: #f5f3fc;
   --courses-section-bg-image: url(./assets/img/bg/home-main.png);
 
   // Course Card
@@ -149,7 +150,7 @@
 
   --course-card-separator: #f4f4f4;
 
-  --course-section-bg: #fafafa;
+  --course-section-bg: #f5f3fc;
   --course-design-border: #e9ecef;
 
   // Course page
@@ -159,7 +160,7 @@
 
   //categories
   /* Section */
-  --categories-section-bg: #fbfcff;
+  --categories-section-bg: #f5f3fc;
 
   /* Card */
   --categories-card-bg: #ffffff;
@@ -184,7 +185,7 @@
 
   // courses-details
 
-  --doctor-card-bg: #f9f9f9;
+  --doctor-card-bg: #fff;
   --doctor-img-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
   --lesson-card-bg: #ffffff;
@@ -243,6 +244,27 @@
   --quiz-result-border-success: #28a745;
   --quiz-result-border-warning: #ffc107;
   --quiz-result-border-danger: #dc3545;
+
+  // top nav
+  --topnav-bg: #e8e6f7;
+  --topnav-text: #2f2f82;
+  --topnav-icon: #ffffff;
+  --topnav-link: #2f2f82;
+  --topnav-link-hover: var(--link-hover);
+  --topnav-link-active: #d43370;
+  --topnav-divider: #2f2f82;
+  //  Language Toggle
+  --lang-color: #2f2f82;
+  --lang-hover: var(--link-hover);
+  --lang-active: var(--link-hover);
+  --lang-divider-color: #2f2f82;
+
+  //  Theme Toggle
+  --theme-toggle-bg: #423966;
+  --theme-toggle-bg-day: #ffbf71;
+  --moon-color: #d9fbff;
+  --sun-core-color: #fff;
+  --sun-halo-color: #ffffcc;
   // nav
   --navbar-bg: #ffffff;
   --navbar-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
@@ -266,7 +288,7 @@
   --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   // verdio player
   --video-bg: #2c3e2d;
-  --video-placeholder-bg: #f9f9f9;
+  --video-placeholder-bg: #fff;
   --video-shadow-light: rgba(0, 0, 0, 0.1);
   --video-shadow-medium: rgba(0, 0, 0, 0.35);
   --video-shadow-strong: rgba(0, 0, 0, 0.5);

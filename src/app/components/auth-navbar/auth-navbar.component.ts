@@ -20,6 +20,8 @@ import { DarkModeService } from '../../core/service/dark-mode.service';
 import { SharedService } from '../../core/service/shared.service';
 import { AuthService } from '../../core/service/auth.service';
 import { GlobalTranslateService } from '../../core/service/global-translate.service';
+import { SettingResponse } from '../../core/interfaces/settings.interface';
+import { SweetAlertUtils } from '../../shared/utils/SweetAlert.utils';
 
 interface MenuItem {
   title: string;
@@ -47,13 +49,13 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public isLangDropdownOpen = false;
   public logoUrl: string = '';
   loginWithWats: boolean = false;
-
+  setting!: SettingResponse;
   public isMenuOpened = false;
   public isTransparent = true;
   public isScrolled = false;
   public isHomePage = false;
   public activeSubmenu: { [key: string]: boolean } = {};
-
+  isAuthenticated: boolean = false;
   private routerSubscription!: Subscription;
 
   public menuItems: MenuItem[] = [
@@ -79,10 +81,13 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.darkModeService.applyMode();
-
+    this.checkAuthStatus();
+    this.isDarkMode = this.darkModeService.isDarkMode();
     this.sharedService.settings$.subscribe((settings) => {
       if (settings) {
         this.logoUrl = this.darkModeService.getLogo(settings);
+        this.setting = settings;
+        console.log(this.setting);
       }
     });
 
@@ -236,5 +241,40 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     if (settings) {
       this.logoUrl = this.darkModeService.getLogo(settings);
     }
+  }
+  toggleThemeManually() {
+    this.isDarkMode = !this.isDarkMode;
+    this.darkModeService.setDarkMode(this.isDarkMode);
+
+    const settings = this.sharedService.getSettings();
+    if (settings) {
+      this.logoUrl = this.darkModeService.getLogo(settings);
+    }
+  }
+  formatWhatsappNumber(number: any): string {
+    return number.replace(/[^0-9]/g, '');
+  }
+
+  checkAuthStatus(): void {
+    this.isAuthenticated = this._AuthService.isAuthenticated();
+  }
+  sarchInCourses(searchInput: string) {
+    if (this.isAuthenticated) {
+      this.router.navigate(['/auth/courses'], {
+        queryParams: { search: searchInput },
+      });
+    } else {
+      this.router.navigate(['/courses'], {
+        queryParams: { search: searchInput },
+      });
+    }
+  }
+
+  openSearchPopup() {
+    SweetAlertUtils.showSearchDialog().then((result) => {
+      if (result.isConfirmed && result.value) {
+        this.sarchInCourses(result.value);
+      }
+    });
   }
 }

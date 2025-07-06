@@ -221,7 +221,27 @@ body.dark-mode {
   --quiz-result-border-success: #28a745;
   --quiz-result-border-warning: #ffc107;
   --quiz-result-border-danger: #dc3545;
+  // top nav
+  --topnav-bg: #e8e6f7;
+  --topnav-text: #2f2f82;
+  --topnav-icon: #ffffff;
+  --topnav-link: #2f2f82;
+  --topnav-link-hover: #d43370;
+  --topnav-link-active: #d43370;
+  --topnav-divider: #2f2f82;
 
+  //  Language Toggle
+  --lang-color: #cfc8ff;
+  --lang-hover: #a18bff;
+  --lang-active: #a18bff;
+  --lang-divider-color: #cfc8ff;
+
+  //  Theme Toggle
+  --theme-toggle-bg: #2c2944;
+  --theme-toggle-bg-day: #f6945e;
+  --moon-color: #d9fbff;
+  --sun-core-color: #ffffff;
+  --sun-halo-color: #a18bff;
   /* Nav */
   --navbar-bg: #231f39;
   --navbar-box-shadow: 0 4px 12px rgba(161, 139, 255, 0.08);

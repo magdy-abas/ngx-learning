@@ -173,6 +173,10 @@ a {
 // .menu {
 //   margin-right: 100px;
 // }
+
+.top-info-bar::before {
+  right: 0;
+}
 .user-img {
   margin-right: 20px;
 }

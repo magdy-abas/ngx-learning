@@ -22,7 +22,7 @@
     "blog": "Blog",
     "login": "Login",
     "signUp": "Sign Up",
-
+    "search": "Search",
     "nightMode": "Night Mode",
     "contactUs": "contact us",
     "lightMode": "Light Mode",
@@ -132,7 +132,14 @@
     "codeSuccess": "Course code verified successfully.",
     "invalidCourseId": "Invalid course ID.",
     "fetchFail": "Failed to fetch course details.",
-    "somethingWentWrong": "Something went wrong."
+    "somethingWentWrong": "Something went wrong.",
+    "search": {
+      "title": "Search for a course",
+      "placeholder": "Enter search keyword",
+      "confirm": "Search",
+      "cancel": "Cancel",
+      "error": "Please enter a keyword to search"
+    }
   },
 
   "home": {

@@ -53,20 +53,22 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.categoryId = params.get('categoryId');
-      this.doctorId = params.get('doctorId');
+    const querySub = this.route.queryParams.subscribe((queryParams) => {
+      this.searchValue = queryParams['search'] || '';
 
-      this.pageNum = 1;
-      this.coursesData = [];
-      this.allDataLoaded = false;
+      this.route.paramMap.subscribe((params) => {
+        this.categoryId = params.get('categoryId');
+        this.doctorId = params.get('doctorId');
 
-      this.getCourses();
+        this.pageNum = 1;
+        this.coursesData = [];
+        this.allDataLoaded = false;
+
+        this.getCourses();
+      });
     });
 
-    this.route.queryParams.subscribe((params) => {
-      this.searchValue = params['search'] || '';
-    });
+    this.subscriptions.push(querySub);
   }
 
   ngOnDestroy(): void {

@@ -12,6 +12,7 @@
     "nightMode": "الوضع الليلي",
     "logout": "تسجيل الخروج",
     "student": "طالب",
+    "search": "بحث",
     "contactUs": "تواصل معنا",
     "lightMode": "الوضع النهاري",
     "darkMode": "الوضع الليلي"
@@ -120,7 +121,14 @@
     "codeSuccess": "تم التحقق من كود الدورة بنجاح.",
     "invalidCourseId": "معرّف الدورة غير صالح.",
     "fetchFail": "فشل تحميل بيانات الدورة.",
-    "somethingWentWrong": "حدث خطأ ما."
+    "somethingWentWrong": "حدث خطأ ما.",
+    "search": {
+      "title": "ابحث عن دورة",
+      "placeholder": "اكتب كلمة البحث",
+      "confirm": "بحث",
+      "cancel": "إلغاء",
+      "error": "من فضلك أدخل كلمة للبحث"
+    }
   },
   "home": {
     "searchPlaceholder": "ماذا تريد أن تتعلم اليوم؟",

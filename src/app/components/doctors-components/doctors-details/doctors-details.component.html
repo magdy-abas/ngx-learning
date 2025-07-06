@@ -11,7 +11,9 @@
         <div class="col-md-12 col-12">
           <div class="profile-info-blk">
             <a href="javascript:;" class="profile-info-img" style="overflow: hidden;">
-              <img [src]="doctor.image || './assets/img/course/doctor.png'" alt="" class="img-fluid">
+              <img [src]="doctor.image" (error)="doctor.image = './assets/img/course/doctor.png'" alt="Doctor Image"
+                class="img-fluid">
+
 
             </a>
             <h4><a href="javascript:;" style="cursor: text;">{{doctor.name}}</a></h4>
@@ -49,7 +51,7 @@
   <!-- /Breadcrumb -->
 
   <!-- Course Content -->
-  <section class="page-content course-sec">
+  <section class="page-content course-sec doctor-profile">
     <div class="container">
       <div class="row">
         <div class="col-lg-8">

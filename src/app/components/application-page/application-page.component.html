@@ -40,21 +40,22 @@
       <div class="container">
         <div class="row align-items-center">
           <!-- mocup -->
-          <div class="col-md-6 text-center mb-4 mb-md-0">
-            <div class="hero-thumb text-main">
-              <div class="iphone-mockup">
-                <div class="iphone-screen" [ngStyle]="{
-    'background-image': 'url(' +
-      (appData?.settings?.application_images?.[0]
-        || appData?.settings?.application_images?.[1]
-      )
-    + ')'
-  }">
-                </div>
+          <div class="col-md-6 text-center d-flex justify-content-center align-items-center mt-5">
 
 
-              </div>
+            <div class="hero-thumb ">
+              <img class="img-fluid" [src]="appData?.settings?.application_images?.[0]
+         || appData?.settings?.application_images?.[1]
+         || '../../../assets/img/hero-thumb-2.png'" (error)="image.src = '../../../assets/img/hero-thumb-2.png'"
+                alt="Hero Image" #image>
+
             </div>
+
+
+
+
+
+
 
           </div>
 

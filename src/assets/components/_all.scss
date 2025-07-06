@@ -968,11 +968,13 @@ button.bg-danger:hover {
 /*-----------------
 	3. Header
 -----------------------*/
-.first-header {
-  position: relative;
 
-  z-index: 5555;
+
+.first-header .container {
+  position: relative;
+  z-index: 1;
 }
+
 .mobile-header-items .mobile-items {
   display: none !important;
 }
@@ -13626,7 +13628,7 @@ input[type="password"]::-ms-clear {
 }
 
 .page-content {
-  background: #fafafa;
+  // background: #fafafa;
   padding: 80px 0 60px;
 }
 
@@ -21152,6 +21154,9 @@ ngx-file-drag-drop span {
 }
 
 @media (max-width: 991.98px) {
+  .d-none-mobile {
+    display: none !important;
+  }
   .header-nav {
     margin-top: 0;
   }
@@ -21227,7 +21232,10 @@ ngx-file-drag-drop span {
     display: none;
   }
   .first-header {
+    .top-links{
     display: none !important;
+    }
+
   }
   .mobile-header-items .mobile-items {
     display: block !important;
