@@ -1,13 +1,11 @@
 // src/styles.scss
-@use "@angular/material" as mat;
+
 @use "sass:map";
+@use "assets/css/angular-material.scss";
 
 // Third-party imports
 @import "bootstrap/scss/bootstrap";
 @import "ngx-bootstrap/datepicker/bs-datepicker";
-
-// Include the common styles for Angular Material
-@include mat.core();
 
 :root {
   --body-bg: #f5f3fc;
@@ -69,13 +67,6 @@
   --input-text: #333333;
   --input-placeholder: #999999;
   --label-color: #444;
-
-  // iti drop down
-  --iti-bg: #fff;
-  --iti-border: #ccc;
-  --iti-item-hover-bg: #f7f7f7;
-  --iti-item-hover-color: #000;
-  --iti-dial-color: #555;
 
   //owl dots
   --owl-dot-default: #ff875a;
@@ -394,24 +385,6 @@ hr {
 body.dark-mode hr {
   border-color: rgba(255, 255, 255, 0.1);
 }
-// Define the palettes for your theme
-$dreams-lms-primary: mat.define-palette(mat.$indigo-palette);
-$dreams-lms-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$dreams-lms-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object
-$dreams-lms-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $dreams-lms-primary,
-      accent: $dreams-lms-accent,
-      warn: $dreams-lms-warn,
-    ),
-  )
-);
-
-// Include theme styles for core and each component
-@include mat.all-component-themes($dreams-lms-theme);
 
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");

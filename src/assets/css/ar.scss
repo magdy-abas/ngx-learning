@@ -88,30 +88,11 @@ a {
   width: auto;
 }
 
-.loginbox .form-control[type="tel"] {
-  text-align: right;
-  padding-right: 36px !important;
+input[type="tel"] {
+  direction: ltr !important;
+  text-align: right !important;
 }
 
-.iti__selected-flag {
-  right: -13px !important;
-}
-
-.iti__arrow {
-  --iti-arrow-padding: 30px !important;
-}
-
-.iti__country-list {
-  left: auto !important;
-  right: 0 !important;
-  text-align: right;
-}
-.dropdown-menu.country-dropdown {
-  left: auto !important;
-  right: 0 !important;
-  text-align: right;
-  direction: rtl;
-}
 .btn-danger {
   margin-right: 10px;
 }
@@ -161,7 +142,7 @@ a {
   padding-right: 30px;
 }
 
-.cdk-overlay-pane {
+.settings-widget .cdk-overlay-pane {
   transform: translateX(40px) !important;
 }
 

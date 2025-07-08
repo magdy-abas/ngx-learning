@@ -1,0 +1,139 @@
+@use "@angular/material" as mat;
+
+/* =======================================
+   1. Define Color Palettes
+========================================== */
+
+$my-primary: mat.define-palette(
+  (
+    50: #fff7ed,
+    100: #ffedd5,
+    200: #fed7aa,
+    300: #fdba74,
+    400: #fb923c,
+    500: #f97316,
+    600: #ea580c,
+    700: #c2410c,
+    800: #9a3412,
+    900: #7c2d12,
+    contrast: (
+      500: white,
+    ),
+  )
+);
+
+$my-primary-dark: mat.define-palette(
+  (
+    50: #f4f0ff,
+    100: #e3dbff,
+    200: #cfc8ff,
+    300: #bfb3ff,
+    400: #a18bff,
+    500: #8f79f5,
+    // الأساسي للدارك
+    600: #7e6ae0,
+    700: #6f5cd1,
+    800: #5a49b3,
+    900: #473899,
+    contrast: (
+      500: white,
+    ),
+  )
+);
+
+$my-accent: mat.define-palette(mat.$amber-palette, A200);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+/* =======================================
+   2. Define Light & Dark Themes
+========================================== */
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $my-primary-dark,
+
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+/* =======================================
+   3. Apply Theme to All Material Components
+========================================== */
+@include mat.core();
+@include mat.all-component-themes($light-theme);
+
+body.dark-mode {
+  @include mat.all-component-colors($dark-theme);
+}
+
+/* =======================================
+   4. Custom CSS Variables for ngx-material-intl-tel-input
+========================================== */
+:root {
+  --mdc-theme-primary: #f97316;
+  --mdc-theme-primary-rgb: 249, 115, 22;
+  --mdc-filled-tel-form-outline-color: #f97316;
+  --mdc-filled-tel-form-focus-outline-color: #f97316;
+  --mdc-tel-form-icon-color: #f97316;
+  --mdc-tel-form-placeholder-color: #a0aec0;
+  --mdc-focus-ring-color: rgba(249, 115, 22, 0.3);
+  --mat-select-panel-background-color: white;
+  --input-bg-mask: #ffffff;
+}
+
+/* =======================================
+   5. Form Overrides
+========================================== */
+.mat-mdc-form-field:not(.mat-form-field-disabled)
+  .mat-mdc-floating-label.mdc-floating-label {
+  font-family: "Cairo", sans-serif;
+}
+
+.mat-mdc-form-field-error {
+  display: block;
+  margin: 10px 0 !important;
+  font-size: 16px !important;
+}
+::ng-deep .tel-form mat-form-field .mat-mdc-text-field-wrapper:hover {
+  background-color: transparent !important;
+}
+[_nghost-ng-c1891651813] .mat-mdc-text-field-wrapper:hover {
+  background-color: transparent !important;
+}
+.mat-mdc-text-field-wrapper {
+  box-shadow: inset 9999px 0 0 0 var(--input-bg),
+    inset -9999px 0 0 0 var(--input-bg), inset 0 9999px 0 0 var(--input-bg),
+    inset 0 -9999px 0 0 var(--input-bg) !important;
+  background-color: transparent !important;
+  border-radius: 10px !important;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  -ms-border-radius: 10px !important;
+  -o-border-radius: 10px !important;
+}
+.tel-form {
+  box-shadow: inset 9999px 0 0 0 var(--input-bg),
+    inset -9999px 0 0 0 var(--input-bg), inset 0 9999px 0 0 var(--input-bg),
+    inset 0 -9999px 0 0 var(--input-bg) !important;
+  background-color: var(--input-bg-mask) !important;
+}
+.mat-select-search-no-entries-found {
+  padding-top: 9px;
+  padding-bottom: 5px !important;
+}

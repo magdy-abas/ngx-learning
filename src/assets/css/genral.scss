@@ -8,7 +8,7 @@
   z-index: 55555 !important;
 }
 .form-control:not(.not-dark),
-input:not(.not-dark) {
+input:not([type="tel"]) {
   background-color: var(--input-bg) !important;
   color: var(--input-text);
   border: 1px solid var(--input-border);
@@ -19,13 +19,13 @@ input:not(.not-dark) {
   // padding: 10px 14px;
 }
 
-.form-control:focus:not(.not-dark) {
+.form-control:focus:not([type="tel"]) {
   border-color: var(--input-focus-border);
   box-shadow: 0 0 0 0.15rem rgba(235, 148, 129, 0.25);
   color: var(--input-text);
 }
 
-.form-control::placeholder:not(.not-dark) {
+.form-control::placeholder:not([type="tel"]) {
   color: var(--input-placeholder);
   opacity: 1;
 }

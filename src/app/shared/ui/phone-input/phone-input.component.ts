@@ -1,107 +1,87 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-import {
-  NgxIntlTelInputModule,
-  SearchCountryField,
-  CountryISO,
-  PhoneNumberFormat,
-} from 'ngx-intl-tel-input';
-import { TranslateModule } from '@ngx-translate/core';
+  NgxMaterialIntlTelInputComponent,
+  TextLabels,
+} from 'ngx-material-intl-tel-input';
 
 @Component({
   selector: 'app-phone-input',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
-    NgxIntlTelInputModule,
     TranslateModule,
+    NgxMaterialIntlTelInputComponent,
   ],
   templateUrl: './phone-input.component.html',
-  styleUrls: ['./phone-input.component.scss'],
+  styleUrl: './phone-input.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class PhoneInputComponent implements OnInit {
-  @Input() formGroup!: FormGroup;
-  @Input() controlName: string = 'phone';
-  @Input() label: string = 'auth.phoneNumber';
-  @Input() validators: ValidatorFn[] = [Validators.required];
+  @Input() control!: FormControl;
 
-  separateDialCode: boolean = true;
-  SearchCountryField = SearchCountryField;
-  CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
+  textLabels: TextLabels = {} as TextLabels;
 
-  preferredCountries: CountryISO[] = [
-    CountryISO.SaudiArabia,
-    CountryISO.Egypt,
-    CountryISO.UnitedArabEmirates,
-    CountryISO.Kuwait,
-    CountryISO.Bahrain,
-    CountryISO.Oman,
-    CountryISO.Qatar,
-    CountryISO.Iraq,
-    CountryISO.Jordan,
-    CountryISO.Lebanon,
-    CountryISO.Libya,
-    CountryISO.Algeria,
-    CountryISO.Yemen,
-    CountryISO.Comoros,
-    CountryISO.Mauritania,
-    CountryISO.Morocco,
-    CountryISO.Palestine,
-    CountryISO.Sudan,
-    CountryISO.Syria,
-    CountryISO.Tunisia,
-    CountryISO.Djibouti,
-    CountryISO.Somalia,
+  constructor(
+    private translate: TranslateService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {}
+
+  ngOnInit(): void {
+    this.translateLabels();
+  }
+
+  translateLabels() {
+    this.translate.get('phone_input.labels').subscribe((labels) => {
+      this.textLabels = {
+        mainLabel: '',
+        codePlaceholder: labels.code,
+        searchPlaceholderLabel: labels.search,
+        noEntriesFoundLabel: labels.no_results,
+        nationalNumberLabel: labels.number,
+        hintLabel: labels.hint,
+        requiredError: labels.required,
+        invalidNumberError: labels.invalid,
+      };
+    });
+  }
+
+  public PereferdCountries: string[] = [
+    'EG',
+    'SA',
+    'AE',
+    'KW',
+    'QA',
+    'OM',
+    'BH',
+    'JO',
+    'LB',
+    'MA',
+    'TN',
+    'DZ',
+    'LY',
+    'IQ',
+    'YE',
+    'SD',
+    'SY',
+    'PS',
+    'MR',
+    'DJ',
+    'SO',
+    'KM',
   ];
-
-  value: any;
-  disabled: boolean = false;
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
-
-  ngOnInit() {
-    if (this.formGroup && this.controlName && this.validators.length) {
-      const control = this.formGroup.get(this.controlName);
-      if (control) {
-        control.setValidators(this.validators);
-        control.updateValueAndValidity();
-      }
-    }
-  }
-
-  writeValue(value: any): void {
-    this.value = value;
-    this.onChange(value);
-  }
-
-  markAsTouched(): void {
-    const control = this.formGroup.get(this.controlName);
-    if (control) {
-      control.markAsTouched();
-      control.markAsDirty();
-      control.updateValueAndValidity();
-    }
-    this.onTouched();
-  }
-
-  onInputChange(value: any): void {
-    this.value = value;
-    this.onChange(value);
-    this.markAsTouched();
-  }
-
-  onBlur(): void {
-    this.markAsTouched();
-  }
 }

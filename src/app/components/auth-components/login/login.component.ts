@@ -12,6 +12,7 @@ import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
 import { routes } from '../../../core/service/routes/routes';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -98,6 +99,7 @@ export class LoginComponent implements OnInit {
     private sharedService: SharedService
   ) {}
   ngOnInit(): void {
+    this.translate.get('phone_input.labels').subscribe((labels) => {});
     this.darkModeService.applyMode();
     this.sharedService.initialized$.pipe(take(1)).subscribe((initialized) => {
       if (initialized) {
@@ -120,6 +122,9 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+  get phoneControl(): FormControl {
+    return this.loginWatsForm.get('phone') as FormControl;
+  }
 
   loginForm: FormGroup = this._FormBuilder.group(
     {
@@ -131,12 +136,10 @@ export class LoginComponent implements OnInit {
     },
     {}
   );
-  loginWatsForm: FormGroup = this._FormBuilder.group(
-    {
-      phone: [null],
-    },
-    {}
-  );
+  loginWatsForm: FormGroup = this._FormBuilder.group({
+    phone: new FormControl(null),
+  });
+
   sendCode: FormGroup = this._FormBuilder.group(
     {
       code: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
@@ -185,13 +188,12 @@ export class LoginComponent implements OnInit {
             this.msgError = res.message;
             console.log(res);
 
-            // Set email error if present
             if (errorData.email?.length) {
               this.loginForm
                 .get('email')
                 ?.setErrors({ serverError: errorData.email[0] });
             }
-            // Set password error if present
+
             if (errorData.password?.length) {
               this.loginForm
                 .get('password')
@@ -208,30 +210,42 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
     }
   }
-
   onSubmitWats() {
-    if (this.loginWatsForm.invalid) {
-      this.loginWatsForm.markAllAsTouched();
+    const control = this.phoneControl;
+
+    if (control.invalid) {
+      control.markAsTouched();
       return;
     }
 
-    const dialCode = this.loginWatsForm.get('phone')?.value.dialCode;
-    this.SendOtpDto.phone_code = dialCode ? dialCode.replace('+', '') : '';
-    this.SendOtpDto.mobile = this.loginWatsForm.get('phone')?.value.number;
-    if (this.SendOtpDto.mobile && this.SendOtpDto.phone_code) {
-      localStorage.setItem('phone_code', this.SendOtpDto?.phone_code);
-      localStorage.setItem('mobile', this.SendOtpDto?.mobile);
+    const rawValue = control.value as string;
+
+    const dialCodeMatch = rawValue.match(/^\+(\d{1,4})/);
+    const dialCode = dialCodeMatch ? dialCodeMatch[1] : '';
+    const mobileNumber = rawValue
+      .replace(/^\+\d{1,4}/, '')
+      .trim()
+      .replace(/\s+/g, '');
+
+    if (!dialCode || !mobileNumber) {
+      control.setErrors({ invalid: true });
+      return;
     }
+
+    this.SendOtpDto.phone_code = dialCode;
+    this.SendOtpDto.mobile = mobileNumber;
+
+    localStorage.setItem('phone_code', dialCode);
+    localStorage.setItem('mobile', mobileNumber);
 
     this._AuthService.sendOtpCode(this.SendOtpDto).subscribe({
       next: (res) => {
-        console.log(res);
         if (res.status === 1) {
           this.watsStep = 2;
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error('Send OTP Error:', err);
       },
     });
   }

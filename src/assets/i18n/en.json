@@ -278,5 +278,16 @@
     "no_certifications": "No certifications provided yet.",
     "courses_title": "Courses",
     "no_courses": "No courses available for this instructor at the moment."
+  },
+  "phone_input": {
+    "labels": {
+      "code": "Country code",
+      "search": "Search country",
+      "no_results": "No countries found",
+      "number": "Phone number",
+      "hint": "Select country and enter phone number",
+      "required": "This field is required",
+      "invalid": "Invalid phone number"
+    }
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -16,12 +17,12 @@ import {
 import { routes } from '../../../core/service/routes/routes';
 import { Router, RouterLink } from '@angular/router';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
-import {
-  NgxIntlTelInputModule,
-  SearchCountryField,
-  CountryISO,
-  PhoneNumberFormat,
-} from 'ngx-intl-tel-input';
+// import {
+//   NgxIntlTelInputModule,
+//   SearchCountryField,
+//   CountryISO,
+//   PhoneNumberFormat,
+// } from 'ngx-intl-tel-input';
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 import { AuthService } from '../../../core/service/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -52,7 +53,7 @@ export
     FormsModule,
     RouterLink,
     FeatherIconModule,
-    NgxIntlTelInputModule,
+
     ReactiveFormsModule,
     AlertErrorComponent,
     TranslateModule,
@@ -71,33 +72,6 @@ class RegisterComponent {
   public welcomeLogin: WelcomeSlideView[] = [];
 
   separateDialCode: boolean = true;
-  preferredCountries: CountryISO[] = [
-    CountryISO.SaudiArabia,
-    CountryISO.UnitedArabEmirates,
-    CountryISO.Kuwait,
-    CountryISO.Bahrain,
-    CountryISO.Oman,
-    CountryISO.Qatar,
-    CountryISO.Egypt,
-    CountryISO.Iraq,
-    CountryISO.Jordan,
-    CountryISO.Lebanon,
-    CountryISO.Libya,
-    CountryISO.Algeria,
-    CountryISO.Yemen,
-    CountryISO.Comoros,
-    CountryISO.Mauritania,
-    CountryISO.Morocco,
-    CountryISO.Palestine,
-    CountryISO.Sudan,
-    CountryISO.Syria,
-    CountryISO.Tunisia,
-    CountryISO.Djibouti,
-    CountryISO.Somalia,
-  ];
-  SearchCountryField = SearchCountryField;
-  CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
 
   password = 'password';
   show = true;
@@ -158,6 +132,11 @@ class RegisterComponent {
     },
     {}
   );
+
+  get phoneControl(): FormControl {
+    return this.regForm.get('phone') as FormControl;
+  }
+
   onClick() {
     if (this.password === 'password') {
       this.password = 'text';
@@ -251,45 +230,65 @@ class RegisterComponent {
   }
 
   onSubmit() {
-    if (this.regForm.valid) {
-      const phoneControl = this.regForm.get('phone');
-      const formData = this.regForm.value;
+    const phoneControl = this.phoneControl;
 
-      this.RegisterDto.name = formData.name;
-      this.RegisterDto.email = formData.email;
-      this.RegisterDto.phone = phoneControl?.value?.number || '';
-      this.RegisterDto.password = formData.password;
-      this.RegisterDto.password_confirmation = formData.password;
-      this.RegisterDto.token = '123';
-      this.RegisterDto.serial_number = '123';
-      this.RegisterDto.os = 'ios';
-
-      this._AuthService.register(this.RegisterDto).subscribe({
-        next: (res: AuthResponse) => {
-          if (res.status === 1) {
-            console.log(res);
-            this._AuthService.saveToken(res.data.token);
-            console.log(res.data.user);
-            this._AuthService.saveUserData(res.data.user);
-            this._Router.navigate(['/auth/home']);
-          } else {
-            const errorData = res.data as ErrorAuthData;
-            console.log(res.message);
-            this.msgError = res.message;
-            if (errorData.email?.length) {
-              this.regForm
-                .get('email')
-                ?.setErrors({ serverError: errorData.email[0] });
-            }
-            scrollToTop();
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          this.msgError = err.message;
-        },
-      });
-    } else {
+    // Step 1: Check if  form valid
+    if (this.regForm.invalid || phoneControl.invalid) {
       this.regForm.markAllAsTouched();
+      phoneControl.markAsTouched();
+      return;
     }
+
+    //: Extract the  phone num
+    const rawPhone: string = phoneControl.value;
+
+    // Extract dial code and mobile number
+    const dialCodeMatch = rawPhone.match(/^\+(\d{1,4})/);
+    const dialCode = dialCodeMatch ? dialCodeMatch[1] : '';
+    const mobile = rawPhone
+      .replace(/^\+\d{1,4}/, '')
+      .trim()
+      .replace(/\s+/g, '');
+
+    // if valid
+    if (!dialCode || !mobile) {
+      phoneControl.setErrors({ invalid: true });
+      return;
+    }
+
+    //  DTO
+    const formData = this.regForm.value;
+    this.RegisterDto.name = formData.name;
+    this.RegisterDto.email = formData.email;
+    this.RegisterDto.phone = mobile;
+    this.RegisterDto.password = formData.password;
+    this.RegisterDto.password_confirmation = formData.password;
+
+    this.RegisterDto.token = '123';
+    this.RegisterDto.serial_number = '123';
+    this.RegisterDto.os = 'ios';
+
+    // send data
+    this._AuthService.register(this.RegisterDto).subscribe({
+      next: (res: AuthResponse) => {
+        if (res.status === 1) {
+          this._AuthService.saveToken(res.data.token);
+          this._AuthService.saveUserData(res.data.user);
+          this._Router.navigate(['/auth/home']);
+        } else {
+          const errorData = res.data as ErrorAuthData;
+          this.msgError = res.message;
+          if (errorData.email?.length) {
+            this.regForm
+              .get('email')
+              ?.setErrors({ serverError: errorData.email[0] });
+          }
+          scrollToTop();
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.msgError = err.message;
+      },
+    });
   }
 }
