@@ -231,11 +231,13 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public navigateTo(route: string) {
     if (route) {
       this.router.navigate([route]);
+      this.closeMobileMenu();
     }
   }
 
   public switchLanguage(lang: 'en' | 'ar') {
     this._GlobalTranslateService.changeLanguage(lang);
+    this.closeMobileMenu();
   }
 
   public isActiveRoute(route: string): boolean {
@@ -290,14 +292,15 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
-
   openSearchPopup() {
+    this.closeMobileMenu();
     SweetAlertUtils.showSearchDialog().then((result) => {
       if (result.isConfirmed && result.value) {
         this.sarchInCourses(result.value);
       }
     });
   }
+
   ngOnDestroy(): void {
     unsubscribeAll(...this.subscriptions);
   }
