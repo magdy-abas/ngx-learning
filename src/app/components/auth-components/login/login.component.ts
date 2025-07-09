@@ -178,17 +178,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       this._AuthService.login(this.loginDto).subscribe({
         next: (res: AuthResponse) => {
-          console.log(res);
-
           if (res.status === 1) {
             this._AuthService.saveToken(res.data.token);
             this._AuthService.saveUserData(res.data.user);
-            console.log(res);
+
             this._Router.navigate(['/']);
           } else {
             const errorData = res.data as ErrorAuthData;
             this.msgError = res.message;
-            console.log(res);
 
             if (errorData.email?.length) {
               this.loginForm
@@ -253,7 +250,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onResendCode() {
-    console.log('Resend clicked');
     this.onSubmitWats();
   }
 
@@ -287,7 +283,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   public onCodeCompleted(code: string): void {
     this.sendCode.get('code')?.setValue(code);
     this.sendCode.get('code')?.markAsTouched();
-    console.log(this.sendCode.value);
   }
 
   ngOnDestroy(): void {

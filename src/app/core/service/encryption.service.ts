@@ -44,7 +44,7 @@ export class EncryptionService {
         return '';
       }
 
-      console.log('url:', decrypted);
+      // console.log('url:', decrypted);
       return decrypted;
     } catch (error) {
       console.error(' error:', error);

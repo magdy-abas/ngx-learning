@@ -56,7 +56,6 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
     const courseSub = this._CoursesService
       .getMyCourses(this.searchDataValue, status, 10, complete_status)
       .subscribe((res) => {
-        console.log(res);
         this.myCourses = res.data.map((course) => {
           if (
             course.client_status === 'accepted' &&
@@ -72,8 +71,6 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
   }
 
   navigateToCourseDetails(courseId: number): void {
-    console.log(courseId);
-
     this._Router.navigate([`/course-details/${courseId}`]);
   }
 

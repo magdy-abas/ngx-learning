@@ -36,7 +36,7 @@ export const headerInterceptor: HttpInterceptorFn = (
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403) {
         localStorage.setItem('errorData', JSON.stringify(error.error));
-        console.log('🚫 403 Error detected by interceptor');
+
         appAccessService.setAccess(true);
       }
       return throwError(() => error);

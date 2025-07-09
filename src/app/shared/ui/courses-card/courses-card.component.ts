@@ -135,8 +135,6 @@ export class CoursesCardComponent implements OnInit, AfterViewChecked {
     return new Promise((resolve, reject) => {
       this._CoursesService.makeRequest(this.reqData).subscribe({
         next: (res) => {
-          console.log(res);
-
           if (res.status === 1) {
             resolve(true);
           } else {

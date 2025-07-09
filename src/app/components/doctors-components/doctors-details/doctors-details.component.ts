@@ -43,8 +43,6 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     if (stateDoctor) {
       this.doctor = stateDoctor;
       this.getDoctorCourses(this.doctor.id, this.currentPage);
-
-      console.log('Doctor from state:', this.doctor);
     } else {
       const id = this.route.snapshot.paramMap.get('id');
       if (id) {
@@ -59,7 +57,6 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     const doctorSub = this.doctorsService.getDoctors(1, id).subscribe({
       next: (data) => {
         this.doctor = data.data[0];
-        console.log('Loaded doctor:', this.doctor);
 
         localStorage.setItem('currentDoctor', JSON.stringify(this.doctor));
 

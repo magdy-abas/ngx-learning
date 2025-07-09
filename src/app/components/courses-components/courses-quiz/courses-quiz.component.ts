@@ -160,9 +160,6 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     const finalSub = this._CoursesService.answerQuiz(this.question).subscribe({
       next: (data) => {
         if (data.status === 1) {
-          console.log('first' + data);
-          console.log(data);
-
           // Fetch updated quiz data with correct answers
           const quizSub = this._CoursesService.getQuiz(this.quizId).subscribe({
             next: (res) => {
@@ -225,7 +222,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
 
   getResulimoji(): boolean {
     const score = this.getScorePercentage();
-    console.log(score);
+
     if (score >= 80) {
       return true;
     }
@@ -288,9 +285,6 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   answerQuestion(question: QuizDTO): void {
     const answerSub = this._CoursesService.answerQuiz(question).subscribe({
       next: (data) => {
-        console.log('sec' + data);
-        console.log(data);
-
         if (data.status === 1) {
           this.currentQuestion++;
           this.selectedAnswer = null;

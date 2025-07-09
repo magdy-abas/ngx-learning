@@ -22,9 +22,7 @@ export class HomeCoursesComponent {
   @Input() CourseShortTitle: string = '';
   private router = inject(Router);
   private authService = inject(AuthService);
-  ngOnInit(): void {
-    console.log(this.coursesData);
-  }
+
   constructor(public data: HomeData) {}
 
   viewAllCourses() {

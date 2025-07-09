@@ -192,7 +192,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
             return;
           }
           this.courseDetails = data;
-          console.log(data);
 
           this.isLoading = false;
           this.isClientSubscribe();

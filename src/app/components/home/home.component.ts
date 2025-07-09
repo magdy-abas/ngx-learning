@@ -138,7 +138,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     const subscription = this._DynamicHomeService.getHomeData().subscribe({
       next: (res) => {
         this.homeSections = res.data;
-        console.log(this.homeSections);
       },
       error: (err) => {
         console.log(err);

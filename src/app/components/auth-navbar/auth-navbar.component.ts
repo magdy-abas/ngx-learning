@@ -84,7 +84,6 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.Auth = this._AuthService.isAuthenticated();
-    console.log(this.Auth);
 
     this.darkModeService.applyMode();
     this.checkAuthStatus();
@@ -93,7 +92,6 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
       if (settings) {
         this.logoUrl = this.darkModeService.getLogo(settings);
         this.setting = settings;
-        console.log(this.setting);
       }
     });
 
