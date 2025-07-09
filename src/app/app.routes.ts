@@ -6,6 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutSelectorComponent,
+    children: [],
   },
   {
     path: '**',

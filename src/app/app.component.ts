@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SharedService } from './core/service/shared.service';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { initSweetAlertTranslations } from './shared/utils/SweetAlert.utils';
-import { LayoutSelectorComponent } from './layouts/layout-selector/layout-selector.component';
+import { AppAccessService } from './core/service/app-access.service';
+import { setupDynamicRoutes } from './shared/utils/router.utils';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +20,16 @@ export class AppComponent implements OnInit {
   tooltipText = 'تواصل معنا';
   whatsappNumber: string = '';
   showWhatsApp: boolean = true;
+
+  private router = inject(Router);
+  private appAccessService = inject(AppAccessService);
+
   constructor(
     public sharedService: SharedService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService
   ) {}
+
   ngOnInit(): void {
     this.spinner.show();
 
@@ -41,6 +47,8 @@ export class AppComponent implements OnInit {
     });
 
     initSweetAlertTranslations(this.translate);
+
+    setupDynamicRoutes(this.router, this.appAccessService);
   }
 
   openWhatsApp(): void {

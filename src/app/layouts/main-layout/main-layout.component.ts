@@ -15,17 +15,24 @@ import { AuthNavbarComponent } from '../../components/auth-navbar/auth-navbar.co
 export class MainLayoutComponent {
   showNavbar = true;
 
-  constructor(private router: Router) {
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.updateNavbarVisibility(this.router.url);
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
         const currentUrl = (event as NavigationEnd).urlAfterRedirects;
-
-        this.showNavbar = !(
-          currentUrl.startsWith('/login') ||
-          currentUrl.startsWith('/signup') ||
-          currentUrl.startsWith('/forgotpass')
-        );
+        this.updateNavbarVisibility(currentUrl);
       });
+  }
+
+  private updateNavbarVisibility(url: string): void {
+    this.showNavbar = !(
+      url.startsWith('/login') ||
+      url.startsWith('/signup') ||
+      url.startsWith('/forgotpass')
+    );
   }
 }
