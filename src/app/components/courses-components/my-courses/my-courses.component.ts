@@ -2,6 +2,7 @@ import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   NgModule,
+  OnDestroy,
   OnInit,
   ViewEncapsulation,
   inject,
@@ -9,11 +10,13 @@ import {
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
 import { FormsModule, NgModel } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { routes } from './../../../core/service/routes/routes';
+
 import { MatSelectModule } from '@angular/material/select';
 import { CoursesService } from '../../../core/service/courses.service';
 import { MyCourse } from '../../../core/interfaces/my-courses.interface';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 
 @Component({
   selector: 'app-my-courses',
@@ -31,11 +34,12 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './my-courses.component.html',
   styleUrl: './my-courses.component.scss',
 })
-export class MyCoursesComponent implements OnInit {
+export class MyCoursesComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   private _CoursesService = inject(CoursesService);
   private _Router = inject(Router);
   myCourses: MyCourse[] = [];
-  routes = routes;
+
   searchDataValue: string = '';
   selectedValue: string = 'all courses';
   searchDataValue1: string = '';
@@ -49,7 +53,7 @@ export class MyCoursesComponent implements OnInit {
     const complete_status =
       selectedValue === 'completed' ? 'completed' : undefined;
 
-    this._CoursesService
+    const courseSub = this._CoursesService
       .getMyCourses(this.searchDataValue, status, 10, complete_status)
       .subscribe((res) => {
         console.log(res);
@@ -63,11 +67,17 @@ export class MyCoursesComponent implements OnInit {
           return course;
         });
       });
+
+    this.subscriptions.push(courseSub);
   }
 
   navigateToCourseDetails(courseId: number): void {
     console.log(courseId);
 
-    this._Router.navigate([`auth/course-details/${courseId}`]);
+    this._Router.navigate([`/course-details/${courseId}`]);
+  }
+
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

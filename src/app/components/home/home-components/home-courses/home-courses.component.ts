@@ -28,10 +28,6 @@ export class HomeCoursesComponent {
   constructor(public data: HomeData) {}
 
   viewAllCourses() {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/auth/courses']);
-    } else {
-      this.router.navigate(['/courses']);
-    }
+    this.router.navigate(['/courses']);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DoctorsService } from '../../../core/service/doctors.service';
@@ -7,6 +7,8 @@ import { NgIf } from '@angular/common';
 import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
 import { CoursesService } from '../../../core/service/courses.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 
 @Component({
   selector: 'app-doctors-details',
@@ -15,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './doctors-details.component.html',
   styleUrl: './doctors-details.component.scss',
 })
-export class DoctorsDetailsComponent implements OnInit {
+export class DoctorsDetailsComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   doctor!: Doctor;
   courses: any[] = [];
   currentPage: number = 1;
@@ -53,7 +56,7 @@ export class DoctorsDetailsComponent implements OnInit {
   }
 
   loadDoctor(id: number) {
-    this.doctorsService.getDoctors(1, id).subscribe({
+    const doctorSub = this.doctorsService.getDoctors(1, id).subscribe({
       next: (data) => {
         this.doctor = data.data[0];
         console.log('Loaded doctor:', this.doctor);
@@ -70,13 +73,14 @@ export class DoctorsDetailsComponent implements OnInit {
         console.error('Failed to load doctor data', err);
       },
     });
+    this.subscriptions.push(doctorSub);
   }
   getDoctorCourses(doctorId: number, page: number): void {
     if (this.isLoading || this.allDataLoaded) return;
 
     this.isLoading = true;
 
-    this.CoursesService.getCourses(
+    const coursesSub = this.CoursesService.getCourses(
       '',
       10,
       page,
@@ -109,6 +113,7 @@ export class DoctorsDetailsComponent implements OnInit {
         this.isLoading = false;
       },
     });
+    this.subscriptions.push(coursesSub);
   }
   @HostListener('window:scroll', [])
   onScroll(): void {
@@ -128,5 +133,9 @@ export class DoctorsDetailsComponent implements OnInit {
   changePage(page: number) {
     this.currentPage = page;
     this.getDoctorCourses(this.doctor.id, this.currentPage);
+  }
+
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

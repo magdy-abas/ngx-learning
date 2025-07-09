@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DoctorsService } from './../../../core/service/doctors.service';
 import {
   Doctor,
@@ -7,6 +7,8 @@ import {
 
 import Aos from 'aos';
 import { HomeInstructorsComponent } from '../../home/home-components/home-instructors/home-instructors.component';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 
 @Component({
   selector: 'app-doctors',
@@ -16,7 +18,8 @@ import { HomeInstructorsComponent } from '../../home/home-components/home-instru
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.scss',
 })
-export class DoctorsComponent implements OnInit {
+export class DoctorsComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   doctors: Doctor[] = [];
   currentPage: number = 1;
   lastPage: number = 1;
@@ -38,7 +41,7 @@ export class DoctorsComponent implements OnInit {
 
     this.isLoading = true;
 
-    this._doctorsService.getDoctors(page).subscribe({
+    const doctorSub = this._doctorsService.getDoctors(page).subscribe({
       next: (res: DoctorsResponse) => {
         this.doctors = [...this.doctors, ...res.data];
         this.lastPage = res.meta.last_page;
@@ -50,5 +53,9 @@ export class DoctorsComponent implements OnInit {
         this.isLoading = false;
       },
     });
+    this.subscriptions.push(doctorSub);
+  }
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

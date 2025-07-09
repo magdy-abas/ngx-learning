@@ -9,7 +9,7 @@ import {
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { Router, RouterLink } from '@angular/router';
 import Aos from 'aos';
-import { routes } from '../../../core/service/routes/routes';
+
 import { CodeInputModule } from 'angular-code-input';
 import { AuthService } from '../../../core/service/auth.service';
 import {
@@ -37,7 +37,6 @@ import { DarkModeService } from '../../../core/service/dark-mode.service';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-  public routes = routes;
   public forgotPassword: WelcomeSlideView[] = [];
   public logoUrl: string = '';
   public appName: string = '';

@@ -39,6 +39,8 @@ interface MenuItem {
   styleUrls: ['./auth-navbar.component.scss'],
 })
 export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
+  private settingsSub?: Subscription;
+
   @ViewChild('navbar', { static: true }) navbar!: ElementRef;
   @ViewChild('sideMenu', { static: true }) sideMenu!: ElementRef;
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
@@ -50,6 +52,7 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public logoUrl: string = '';
   loginWithWats: boolean = false;
   setting!: SettingResponse;
+  Auth!: boolean;
   public isMenuOpened = false;
   public isTransparent = true;
   public isScrolled = false;
@@ -80,6 +83,9 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    this.Auth = this._AuthService.isAuthenticated();
+    console.log(this.Auth);
+
     this.darkModeService.applyMode();
     this.checkAuthStatus();
     this.isDarkMode = this.darkModeService.isDarkMode();
@@ -113,11 +119,11 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.setupEventListeners();
   }
-
   ngOnDestroy() {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
+    this.settingsSub?.unsubscribe();
   }
 
   private isDesktop(): boolean {
@@ -259,15 +265,9 @@ export class AuthNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isAuthenticated = this._AuthService.isAuthenticated();
   }
   sarchInCourses(searchInput: string) {
-    if (this.isAuthenticated) {
-      this.router.navigate(['/auth/courses'], {
-        queryParams: { search: searchInput },
-      });
-    } else {
-      this.router.navigate(['/courses'], {
-        queryParams: { search: searchInput },
-      });
-    }
+    this.router.navigate(['/courses'], {
+      queryParams: { search: searchInput },
+    });
   }
 
   openSearchPopup() {

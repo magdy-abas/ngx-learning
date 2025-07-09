@@ -1,4 +1,11 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { AuthService } from '../../../core/service/auth.service';
 import { CoursesService } from '../../../core/service/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +19,8 @@ import {
 } from '../../../core/interfaces/courses.interface';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
@@ -20,7 +29,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './courses-quiz.component.html',
   styleUrl: './courses-quiz.component.scss',
 })
-export class CoursesQuizComponent implements AfterViewInit {
+export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+
   // ViewChild reference for options list
   @ViewChild('optionsList') optionsList!: ElementRef;
 
@@ -146,14 +157,14 @@ export class CoursesQuizComponent implements AfterViewInit {
    * Submit final question and show results
    */
   submitLastQuestion(): void {
-    this._CoursesService.answerQuiz(this.question).subscribe({
+    const finalSub = this._CoursesService.answerQuiz(this.question).subscribe({
       next: (data) => {
         if (data.status === 1) {
           console.log('first' + data);
           console.log(data);
 
           // Fetch updated quiz data with correct answers
-          this._CoursesService.getQuiz(this.quizId).subscribe({
+          const quizSub = this._CoursesService.getQuiz(this.quizId).subscribe({
             next: (res) => {
               if (res.status === 1) {
                 this.quizData = res.data;
@@ -163,10 +174,12 @@ export class CoursesQuizComponent implements AfterViewInit {
             },
             error: (err) => console.error(err),
           });
+          this.subscriptions.push(quizSub);
         }
       },
       error: (err) => console.error(err),
     });
+    this.subscriptions.push(finalSub);
   }
 
   /**
@@ -227,7 +240,7 @@ export class CoursesQuizComponent implements AfterViewInit {
    * Close result view and reset quiz state
    */
   closeResult(): void {
-    this._Router.navigate([`auth/course-details/${this.courseId}`]).then(() => {
+    this._Router.navigate([`/course-details/${this.courseId}`]).then(() => {
       this.resetQuiz();
     });
   }
@@ -249,7 +262,7 @@ export class CoursesQuizComponent implements AfterViewInit {
    */
   getQuiz(quizId: number): void {
     this.spinner.show();
-    this._CoursesService.getQuiz(quizId).subscribe({
+    const getQuizSub = this._CoursesService.getQuiz(quizId).subscribe({
       next: (data) => {
         if (data.status === 1) {
           this.quizData = data.data;
@@ -266,13 +279,14 @@ export class CoursesQuizComponent implements AfterViewInit {
         this.spinner.hide();
       },
     });
+    this.subscriptions.push(getQuizSub);
   }
 
   /**
    * Submit answer to server
    */
   answerQuestion(question: QuizDTO): void {
-    this._CoursesService.answerQuiz(question).subscribe({
+    const answerSub = this._CoursesService.answerQuiz(question).subscribe({
       next: (data) => {
         console.log('sec' + data);
         console.log(data);
@@ -284,5 +298,9 @@ export class CoursesQuizComponent implements AfterViewInit {
       },
       error: (err) => console.error(err),
     });
+    this.subscriptions.push(answerSub);
+  }
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

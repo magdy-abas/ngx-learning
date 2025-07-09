@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { routes } from '../../../../core/service/routes/routes';
 import { DataService } from '../../../../core/service/data/data.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import Aos from 'aos';
@@ -23,7 +22,7 @@ export class HomeSliderComponent {
   ngOnInit(): void {
     console.log(this.sliderData);
   }
-  public routes = routes;
+
   @Input() sliderData: Slider[] = [];
   @Input() sliderTitle: string = '';
   @Input() sliderShortTitle: string = '';

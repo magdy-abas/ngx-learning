@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import {
@@ -14,7 +20,7 @@ import {
   Lang,
   WelcomeSlideView,
 } from '../../../core/service/data/data.service';
-import { routes } from '../../../core/service/routes/routes';
+
 import { Router, RouterLink } from '@angular/router';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
 // import {
@@ -37,6 +43,7 @@ import {
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { SharedService } from '../../../core/service/shared.service';
+import { Subscription } from 'rxjs';
 type passwordResponce = {
   passwordResponceText?: string;
   passwordResponceImage?: string;
@@ -62,8 +69,9 @@ export
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-class RegisterComponent {
-  public routes = routes;
+class RegisterComponent implements OnInit, OnDestroy {
+  private settingsSub?: Subscription;
+
   RegisterDto: RegisterDto = new RegisterDto();
   public passwordResponce: passwordResponce = {};
   msgError: string = '';
@@ -106,7 +114,7 @@ class RegisterComponent {
   ngOnInit(): void {
     this.darkModeService.applyMode();
 
-    this.sharedService.settings$.subscribe((settings) => {
+    this.settingsSub = this.sharedService.settings$.subscribe((settings) => {
       if (settings?.data) {
         this.logoUrl = this.darkModeService.getLogo(settings);
         const lang = (localStorage.getItem('lang') || 'en') as Lang;
@@ -274,7 +282,7 @@ class RegisterComponent {
         if (res.status === 1) {
           this._AuthService.saveToken(res.data.token);
           this._AuthService.saveUserData(res.data.user);
-          this._Router.navigate(['/auth/home']);
+          this._Router.navigate(['/']);
         } else {
           const errorData = res.data as ErrorAuthData;
           this.msgError = res.message;
@@ -290,5 +298,9 @@ class RegisterComponent {
         this.msgError = err.message;
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.settingsSub?.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { Router, RouterLink } from '@angular/router';
@@ -9,7 +9,7 @@ import {
 } from './../../../core/service/data/data.service';
 import { CommonModule } from '@angular/common';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
-import { routes } from '../../../core/service/routes/routes';
+
 import {
   FormBuilder,
   FormControl,
@@ -35,7 +35,7 @@ import { CodeInputModule } from 'angular-code-input';
 import { OtpCodeInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { SharedService } from '../../../core/service/shared.service';
-import { filter, take } from 'rxjs';
+import { filter, Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -55,14 +55,16 @@ import { filter, take } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  private settingsSub?: Subscription;
+
   watsStep: number = 1;
   loginWithWats: boolean = false;
   loading: boolean = false;
   SendOtpDto: SendOtpDto = new SendOtpDto();
   loginDto: LoginDto = new LoginDto();
   watsLoginDto: WatsLoginDto = new WatsLoginDto();
-  public routes = routes;
+
   password = 'password';
   show = true;
   msgError: string = '';
@@ -105,10 +107,10 @@ export class LoginComponent implements OnInit {
       if (initialized) {
         const method = this.sharedService.getLoginMethod();
 
-        this.loginWithWats = method === 'mobile_whatsapp';
+        this.loginWithWats = method === '';
       }
     });
-    this.sharedService.settings$.subscribe((settings) => {
+    this.settingsSub = this.sharedService.settings$.subscribe((settings) => {
       if (settings?.data) {
         this.logoUrl = this.darkModeService.getLogo(settings);
 
@@ -182,7 +184,7 @@ export class LoginComponent implements OnInit {
             this._AuthService.saveToken(res.data.token);
             this._AuthService.saveUserData(res.data.user);
             console.log(res);
-            this._Router.navigate(['/auth']);
+            this._Router.navigate(['/']);
           } else {
             const errorData = res.data as ErrorAuthData;
             this.msgError = res.message;
@@ -272,7 +274,7 @@ export class LoginComponent implements OnInit {
         if (res.status === 1) {
           this._AuthService.saveToken(res.data.token);
           this._AuthService.saveUserData(res.data.user);
-          this._Router.navigate(['/auth']);
+          this._Router.navigate(['/']);
         } else {
           if (res.message === 'Invalid OTP') {
             this.sendCode.get('code')?.setErrors({ invalidOtp: true });
@@ -286,5 +288,9 @@ export class LoginComponent implements OnInit {
     this.sendCode.get('code')?.setValue(code);
     this.sendCode.get('code')?.markAsTouched();
     console.log(this.sendCode.value);
+  }
+
+  ngOnDestroy(): void {
+    this.settingsSub?.unsubscribe();
   }
 }

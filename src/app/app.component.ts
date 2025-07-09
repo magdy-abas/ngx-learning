@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { SeoService } from './core/service/seo.service';
 import { SharedService } from './core/service/shared.service';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { initSweetAlertTranslations } from './shared/utils/SweetAlert.utils';
+import { LayoutSelectorComponent } from './layouts/layout-selector/layout-selector.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   whatsappNumber: string = '';
   showWhatsApp: boolean = true;
   constructor(
-    private seoService: SeoService,
     public sharedService: SharedService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService
@@ -42,13 +41,6 @@ export class AppComponent implements OnInit {
     });
 
     initSweetAlertTranslations(this.translate);
-
-    this.seoService.updateMeta(
-      'ELearning - Enhance Your Skills Online',
-      'Explore our eLearning platform to enhance your skills with a wide variety of courses designed for learners at every level.',
-      'eLearning, online learning, online courses, skill enhancement, education',
-      'https:.com/og-image.jpg'
-    );
   }
 
   openWhatsApp(): void {

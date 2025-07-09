@@ -32,7 +32,7 @@
           <div class="img-logo">
             <img [src]="logoUrl" class="img-fluid logo" alt="Logo">
             <div class="back-home">
-              <a [routerLink]="routes.home">{{ 'auth.backToHome' | translate }}</a>
+              <a routerLink="/">{{ 'auth.backToHome' | translate }}</a>
             </div>
           </div>
           <h1>{{ 'auth.signUp' | translate }}</h1>
@@ -117,9 +117,9 @@
               <label class="form-check-label mb-0">
                 <input class="form-check-input input-box-auth" type="checkbox" name="remember" />
                 {{ 'auth.termsOfService' | translate }}
-                <a [routerLink]="routes.page_term_condition">{{ 'auth.termsOfService' | translate }}</a> {{ 'auth.and' |
+                <a routerLink="/">{{ 'auth.termsOfService' | translate }}</a> {{ 'auth.and' |
                 translate }}
-                <a [routerLink]="routes.page_privacy_policy">{{ 'auth.privacyPolicy' | translate }}</a>.
+                <a routerLink="/">{{ 'auth.privacyPolicy' | translate }}</a>.
               </label>
             </div>
 

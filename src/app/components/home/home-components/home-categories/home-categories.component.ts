@@ -20,20 +20,12 @@ export class HomeCategoriesComponent {
   constructor(private router: Router, private authService: AuthService) {}
 
   onCategoryClick(category: Category): void {
-    const pathPrefix = this.authService.isAuthenticated() ? '/auth' : '';
-
     if (category.has_sub_categories === 1) {
-      this.router.navigate([`${pathPrefix}/categories/${category.id}`]);
-    } else {
-      this.router.navigate([`${pathPrefix}/courses/category/${category.id}`]);
+      this.router.navigate([`/courses/category/${category.id}`]);
     }
   }
 
   viewAllCategories(): void {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/auth/categories']);
-    } else {
-      this.router.navigate(['/categories']);
-    }
+    this.router.navigate(['/categories']);
   }
 }

@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  HostListener,
+  OnDestroy,
+} from '@angular/core';
 import { CategoriesService } from '../../core/service/categories.service';
 import {
   Category,
@@ -8,6 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../core/service/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 
 @Component({
   selector: 'app-categories',
@@ -16,7 +24,9 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit, OnDestroy {
+  private routeSub?: Subscription;
+  private subscriptions: Subscription[] = [];
   categories: Category[] = [];
   subCategories: Category[] = [];
   currentPage: number = 1;
@@ -31,7 +41,7 @@ export class CategoriesComponent implements OnInit {
   private authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSub = this.route.paramMap.subscribe((params) => {
       this.categoryId = params.get('categoryId')
         ? parseInt(params.get('categoryId')!, 10)
         : null;
@@ -76,11 +86,7 @@ export class CategoriesComponent implements OnInit {
       this.isSubCategoryView = true;
       this.getCategories(1, category.id);
     } else {
-      if (this.authService.isAuthenticated()) {
-        this.router.navigate([`/auth/courses/category/${category.id}`]);
-      } else {
-        this.router.navigate([`/courses/category/${category.id}`]);
-      }
+      this.router.navigate([`/courses/category/${category.id}`]);
     }
   }
 
@@ -89,11 +95,7 @@ export class CategoriesComponent implements OnInit {
       this.subCategories = subCategory.sub_categories || [];
       this.isSubCategoryView = true;
     } else {
-      if (this.authService.isAuthenticated()) {
-        this.router.navigate([`/auth/courses/category/${subCategory.id}`]);
-      } else {
-        this.router.navigate([`/courses/category/${subCategory.id}`]);
-      }
+      this.router.navigate([`/courses/category/${subCategory.id}`]);
     }
   }
 
@@ -112,5 +114,8 @@ export class CategoriesComponent implements OnInit {
     this.subCategories = [];
     this.currentPage = 1;
     this.getCategories(0);
+  }
+  ngOnDestroy(): void {
+    unsubscribeAll(this.routeSub!);
   }
 }

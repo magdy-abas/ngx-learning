@@ -13,7 +13,7 @@ import {
   NavigationEnd,
   RouterModule,
 } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -25,6 +25,7 @@ import { DarkModeService } from '../../core/service/dark-mode.service';
 import { GlobalTranslateService } from '../../core/service/global-translate.service';
 import { SettingResponse } from '../../core/interfaces/settings.interface';
 import { SweetAlertUtils } from '../../shared/utils/SweetAlert.utils';
+import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
 
 interface MenuItem {
   title: string;
@@ -48,6 +49,8 @@ interface MenuItem {
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
+  private subscriptions: Subscription[] = [];
+
   @ViewChild('navbar', { static: true }) navbar!: ElementRef;
   @ViewChild('sideMenu', { static: true }) sideMenu!: ElementRef;
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
@@ -64,20 +67,21 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   public logoUrl: string = '';
   public isDarkMode = false;
   public isUserDropdownOpen = false;
-
+  isAuth!: boolean;
+  loginWithWats: boolean = false;
   private routerSubscription!: Subscription;
 
   public menuItems: MenuItem[] = [
-    { title: 'Home', translationKey: 'navbar.home', route: '/auth/home' },
+    { title: 'Home', translationKey: 'navbar.home', route: '/home' },
     {
       title: 'courses',
       translationKey: 'navbar.courses',
-      route: '/auth/courses',
+      route: '/courses',
     },
     {
       title: 'categories',
       translationKey: 'navbar.categories',
-      route: '/auth/categories',
+      route: '/categories',
     },
   ];
 
@@ -98,6 +102,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    this.isAuth = this.AuthService.isAuthenticated();
     this.darkModeService.applyMode();
     this.isDarkMode = this.darkModeService.isDarkMode();
     this.sharedService.settings$.subscribe((settings) => {
@@ -107,17 +112,24 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.loadUserData();
+    this.sharedService.initialized$.pipe(take(1)).subscribe((initialized) => {
+      if (initialized) {
+        const method = this.sharedService.getLoginMethod();
+        this.loginWithWats = method === 'mobile_whatsapp';
+      }
+    });
 
     this.checkCurrentRoute();
     this.handleNavbarState();
 
-    this.routerSubscription = this.router.events
+    const routerSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.closeMobileMenu();
         this.checkCurrentRoute();
         this.handleNavbarState();
       });
+    this.subscriptions.push(routerSub);
   }
   ngAfterViewInit() {
     this.setupEventListeners();
@@ -128,12 +140,6 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     if (userDataString) {
       const userData = JSON.parse(userDataString);
       this.userName = userData.name ? userData.name : `user${userData.id}`;
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
     }
   }
 
@@ -279,7 +285,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   sarchInCourses(searchInput: string) {
     if (searchInput) {
-      this.router.navigate(['/auth/courses'], {
+      this.router.navigate(['/courses'], {
         queryParams: { search: searchInput },
       });
     }
@@ -291,5 +297,8 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sarchInCourses(result.value);
       }
     });
+  }
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
 import { DataService } from '../../../core/service/data/data.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { routes } from '../../../core/service/routes/routes';
+
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
@@ -56,7 +56,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     const querySub = this.route.queryParams.subscribe((queryParams) => {
       this.searchValue = queryParams['search'] || '';
 
-      this.route.paramMap.subscribe((params) => {
+      const paramSub = this.route.paramMap.subscribe((params) => {
         this.categoryId = params.get('categoryId');
         this.doctorId = params.get('doctorId');
 
@@ -65,6 +65,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.allDataLoaded = false;
 
         this.getCourses();
+        this.subscriptions.push(paramSub);
       });
     });
 

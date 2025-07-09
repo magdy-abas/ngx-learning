@@ -10,12 +10,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AppAccessService } from '../service/app-access.service';
 
 export const headerInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
   const translateService = inject(TranslateService);
+  const appAccessService = inject(AppAccessService);
   const router = inject(Router);
 
   const lang =
@@ -34,8 +36,8 @@ export const headerInterceptor: HttpInterceptorFn = (
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403) {
         localStorage.setItem('errorData', JSON.stringify(error.error));
-
-        router.navigate(['/app']);
+        console.log('🚫 403 Error detected by interceptor');
+        appAccessService.setAccess(true);
       }
       return throwError(() => error);
     })

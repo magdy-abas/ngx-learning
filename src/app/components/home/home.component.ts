@@ -153,15 +153,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   directPath(searchInput: string) {
-    if (this.isAuthenticated) {
-      this.router.navigate(['/auth/courses'], {
-        queryParams: { search: searchInput },
-      });
-    } else {
-      this.router.navigate(['/courses'], {
-        queryParams: { search: searchInput },
-      });
-    }
+    this.router.navigate(['/courses'], {
+      queryParams: { search: searchInput },
+    });
   }
 
   ngOnDestroy(): void {

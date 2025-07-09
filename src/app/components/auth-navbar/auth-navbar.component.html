@@ -251,14 +251,13 @@
           </ul>
         </li>
         <li>
-          <a (click)="openSearchPopup()" class="csr-pointer">
+          <a href="#" (click)="openSearchPopup(); $event.preventDefault()" class="csr-pointer">
             {{ 'navbar.search' | translate }}
           </a>
+
         </li>
         <!-- Mobile Auth Links -->
-        <li><a routerLink="/login" (click)="navigateTo('/login')">{{ 'navbar.login' | translate }}</a></li>
-        <li *ngIf="!loginWithWats"><a routerLink="/signup" (click)="navigateTo('/signup')">{{ 'navbar.signUp' |
-            translate }}</a></li>
+
       </ul>
 
     </div>

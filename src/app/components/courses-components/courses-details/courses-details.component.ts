@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeatherIconModule } from './../../../shared/utils/feather-icons.utils';
 
-import { routes } from './../../../core/service/routes/routes';
 import { AuthService } from './../../../core/service/auth.service';
 import { CoursesService } from './../../../core/service/courses.service';
 import * as CryptoJS from 'crypto-js';
@@ -38,7 +37,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   pdfUrl = '';
   showPdfViewer = false;
   currentResourceTitle = '';
-  public routes = routes;
+
   courseDetails?: CourseDetailsResponse;
   public isLoading: boolean = true;
   public errorMessage: string = '';
@@ -98,10 +97,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  ngOnDestroy(): void {
-    unsubscribeAll(...this.subscriptions);
-  }
-
   isClientSubscribe() {
     if (this.courseDetails?.course.client_status === 'accepted') {
       this.CourseSubscribe = true;
@@ -115,6 +110,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   ): void {
     const lessonType = type.toLowerCase();
 
+    this.videoUrl = '';
+    this.videoLoaded = false;
     if (!isFree && !this._AuthService.isAuthenticated()) {
       this.confirmBox();
       return;
@@ -126,11 +123,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
     switch (lessonType) {
       case 'quiz':
-        if (this._AuthService.isAuthenticated()) {
-          this._Router.navigate([`/auth/course-quiz/${this.courseId}/${id}`]);
-        } else {
-          this._Router.navigate([`/course-quiz/${this.courseId}/${id}`]);
-        }
+        this._Router.navigate([`/course-quiz/${this.courseId}/${id}`]);
+
         break;
 
       case 'video':
@@ -222,25 +216,21 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
 
   redirectToCourses(): void {
-    if (this._AuthService.isAuthenticated()) {
-      this._Router.navigate(['/auth/courses']);
-    } else {
-      this._Router.navigate(['/courses']);
-    }
+    this._Router.navigate(['/courses']);
   }
 
   getResources(courseId: any) {
-    this._CoursesService.getResources(courseId).subscribe({
+    const resourcesSub = this._CoursesService.getResources(courseId).subscribe({
       next: (data: any) => {
         if (data.data) {
           this.resources = data.data;
-          console.log('Resources loaded:', this.resources);
         }
       },
       error: (err) => {
         console.log(err);
       },
     });
+    this.subscriptions.push(resourcesSub);
   }
 
   async buyCourse(
@@ -338,8 +328,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       this._CoursesService.makeRequest(this.reqData).subscribe({
         next: (res) => {
-          console.log(res);
-
           if (res.status === 1) {
             resolve(true);
           } else {
@@ -361,7 +349,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     chapterId: number,
     isFree: boolean
   ): void {
-    this._CoursesService.getVideo(lessonId).subscribe({
+    const videoSub = this._CoursesService.getVideo(lessonId).subscribe({
       next: (response) => {
         if (response.status === 1 && response.data?.file_data) {
           const decryptedUrl = isFree
@@ -379,6 +367,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       },
       error: (err) => console.error('Error fetching video:', err),
     });
+    this.subscriptions.push(videoSub);
   }
 
   private handleMeeting(
@@ -386,35 +375,36 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     chapterId: number,
     isFree: boolean
   ): void {
-    const leaveUrl = `${window.location.origin}/auth/course-details/${this.courseId}`;
+    const leaveUrl = `${window.location.origin}/course-details/${this.courseId}`;
 
-    this._CoursesService.joinMeeting(lessonId, leaveUrl).subscribe({
-      next: (data) => {
-        // console.log(data);
+    const meetingSub = this._CoursesService
+      .joinMeeting(lessonId, leaveUrl)
+      .subscribe({
+        next: (data) => {
+          // console.log(data);
 
-        if (data.status === 1 && data.data?.join_url) {
-          // console.log('Join URL:', data.data.join_url);
-          // console.log('User Info:', this.userInfo);
-          // console.log('Chapter ID:', chapterId);
-          // console.log('Lesson ID:', lessonId);
+          if (data.status === 1 && data.data?.join_url) {
+            // console.log('Join URL:', data.data.join_url);
+            // console.log('User Info:', this.userInfo);
+            // console.log('Chapter ID:', chapterId);
+            // console.log('Lesson ID:', lessonId);
 
-          const decryptedJoinUrl = isFree
-            ? data.data.join_url
-            : this.encryptionService.decryptData(
-                data.data.join_url,
-                this.userInfo?.id,
-                chapterId,
-                lessonId,
-                this.userInfo?.name
-              );
+            const decryptedJoinUrl = isFree
+              ? data.data.join_url
+              : this.encryptionService.decryptData(
+                  data.data.join_url,
+                  this.userInfo?.id,
+                  chapterId,
+                  lessonId,
+                  this.userInfo?.name
+                );
 
-          console.log('Decrypted Join URL:', decryptedJoinUrl);
-
-          window.open(decryptedJoinUrl, '_blank');
-        }
-      },
-      error: (err) => console.error('Error joining meeting:', err),
-    });
+            window.open(decryptedJoinUrl, '_blank');
+          }
+        },
+        error: (err) => console.error('Error joining meeting:', err),
+      });
+    this.subscriptions.push(meetingSub);
   }
 
   //resourses
@@ -453,5 +443,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
   onPlayerError(error: any) {
     console.error('Player error:', error);
+  }
+
+  ngOnDestroy(): void {
+    unsubscribeAll(...this.subscriptions);
   }
 }

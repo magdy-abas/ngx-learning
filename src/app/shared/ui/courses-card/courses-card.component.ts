@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -33,7 +34,7 @@ import { RequestJoinDto } from './../../../core/Dtos/coursesDtos';
   templateUrl: './courses-card.component.html',
   styleUrl: './courses-card.component.scss',
 })
-export class CoursesCardComponent implements OnInit {
+export class CoursesCardComponent implements OnInit, AfterViewChecked {
   constructor(
     private _AuthService: AuthService,
     private _Router: Router,
@@ -57,9 +58,6 @@ export class CoursesCardComponent implements OnInit {
   }
 
   getRouterLink(courseId: number): string[] {
-    if (this._AuthService.isAuthenticated()) {
-      return ['/auth/course-details', courseId.toString()];
-    }
     return ['/course-details', courseId.toString()];
   }
 

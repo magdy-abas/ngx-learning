@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-application-page',
   standalone: true,
-  imports: [NgIf, NgStyle, NgClass],
+  imports: [NgIf, NgClass],
   templateUrl: './application-page.component.html',
   styleUrl: './application-page.component.scss',
 })

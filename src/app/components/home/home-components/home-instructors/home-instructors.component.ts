@@ -26,17 +26,11 @@ export class HomeInstructorsComponent {
   constructor(public data: HomeData) {}
 
   viewAllDoctors() {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/auth/instructors']);
-    } else {
-      this.router.navigate(['/instructors']);
-    }
+    this.router.navigate(['/instructors']);
   }
 
   goToDoctorProfile(doctor: Doctor) {
-    const route = this.authService.isAuthenticated()
-      ? `/auth/instructors-profile/${doctor.id}`
-      : `/instructor-profile/${doctor.id}`;
+    const route = `/instructor-profile/${doctor.id}`;
 
     this.router.navigate([route], {
       state: { doctor },

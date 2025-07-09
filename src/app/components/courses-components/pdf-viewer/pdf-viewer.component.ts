@@ -5,6 +5,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -47,13 +48,13 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [``],
 })
-export class PdfViewerComponent implements OnChanges {
+export class PdfViewerComponent implements OnChanges, OnDestroy {
   @Input() pdfUrl: string = '';
   @Input() showPdfViewer: boolean = false;
   @Input() resourceTitle: string = '';
 
   @Output() closePdfEvent = new EventEmitter<void>();
-
+  private resizeHandler = () => this.setInitialZoom();
   pdfSrc: string | null = null;
   totalPages: number = 0;
   errorMessage: string = '';
@@ -117,6 +118,6 @@ export class PdfViewerComponent implements OnChanges {
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', () => this.setInitialZoom());
+    window.removeEventListener('resize', this.resizeHandler);
   }
 }
