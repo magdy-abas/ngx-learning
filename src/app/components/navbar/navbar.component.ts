@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   private routerSubscription!: Subscription;
 
   public menuItems: MenuItem[] = [
-    { title: 'Home', translationKey: 'navbar.home', route: '/home' },
+    { title: 'Home', translationKey: 'navbar.home', route: '/' },
     {
       title: 'courses',
       translationKey: 'navbar.courses',
