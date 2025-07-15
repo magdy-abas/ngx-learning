@@ -12,10 +12,15 @@ a {
   padding-left: 0;
   padding-right: 20px;
 }
-.navbar .main-menu-wrapper {
+.main-menu-wrapper {
   margin-right: 100px;
 }
-
+.menu-item .menu-link {
+  margin-right: 30px;
+}
+.menu .fa-magnifying-glass {
+  margin-right: 30px;
+}
 .users.dropdown-menu.dropdown-menu-right.show {
   transform: translateX(130px);
 }
@@ -195,4 +200,7 @@ input[type="tel"] {
   .theme-dropdown {
     left: 0 !important;
   }
+}
+input[type="tel"].has-value {
+  text-align: center !important;
 }

@@ -65,8 +65,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.allDataLoaded = false;
 
         this.getCourses();
-        this.subscriptions.push(paramSub);
       });
+
+      this.subscriptions.push(paramSub);
     });
 
     this.subscriptions.push(querySub);

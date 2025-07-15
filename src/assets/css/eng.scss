@@ -26,7 +26,12 @@ body {
 .settings-widget .cdk-overlay-pane {
   transform: translateX(-10px) !important;
 }
-
+.menu-item .menu-link {
+  margin-left: 30px;
+}
+.menu .fa-magnifying-glass {
+  margin-left: 30px;
+}
 // nav
 // .menu {
 //   margin-left: 100px;

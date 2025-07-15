@@ -8,7 +8,7 @@ import * as CryptoJS from 'crypto-js';
 import { RequestJoinDto } from '../../../core/Dtos/coursesDtos';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
@@ -28,6 +28,7 @@ import { HlsPlayerComponent } from '../../hls-player/hls-player.component';
     PdfViewerComponent,
     TranslateModule,
     HlsPlayerComponent,
+    DatePipe,
   ],
 
   templateUrl: './courses-details.component.html',
@@ -423,7 +424,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
           resourceId,
           this.userInfo?.name || 'Guest'
         );
-
+    console.log(decryptedUrl);
     if (decryptedUrl) {
       this.pdfUrl = decryptedUrl;
       this.currentResourceTitle = resourceTitle;

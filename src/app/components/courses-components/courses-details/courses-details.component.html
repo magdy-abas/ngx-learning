@@ -114,7 +114,25 @@
               <ul *ngIf="chapter.lessons?.length; else noLessons">
                 <li *ngFor="let lesson of chapter.lessons"
                   (click)="redirectToLesson(lesson.id, lesson.type, chapter.id , lesson.is_free)">
-                  <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">{{lesson.title}}</p>
+
+                  <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">
+
+                    <!-- <i *ngIf="lesson.quiz_info.is_answered == 1" class="fa-solid fa-check-circle quiz-score"></i> -->
+                    {{lesson.title}}
+
+
+                    <span *ngIf="lesson.meeting_info.start_at as mt" class="meta-info-inline">
+                      &nbsp;| <i class="fa-solid fa-calendar-day"></i> {{ mt | date: 'dd-MM-yyyy' }}
+                      <i class="fa-solid fa-clock"></i> {{ mt | date: 'HH:mm' }}
+                    </span>
+
+                    <!-- <span *ngIf="lesson.quiz_info.is_answered == 1" class="quiz-score">
+                      &nbsp;| <i class="fa-solid fa-check-circle"></i>
+                      {{ lesson.quiz_info.correct_answers }} / {{ lesson.quiz_info.total_mark }}
+                    </span> -->
+
+
+                  </p>
                   <div><img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;"></div>
                 </li>
               </ul>
@@ -148,7 +166,7 @@
             <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
               <ul>
                 @for (resource of chapter.resources; track resource.id) {
-                <li
+                <li class="csr-pointer"
                   (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title, resource.is_free)">
                   <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
                   <div>
