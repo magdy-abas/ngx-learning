@@ -94,12 +94,12 @@
             <a href="#notes" class="nav-link" data-bs-toggle="tab">{{ 'courses.notes' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a href="#more" class="nav-link" data-bs-toggle="tab">{{ 'courses.more' | translate }}</a>
+            <a href="#more" class="nav-link" data-bs-toggle="tab">{{ 'courses.filesCount' | translate }}</a>
           </li>
         </ul>
       </div>
 
-      <div class="tab-content">
+      <div class="cstm-tab tab-content">
         <div class="lesson-group tab-pane fade show active" id="program">
           @if (courseDetails.data.length > 0) {
           @for (chapter of courseDetails.data; track $index; let first = $first) {
@@ -117,7 +117,7 @@
 
                   <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">
 
-                    <!-- <i *ngIf="lesson.quiz_info.is_answered == 1" class="fa-solid fa-check-circle quiz-score"></i> -->
+                    <i *ngIf="lesson.quiz_info.is_answered == 1" class="fa-solid fa-check-circle quiz-score"></i>
                     {{lesson.title}}
 
 
@@ -150,10 +150,36 @@
         </div>
 
         <div class="lesson-group tab-pane fade" id="notes">
+          @if (doctorComments.length > 0) {
+          @for (comment of doctorComments; track $index; let first = $first) {
           <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">{{ 'courses.noData' | translate }}</h4>
+            <h6 class="cou-title">
+              <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#note' + $index" aria-expanded="true">
+                {{ 'courses.note' | translate }} {{ $index + 1 }}
+                <!-- <span>
+                  <i class="fa-solid fa-calendar-day"></i> {{ comment.created_at }}
+                </span> -->
+              </a>
+            </h6>
+
+            <div [id]="'note' + $index" class="card-collapse collapse" [class.show]="first">
+              <ul>
+                <li>
+                  <p class=" pe-2 ps-2">{{ comment.comment }}</p>
+                </li>
+              </ul>
+            </div>
           </div>
+          }
+          } @else {
+          <div class="course-card">
+            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
+              {{ 'courses.noComments' | translate }}
+            </h4>
+          </div>
+          }
         </div>
+
 
         <div class="lesson-group tab-pane fade" id="more">
           @for (chapter of resources; track chapter.id; let first = $first) {

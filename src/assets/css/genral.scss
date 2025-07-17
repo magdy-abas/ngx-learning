@@ -1060,6 +1060,9 @@ code-input.code-input {
   transition: color 0.3s ease;
 }
 
+.cstm-tab .meta-info-inline {
+  margin-left: 0 !important;
+}
 .more-section ul li p {
   color: var(--color-black);
   transition: color 0.3s ease;

@@ -13,6 +13,7 @@ import {
 } from '../interfaces/courses.interface';
 import { RequestJoinDto, QuizDTO } from './../Dtos/coursesDtos';
 import { MyCoursesResponse } from '../interfaces/my-courses.interface';
+import { DoctorCommentsResponse } from '../interfaces/doctor-comments';
 
 @Injectable({
   providedIn: 'root',
@@ -110,5 +111,12 @@ export class CoursesService {
     return this._HttpClient.post(`${baseUrl}lessons/show`, {
       lesson_id: lesson_id,
     });
+  }
+
+  //doctor-comments
+  getDoctorComments(courseId: number): Observable<DoctorCommentsResponse> {
+    return this._HttpClient.get<DoctorCommentsResponse>(
+      `${baseUrl}chapters/doctor-comments?course_id=${courseId}`
+    );
   }
 }

@@ -17,9 +17,6 @@ import { setupDynamicRoutes } from './shared/utils/router.utils';
 })
 export class AppComponent implements OnInit {
   title = 'e-learning';
-  tooltipText = 'تواصل معنا';
-  whatsappNumber: string = '';
-  showWhatsApp: boolean = true;
 
   private router = inject(Router);
   private appAccessService = inject(AppAccessService);
@@ -38,7 +35,6 @@ export class AppComponent implements OnInit {
 
       if (settings?.data) {
         this.setFavicon(settings.data.icon ?? 'assets/default-favicon.png');
-        this.applySettings(settings.data);
       } else {
         console.warn('Settings were invalid. Using fallback settings.');
       }
@@ -49,17 +45,6 @@ export class AppComponent implements OnInit {
     initSweetAlertTranslations(this.translate);
 
     setupDynamicRoutes(this.router, this.appAccessService);
-  }
-
-  openWhatsApp(): void {
-    const whatsappUrl = `https://wa.me/${this.whatsappNumber}?text=اهلا`;
-    window.open(whatsappUrl, '_blank');
-  }
-
-  applySettings(settingsData: any): void {
-    if (settingsData.contact_us && settingsData.contact_us.whatsapp) {
-      this.whatsappNumber = settingsData.contact_us.whatsapp;
-    }
   }
 
   setFavicon(iconUrl: string) {

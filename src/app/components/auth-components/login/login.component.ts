@@ -272,8 +272,10 @@ export class LoginComponent implements OnInit, OnDestroy {
           this._AuthService.saveUserData(res.data.user);
           this._Router.navigate(['/']);
         } else {
-          if (res.message === 'Invalid OTP') {
-            this.sendCode.get('code')?.setErrors({ invalidOtp: true });
+          if (res.status === 0 && res.message.includes('كود التاكيد')) {
+            this.sendCode
+              .get('code')
+              ?.setErrors({ serverMessage: res.message });
           }
         }
       },

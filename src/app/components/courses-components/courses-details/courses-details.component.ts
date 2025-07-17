@@ -17,6 +17,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EncryptionService } from '../../../core/service/encryption.service';
 import { HlsPlayerComponent } from '../../hls-player/hls-player.component';
+import { DoctorComment } from '../../../core/interfaces/doctor-comments';
 
 @Component({
   selector: 'app-courses-details',
@@ -38,6 +39,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   pdfUrl = '';
   showPdfViewer = false;
   currentResourceTitle = '';
+  doctorComments: DoctorComment[] = [];
 
   courseDetails?: CourseDetailsResponse;
   public isLoading: boolean = true;
@@ -84,6 +86,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
       if (this.isAuth) {
         this.getResources(+courseId);
+        this.getDoctorComments(+courseId);
         this.userInfo = this._AuthService.userData;
       }
 
@@ -231,6 +234,23 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       },
     });
     this.subscriptions.push(resourcesSub);
+  }
+
+  getDoctorComments(courseId: number): void {
+    const commentsSub = this._CoursesService
+      .getDoctorComments(courseId)
+      .subscribe({
+        next: (response) => {
+          if (response.status === 1 && response.data) {
+            this.doctorComments = response.data;
+          }
+        },
+        error: (err) => {
+          console.error('Error loading doctor comments:', err);
+        },
+      });
+
+    this.subscriptions.push(commentsSub);
   }
 
   async buyCourse(

@@ -12,6 +12,7 @@ import { AuthService } from '../../core/service/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProfileService } from '../../core/service/profile.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -37,9 +38,18 @@ export class ProfileComponent implements OnInit {
   private _AuthService = inject(AuthService);
   private _ProfileService = inject(ProfileService);
   private _fb = inject(FormBuilder);
+  private _route = inject(ActivatedRoute);
 
   ngOnInit(): void {
     AOS.init({ duration: 1000, once: true });
+
+    // Check for query param 'section'
+    this._route.queryParams.subscribe((params) => {
+      const section = params['section'];
+      if (section === 'courses') {
+        this.activeSection = 'courses';
+      }
+    });
 
     this.profileForm = this._fb.group({
       name: [{ value: '', disabled: true }, Validators.required],

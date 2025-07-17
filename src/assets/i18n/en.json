@@ -112,7 +112,9 @@
     "showCourse": "Show Course",
     "startNow": "Start Now",
     "subscribed": "Subscribed",
-    "rejected": "Rejected"
+    "rejected": "Rejected",
+    "noComments": "No notes available",
+    "note": "Note"
   },
 
   "sweetAlerts": {
@@ -210,6 +212,9 @@
     "back": "Back",
     "resultTitle": "Your Result",
     "close": "Close",
+    "minute": "m",
+    "second": "s",
+    "timeRemaining": "Time Remaining",
     "result": {
       "excellent": "Excellent work! You have mastered this topic!",
       "good": "Good job! Keep practicing to improve even more.",

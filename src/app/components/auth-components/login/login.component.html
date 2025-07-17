@@ -134,6 +134,10 @@
                   <div *ngIf="sendCode.get('code')?.errors?.['invalidOtp']">
                     {{ 'auth.codeInvalid' | translate }}
                   </div>
+                  <div class="text-danger text-center my-2" *ngIf="sendCode.get('code')?.errors?.['serverMessage']">
+                    {{ sendCode.get('code')?.errors?.['serverMessage'] }}
+                  </div>
+
                 </div>
 
 

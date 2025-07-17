@@ -101,7 +101,9 @@
     "showCourse": "عرض الدورة",
     "startNow": "ابدأ الآن",
     "subscribed": "مشترك",
-    "rejected": "مرفوض"
+    "rejected": "مرفوض",
+    "noComments": "لا توجد ملاحظات حتى الآن",
+    "note": "ملاحظة"
   },
 
   "sweetAlerts": {
@@ -198,6 +200,9 @@
     "back": "السابق",
     "resultTitle": "نتيجتك",
     "close": "إغلاق",
+    "minute": " د",
+    "second": " ث",
+    "timeRemaining": "الوقت المتبقي",
     "result": {
       "excellent": "عمل ممتاز! لقد أتقنت هذا الموضوع!",
       "good": "عمل جيد! استمر في التدريب لتحسين مستواك أكثر.",

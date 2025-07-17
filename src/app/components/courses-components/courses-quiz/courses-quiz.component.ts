@@ -34,6 +34,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
 
   // ViewChild reference for options list
   @ViewChild('optionsList') optionsList!: ElementRef;
+  userAnswers: { [questionId: number]: number } = {};
 
   // Properties for quiz state and data
   question: QuizDTO = new QuizDTO();
@@ -46,6 +47,10 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   showResult: boolean = false;
   rate: boolean = true;
   showIntro: boolean = true;
+  // time quiz
+  remaining_seconds: number = 0;
+  formattedTime: string = '';
+  private timerInterval!: any;
 
   constructor(
     private _AuthService: AuthService,
@@ -66,13 +71,12 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     courseId ? (this.courseId = +courseId) : courseId;
     if (quizId) {
       this.quizId = +quizId;
-
-      this.getQuiz(this.quizId);
     }
   }
 
   startQuiz(): void {
     this.showIntro = false;
+    this.getQuiz(this.quizId);
   }
 
   ngAfterViewInit(): void {}
@@ -234,6 +238,39 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   /**
+   * hanle quiz time
+   */
+
+  startCountdown(seconds: number): void {
+    this.remaining_seconds = seconds;
+    this.updateFormattedTime();
+
+    this.timerInterval = setInterval(() => {
+      if (this.remaining_seconds > 0) {
+        this.remaining_seconds--;
+        this.updateFormattedTime();
+      } else {
+        clearInterval(this.timerInterval);
+        //!when time end logic here
+      }
+    }, 1000);
+  }
+
+  updateFormattedTime(): void {
+    const m = Math.floor(this.remaining_seconds / 60);
+    const s = this.remaining_seconds % 60;
+
+    const minuteLabel = this.translate.instant('quiz.minute');
+    const secondLabel = this.translate.instant('quiz.second');
+
+    this.formattedTime = `${m}${minuteLabel} ${s}${secondLabel}`;
+  }
+
+  pad(num: number): string {
+    return num < 10 ? '0' + num : num.toString();
+  }
+
+  /**
    * Close result view and reset quiz state
    */
   closeResult(): void {
@@ -264,6 +301,9 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
         if (data.status === 1) {
           this.quizData = data.data;
           this.quizResponse = data;
+          if (data.remaining_seconds && !data.can_show_answers) {
+            this.startCountdown(data.remaining_seconds);
+          }
 
           if (this.quizResponse.can_show_answers) {
             this.showIntro = false;
@@ -295,6 +335,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     this.subscriptions.push(answerSub);
   }
   ngOnDestroy(): void {
+    clearInterval(this.timerInterval);
     unsubscribeAll(...this.subscriptions);
   }
 }

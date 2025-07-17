@@ -35,6 +35,10 @@
           </div>
           }
           @if ( !showIntro && quizData.length > 0) {
+          <div class="question-number text-end">
+            {{ 'quiz.timeRemaining' | translate }}: <span class="fw-bold ">{{ formattedTime }} </span>
+          </div>
+
           <!-- Show Quiz Box only when not showing result -->
           @if (!showResult) {
           <div class="quiz-box">
@@ -78,17 +82,20 @@
 
             <!-- Navigation Buttons -->
             <div class="quiz-btns">
-              @if (quizResponse.can_show_answers && currentQuestion > 1) {
-              <button type="button" class="back-btn btn mx-2" (click)="previousQuestion()">
-                {{ 'quiz.back' | translate }}
-              </button>
-              }
+
 
               <button type="button" class="next-btn btn" (click)="nextQuestion()" [disabled]="!canProceed()">
 
                 {{ 'quiz.next' | translate }}
 
               </button>
+              @if (quizResponse.can_show_answers && currentQuestion > 1) {
+              <button type="button" class="back-btn btn mx-2" (click)="previousQuestion()">
+                {{ 'quiz.back' | translate }}
+              </button>
+              }
+
+
             </div>
           </div>
           }
