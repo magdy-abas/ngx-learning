@@ -8,34 +8,46 @@
             <div class="card-header border-bottom text-center pb-3">
               <h2 class="fs-4 mb-0">{{ 'quiz.welcome' | translate }}</h2>
             </div>
+
             <div class="d-flex flex-column align-items-center p-4">
-              @if (showResult) { <p class="text-center mb-4">
-                {{ 'quiz.introShowAnswers' | translate }}
-              </p>
 
-
-
-              }
-              <p class="text-center mb-4">
-                {{ 'quiz.introWarning' | translate }} </p>
-
-              @if (showResult) {
-              <button type="button" class="next-btn btn" (click)="startQuiz()">
-
-                {{ 'quiz.showResult' | translate }}
+              @if (quizNotAvailableMessage) {
+              <p class="text-center mb-4">{{ quizNotAvailableMessage }}</p>
+              <button type="button" class="next-btn btn" (click)="backToCourse()">
+                {{ 'quiz.goBack' | translate }}
               </button>
 
+              } @else if (awaitingResult) {
+              <p class="text-center mb-4">
+                {{ 'quiz.alreadySolved' | translate }}<br>
+                {{ 'quiz.resultAvailableAt' | translate }}:
+                <span class="fw-bold">{{ resultAvailableTime }}</span>
+              </p>
+              <button type="button" class="next-btn btn" (click)="backToCourse()">
+                {{ 'quiz.goBack' | translate }}
+              </button>
 
-              }
+              } @else {
+              <p class="text-center mb-4">
+                {{ 'quiz.introWarning' | translate }}
+              </p>
               <button type="button" class="next-btn btn" (click)="startQuiz()">
-
                 {{ 'quiz.start' | translate }}
               </button>
+
+              @if (showResult) {
+              <button type="button" class="next-btn btn mt-3" (click)="startQuiz()">
+                {{ 'quiz.showResult' | translate }}
+              </button>
+              }
+              }
+
             </div>
           </div>
           }
+
           @if ( !showIntro && quizData.length > 0) {
-          <div class="question-number text-end">
+          <div class="question-number text-end" *ngIf="!quizResponse.is_answered && quizResponse.remaining_seconds">
             {{ 'quiz.timeRemaining' | translate }}: <span class="fw-bold ">{{ formattedTime }} </span>
           </div>
 
@@ -51,7 +63,9 @@
               <span class="question-text text-center">Q{{currentQuestion}}. </span>
               @if (quizData[currentQuestion - 1].image) {
               <div class="question-img">
+                <span class="question-text text-center "> {{quizData[currentQuestion - 1].title}} </span>
                 <img [src]="quizData[currentQuestion - 1].image" class="img-fluid" alt="Question image">
+
               </div>
               } @else {
               <span class="question-text text-center">{{quizData[currentQuestion - 1].title}}</span>
@@ -69,7 +83,9 @@
                   [(ngModel)]="selectedAnswer" [value]="answer.id" [disabled]="quizResponse.can_show_answers">
                 @if (answer.image) {
                 <label [for]="'option' + answer.id" class="option-label img-option p-1">
+                  <p>{{answer.title}}</p>
                   <img [src]="answer.image" [alt]="answer.title">
+
                 </label>
                 } @else {
                 <label [for]="'option' + answer.id" class="option-label">

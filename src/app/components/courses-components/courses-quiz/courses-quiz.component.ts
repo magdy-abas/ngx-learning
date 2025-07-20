@@ -11,7 +11,7 @@ import { CoursesService } from '../../../core/service/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizDTO } from '../../../core/Dtos/coursesDtos';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 
 import {
   QuestionData,
@@ -24,17 +24,19 @@ import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.util
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
-  imports: [FormsModule, NgClass, TranslateModule],
+  imports: [FormsModule, NgClass, TranslateModule, NgIf],
 
   templateUrl: './courses-quiz.component.html',
   styleUrl: './courses-quiz.component.scss',
 })
 export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
+  quizNotAvailableMessage: string | null = null;
 
   // ViewChild reference for options list
   @ViewChild('optionsList') optionsList!: ElementRef;
-  userAnswers: { [questionId: number]: number } = {};
+  resultAvailableTime: string | null = null;
+  awaitingResult: boolean = false;
 
   // Properties for quiz state and data
   question: QuizDTO = new QuizDTO();
@@ -71,12 +73,12 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     courseId ? (this.courseId = +courseId) : courseId;
     if (quizId) {
       this.quizId = +quizId;
+      this.getQuiz(this.quizId);
     }
   }
 
   startQuiz(): void {
     this.showIntro = false;
-    this.getQuiz(this.quizId);
   }
 
   ngAfterViewInit(): void {}
@@ -164,22 +166,28 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     const finalSub = this._CoursesService.answerQuiz(this.question).subscribe({
       next: (data) => {
         if (data.status === 1) {
-          // Fetch updated quiz data with correct answers
           const quizSub = this._CoursesService.getQuiz(this.quizId).subscribe({
             next: (res) => {
               if (res.status === 1) {
                 this.quizData = res.data;
                 this.quizResponse = res;
-                this.showResult = true; // Show results
+
+                if (res.can_show_answers) {
+                  this.showResult = true;
+                } else {
+                  this._Router.navigate([`/course-details/${this.courseId}`]);
+                }
               }
             },
             error: (err) => console.error(err),
           });
+
           this.subscriptions.push(quizSub);
         }
       },
       error: (err) => console.error(err),
     });
+
     this.subscriptions.push(finalSub);
   }
 
@@ -251,7 +259,8 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
         this.updateFormattedTime();
       } else {
         clearInterval(this.timerInterval);
-        //!when time end logic here
+
+        this.backToCourse();
       }
     }, 1000);
   }
@@ -296,19 +305,36 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   getQuiz(quizId: number): void {
     this.spinner.show();
+
     const getQuizSub = this._CoursesService.getQuiz(quizId).subscribe({
       next: (data) => {
         if (data.status === 1) {
           this.quizData = data.data;
           this.quizResponse = data;
-          if (data.remaining_seconds && !data.can_show_answers) {
-            this.startCountdown(data.remaining_seconds);
+
+          if (data.can_show_answers) {
+            this.showIntro = false;
+            this.showResult = false;
           }
 
-          if (this.quizResponse.can_show_answers) {
-            this.showIntro = false;
+          if (!data.can_show_answers && data.is_answered) {
+            this.awaitingResult = true;
+            this.resultAvailableTime = data.show_answers_at;
+          }
+
+          if (
+            data.remaining_seconds &&
+            !data.can_show_answers &&
+            !data.is_answered
+          ) {
+            this.startCountdown(data.remaining_seconds);
           }
         }
+        if (data.status === 0) {
+          this.quizNotAvailableMessage = data.message;
+          this.showIntro = true;
+        }
+
         this.spinner.hide();
       },
       error: (err) => {
@@ -316,6 +342,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
         this.spinner.hide();
       },
     });
+
     this.subscriptions.push(getQuizSub);
   }
 
@@ -337,5 +364,9 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.timerInterval);
     unsubscribeAll(...this.subscriptions);
+  }
+
+  backToCourse(): void {
+    this._Router.navigate([`/course-details/${this.courseId}`]);
   }
 }

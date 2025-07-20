@@ -215,6 +215,10 @@
     "minute": "m",
     "second": "s",
     "timeRemaining": "Time Remaining",
+    "alreadySolved": "You have already completed this quiz.",
+    "resultAvailableAt": "The result will be available at",
+    "goBack": "الرجوع",
+
     "result": {
       "excellent": "Excellent work! You have mastered this topic!",
       "good": "Good job! Keep practicing to improve even more.",
