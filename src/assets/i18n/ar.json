@@ -43,7 +43,7 @@
     "passwordsMustMatch": "يجب أن تتطابق كلمات المرور",
 
     "code": "الرمز",
-    "codeRequired": "رمز مطلوب (4 أحرف).",
+    "codeRequired": "الرمز مطلوب",
 
     "phoneNumber": "رقم الهاتف",
     "invalidPhoneNumber": "رقم الهاتف غير صالح",
@@ -284,5 +284,9 @@
       "required": "هذا الحقل مطلوب",
       "invalid": "رقم غير صالح"
     }
+  },
+  "otp_input": {
+    "resend_timer": "إعادة إرسال الرمز في {{time}} ",
+    "resend_code": "إعادة إرسال الرمز"
   }
 }

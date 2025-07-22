@@ -1,18 +1,21 @@
-<code-input class="code-input" [isCodeHidden]="isCodeHidden" [codeLength]="codeLength"
-  (codeCompleted)="onCodeCompleted($event)">
-</code-input>
+<div class="otp-group">
+  <label *ngIf="label">{{ label }}</label>
+  <div class="otp-input-container" dir="ltr">
+    <input *ngFor="let _ of [].constructor(length); let i = index" #otpInput type="text" class="otp-input" maxlength="1"
+      (input)="onInput($event, i)" (keydown)="onKeydown($event, i)" (paste)="onPaste($event)"
+      [class.is-invalid]="showError">
 
-
-
-<div class="text-center my-3">
-  <ng-container *ngIf="!canResend">
-    <small style="color: #221d1b;"> s{{timeLeft}} {{'auth.resendIn' | translate}} </small>
-  </ng-container>
-
-  <div class="forgot">
-    <button class="btn btn-link forgot-link p-0" style="color: #ff875a;" *ngIf="canResend" (click)="onResend()">
-      {{'auth.resendCode' | translate}}
-    </button>
   </div>
 
+
+  <div class="resend-container my-2">
+    <ng-container *ngIf="!canResend">
+      <span class="resend-timer ">{{ 'otp_input.resend_timer' | translate: { time: getFormattedTime() } }}</span>
+    </ng-container>
+
+    <button type="button" class="resend-button" [class.disabled]="!canResend" [disabled]="!canResend"
+      (click)="onResendClick()">
+      {{ 'otp_input.resend_code' | translate }}
+    </button>
+  </div>
 </div>

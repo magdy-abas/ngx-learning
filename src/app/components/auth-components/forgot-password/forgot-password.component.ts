@@ -10,7 +10,6 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { Router, RouterLink } from '@angular/router';
 import Aos from 'aos';
 
-import { CodeInputModule } from 'angular-code-input';
 import { AuthService } from '../../../core/service/auth.service';
 import {
   DataService,
@@ -21,6 +20,7 @@ import {
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
+import { OtpInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -28,10 +28,11 @@ import { DarkModeService } from '../../../core/service/dark-mode.service';
     CarouselModule,
     CommonModule,
     RouterLink,
-    CodeInputModule,
+
     ReactiveFormsModule,
     AlertErrorComponent,
     TranslateModule,
+    OtpInputComponent,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
@@ -188,5 +189,38 @@ export class ForgotPasswordComponent implements OnInit {
 
   public onCodeCompleted(code: string): void {
     this.resetPasswordForm.patchValue({ code });
+  }
+
+  getOtpErrorMessage(): string {
+    const codeControl = this.resetPasswordForm.get('code');
+
+    if (codeControl?.errors?.['required']) {
+      return 'كود التفعيل مطلوب';
+    }
+
+    if (
+      codeControl?.errors?.['minlength'] ||
+      codeControl?.errors?.['maxlength']
+    ) {
+      return 'كود التفعيل يجب أن يكون 4 أرقام';
+    }
+
+    return '';
+  }
+  resendCode() {
+    if (this.emailForm.valid) {
+      this._AuthService.sendPinCode(this.emailForm.value).subscribe({
+        next: (res) => {
+          if (res.status === 1) {
+            this.errMsg = '';
+          } else {
+            this.errMsg = res.message;
+          }
+        },
+        error: (err) => {
+          console.error('Error resending code:', err);
+        },
+      });
+    }
   }
 }

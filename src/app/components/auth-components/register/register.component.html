@@ -65,8 +65,11 @@
                 <app-alert-error controlName="email" [formName]="regForm" />
               </div>
             </div>
+            <div class="form-group">
+              <label class="form-control-label">{{ 'auth.phoneNumber' | translate }}</label>
+              <app-phone-input [control]="phoneControl"></app-phone-input>
+            </div>
 
-            <app-phone-input [control]="phoneControl"></app-phone-input>
 
 
 

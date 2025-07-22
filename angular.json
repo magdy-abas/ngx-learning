@@ -35,10 +35,9 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss",
               "node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss",
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+        
               "node_modules/aos/dist/aos.css",
-              "node_modules/swiper/swiper-bundle.css",
+        
 
               "node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
               "node_modules/@fortawesome/fontawesome-free/css/brands.css",
@@ -52,7 +51,7 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/slick-carousel/slick/slick.min.js",
+         
               "node_modules/aos/dist/aos.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]

@@ -54,7 +54,7 @@
     "passwordsMustMatch": "Passwords must match",
 
     "code": "Code",
-    "codeRequired": "Code is required (4 characters).",
+    "codeRequired": "Code is required ",
 
     "phoneNumber": "Phone number",
     "invalidPhoneNumber": "Phone number is invalid",
@@ -298,5 +298,9 @@
       "required": "This field is required",
       "invalid": "Invalid phone number"
     }
+  },
+  "otp_input": {
+    "resend_timer": "Resend code in {{time}}",
+    "resend_code": "Resend Code"
   }
 }

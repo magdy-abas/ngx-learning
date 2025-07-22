@@ -1,48 +1,140 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  QueryList,
+  ViewChildren,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CodeInputModule } from 'angular-code-input';
+import { interval, Subscription } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-otp-code-input',
+  selector: 'app-otp-input',
   standalone: true,
-  imports: [CommonModule, CodeInputModule, TranslateModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './otp-code-input.component.html',
   styleUrls: ['./otp-code-input.component.scss'],
 })
-export class OtpCodeInputComponent {
-  @Input() codeLength: number = 4;
-  @Input() isCodeHidden: boolean = false;
-  @Input() countdown: number = 60;
-  @Output() codeCompleted = new EventEmitter<string>();
-  @Output() resendClicked = new EventEmitter<void>();
+export class OtpInputComponent implements OnInit, OnDestroy {
+  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
+  @Output() otpCompleted = new EventEmitter<string>();
 
-  public timeLeft: number = 0;
-  public intervalId: any;
-  public canResend: boolean = false;
+  @Input() length: number = 4;
+  @Input() label?: string;
+  @Input() showError: boolean = false;
+  @Input() errorMessage: string = '';
 
-  ngOnInit() {
-    this.startTimer();
+  @Output() otpChange = new EventEmitter<string>();
+  @Output() resendOtp = new EventEmitter<void>();
+
+  countdown: number = 60;
+  canResend: boolean = false;
+  timerSubscription?: Subscription;
+
+  ngOnInit(): void {
+    this.startResendTimer();
   }
 
-  private startTimer() {
-    this.timeLeft = this.countdown;
+  ngOnDestroy(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  onInput(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    if (!/^\d*$/.test(value)) {
+      input.value = '';
+      return;
+    }
+
+    if (value && index < this.length - 1) {
+      this.otpInputs.get(index + 1)?.nativeElement.focus();
+    }
+
+    this.emitOtpValue();
+  }
+
+  onKeydown(event: KeyboardEvent, index: number): void {
+    const input = event.target as HTMLInputElement;
+
+    if (event.key === 'Backspace' && !input.value && index > 0) {
+      this.otpInputs.get(index - 1)?.nativeElement.focus();
+    }
+  }
+
+  private emitOtpValue(): void {
+    const otpValue = this.otpInputs
+      .toArray()
+      .map((input) => input.nativeElement.value)
+      .join('');
+
+    this.otpChange.emit(otpValue);
+  }
+
+  clear(): void {
+    this.otpInputs.forEach((input) => {
+      input.nativeElement.value = '';
+    });
+    this.emitOtpValue();
+  }
+
+  startResendTimer(): void {
+    this.countdown = 60;
     this.canResend = false;
-    this.intervalId = setInterval(() => {
-      this.timeLeft--;
-      if (this.timeLeft <= 0) {
-        clearInterval(this.intervalId);
-        this.canResend = true;
-      }
-    }, 1000);
+
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+
+    this.timerSubscription = interval(1000)
+      .pipe(takeWhile(() => this.countdown > 0))
+      .subscribe(() => {
+        this.countdown--;
+        if (this.countdown === 0) {
+          this.canResend = true;
+        }
+      });
   }
 
-  onResend() {
-    this.resendClicked.emit();
-    this.startTimer();
+  onResendClick(): void {
+    if (this.canResend) {
+      this.resendOtp.emit();
+      this.startResendTimer();
+      this.clear();
+    }
   }
 
-  onCodeCompleted(code: string) {
-    this.codeCompleted.emit(code);
+  getFormattedTime(): string {
+    const minutes = Math.floor(this.countdown / 60);
+    const seconds = this.countdown % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  }
+
+  onPaste(event: ClipboardEvent): void {
+    const pasteData = event.clipboardData?.getData('text') ?? '';
+    const digits = pasteData.replace(/\D/g, '').slice(0, this.length).split('');
+
+    digits.forEach((digit, i) => {
+      const input = this.otpInputs.get(i);
+      if (input) input.nativeElement.value = digit;
+    });
+
+    this.emitOtpValue();
+
+    const nextInput = this.otpInputs.get(digits.length);
+    if (nextInput) nextInput.nativeElement.focus();
+
+    event.preventDefault();
   }
 }

@@ -114,14 +114,18 @@
 
 
 
-            <form [formGroup]="sendCode" (ngSubmit)="loginWithWatsApp()">
-              <div class="form-group" *ngIf="watsStep === 2">
+            <form *ngIf="loginWithWats" [formGroup]="sendCode" (ngSubmit)="loginWithWatsApp()">
+              <div class="form-group" *ngIf="watsStep === 2  ">
                 <label class="form-control-label">{{'auth.code' | translate}}</label>
-                <app-otp-code-input style="direction: ltr;" [isCodeHidden]="false" [codeLength]="4"
+                <!-- <app-otp-code-input style="direction: ltr;" [isCodeHidden]="false" [codeLength]="4"
                   (codeCompleted)="onCodeCompleted($event)" (resendClicked)="onResendCode()">
-                </app-otp-code-input>
+                </app-otp-code-input> -->
 
-
+                <app-otp-input [length]="4" style="direction: ltr;"
+                  [showError]="!!(sendCode.get('code')?.invalid && sendCode.get('code')?.touched)"
+                  [errorMessage]="getOtpErrorMessage()" (otpChange)="sendCode.get('code')?.setValue($event)"
+                  (otpCompleted)="onCodeCompleted($event)" (resendOtp)="onResendCode()">
+                </app-otp-input>
 
                 <div class="text-danger text-center my-2"
                   *ngIf="sendCode.get('code')?.invalid && sendCode.get('code')?.touched">

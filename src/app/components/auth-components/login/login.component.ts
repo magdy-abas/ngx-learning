@@ -31,8 +31,8 @@ import {
   ErrorAuthData,
 } from '../../../core/interfaces/auth.interface';
 import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.component';
-import { CodeInputModule } from 'angular-code-input';
-import { OtpCodeInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
+
+import { OtpInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { SharedService } from '../../../core/service/shared.service';
 import { filter, Subscription, take } from 'rxjs';
@@ -49,7 +49,7 @@ import { filter, Subscription, take } from 'rxjs';
     AlertErrorComponent,
     TranslateModule,
     PhoneInputComponent,
-    OtpCodeInputComponent,
+    OtpInputComponent,
   ],
 
   templateUrl: './login.component.html',
@@ -285,6 +285,28 @@ export class LoginComponent implements OnInit, OnDestroy {
   public onCodeCompleted(code: string): void {
     this.sendCode.get('code')?.setValue(code);
     this.sendCode.get('code')?.markAsTouched();
+  }
+
+  getOtpErrorMessage(): string {
+    const codeControl = this.sendCode.get('code');
+
+    if (codeControl?.errors?.['required']) {
+      return this.translate.instant('auth.codeRequired');
+    }
+
+    if (codeControl?.errors?.['pattern']) {
+      return this.translate.instant('auth.codeRequired');
+    }
+
+    if (codeControl?.errors?.['invalidOtp']) {
+      return this.translate.instant('auth.codeInvalid');
+    }
+
+    if (codeControl?.errors?.['serverMessage']) {
+      return codeControl.errors['serverMessage'];
+    }
+
+    return '';
   }
 
   ngOnDestroy(): void {
