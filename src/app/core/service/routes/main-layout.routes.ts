@@ -26,6 +26,14 @@ export const mainRoutes: Routes = [
       ).then((m) => m.CoursesComponent),
     title: 'courses',
   },
+  {
+    path: 'instructor-register',
+    loadComponent: () =>
+      import(
+        '../../../components/doctors-components/doctors-reg/doctors-reg.component'
+      ).then((m) => m.DoctorsRegComponent),
+    title: 'instructor-register',
+  },
 
   {
     path: 'courses/category/:categoryId',

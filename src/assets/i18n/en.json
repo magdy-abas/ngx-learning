@@ -80,7 +80,14 @@
 
     "resendIn": "Resend in",
     "resendCode": "Resend Code",
-    "codeInvalid": "Code is invalid"
+    "codeInvalid": "Code is invalid",
+
+    "coursesPlaceholder": "Enter the names of the courses you can teach",
+    "notesPlaceholder": "Enter any additional notes if applicable",
+    "fullNamePlaceholder": "Enter your full name",
+    "registerTitle": "Registration Information",
+    "registerHeading": "Register as an Instructor",
+    "registerDescription": "Fill in the following information and we will contact you as soon as possible to confirm your registration as an instructor with us."
   },
   "courses": {
     "home": "Home",
@@ -207,7 +214,10 @@
       "confirm": "Yes, Confirm Booking",
       "cancel": "Cancel"
     },
-    "appointment_success": "The appointment has been successfully booked"
+    "appointment_success": "The appointment has been successfully booked",
+    "requestSentTitle": "Request Sent Successfully!",
+    "requestSentBody": "We will contact you soon to confirm your registration.",
+    "ok": "OK"
   },
   "quiz": {
     "welcome": "Welcome to the Quiz!",

@@ -1,21 +1,21 @@
 @if (formName.get(controlName)?.errors && formName.get(controlName)?.touched) {
 
-<div class="">
-  <ul class="m-0">
+<div class="mt-2">
 
-    @if(formName.get(controlName)?.getError('required') ){
-    <li class="fw-normal my-2 text-danger fs-6"> {{ 'auth.inputRequired' | translate}}</li>
-    }@if (formName.get(controlName)?.getError('minlength')) {
-    <li class="fw-normal my-2 text-danger fs-6">{{'auth.inputMinLength' | translate}}.</li>
-    }@if (formName.get(controlName)?.getError('maxlength')) {
-    <li class="fw-normal my-2 text-danger fs-6">{{'auth.inputMaxLength' | translate}}</li>
-    } @if (formName.get(controlName)?.getError('email')) {
-    <li class="fw-normal my-2 text-danger fs-6"> {{'auth.invalidEmail' | translate}}</li>
-    }@if (formName.get(controlName)?.getError('pattern')) {
-    <li class="fw-normal my-2 text-danger fs-6"> {{'auth.passwordRequirements' | translate}}
-    </li>
-    }
-  </ul>
+
+  @if(formName.get(controlName)?.getError('required') ){
+  <span class="fw-normal my-2 text-danger fs-6 mt-2"> {{ 'auth.inputRequired' | translate}}</span>
+  }@if (formName.get(controlName)?.getError('minlength')) {
+  <span class="fw-normal my-2 text-danger fs-6 mt-2">{{'auth.inputMinLength' | translate}}.</span>
+  }@if (formName.get(controlName)?.getError('maxlength')) {
+  <span class="fw-normal my-2 text-danger fs-6 mt-2">{{'auth.inputMaxLength' | translate}}</span>
+  } @if (formName.get(controlName)?.getError('email')) {
+  <span class="fw-normal my-2 text-danger fs-6 mt-2"> {{'auth.invalidEmail' | translate}}</span>
+  }@if (formName.get(controlName)?.getError('pattern')) {
+  <span class="fw-normal my-2 text-danger fs-6 mt-2"> {{'auth.passwordRequirements' | translate}}
+  </span>
+  }
+
 </div>
 
 }@else if (formName.getError('mismatch') && formName.get(controlName)?.touched && controlName =="rePassword") {

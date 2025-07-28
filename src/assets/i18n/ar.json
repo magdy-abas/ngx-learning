@@ -69,7 +69,14 @@
 
     "resendIn": "إعادة الإرسال في",
     "resendCode": "إعادة إرسال الرمز",
-    "codeInvalid": "الرمز غير صالح"
+    "codeInvalid": "الرمز غير صالح",
+
+    "coursesPlaceholder": "اذكر أسماء الدورات التي يمكنك تدريسها",
+    "notesPlaceholder": "أي ملاحظات  او استفسارات إضافية إن وجدت",
+    "fullNamePlaceholder": "أدخل اسمك بالكامل",
+    "registerTitle": "بيانات التسجيل",
+    "registerHeading": "سجل كمحاضر معنا",
+    "registerDescription": "املأ البيانات التالية وسنقوم بالتواصل معك في أقرب وقت ممكن لتأكيد تسجيلك كمحاضر لدينا."
   },
   "courses": {
     "home": "الرئيسية",
@@ -125,6 +132,7 @@
     "invalidCourseId": "معرّف الدورة غير صالح.",
     "fetchFail": "فشل تحميل بيانات الدورة.",
     "somethingWentWrong": "حدث خطأ ما.",
+
     "search": {
       "title": "ابحث عن دورة",
       "placeholder": "اكتب كلمة البحث",
@@ -195,7 +203,10 @@
       "confirm": "نعم، تأكيد الحجز",
       "cancel": "إلغاء"
     },
-    "appointment_success": "تم حجز الموعد بنجاح"
+    "appointment_success": "تم حجز الموعد بنجاح",
+    "requestSentTitle": "تم إرسال الطلب بنجاح!",
+    "requestSentBody": "سنتواصل معك قريبًا لتأكيد التسجيل.",
+    "ok": "حسنًا"
   },
   "quiz": {
     "welcome": "مرحبا بك في الاختبار!",

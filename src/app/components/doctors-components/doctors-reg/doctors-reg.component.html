@@ -1,0 +1,71 @@
+<div class="main-wrapper log-wrap">
+  <div class="row">
+    <div class="col-md-6 login-bg d-none d-md-flex flex-column justify-content-center align-items-center text-center">
+      <div class="p-4">
+        <!-- <img src="assets/img/illustration/teacher-register.svg" class="img-fluid w-75 mb-4" alt="Instructor"> -->
+        <h2 class="text-primary mb-3">{{ 'auth.registerHeading' | translate }}</h2>
+        <p class="text-muted">{{ 'auth.registerDescription' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6 login-wrap-bg">
+      <div class="login-wrapper">
+        <div class="loginbox">
+          <h3 class="text-center heading-color mb-4">{{ 'auth.registerTitle' | translate }}</h3>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label>{{ 'auth.fullName' | translate }}</label>
+              <input type="text" class="form-control" formControlName="name"
+                [placeholder]="'auth.fullNamePlaceholder' | translate">
+              <div *ngIf="(f['name'].touched || submitted) && f['name'].errors?.['required']"
+                class="text-danger small mt-2">
+                {{ 'auth.inputRequired' | translate }}
+              </div>
+
+
+            </div>
+
+            <div class="form-group">
+              <label>{{ 'auth.email' | translate }}</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="example@mail.com">
+              <div *ngIf="(f['email'].touched || submitted) && f['email'].errors?.['required']"
+                class="text-danger small  mt-2">
+                {{ 'auth.inputRequired' | translate }}
+              </div>
+              <div *ngIf="(f['email'].touched || submitted) && f['email'].errors?.['email']"
+                class="text-danger small mt-2">
+                {{ 'auth.invalidEmail' | translate }}
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label>{{ 'auth.phoneNumber' | translate }}</label>
+
+              <app-phone-input [control]="phoneControl"></app-phone-input>
+
+
+
+            </div>
+
+            <div class="form-group">
+              <label>{{ 'courses.courseCategories' | translate }}</label>
+              <textarea rows="3" class="form-control" formControlName="courses"
+                [placeholder]="'auth.coursesPlaceholder' | translate"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>{{ 'courses.note' | translate }}</label>
+              <textarea rows="3" class="form-control" formControlName="notes"
+                [placeholder]="'auth.notesPlaceholder' | translate"></textarea>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button class="btn btn-primary btn-start w-100" type="submit"> {{ 'auth.submit' | translate }}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
