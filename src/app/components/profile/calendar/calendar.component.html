@@ -1,0 +1,16 @@
+<div class="calendar-wrapper">
+  <div class="sell-course-head comman-space">
+    <h3>{{ 'calendar_intro' | translate }}</h3>
+
+    <p>{{ 'calendar_info' | translate }}</p>
+  </div>
+
+  <full-calendar [options]="calendarOptions">
+    <ng-template #eventContent let-arg>
+      <div class="custom-event">
+        <span class="evt-time">{{ arg.timeText }}</span>
+        <span class="evt-title">{{ arg.event.title }}</span>
+      </div>
+    </ng-template>
+  </full-calendar>
+</div>

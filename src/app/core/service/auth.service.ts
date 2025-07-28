@@ -44,14 +44,6 @@ export class AuthService {
   userData: UserData | null = null;
   auth = signal(false);
 
-  // login with
-  // watsapp
-  checkLoginMethod(): Observable<CheckResponse> {
-    return this._HttpClient.get<CheckResponse>(
-      `${baseUrl}mobile-versions/last-version`
-    );
-  }
-
   sendOtpCode(data: SendOtpDto): Observable<OtpResponse> {
     return this._HttpClient.post<OtpResponse>(
       `${baseUrl}auth/ws/send-otp`,

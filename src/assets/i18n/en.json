@@ -26,7 +26,8 @@
     "nightMode": "Night Mode",
     "contactUs": "contact us",
     "lightMode": "Light Mode",
-    "darkMode": "Dark Mode"
+    "darkMode": "Dark Mode",
+    "instructor-reg": "Instructor Registration"
   },
   "auth": {
     "backToHome": "Back to Home",
@@ -199,7 +200,14 @@
     },
     "error": {
       "title": "Error!"
-    }
+    },
+    "appointment": {
+      "title": "Do you want to book a private appointment with {{doctor}}?",
+      "text": "The booking will be confirmed once you click Yes.",
+      "confirm": "Yes, Confirm Booking",
+      "cancel": "Cancel"
+    },
+    "appointment_success": "The appointment has been successfully booked"
   },
   "quiz": {
     "welcome": "Welcome to the Quiz!",
@@ -274,7 +282,10 @@
     "lastNamePlaceholder": "Enter your last Name",
     "emailPlaceholder": "Enter your Email",
     "birthdayPlaceholder": "Birth of Date",
-    "phonePlaceholder": "Enter your phone number  "
+    "phonePlaceholder": "Enter your phone number  ",
+    "myCalendar": "My Calendar",
+    "calendar_intro": "Upcoming Meeting Schedule",
+    "calendar_info": "Easily find your lecture times"
   },
 
   "instructor": {
@@ -286,7 +297,8 @@
     "certifications_title": "Certifications",
     "no_certifications": "No certifications provided yet.",
     "courses_title": "Courses",
-    "no_courses": "No courses available for this instructor at the moment."
+    "no_courses": "No courses available for this instructor at the moment.",
+    "book_private": "Book Private Appointment"
   },
   "phone_input": {
     "labels": {

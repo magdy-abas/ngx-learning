@@ -14,8 +14,19 @@
         <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
 
         <div>
-          <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
-            disabled>{{ 'courses.subscribed' | translate }}</button>
+          <!-- <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
+            disabled>{{ 'courses.subscribed' | translate }}</button> -->
+          <div class="d-flex justify-content-center align-items-center mb-2">
+            <div *ngIf="courseDetails?.course?.client_status === 'accepted'" class="course-card-progress-bar   d-flex"
+              style="width: 80%;">
+              <span class="progress-text mx-2">{{0}}%</span>
+              <div class="progress-container">
+                <div class="progress-fill" [style.width.%]="0">
+
+                </div>
+              </div>
+            </div>
+          </div>
 
           <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
             disabled>{{ 'courses.rejected' | translate }}</button>
@@ -68,8 +79,20 @@
         <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
 
         <div>
-          <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
-            disabled>{{ 'courses.subscribed' | translate }}</button>
+          <!-- <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
+            disabled>{{ 'courses.subscribed' | translate }}</button> -->
+          <div class="d-flex justify-content-center align-items-center mb-2">
+            <div *ngIf="courseDetails?.course?.client_status === 'accepted'" class="course-card-progress-bar   d-flex"
+              style="width: 80%;">
+              <span class="progress-text mx-2">{{0}}%</span>
+              <div class="progress-container">
+                <div class="progress-fill" [style.width.%]="0">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
 
           <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
             disabled>{{ 'courses.rejected' | translate }}</button>

@@ -51,9 +51,11 @@
 
 
 
-
+      <a href="#" class="text-decoration-none btn-sm" routerLink="instructor-register">{{ 'navbar.instructor-reg' |
+        translate }}</a>
       <a *ngIf="!isAuth" href="#" class="text-decoration-none btn-sm" routerLink="login">{{ 'navbar.login' | translate
         }}</a>
+
       <a href="#" *ngIf="!loginWithWats && !isAuth" class="text-decoration-none btn-sm" routerLink="signup">{{
         'navbar.signUp' |
         translate }}</a>
@@ -327,6 +329,10 @@
         </li>
 
         <!-- Mobile Auth Links -->
+        <li>
+          <a href="#" class="text-decoration-none btn-sm" routerLink="instructor-register">{{ 'navbar.instructor-reg' |
+            translate }}</a>
+        </li>
         <li *ngIf="!isAuth"><a routerLink="/login">{{ 'navbar.login' | translate }}</a>
         </li>
         <li *ngIf="!loginWithWats && !isAuth"><a routerLink="/signup">{{ 'navbar.signUp'|translate }}</a></li>

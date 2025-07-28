@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProfileService } from '../../core/service/profile.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @Component({
   selector: 'app-profile',
@@ -24,13 +25,14 @@ import { ActivatedRoute } from '@angular/router';
     TranslateModule,
     ReactiveFormsModule,
     TooltipModule,
+    CalendarComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
-  activeSection: 'profile' | 'courses' = 'profile';
+  activeSection: 'profile' | 'courses' | 'calendar' = 'profile';
   isEditingName = false;
   userData: any = { name: '' };
   errorMessage: string = '';
@@ -76,7 +78,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  switchSection(section: 'profile' | 'courses') {
+  switchSection(section: 'profile' | 'courses' | 'calendar') {
     this.activeSection = section;
     setTimeout(() => AOS.refresh(), 50);
   }

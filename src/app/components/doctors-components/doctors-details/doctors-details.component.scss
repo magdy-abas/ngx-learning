@@ -5,3 +5,39 @@
 .instructor-bg-blk {
   background-color: var(--color-light-bg) !important;
 }
+.btn-outline-primary {
+  border: 2px solid #392c7d;
+  background-color: transparent;
+  color: #392c7d;
+  border-radius: 50px;
+  padding: 0.45rem 1.3rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+}
+
+.btn-outline-primary:hover {
+  background-color: #392c7d;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(57, 44, 125, 0.35);
+}
+
+.btn-outline-primary:active {
+  background-color: #2e2366;
+  border-color: #2e2366;
+  color: #fff;
+}
+.btn-outline-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc;
+  color: #fff;
+  outline: none;
+  border: none;
+}

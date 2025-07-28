@@ -15,7 +15,8 @@
     "search": "بحث",
     "contactUs": "تواصل معنا",
     "lightMode": "الوضع النهاري",
-    "darkMode": "الوضع الليلي"
+    "darkMode": "الوضع الليلي",
+    "instructor-reg": "التسجيل كمحاضر"
   },
   "auth": {
     "backToHome": "الرجوع إلى الرئيسيه",
@@ -187,7 +188,14 @@
     },
     "error": {
       "title": "خطأ!"
-    }
+    },
+    "appointment": {
+      "title": "هل تريد حجز موعد خاص مع {{doctor}}؟",
+      "text": "تأكيد الحجز سيتم فور الضغط على نعم.",
+      "confirm": "نعم، تأكيد الحجز",
+      "cancel": "إلغاء"
+    },
+    "appointment_success": "تم حجز الموعد بنجاح"
   },
   "quiz": {
     "welcome": "مرحبا بك في الاختبار!",
@@ -261,7 +269,10 @@
     "lastNamePlaceholder": "أدخل اسمك الأخير",
     "emailPlaceholder": "أدخل بريدك الإلكتروني",
     "phonePlaceholder": "أدخل رقم الهاتف",
-    "birthdayPlaceholder": "تاريخ الميلاد"
+    "birthdayPlaceholder": "تاريخ الميلاد",
+    "myCalendar": "التقويم",
+    "calendar_intro": "مواعيد الاجتماعات القادمة",
+    "calendar_info": "اعرف مواعيد محاضراتك بسهولة"
   },
   "instructor": {
     "courses_number": "عدد الدورات: {{count}}",
@@ -272,7 +283,8 @@
     "certifications_title": "الشهادات",
     "no_certifications": "لا توجد شهادات مضافة حتى الآن.",
     "courses_title": "الدورات",
-    "no_courses": "لا توجد دورات متاحة لهذا المحاضر حاليًا."
+    "no_courses": "لا توجد دورات متاحة لهذا المحاضر حاليًا.",
+    "book_private": "حجز موعد خاص"
   },
   "phone_input": {
     "labels": {

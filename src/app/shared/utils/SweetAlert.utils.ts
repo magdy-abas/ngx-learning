@@ -128,4 +128,23 @@ export const SweetAlertUtils = {
       },
     });
   },
+
+  showAppointmentConfirmation(doctorName: string) {
+    return Swal.fire({
+      title: translateService.instant('sweetalert.appointment.title', {
+        doctor: doctorName,
+      }),
+      text: translateService.instant('sweetalert.appointment.text'),
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: translateService.instant(
+        'sweetalert.appointment.confirm'
+      ),
+      cancelButtonText: translateService.instant(
+        'sweetalert.appointment.cancel'
+      ),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
 };

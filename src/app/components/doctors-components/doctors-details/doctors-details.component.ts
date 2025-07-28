@@ -6,9 +6,11 @@ import { Doctor } from '../../../core/interfaces/doctors.interface';
 import { NgIf } from '@angular/common';
 import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
 import { CoursesService } from '../../../core/service/courses.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
+import { SweetAlertUtils } from '../../../shared/utils/SweetAlert.utils';
+import { AuthService } from '../../../core/service/auth.service';
 
 @Component({
   selector: 'app-doctors-details',
@@ -31,7 +33,9 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private doctorsService: DoctorsService,
-    private CoursesService: CoursesService
+    private CoursesService: CoursesService,
+    private translate: TranslateService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -130,6 +134,21 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
   changePage(page: number) {
     this.currentPage = page;
     this.getDoctorCourses(this.doctor.id, this.currentPage);
+  }
+
+  isBooked: boolean = false;
+
+  onBookPrivateAppointment() {
+    SweetAlertUtils.showAppointmentConfirmation(this.doctor.name).then(
+      (result) => {
+        if (result.isConfirmed) {
+          this.isBooked = true;
+          SweetAlertUtils.showSuccessAlert(
+            this.translate.instant('sweetalert.appointment_success')
+          );
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
