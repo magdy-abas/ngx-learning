@@ -122,7 +122,8 @@
     "subscribed": "Subscribed",
     "rejected": "Rejected",
     "noComments": "No notes available",
-    "note": "Note"
+    "note": "Note",
+    "score": "Score"
   },
 
   "sweetAlerts": {

@@ -8,7 +8,7 @@ import * as CryptoJS from 'crypto-js';
 import { RequestJoinDto } from '../../../core/Dtos/coursesDtos';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
@@ -30,6 +30,7 @@ import { DoctorComment } from '../../../core/interfaces/doctor-comments';
     TranslateModule,
     HlsPlayerComponent,
     DatePipe,
+    NgClass,
   ],
 
   templateUrl: './courses-details.component.html',
