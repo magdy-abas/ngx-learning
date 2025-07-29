@@ -13,6 +13,7 @@ import {
 import Hls from 'hls.js';
 import Plyr from 'plyr';
 import { NgIf } from '@angular/common';
+import { GlobalTranslateService } from '../../core/service/global-translate.service';
 
 @Component({
   selector: 'app-hls-player',
@@ -35,8 +36,7 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   private hls: Hls | null = null;
   private player: Plyr | null = null;
   public showInitialLoader: boolean = true;
-
-  constructor() {}
+  constructor(private translate: GlobalTranslateService) {}
 
   ngAfterViewInit(): void {
     if (this.src) {
@@ -94,12 +94,14 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     availableQualities: number[],
     defaultQuality: number
   ): void {
+    const lang = this.translate.language$.value;
     const video = this.videoElement.nativeElement;
     if (this.player) {
       this.player.destroy();
     }
 
     this.player = new Plyr(video, {
+      i18n: lang === 'ar' ? this.getArabicI18n() : {},
       controls: [
         'play-large',
         'rewind',
@@ -114,6 +116,10 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
         'fullscreen',
       ],
       settings: ['quality', 'speed', 'captions'],
+      tooltips: {
+        controls: true,
+        seek: true,
+      },
       quality: {
         default: defaultQuality,
         options: availableQualities,
@@ -167,6 +173,38 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
       this.hls.destroy();
       this.hls = null;
     }
+  }
+
+  private getArabicI18n() {
+    return {
+      restart: 'إعادة التشغيل',
+      rewind: 'رجوع 10 ثواني',
+      play: 'تشغيل',
+      pause: 'إيقاف مؤقت',
+      fastForward: 'تقديم 10 ثواني',
+      seek: 'تخطي',
+      seekLabel: '{seektime} ثانية',
+      played: 'تم التشغيل',
+      buffered: 'تم التحميل المؤقت',
+      currentTime: 'الوقت الحالي',
+      duration: 'المدة',
+      volume: 'الصوت',
+      mute: 'كتم الصوت',
+      unmute: 'إلغاء الكتم',
+      enableCaptions: 'تشغيل الترجمة',
+      disableCaptions: 'إيقاف الترجمة',
+      download: 'تحميل',
+      enterFullscreen: 'ملء الشاشة',
+      exitFullscreen: 'الخروج من ملء الشاشة',
+      frameTitle: 'مشغل للفيديو',
+      captions: 'الترجمة',
+      settings: 'الإعدادات',
+      menuBack: 'رجوع',
+      speed: 'السرعة',
+      normal: 'عادي',
+      quality: 'الجودة',
+      loop: 'تشغيل متكرر',
+    };
   }
 
   ngOnDestroy(): void {

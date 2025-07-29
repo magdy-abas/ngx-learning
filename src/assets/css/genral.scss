@@ -7,16 +7,14 @@
 .swal2-container {
   z-index: 55555 !important;
 }
-.form-control:not(.not-dark),
-input:not([type="tel"]) {
+.form-control:not(.not-dark):not([data-plyr]),
+input:not([type="tel"]):not([data-plyr]) {
   background-color: var(--input-bg) !important;
   color: var(--input-text);
   border: 1px solid var(--input-border);
   border-radius: 5px;
-  // min-height: 50px;
   transition: 0.3s ease;
   font-size: 15px;
-  // padding: 10px 14px;
 }
 
 .form-control:focus:not([type="tel"]) {
