@@ -9,6 +9,19 @@
   --calender-toolbar-title: #2d2a78;
   --calender-white: #ffffff;
 }
+body.dark-mode {
+  :host ::ng-deep {
+    --calender-light-bg: transparent !important;
+    --calender-primary-bg: #a18bff !important;
+    --calender-primary-bg-hover: #cfc8ff !important;
+    --calender-primary-bg-active: #7d6cd1 !important;
+    --calender-today-bg: #392c7d !important;
+    --calender-event-bg: #2c2944 !important;
+    --calender-event-text: #e4e4e7 !important;
+    --calender-toolbar-title: #cfc8ff !important;
+    --calender-white: #e4e4e7 !important;
+  }
+}
 
 .calendar-wrapper {
   background-color: var(--calender-light-bg);
