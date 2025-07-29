@@ -1,4 +1,4 @@
-name: farida
+name: steps
 
 on:
   push:
