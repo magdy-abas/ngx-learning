@@ -382,6 +382,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
                 lessonId,
                 this.userInfo?.name || 'Guest'
               );
+
+          console.log('Decrypted Video URL:', decryptedUrl);
+
           this.videoUrl = decryptedUrl;
           this.videoLoaded = true;
         }
@@ -402,14 +405,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       .joinMeeting(lessonId, leaveUrl)
       .subscribe({
         next: (data) => {
-          // console.log(data);
-
           if (data.status === 1 && data.data?.join_url) {
-            // console.log('Join URL:', data.data.join_url);
-            // console.log('User Info:', this.userInfo);
-            // console.log('Chapter ID:', chapterId);
-            // console.log('Lesson ID:', lessonId);
-
             const decryptedJoinUrl = isFree
               ? data.data.join_url
               : this.encryptionService.decryptData(

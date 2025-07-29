@@ -207,7 +207,8 @@
       "title": "Success!"
     },
     "error": {
-      "title": "Error!"
+      "title": "Error!",
+      "confirm": "oK"
     },
     "appointment": {
       "title": "Do you want to book a private appointment with {{doctor}}?",

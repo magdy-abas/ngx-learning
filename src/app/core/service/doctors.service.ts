@@ -20,4 +20,17 @@ export class DoctorsService {
 
     return this.http.get<DoctorsResponse>(`${baseUrl}doctors`, { params });
   }
+
+  BookPrivateAppointment(doctor_id: number): Observable<any> {
+    return this.http.post(`${baseUrl}request-private-course`, { doctor_id });
+  }
+  doctorRegister(data: {
+    name: string;
+    email: string;
+    phone: string;
+    courses: string;
+    note: string;
+  }): Observable<any> {
+    return this.http.post(`${baseUrl}register-doctor`, data);
+  }
 }

@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UpdateInfoResponse } from '../interfaces/profile.interface';
+import {
+  MettingDateApiResponse,
+  UpdateInfoResponse,
+} from '../interfaces/profile.interface';
 import { baseUrl } from '../../environment/environment.local';
 import { UpdateProfileDto } from '../Dtos/profileDtos';
 
@@ -15,6 +18,11 @@ export class ProfileService {
     return this._HttpClient.post<UpdateInfoResponse>(
       `${baseUrl}update-profile`,
       body
+    );
+  }
+  getMeetingTimes(): Observable<MettingDateApiResponse> {
+    return this._HttpClient.get<MettingDateApiResponse>(
+      `${baseUrl}lessons/upcoming-meeting`
     );
   }
 }

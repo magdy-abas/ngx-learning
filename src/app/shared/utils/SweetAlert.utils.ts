@@ -101,6 +101,7 @@ export const SweetAlertUtils = {
       title: translateService.instant('sweetalert.error.title'),
       text: errorMessage,
       icon: 'error',
+      confirmButtonText: translateService.instant('sweetalert.error.confirm'),
       customClass: commonCustomClasses,
     });
   },
@@ -143,6 +144,27 @@ export const SweetAlertUtils = {
       cancelButtonText: translateService.instant(
         'sweetalert.appointment.cancel'
       ),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
+
+  showBookingFailureAlert(message: string) {
+    return Swal.fire({
+      text: message,
+      icon: 'info',
+      confirmButtonText: translateService.instant('sweetalert.error.confirm'),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
+
+  showSubmissionSuccess(message: string) {
+    return Swal.fire({
+      icon: 'success',
+      title: translateService.instant('sweetalert.success.title'),
+      text: message,
+      confirmButtonText: translateService.instant('sweetalert.ok'),
       width: '450px',
       customClass: commonCustomClasses,
     });

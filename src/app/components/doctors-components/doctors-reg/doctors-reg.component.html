@@ -44,6 +44,10 @@
 
               <app-phone-input [control]="phoneControl"></app-phone-input>
 
+              <div *ngIf="(phoneControl.touched || submitted) && phoneControl.errors?.['required']"
+                class="text-danger small mt-2">
+                {{ 'auth.inputRequired' | translate }}
+              </div>
 
 
             </div>
@@ -52,7 +56,13 @@
               <label>{{ 'courses.courseCategories' | translate }}</label>
               <textarea rows="3" class="form-control" formControlName="courses"
                 [placeholder]="'auth.coursesPlaceholder' | translate"></textarea>
+              <div *ngIf="(f['courses'].touched || submitted) && f['courses'].errors?.['required']"
+                class="text-danger small mt-2">
+                {{ 'auth.inputRequired' | translate }}
+              </div>
+
             </div>
+
 
             <div class="form-group">
               <label>{{ 'courses.note' | translate }}</label>

@@ -14,3 +14,16 @@ export interface UpdateInfoResponse {
   message: string;
   data: UserData;
 }
+
+interface Event {
+  id: number;
+  chapter_id: number;
+  title: string;
+  start: string;
+}
+
+export interface MettingDateApiResponse {
+  status: number;
+  message: string;
+  data: Event[];
+}

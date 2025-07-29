@@ -149,17 +149,18 @@
                       <i class="fa-solid fa-clock"></i> {{ mt | date: 'HH:mm' }}
                     </span>
                     <span *ngIf="lesson.quiz_info.is_answered == 1" class="quiz-badge" [ngClass]="{
-    'badge-success': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
-    'badge-warning': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
-                     (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
-    'badge-danger': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5
-  }">
+                           'badge-success': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
+                         'badge-warning': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
+                                          (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
+                         'badge-danger': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5
+                       }">
                       <i class="fa-solid" [ngClass]="{
-      'fa-check-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
-      'fa-exclamation-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
+                         'fa-check-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
+                         'fa-exclamation-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
                                (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
-      'fa-times-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5
-    }" style="margin-inline-end: 5px; font-size: 12px;"></i>
+                         'fa-times-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5
+                                                                  }"
+                        style="margin-inline-end: 5px; font-size: 12px;"></i>
                       {{ 'courses.score' | translate }}:
                       {{ lesson.quiz_info.correct_answers }} / {{ lesson.quiz_info.total_mark }}
                     </span>

@@ -45,11 +45,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     AOS.init({ duration: 1000, once: true });
 
-    // Check for query param 'section'
     this._route.queryParams.subscribe((params) => {
       const section = params['section'];
-      if (section === 'courses') {
-        this.activeSection = 'courses';
+      if (section === 'courses' || section === 'calendar') {
+        this.activeSection = section;
       }
     });
 

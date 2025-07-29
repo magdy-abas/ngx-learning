@@ -196,7 +196,8 @@
       "title": "تم بنجاح!"
     },
     "error": {
-      "title": "خطأ!"
+      "title": "خطأ!",
+      "confirm": "حسنًا"
     },
     "appointment": {
       "title": "هل تريد حجز موعد خاص مع {{doctor}}؟",

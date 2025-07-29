@@ -20,6 +20,7 @@ import { AuthService } from '../../../core/service/auth.service';
   styleUrl: './doctors-details.component.scss',
 })
 export class DoctorsDetailsComponent implements OnInit, OnDestroy {
+  isBooked: boolean = false;
   subscriptions: Subscription[] = [];
   doctor!: Doctor;
   courses: any[] = [];
@@ -136,16 +137,26 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     this.getDoctorCourses(this.doctor.id, this.currentPage);
   }
 
-  isBooked: boolean = false;
-
   onBookPrivateAppointment() {
     SweetAlertUtils.showAppointmentConfirmation(this.doctor.name).then(
       (result) => {
         if (result.isConfirmed) {
-          this.isBooked = true;
-          SweetAlertUtils.showSuccessAlert(
-            this.translate.instant('sweetalert.appointment_success')
-          );
+          this.doctorsService.BookPrivateAppointment(this.doctor.id).subscribe({
+            next: (res) => {
+              if (res.status === 1) {
+                this.isBooked = true;
+                SweetAlertUtils.showSuccessAlert(
+                  this.translate.instant('sweetalert.appointment_success')
+                );
+              } else {
+                SweetAlertUtils.showBookingFailureAlert(res.message);
+              }
+            },
+            error: (err) => {
+              console.error(err);
+              SweetAlertUtils.showErrorAlert(err.message);
+            },
+          });
         }
       }
     );

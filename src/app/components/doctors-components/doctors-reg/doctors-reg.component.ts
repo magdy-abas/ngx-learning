@@ -10,6 +10,7 @@ import { PhoneInputComponent } from '../../../shared/ui/phone-input/phone-input.
 import { NgIf } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
+import { DoctorsService } from '../../../core/service/doctors.service';
 
 @Component({
   selector: 'app-doctors-reg',
@@ -22,7 +23,11 @@ export class DoctorsRegComponent {
   registerForm!: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder, private translate: TranslateService) {}
+  constructor(
+    private fb: FormBuilder,
+    private translate: TranslateService,
+    private _DoctorsService: DoctorsService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -47,16 +52,30 @@ export class DoctorsRegComponent {
     }
 
     const formData = this.registerForm.value;
-    console.log('Instructor Data:', JSON.stringify(formData, null, 2));
 
-    Swal.fire({
-      icon: 'success',
-      title: this.translate.instant('sweetalert.requestSentTitle'),
-      text: this.translate.instant('sweetalert.requestSentBody'),
-      confirmButtonText: this.translate.instant('sweetalert.ok'),
+    this._DoctorsService.doctorRegister(formData).subscribe({
+      next: (res) => {
+        if (res.status === 1) {
+          Swal.fire({
+            icon: 'success',
+            title: this.translate.instant('sweetalert.requestSentTitle'),
+            text: this.translate.instant('sweetalert.requestSentBody'),
+            confirmButtonText: this.translate.instant('sweetalert.ok'),
+          });
+
+          this.registerForm.reset();
+          this.submitted = false;
+        } else {
+          Swal.fire({
+            text: res.message,
+            confirmButtonText: this.translate.instant('sweetalert.ok'),
+          });
+        }
+      },
+      error: (err) => {
+        const errorMessage = err?.error?.message;
+      },
     });
-    this.registerForm.reset();
-    this.submitted = false;
   }
 
   get phoneControl(): FormControl {
