@@ -1,4 +1,12 @@
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  firstValueFrom,
+  map,
+  Observable,
+  of,
+  tap,
+} from 'rxjs';
 import { SettingResponse } from '../interfaces/settings.interface';
 import { baseUrl } from '../../environment/environment.local';
 import { Router } from '@angular/router';
@@ -33,6 +41,7 @@ export class SharedService {
           this.setLoginMethod(response.data.settings.auth_login_with);
         } else {
           this.isSecurityChecked.next(false);
+
           this.initializationComplete.next(true);
           this.router.navigate(['/notfound']);
         }
@@ -76,18 +85,13 @@ export class SharedService {
     localStorage.setItem('appSettings', JSON.stringify(settings));
   }
 
-  loadSettings(): Promise<void> {
-    return this.settings()
-      .toPromise()
-      .then((response) => {
-        if (response) {
-          this.settingsData = response;
-          this.saveSettingsToLocalStorage(response);
-          this.settingsSubject.next(response);
-        } else {
-          console.warn('Settings API returned undefined');
-        }
-      });
+  async loadSettings(): Promise<void> {
+    const response = await firstValueFrom(this.settings());
+    if (response) {
+      this.settingsData = response;
+      this.saveSettingsToLocalStorage(response);
+      this.settingsSubject.next(response);
+    }
   }
 
   getSettings(): SettingResponse | null {

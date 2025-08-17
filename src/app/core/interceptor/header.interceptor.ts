@@ -25,7 +25,6 @@ export const headerInterceptor: HttpInterceptorFn = (
 
   const modifiedReq = req.clone({
     setHeaders: {
-      'Content-Type': 'application/json',
       Accept: 'application/json',
       'Accept-Language': lang,
       'Accept-Browser': 'angular_website',

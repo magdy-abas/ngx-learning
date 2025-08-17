@@ -46,10 +46,10 @@ export class ApplicationPageComponent implements OnInit {
 
   get appName(): string {
     if (!this.appData?.settings?.app_name) {
-      return this.lang === 'ar' ? 'توتال' : 'Total';
+      return this.lang === 'ar' ? 'التطبيق' : 'app';
     }
     return this.lang === 'ar'
-      ? this.appData.settings.app_name.ar || 'فريدة'
-      : this.appData.settings.app_name.en || 'Farida';
+      ? this.appData.settings.app_name.ar || 'التطبيق'
+      : this.appData.settings.app_name.en || 'app';
   }
 }
