@@ -35,7 +35,12 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private hls: Hls | null = null;
   private player: Plyr | null = null;
+
   public showInitialLoader: boolean = true;
+
+  private _onLoadedData?: () => void;
+  private _onCanPlay?: () => void;
+
   constructor(private translate: GlobalTranslateService) {}
 
   ngAfterViewInit(): void {
@@ -47,6 +52,7 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['src'] && !changes['src'].firstChange) {
       this.destroyPlayer();
+      this.showInitialLoader = true;
       if (this.src) {
         this.initializePlayer();
       }
@@ -58,6 +64,16 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     video.poster = this.poster;
     video.muted = this.muted;
     video.preload = this.preload;
+
+    video.style.visibility = 'hidden';
+    video.style.opacity = '0';
+    video.style.pointerEvents = 'none';
+
+    this._onLoadedData = () => this.finishLoading();
+    this._onCanPlay = () => this.finishLoading();
+
+    video.addEventListener('loadeddata', this._onLoadedData, { once: true });
+    video.addEventListener('canplay', this._onCanPlay, { once: true });
 
     if (Hls.isSupported()) {
       this.initializeHls();
@@ -80,13 +96,23 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
         .map((level) => level.height)
         .sort((a, b) => b - a);
 
-      const defaultQuality = availableQualities ? availableQualities[0] : 720;
+      const defaultQuality = availableQualities?.[0] || 720;
 
       this.initializePlyr(availableQualities, defaultQuality);
     });
 
-    this.hls.on(Hls.Events.ERROR, (event, data) => {
-      this.handleHlsError(data);
+    this.hls.on(Hls.Events.ERROR, (_event, data) => {
+      if (!data.fatal) return;
+      switch (data.type) {
+        case Hls.ErrorTypes.NETWORK_ERROR:
+          this.hls?.startLoad();
+          break;
+        case Hls.ErrorTypes.MEDIA_ERROR:
+          this.hls?.recoverMediaError();
+          break;
+        default:
+          this.handleHlsError(data);
+      }
     });
   }
 
@@ -96,6 +122,7 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   ): void {
     const lang = this.translate.language$.value;
     const video = this.videoElement.nativeElement;
+
     if (this.player) {
       this.player.destroy();
     }
@@ -128,7 +155,7 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
           const levelIndex = this.hls?.levels.findIndex(
             (level) => level.height === newQuality
           );
-          if (levelIndex !== -1 && levelIndex != null) {
+          if (levelIndex != null && levelIndex >= 0) {
             this.hls!.currentLevel = levelIndex;
           }
         },
@@ -136,9 +163,15 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     });
 
     this.player.once('ready', () => {
-      this.showInitialLoader = false;
-      video.style.visibility = 'visible';
+      if (video.readyState >= 2) {
+        this.finishLoading();
+      }
       this.playerReady.emit();
+
+      if (this.autoplay) {
+        video.muted = this.muted || true;
+        video.play().catch(() => {});
+      }
     });
   }
 
@@ -155,8 +188,21 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
     });
   }
 
+  private finishLoading(): void {
+    if (!this.showInitialLoader) return;
+    const video = this.videoElement.nativeElement;
+
+    this.showInitialLoader = false;
+
+    video.style.visibility = 'visible';
+    video.style.opacity = '1';
+    video.style.pointerEvents = 'auto';
+  }
+
   private handleHlsError(data: any): void {
     console.error('HLS Error:', data);
+    this.destroyPlayer();
+    this.error.emit(data);
   }
 
   private handleError(message: string, details?: any): void {
@@ -165,6 +211,17 @@ export class HlsPlayerComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   private destroyPlayer(): void {
+    const video = this.videoElement?.nativeElement;
+    if (video) {
+      if (this._onLoadedData) {
+        video.removeEventListener('loadeddata', this._onLoadedData);
+        this._onLoadedData = undefined;
+      }
+      if (this._onCanPlay) {
+        video.removeEventListener('canplay', this._onCanPlay);
+        this._onCanPlay = undefined;
+      }
+    }
     if (this.player) {
       this.player.destroy();
       this.player = null;

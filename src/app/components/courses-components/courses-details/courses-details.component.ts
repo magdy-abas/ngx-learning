@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FeatherIconModule } from './../../../shared/utils/feather-icons.utils';
 
 import { AuthService } from './../../../core/service/auth.service';
@@ -8,7 +8,14 @@ import * as CryptoJS from 'crypto-js';
 import { RequestJoinDto } from '../../../core/Dtos/coursesDtos';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from './../../../shared/utils/unSubscribeObservable.utils';
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import {
+  DatePipe,
+  NgClass,
+  NgFor,
+  NgIf,
+  NgSwitch,
+  NgSwitchCase,
+} from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
@@ -18,6 +25,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EncryptionService } from '../../../core/service/encryption.service';
 import { HlsPlayerComponent } from '../../hls-player/hls-player.component';
 import { DoctorComment } from '../../../core/interfaces/doctor-comments';
+import { DarkModeService } from '../../../core/service/dark-mode.service';
 
 @Component({
   selector: 'app-courses-details',
@@ -31,6 +39,9 @@ import { DoctorComment } from '../../../core/interfaces/doctor-comments';
     HlsPlayerComponent,
     DatePipe,
     NgClass,
+    NgSwitch,
+    NgSwitchCase,
+    RouterLink,
   ],
 
   templateUrl: './courses-details.component.html',
@@ -41,7 +52,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   showPdfViewer = false;
   currentResourceTitle = '';
   doctorComments: DoctorComment[] = [];
-
+  courseProgress: number = 25;
   courseDetails?: CourseDetailsResponse;
   public isLoading: boolean = true;
   public errorMessage: string = '';
@@ -71,7 +82,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
-    private encryptionService: EncryptionService
+    private encryptionService: EncryptionService,
+    private DarkModeService: DarkModeService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -80,6 +92,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.spinner.show();
+    this.DarkModeService.applyMode();
     this.isAuth = this._AuthService.isAuthenticated();
     const courseId = this._route.snapshot.paramMap.get('id');
     if (courseId) {
@@ -146,21 +159,16 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   }
 
   getDisplayIcon(lesson: any): string {
-    // For free lessons,
-    if (lesson.is_free) {
-      return this.getLessonTypeIcon(lesson.type);
-    }
-
-    // For non-free lessons
-    if (this.CourseSubscribe) {
-      // If user bought the course
-      return this.getLessonTypeIcon(lesson.type);
+    if (lesson.is_free || this.CourseSubscribe) {
+      return lesson.type; // video | quiz | meeting
     } else {
-      // If user hasn't bought the course
-      return 'assets/img/icon/lock.svg';
+      return 'lock';
     }
   }
 
+  isLocked(lesson: any): boolean {
+    return !(lesson.is_free || this.CourseSubscribe);
+  }
   getLessonTypeIcon(type: string): string {
     switch (type) {
       case 'video':
@@ -432,6 +440,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     resourceTitle: string,
     isFree: boolean
   ): void {
+    console.log('work');
+
     const decryptedUrl = isFree
       ? encryptedUrl
       : this.encryptionService.decryptData(

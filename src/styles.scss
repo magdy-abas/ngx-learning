@@ -176,20 +176,80 @@
 
   // courses-details
 
-  --doctor-card-bg: #fff;
-  --doctor-img-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* Text colors */
+  --cd-text-muted: #6c757d;
+  --cd-text-dark: #333333;
+  --cd-text-strong: #111827;
+  --cd-text-gray-500: #97a7bf;
 
-  --lesson-card-bg: #ffffff;
-  --lesson-card-border: #e5e5e5;
-  --lesson-card-radius: 10px;
+  /* Icons */
+  --cd-icon-primary: #ff875a;
+  --cd-icon-accent: #ff7a50;
 
-  --lesson-percent-border: #e5e5e5;
-  --lesson-widget-bg: #ffffff;
+  /* Base colors */
+  --cd-white: #ffffff;
+  --cd-black: #000000;
 
-  --category-tab-bg: #e0e0e0;
-  --category-tab-text: #000000;
-  --category-tab-active-bg: #ff5364;
-  --category-tab-active-text: #ffffff;
+  /* Borders */
+  --cd-border: #e5e7eb;
+
+  /* Shadows */
+  --cd-shadow-weak: rgba(0, 0, 0, 0.05);
+  --cd-shadow-medium: rgba(0, 0, 0, 0.06);
+
+  /* Video */
+  --cd-video-bg: #000000;
+  --cd-video-placeholder-bg: #000000;
+
+  /* Tabs */
+  --cd-tabs-bg: #f3f4f6;
+  --cd-tab-text: #6b7280;
+  --cd-tab-hover-text: #333333;
+  --cd-tab-active-bg: #ffffff;
+  --cd-tab-active-text: #111827;
+
+  /* Chapter */
+  --cd-chapter-bg: #ffffff;
+  --cd-chapter-icon-bg: #eff6ff;
+  --cd-chapter-icon-text: #2563eb;
+  --cd-arrow: #9ca3af;
+
+  /* Items */
+  --cd-item-bg: #ffffff;
+  --cd-item-hover-bg: #f9fafb;
+  --cd-thumb-bg: #f3f4f6;
+
+  /* Scrollbar */
+  --cd-scrollbar-thumb: #e5e7eb;
+
+  /* Aside */
+  --cd-aside-bg: #f9fafb;
+
+  /* Lite buttons */
+  --cd-btn-bg: #ffffff;
+  --cd-btn-hover-bg: #f9fafb;
+
+  /* Progress */
+  --cd-progress-track: #e5e7eb;
+  --cd-progress-fill: #e67342;
+  --cd-progress-text: #ffffff;
+  --cd-accent: #e67342;
+
+  /* Badges */
+  --cd-badge-text: #ffffff;
+
+  --cd-badge-success-bg: #28a7451f;
+  --cd-badge-success-border: #28a745;
+
+  --cd-badge-warning-bg: #ffc1071f;
+  --cd-badge-warning-border: #ffc107;
+
+  --cd-badge-danger-bg: #dc35451f;
+  --cd-badge-danger-border: #dc3545;
+
+  /* Extra */
+  --cd-lesson-icon-bg: #f0f4f9;
+  --cd-breadcrumb-bg: #ffffff;
 
   // quiz courses-drtails
   --quiz-primary-color: var(--color-primary);

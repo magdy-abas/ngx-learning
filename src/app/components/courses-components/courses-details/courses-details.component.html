@@ -1,260 +1,416 @@
-<div *ngIf="courseDetails" class="container my-4">
+<!-- NEW DESIGN TEMPLATE (logic preserved) -->
+<div *ngIf="courseDetails" class="courses-det">
+  <div class="layout">
+    <!-- MAIN -->
+    <main class="flex-grow-1 px-3 ">
+      <div class="container-xxl px-0">
+        <div class="mb-3 breadcrumb-bar-cstm mt-3 ">
+          <h1 class="h5 fw-bold mb-3 text-main-cstm">{{ courseDetails.course.title }}</h1>
+          <div class="small text-secondary ">
+            <a routerLink="/" class="text-decoration-none text-secondary"> {{ 'courses.home' | translate }}</a>
+            <span class="px-1">›</span>
 
-  <!-- Doctor card for mobile -->
-  <div class="row d-lg-none mb-3">
-    <div class="col-12">
-      <div class="doctor-card shadow-sm rounded-4 p-3 text-center mb-3">
-        <div class="doctor-img-wrapper mb-2">
-          <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
-            onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img" class="w-100 h-100"
-            style="object-fit: cover;">
-        </div>
+            <a routerLink="/courses" class="text-decoration-none text-secondary">{{ 'courses.courses' | translate }}</a>
+            <span class="px-1">›</span>
 
-        <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
-        <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
-
-        <div>
-          <!-- <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
-            disabled>{{ 'courses.subscribed' | translate }}</button> -->
-          <div class="d-flex justify-content-center align-items-center mb-2">
-            <div *ngIf="courseDetails?.course?.client_status === 'accepted'" class="course-card-progress-bar   d-flex"
-              style="width: 80%;">
-              <span class="progress-text mx-2">{{0}}%</span>
-              <div class="progress-container">
-                <div class="progress-fill" [style.width.%]="0">
-
-                </div>
-              </div>
-            </div>
+            <span class="px-1">{{ courseDetails.course.title }}</span>
           </div>
 
-          <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
-            disabled>{{ 'courses.rejected' | translate }}</button>
-
-          <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="btn btn-secondary btn-sm px-4 py-2"
-            disabled>{{ 'courses.pending' | translate }}</button>
-
-          <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
-            (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
-            class="btn btn-orange btn-sm px-4 py-2">{{ 'courses.subscribeNow' | translate }}</button>
         </div>
+
+        <!-- Video Player -->
+        <section class="video-wrap video--cover mb-3">
+          <ng-container *ngIf="!videoLoaded; else showVideo">
+            <div class="video-el">
+              <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
+              <button class="start-btn" (click)="startFirstLesson()">
+                {{ 'courses.startNow' | translate }}
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-template #showVideo>
+            <app-hls-player [src]="videoUrl" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
+              (error)="onPlayerError($event)">
+            </app-hls-player>
+          </ng-template>
+        </section>
       </div>
-    </div>
-  </div>
+    </main>
 
-  <!-- Main layout -->
-  <div class="row align-items-start">
+    <!-- SIDEBAR -->
+    <aside class="aside">
+      <div class="d-flex flex-column flex-grow-1">
 
-    <!-- video -->
-    <div class="col-lg-8 col-md-7 col-sm-12 mb-3">
-      <div class="video-wrapper">
-        <ng-container *ngIf="!videoLoaded; else showVideo">
-          <div class="video-placeholder">
-            <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
-            <button class="start-btn" (click)="startFirstLesson()">
-              {{ 'courses.startNow' | translate }}
+        <!-- Profile Card -->
+        <div [ngClass]="{ 'card-soft-sm-sub': isAuth }" class="card-soft-sm p-3 m-3">
+          <div class="d-flex align-items-center gap-3 card-body-cstm p-2 rounded-4">
+            <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
+              onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img"
+              style="width:48px;height:48px; border-radius: 50%; object-fit: cover;">
+
+            <div class="flex-grow-1">
+              <p class="fw-semibold mb-0 lh-1">{{ courseDetails.course.doctor }}</p>
+              <p class="text-muted small mt-1 mb-0"> {{ 'navbar.instructor' | translate }}</p>
+            </div>
+
+            <!-- Subscribe buttons / statuses -->
+            <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
+              disabled>
+              {{ 'courses.rejected' | translate }}
+            </button>
+            <button *ngIf="courseDetails?.course?.client_status === 'pending'"
+              class="btn btn-secondary btn-sm px-4 py-2" disabled>
+              {{ 'courses.pending' | translate }}
+            </button>
+            <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
+              (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
+              class="btn btn-orange btn-sm px-4 py-2">
+              {{ 'courses.subscribeNow' | translate }}
             </button>
           </div>
-        </ng-container>
 
-        <ng-template #showVideo>
-          <app-hls-player [src]="videoUrl" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
-            (error)="onPlayerError($event)"></app-hls-player>
-        </ng-template>
-      </div>
-    </div>
-
-    <!-- Doctor card + tabs for desktop -->
-    <div class="col-lg-4 col-md-5 col-sm-12 mb-3">
-
-      <!-- Doctor card for desktop -->
-      <div class="doctor-card shadow-sm rounded-4 p-3 text-center mb-3 d-none d-lg-block">
-        <div class="doctor-img-wrapper mb-2">
-          <img [src]="courseDetails.course.doctor_image || './assets/img/course/doctor.png'"
-            onerror="this.src='./assets/img/course/doctor.png'" alt="doctor-img" class="w-100 h-100"
-            style="object-fit: cover;">
+          <!-- Progress (only if accepted) -->
+          <div *ngIf="courseDetails?.course?.client_status === 'accepted'" class="mt-3">
+            <div class="progress-wrap">
+              <div class="progress-inner" [style.width.%]="courseProgress || 0"></div>
+            </div>
+            <p class="small mt-1 mb-0 progress-inner-text">
+              {{ (courseProgress || 0) }}% {{ 'courses.studyProgress' | translate }}
+            </p>
+          </div>
         </div>
 
-        <h6 class="mb-1 text-muted small">{{ courseDetails.course.doctor }}</h6>
-        <h5 class="fw-bold mb-2 text-orange">{{ courseDetails.course.title }}</h5>
+        <!-- Tabs + Content -->
+        <div class="card-soft m-3 p-3 d-flex flex-column" style="min-height:0;">
+          <!-- Tabs -->
+          <div class="tabs-pill mb-3">
+            <ul class="nav nav-pills mx-0 px-0" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button id="program-tab" class="nav-link active tab-btn" data-bs-toggle="tab" data-bs-target="#program"
+                  type="button" role="tab" aria-controls="program" aria-selected="true">
+                  {{ 'courses.courseProgram' | translate }}
+                </button>
+              </li>
 
-        <div>
-          <!-- <button *ngIf="courseDetails?.course?.client_status === 'accepted'" class="btn btn-success btn-sm px-4 py-2"
-            disabled>{{ 'courses.subscribed' | translate }}</button> -->
-          <div class="d-flex justify-content-center align-items-center mb-2">
-            <div *ngIf="courseDetails?.course?.client_status === 'accepted'" class="course-card-progress-bar   d-flex"
-              style="width: 80%;">
-              <span class="progress-text mx-2">{{0}}%</span>
-              <div class="progress-container">
-                <div class="progress-fill" [style.width.%]="0">
+              <li class="nav-item" role="presentation">
+                <button id="notes-tab" class="nav-link tab-btn" data-bs-toggle="tab" data-bs-target="#notes"
+                  type="button" role="tab" aria-controls="notes" aria-selected="false">
+                  {{ 'courses.notes' | translate }}
+                </button>
+              </li>
 
+              <li class="nav-item" role="presentation">
+                <button id="more-tab" class="nav-link tab-btn" data-bs-toggle="tab" data-bs-target="#more" type="button"
+                  role="tab" aria-controls="more" aria-selected="false">
+                  {{ 'courses.filesCount' | translate }}
+                </button>
+              </li>
+            </ul>
+          </div>
+
+
+          <!-- Panels -->
+          <div class="tab-content flex-grow-1 overflow-auto nice-scroll" style="min-height:0;">
+
+            <!-- PROGRAM -->
+            <div id="program" class="tab-pane fade show active" role="tabpanel" aria-labelledby="program-tab">
+              <div id="program-accordion" class="d-grid gap-3">
+                @if (courseDetails.data.length > 0) {
+                @for (chapter of courseDetails.data; track $index; let first = $first) {
+                <section class="chapter" [attr.aria-open]="first">
+                  <button class="chapter-toggle d-flex align-items-center w-100 gap-3" type="button"
+                    [attr.aria-expanded]="first" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#program-chapter-' + $index"
+                    [attr.aria-controls]="'program-chapter-' + $index">
+                    <div class="icon-quad">
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M7.24 2h-1.9C3.15 2 2 3.15 2 5.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9C10.57 3.15 9.42 2 7.24 2z">
+                        </path>
+                        <path
+                          d="M18.67 2h-1.9c-2.18 0-3.33 1.15-3.33 3.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9C22 3.15 20.85 2 18.67 2z"
+                          opacity=".4"></path>
+                        <path
+                          d="M18.67 13.43h-1.9c-2.18 0-3.33 1.15-3.33 3.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9c0-2.18-1.15-3.33-3.33-3.33z">
+                        </path>
+                        <path
+                          d="M7.24 13.43h-1.9C3.15 13.43 2 14.58 2 16.76v1.9C2 20.85 3.15 22 5.33 22h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9c.01-2.19-1.14-3.34-3.32-3.34z"
+                          opacity=".4"></path>
+                      </svg>
+                    </div>
+
+                    <div class="flex-grow-1 text-start">
+                      <p class="fw-semibold mb-0">{{ chapter.title }}</p>
+                      <p class="text-muted small mb-0">
+                        {{ chapter.lessons.length || 0 }} {{ 'courses.lessonsCount' | translate }}
+                      </p>
+                    </div>
+
+                    <svg class="arrow ms-auto" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </button>
+
+
+                  <div class="chapter-content collapse" [class.show]="first" [id]="'program-chapter-' + $index"
+                    data-bs-parent="#program-accordion">
+                    <ul *ngIf="chapter.lessons?.length; else noLessons">
+                      <li *ngFor="let lesson of chapter.lessons" class="item-row csr-pointer"
+                        (click)="redirectToLesson(lesson.id, lesson.type, chapter.id, lesson.is_free)"
+                        [class.locked]="isLocked(lesson)">
+                        <div [ngSwitch]="getDisplayIcon(lesson)" class="chapter-content-icon">
+                          <!-- Video -->
+                          <!-- Video -->
+                          <svg *ngSwitchCase="'video'" height="24" width="24" class="text-gray-500"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            aria-hidden="true">
+                            <path
+                              d="M7.81 2h8.38c.06 0 .12 0 .17.01.54 0 1.04.06 1.5.17 2.16.47 3.56 1.91 3.99 4.1.1.47.15.97.15 1.5v8.5c-.01.53-.06 1.03-.16 1.5-.44 2.15-1.84 3.57-3.98 4.04-.46.11-.96.17-1.5.17-.05.01-.11.01-.17.01H7.81c-.51 0-1-.04-1.45-.13-2.26-.42-3.74-1.87-4.2-4.09-.11-.47-.16-.97-.16-1.5V7.77c0-.53.05-1.03.15-1.49.44-2.26 1.93-3.73 4.21-4.15.45-.09.94-.13 1.45-.13z"
+                              opacity=".4" />
+                            <path
+                              d="M7.86 11.25h8.5V2.01c.54 0 1.04.06 1.5.17v4.1h3.99c.1.47.15.97.15 1.5h-4.14v3.47H22v1.5h-4.14v3.53H22c-.01.53-.06 1.03-.16 1.5h-3.98v4.04c-.46.11-.96.17-1.5.17v-9.24h-8.5V22h-.05c-.51 0-1-.04-1.45-.13v-4.11c-.04.01-.08.02-.12.02H2.16c-.11-.47-.16-.97-.16-1.5h4.24c.04 0 .08.02.12.03v-3.56H2v-1.5h4.36V7.78H2v-.01c0-.53.05-1.03.15-1.49h4.18c.01 0 .02.01.03.01V2.13C6.81 2.04 7.3 2 7.81 2h.05v9.25z" />
+                          </svg>
+
+
+                          <!-- Quiz -->
+                          <svg *ngSwitchCase="'quiz'" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"
+                            class="icons text-gray-500">
+                            <path
+                              d="M16.24 3.65H7.76c-2.47 0-4.47 2.01-4.47 4.47v9.41C3.29 19.99 5.3 22 7.76 22h8.47c2.47 0 4.47-2.01 4.47-4.47V8.12c.01-2.47-2-4.47-4.46-4.47z"
+                              opacity=".4"></path>
+                            <path
+                              d="M14.35 2h-4.7c-1.04 0-1.89.84-1.89 1.88v.94c0 1.04.84 1.88 1.88 1.88h4.71c1.04 0 1.88-.84 1.88-1.88v-.94C16.24 2.84 15.39 2 14.35 2zM15 12.95H8c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h7c.41 0 .75.34.75.75s-.34.75-.75.75zM12.38 16.95H8c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h4.38c.41 0 .75.34.75.75s-.34.75-.75.75z">
+                            </path>
+                          </svg>
+
+                          <!-- Meeting -->
+                          <svg *ngSwitchCase="'meeting'" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"
+                            class="icons text-gray-500">
+                            <path
+                              d="M17 10.5V7c0-1.1-.9-2-2-2H5C3.9 5 3 5.9 3 7v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-3.5l4 4v-11l-4 4z" />
+                          </svg>
+
+                          <!-- Lock -->
+                          <svg *ngSwitchCase="'lock'" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"
+                            class="icons text-gray-500">
+                            <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+                            <rect x="5" y="10" width="14" height="11" rx="2" />
+                            <circle cx="12" cy="15" r="1" />
+                            <path d="M12 16v3" />
+                          </svg>
+                        </div>
+
+                        <div class="flex-grow-1">
+                          <p class="mb-0 small fw-medium"
+                            [class.play-intro]="lesson.is_free && CourseSubscribe == false">
+                            {{ lesson.title }}
+                            <span *ngIf="lesson.meeting_info?.start_at as mt" class="meta-info-inline">
+                              &nbsp;| <i class="fa-solid fa-calendar-day"></i> {{ mt | date: 'dd-MM-yyyy' }}
+                              <i class="fa-solid fa-clock"></i> {{ mt | date: 'HH:mm' }}
+                            </span>
+                            <span *ngIf="lesson.quiz_info?.is_answered == 1" class="quiz-badge" [ngClass]="{
+                        'badge-success': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
+                        'badge-warning': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
+                                         (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
+                        'badge-danger' : (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5}">
+                              <i class="fa-solid"
+                                [ngClass]="{
+                          'fa-check-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
+                          'fa-exclamation-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
+                                                   (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
+                          'fa-times-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5 }"
+                                style="margin-inline-end: 5px; font-size: 12px;"></i>
+                              {{ 'courses.score' | translate }}:
+                              {{ lesson.quiz_info.correct_answers }} / {{ lesson.quiz_info.total_mark }}
+                            </span>
+                          </p>
+                          <p class="mb-0 text-muted small">
+                            {{ ('lessonTypes.' + (lesson.type || 'unknown')) | translate }}
+                          </p>
+
+
+                        </div>
+                      </li>
+                    </ul>
+                    <ng-template #noLessons>
+                      <div class="border border-dashed rounded-4 p-4 text-center small text-muted">
+                        {{ 'courses.noLessons' | translate }}
+                      </div>
+                    </ng-template>
+                  </div>
+                </section>
+                }
+                } @else {
+                <div class="border border-dashed rounded-4 p-4 text-center small text-muted">
+                  {{ 'courses.noData' | translate }}
                 </div>
+                }
               </div>
             </div>
-          </div>
 
+            <!-- NOTES -->
+            <div id="notes" class="tab-pane fade" role="tabpanel" aria-labelledby="notes-tab">
+              <div id="notes-accordion" class="d-grid gap-3">
+                @if (doctorComments.length > 0) {
+                @for (comment of doctorComments; track $index; let first = $first) {
+                <section class="chapter" [attr.aria-open]="first">
+                  <button class="chapter-toggle d-flex align-items-center w-100 gap-3" type="button"
+                    [attr.aria-expanded]="first" data-bs-toggle="collapse" [attr.data-bs-target]="'#note-' + $index"
+                    [attr.aria-controls]="'note-' + $index">
+                    <div class="icon-quad">
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M7.24 2h-1.9C3.15 2 2 3.15 2 5.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9C10.57 3.15 9.42 2 7.24 2z">
+                        </path>
+                        <path
+                          d="M18.67 2h-1.9c-2.18 0-3.33 1.15-3.33 3.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9C22 3.15 20.85 2 18.67 2z"
+                          opacity=".4"></path>
+                        <path
+                          d="M18.67 13.43h-1.9c-2.18 0-3.33 1.15-3.33 3.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9c0-2.18-1.15-3.33-3.33-3.33z">
+                        </path>
+                        <path
+                          d="M7.24 13.43h-1.9C3.15 13.43 2 14.58 2 16.76v1.9C2 20.85 3.15 22 5.33 22h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9c.01-2.19-1.14-3.34-3.32-3.34z"
+                          opacity=".4"></path>
+                      </svg>
+                    </div>
 
-          <button *ngIf="courseDetails?.course?.client_status === 'rejected'" class="btn btn-danger btn-sm px-4 py-2"
-            disabled>{{ 'courses.rejected' | translate }}</button>
+                    <div class="flex-grow-1 text-start">
+                      <p class="fw-semibold mb-0">{{ 'courses.note' | translate }} {{ $index + 1 }}</p>
+                    </div>
 
-          <button *ngIf="courseDetails?.course?.client_status === 'pending'" class="btn btn-secondary btn-sm px-4 py-2"
-            disabled>{{ 'courses.pending' | translate }}</button>
+                    <svg class="arrow ms-auto" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </button>
 
-          <button *ngIf="!['accepted','rejected','pending'].includes(courseDetails.course.client_status)"
-            (click)="buyCourse($event, courseDetails.course.id, courseDetails.course.way_to_by_course_in_app, courseDetails.course.client_status)"
-            class="btn btn-orange btn-sm px-4 py-2">{{ 'courses.subscribeNow' | translate }}</button>
-        </div>
-      </div>
-
-      <!-- category tab -->
-      <div class="category-tab tickets-tab-blk">
-        <ul class="nav">
-          <li class="nav-item">
-            <a href="#program" class="nav-link active" data-bs-toggle="tab">{{ 'courses.courseProgram' | translate
-              }}</a>
-          </li>
-          <li class="nav-item">
-            <a href="#notes" class="nav-link" data-bs-toggle="tab">{{ 'courses.notes' | translate }}</a>
-          </li>
-          <li class="nav-item">
-            <a href="#more" class="nav-link" data-bs-toggle="tab">{{ 'courses.filesCount' | translate }}</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="cstm-tab tab-content">
-        <div class="lesson-group tab-pane fade show active" id="program">
-          @if (courseDetails.data.length > 0) {
-          @for (chapter of courseDetails.data; track $index; let first = $first) {
-          <div class="course-card">
-            <h6 class="cou-title">
-              <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index">
-                {{chapter.title}}
-                <span class="">{{chapter.lessons.length}} {{ 'courses.lessonsCount' | translate }}</span>
-              </a>
-            </h6>
-            <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
-              <ul *ngIf="chapter.lessons?.length; else noLessons">
-                <li *ngFor="let lesson of chapter.lessons"
-                  (click)="redirectToLesson(lesson.id, lesson.type, chapter.id , lesson.is_free)">
-
-                  <p [class.play-intro]="lesson.is_free && CourseSubscribe == false">
-
-
-                    {{lesson.title}}
-
-
-                    <span *ngIf="lesson.meeting_info.start_at as mt" class="meta-info-inline">
-                      &nbsp;| <i class="fa-solid fa-calendar-day"></i> {{ mt | date: 'dd-MM-yyyy' }}
-                      <i class="fa-solid fa-clock"></i> {{ mt | date: 'HH:mm' }}
-                    </span>
-                    <span *ngIf="lesson.quiz_info.is_answered == 1" class="quiz-badge" [ngClass]="{
-                           'badge-success': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
-                         'badge-warning': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
-                                          (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
-                         'badge-danger': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5
-                       }">
-                      <i class="fa-solid" [ngClass]="{
-                         'fa-check-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.8,
-                         'fa-exclamation-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) >= 0.5 &&
-                               (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.8,
-                         'fa-times-circle': (+lesson.quiz_info.correct_answers / +lesson.quiz_info.total_mark) < 0.5
-                                                                  }"
-                        style="margin-inline-end: 5px; font-size: 12px;"></i>
-                      {{ 'courses.score' | translate }}:
-                      {{ lesson.quiz_info.correct_answers }} / {{ lesson.quiz_info.total_mark }}
-                    </span>
-
-
-
-
-
-
-                  </p>
-                  <div><img [src]="getDisplayIcon(lesson)" alt="lesson-icon" style="width: 20px;"></div>
-                </li>
-              </ul>
-              <ng-template #noLessons>
-                <p class="text-center py-3">{{ 'courses.noLessons' | translate }}</p>
-              </ng-template>
-            </div>
-          </div>
-          }
-          } @else {
-          <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">{{ 'courses.noData' | translate }}</h4>
-          </div>
-          }
-        </div>
-
-        <div class="lesson-group tab-pane fade" id="notes">
-          @if (doctorComments.length > 0) {
-          @for (comment of doctorComments; track $index; let first = $first) {
-          <div class="course-card">
-            <h6 class="cou-title">
-              <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#note' + $index" aria-expanded="true">
-                {{ 'courses.note' | translate }} {{ $index + 1 }}
-                <!-- <span>
-                  <i class="fa-solid fa-calendar-day"></i> {{ comment.created_at }}
-                </span> -->
-              </a>
-            </h6>
-
-            <div [id]="'note' + $index" class="card-collapse collapse" [class.show]="first">
-              <ul>
-                <li>
-                  <p class=" pe-2 ps-2">{{ comment.comment }}</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          }
-          } @else {
-          <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">
-              {{ 'courses.noComments' | translate }}
-            </h4>
-          </div>
-          }
-        </div>
-
-
-        <div class="lesson-group tab-pane fade" id="more">
-          @for (chapter of resources; track chapter.id; let first = $first) {
-          <div class="course-card">
-            <h6 class="cou-title">
-              <a [class.collapsed]="!first" data-bs-toggle="collapse" [href]="'#chapter' + $index" aria-expanded="true">
-                {{chapter.title}} <span>{{chapter.resources.length}} {{ 'courses.filesCount' | translate }}</span>
-              </a>
-            </h6>
-            <div [id]="'chapter' + $index" class="card-collapse collapse" [class.show]="first">
-              <ul>
-                @for (resource of chapter.resources; track resource.id) {
-                <li class="csr-pointer"
-                  (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title, resource.is_free)">
-                  <p [class.play-intro]="resource.is_free">{{resource.title}}</p>
-                  <div>
-                    @if (CourseSubscribe == false) {
-                    <img [src]="resource.is_free ? 'assets/img/icon/file.svg' : 'assets/img/icon/lock.svg'" alt="file">
-                    }
-                    <img src='assets/img/icon/file.svg' alt="file">
+                  <div class="chapter-content collapse" [class.show]="first" [id]="'note-' + $index"
+                    data-bs-parent="#notes-accordion">
+                    <ul>
+                      <li class="item-row">
+                        <div class="flex-grow-1">
+                          <p class="pe-2 ps-2 mb-0">{{ comment.comment }}</p>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-                </li>
+                </section>
                 }
-              </ul>
+                } @else {
+                <div class="border border-dashed rounded-4 p-4 text-center small text-muted">
+                  {{ 'courses.noComments' | translate }}
+                </div>
+                }
+              </div>
             </div>
-          </div>
-          }
-          @if (!resources.length) {
-          <div class="course-card">
-            <h4 class="text-center py-5 tittle" style="color: #ff875a;">{{ 'courses.noData' | translate }}</h4>
-          </div>
-          }
-        </div>
 
-      </div>
+            <!-- MORE / RESOURCES -->
+            <div id="more" class="tab-pane fade" role="tabpanel" aria-labelledby="more-tab">
+              <div id="resources-accordion" class="d-grid gap-3">
+                @if (resources.length > 0) {
+                @for (chapter of resources; track chapter.id; let first = $first) {
+                <section class="chapter" [attr.aria-open]="first">
+                  <button class="chapter-toggle d-flex align-items-center w-100 gap-3" type="button"
+                    [attr.aria-expanded]="first" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#resources-chapter-' + $index"
+                    [attr.aria-controls]="'resources-chapter-' + $index">
+                    <div class="icon-quad">
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M7.24 2h-1.9C3.15 2 2 3.15 2 5.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9C10.57 3.15 9.42 2 7.24 2z">
+                        </path>
+                        <path
+                          d="M18.67 2h-1.9c-2.18 0-3.33 1.15-3.33 3.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9C22 3.15 20.85 2 18.67 2z"
+                          opacity=".4"></path>
+                        <path
+                          d="M18.67 13.43h-1.9c-2.18 0-3.33 1.15-3.33 3.33v1.9c0 2.18 1.15 3.33 3.33 3.33h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9c0-2.18-1.15-3.33-3.33-3.33z">
+                        </path>
+                        <path
+                          d="M7.24 13.43h-1.9C3.15 13.43 2 14.58 2 16.76v1.9C2 20.85 3.15 22 5.33 22h1.9c2.18 0 3.33-1.15 3.33-3.33v-1.9c.01-2.19-1.14-3.34-3.32-3.34z"
+                          opacity=".4"></path>
+                      </svg>
+                    </div>
 
-    </div>
+                    <div class="flex-grow-1 text-start">
+                      <p class="fw-semibold mb-0">{{ chapter.title }}</p>
+                      <p class="text-muted small mb-0">
+                        {{ chapter.resources?.length || 0 }} {{ 'courses.filesCount' | translate }}
+                      </p>
+                    </div>
+
+                    <!-- Arrow -->
+                    <svg class="arrow ms-auto" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </button>
+
+
+                  <div class="chapter-content collapse" [class.show]="first" [id]="'resources-chapter-' + $index"
+                    data-bs-parent="#resources-accordion">
+                    <ul *ngIf="chapter.resources?.length; else noResources">
+                      @for (resource of chapter.resources; track resource.id) {
+                      <li class="item-row csr-pointer"
+                        (click)="handleResourceClick(chapter.id, resource.id, resource.created_at, resource.title, resource.is_free)">
+                        <div class="chapter-content-icon">
+                          <div class="chapter-content-icon"
+                            *ngIf="CourseSubscribe == false && !resource.is_free; else fileIcon">
+                            <!--  Lock Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                              width="20" height="20" class="icons text-gray-500">
+                              <title>Lock</title>
+                              <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+                              <rect x="5" y="10" width="14" height="11" rx="2" />
+                              <circle cx="12" cy="15" r="1" />
+                              <path d="M12 16v3" />
+                            </svg>
+                          </div>
+
+                          <ng-template #fileIcon>
+                            <div class="chapter-content-icon">
+                              <!-- File Icon -->
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 24 24" class="icons text-gray-500">
+                                <path
+                                  d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 18H6V4h7v5h5v11z" />
+                              </svg>
+                            </div>
+                          </ng-template>
+
+                        </div>
+                        <div class="flex-grow-1">
+                          <p class="mb-0 small fw-medium" [class.play-intro]="resource.is_free">{{ resource.title }}</p>
+
+                        </div>
+                      </li>
+                      }
+                    </ul>
+                    <ng-template #noResources>
+                      <div class="border border-dashed rounded-4 p-4 text-center small text-muted">
+                        {{ 'courses.noData' | translate }}
+                      </div>
+                    </ng-template>
+                  </div>
+                </section>
+                }
+                } @else {
+                <div class="border border-dashed rounded-4 p-4 text-center small text-muted">
+                  {{ 'courses.noData' | translate }}
+                </div>
+                }
+              </div>
+            </div>
+
+          </div>
+          <!-- /tab-content -->
+        </div> <!-- /tabs card -->
+
+      </div> <!-- /flex-col -->
+    </aside>
   </div>
 </div>
 

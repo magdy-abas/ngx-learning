@@ -32,7 +32,9 @@ export class MainLayoutComponent {
     this.showNavbar = !(
       url.startsWith('/login') ||
       url.startsWith('/signup') ||
-      url.startsWith('/forgotpass')
+      url.startsWith('/forgotpass') ||
+      url.startsWith('/resetpass') ||
+      url.startsWith('/course-details/')
     );
   }
 }

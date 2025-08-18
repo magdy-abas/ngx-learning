@@ -95,6 +95,7 @@
     "showing": "Showing",
     "of": "of",
     "results": "results",
+    "studyProgress": "Study Progress",
     "search": "Search",
     "notFound": "Not Found Courses",
     "courseCategories": "Course categories",
@@ -106,11 +107,11 @@
     "viewAll": "View all ",
     "viewAllInstactors": "View all Instructors",
     "courses": "courses",
-    "subscribeNow": "Subscribe Now",
+    "subscribeNow": "Subscribe ",
     "lessonsCount": "Lessons",
     "noLessons": "No available lessons",
     "noData": "No Data available",
-    "courseProgram": "Course Program",
+    "courseProgram": "Content",
     "notes": "Notes",
     "more": "More",
     "filesCount": "Files",
@@ -124,6 +125,13 @@
     "noComments": "No notes available",
     "note": "Note",
     "score": "Score"
+  },
+
+  "lessonTypes": {
+    "quiz": "Quiz",
+    "video": "Video",
+    "meeting": "Meeting",
+    "unknown": "Unknown"
   },
 
   "sweetAlerts": {

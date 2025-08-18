@@ -13,6 +13,7 @@
     "logout": "تسجيل الخروج",
     "student": "طالب",
     "search": "بحث",
+    "instructor": "محاضر",
     "contactUs": "تواصل معنا",
     "lightMode": "الوضع النهاري",
     "darkMode": "الوضع الليلي",
@@ -85,6 +86,7 @@
     "of": "من",
     "results": "النتائج",
     "search": "بحث",
+    "studyProgress": "تقدم الدراسة",
     "notFound": "لم يتم العثور على دورات",
     "courseCategories": "فئات الدورات",
     "filters": "التصفية",
@@ -114,7 +116,12 @@
     "note": "ملاحظة",
     "score": "النتيجة"
   },
-
+  "lessonTypes": {
+    "quiz": "اختبار",
+    "video": "فيديو",
+    "meeting": "اجتماع",
+    "unknown": "غير معروف"
+  },
   "sweetAlerts": {
     "loginRequired": "الرجاء تسجيل الدخول لشراء الدورة",
     "goToLogin": "الذهاب لتسجيل الدخول",

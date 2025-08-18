@@ -181,6 +181,82 @@ body.dark-mode {
   --category-tab-active-bg: #a18bff;
   --category-tab-active-text: #ffffff;
 
+  // courses-details
+
+  /* Text colors */
+  --cd-text-muted: #a7a7b5;
+  --cd-text-dark: #e4e4e7;
+  --cd-text-strong: #f5f5f7;
+  --cd-text-gray-500: #aaa4d0;
+
+  /* Icons */
+  --cd-icon-primary: #a18bff;
+  --cd-icon-accent: #ff8290;
+
+  /* Base colors */
+  --cd-white: #1e1b2e;
+  --cd-black: #f5f5f5;
+
+  /* Borders */
+  --cd-border: rgba(255, 255, 255, 0.1);
+
+  /* Shadows */
+  --cd-shadow-weak: rgba(0, 0, 0, 0.25);
+  --cd-shadow-medium: rgba(0, 0, 0, 0.4);
+
+  /* Video */
+  --cd-video-bg: #29263e;
+  --cd-video-placeholder-bg: #2a263f;
+
+  /* Tabs */
+  --cd-tabs-bg: #2c2944;
+  --cd-tab-text: #aaa4d0;
+  --cd-tab-hover-text: #ffffff;
+  --cd-tab-active-bg: #3b3657;
+  --cd-tab-active-text: #ffffff;
+
+  /* Chapter */
+  --cd-chapter-bg: #2c2944;
+  --cd-chapter-icon-bg: #3b3657;
+  --cd-chapter-icon-text: #a18bff;
+  --cd-arrow: #bcbccc;
+
+  /* Items */
+  --cd-item-bg: #2c2944;
+  --cd-item-hover-bg: #3b3657;
+  --cd-thumb-bg: #413655;
+
+  /* Scrollbar */
+  --cd-scrollbar-thumb: rgba(255, 255, 255, 0.1);
+
+  /* Aside */
+  --cd-aside-bg: #1e1b2e;
+
+  /* Lite buttons */
+  --cd-btn-bg: #2c2944;
+  --cd-btn-hover-bg: #3b3657;
+
+  /* Progress */
+  --cd-progress-track: rgb(0 0 0 / 8%);
+  --cd-progress-fill: #a18bff;
+  --cd-progress-text: #ffffff;
+  --cd-accent: #a18bff;
+
+  /* Badges */
+  --cd-badge-text: #ffffff;
+
+  --cd-badge-success-bg: rgba(40, 167, 69, 0.15);
+  --cd-badge-success-border: #28a745;
+
+  --cd-badge-warning-bg: rgba(255, 193, 7, 0.15);
+  --cd-badge-warning-border: #ffc107;
+
+  --cd-badge-danger-bg: rgba(220, 53, 69, 0.15);
+  --cd-badge-danger-border: #dc3545;
+
+  /* Extra */
+  --cd-lesson-icon-bg: #302d4a;
+  --cd-breadcrumb-bg: #2c2944;
   // quiz courses-details
   --quiz-primary-color: var(--color-primary);
 
