@@ -57,11 +57,12 @@
                       <i class="fas fa-book fs-6"></i> {{ 'profile.myCourses' | translate }}
                     </a>
                   </li>
-                  <li class="nav-item " [ngClass]="{ 'active': activeSection === 'calendar' }" style="cursor: pointer;">
+                  <!-- Calender Routing  -->
+                  <!-- <li class="nav-item " [ngClass]="{ 'active': activeSection === 'calendar' }" style="cursor: pointer;">
                     <a (click)="switchSection('calendar')" class="nav-link">
                       <i class="fas fa-calendar fs-6"></i> {{ 'profile.myCalendar' | translate }}
                     </a>
-                  </li>
+                  </li> -->
                   <li class="nav-item">
                     <a (click)="logout()" class="nav-link" style="cursor: pointer;">
                       <i class="fas fa-right-from-bracket fs-6"></i> {{ 'profile.signOut' | translate }}
