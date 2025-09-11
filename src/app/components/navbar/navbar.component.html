@@ -76,8 +76,9 @@
       <div class="container d-flex  justify-content-between  align-items-center">
         <!-- Logo -->
         <div class="logo" routerLink="/">
-          <img [src]="logoUrl" alt="Logo" class="logo-img logo">
 
+
+          <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
 
         </div>
 
@@ -244,8 +245,8 @@
       <!-- Side Menu Header -->
       <div class="side-menu-header ">
         <div class="logo" routerLink="/">
-          <img [src]="logoUrl" alt="Logo" class="logo-img">
 
+          <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img ">
         </div>
         <button class="close-btn" #closeBtn>
           <i class="fas fa-times"></i>

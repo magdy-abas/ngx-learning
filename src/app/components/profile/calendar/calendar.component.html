@@ -1,16 +1,136 @@
-<div class="calendar-wrapper">
-  <div class="sell-course-head comman-space">
-    <h3>{{ 'profile.calendar_intro' | translate }}</h3>
-
-    <p>{{ 'profile.calendar_info' | translate }}</p>
+<div class="container-xxl page-wrap">
+  <div class="page-title ">
+    <h3 class="mb-4">{{ 'calendar.pageTitle' | translate }}</h3>
+    <p>{{ 'calendar.pageSubTitle' | translate }}</p>
   </div>
 
-  <full-calendar [options]="calendarOptions">
-    <ng-template #eventContent let-arg>
-      <div class="custom-event">
-        <span class="evt-time">{{ arg.timeText }}</span>
-        <span class="evt-title">{{ arg.event.title }}</span>
+
+  <!-- الصف 1: Calendar + Upcoming -->
+  <div class="row g-4 align-items-start">
+    <!-- Calendar -->
+    <div class="col-12 col-lg-6">
+      <div class="soft-card p-3 calendar-card h-100">
+        <div class="card-head">
+          <div>
+            <div class="fw-bold sec-calender-title">{{ 'calendar.selectDateTitle' | translate }}</div>
+            <div class="eyebrow">{{ 'calendar.selectDateSub' | translate }}</div>
+          </div>
+        </div>
+
+        <bs-datepicker-inline [bsValue]="bsValue()" [bsConfig]="{
+            containerClass: 'theme-default',
+            showWeekNumbers: false,
+            isAnimated: true,
+            adaptivePosition: false,
+            initCurrentTime: false
+          }" [dateCustomClasses]="eventDates">
+        </bs-datepicker-inline>
       </div>
-    </ng-template>
-  </full-calendar>
+    </div>
+
+    <!-- Upcoming -->
+    <div class="col-12 col-lg-6">
+      <div class="soft-card p-3 h-100">
+        <div class="card-head">
+          <div>
+            <div class="fw-bold sec-calender-title">{{ 'calendar.upcomingTitle' | translate }}</div>
+            <div class="eyebrow">{{ 'calendar.upcomingSub' | translate }}</div>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="date-pill">
+              <div class="d">01</div>
+              <div class="m">Jan</div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="fw-semibold ">{{ 'calendar.assignmentExpiration' | translate }}</div>
+              <div class="eyebrow">Students Assignment - New Update Features</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="date-pill">
+              <div class="d">18</div>
+              <div class="m">May</div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="fw-semibold">{{ 'calendar.meeting' | translate }}</div>
+              <div class="eyebrow">Robert Ransdell</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="date-pill">
+              <div class="d">05</div>
+              <div class="m">Jul</div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="fw-semibold">{{ 'calendar.courseExpiration' | translate }}</div>
+              <div class="eyebrow">New Update Features</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الصف 2: Day Events -->
+  <div class="row g-4 mt-1">
+    <div class="col-8">
+      <div class="soft-card p-4">
+        <div class="card-head">
+          <div>
+            <div id="dayTitle" class="fw-bold sec-calender-title">
+              {{ 'calendar.dayEventsTitle' | translate:{date: '2 January 2026'} }}
+            </div>
+            <div class="eyebrow">{{ 'calendar.dayEventsSub' | translate }}</div>
+          </div>
+        </div>
+
+        <div class="divider mb-3"></div>
+
+        <!-- Event Card -->
+        <div class="event-card mb-3 d-flex align-items-center">
+          <div class="event-icon me-2">
+            <!-- Calendar Icon -->
+            <svg height="24px" width="24px" class="icons text-primary" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20 8.25V18c0 3-1.79 4-4 4H8c-2.21 0-4-1-4-4V8.25c0-3.25 1.79-4 4-4
+                0 .62.25 1.18.66 1.59.41.41.97.66 1.59.66h3.5C14.99 6.5 16
+                5.49 16 4.25c2.21 0 4 .75 4 4z" opacity=".4"></path>
+              <path d="M16 4.25c0 1.24-1.01 2.25-2.25 2.25h-3.5c-.62 0-1.18-.25-1.59-.66C8.25
+                5.43 8 4.87 8 4.25 8 3.01 9.01 2 10.25 2h3.5c.62 0
+                1.18.25 1.59.66.41.41.66.97.66 1.59zM12 13.75H8c-.41
+                0-.75-.34-.75-.75s.34-.75.75-.75h4c.41 0
+                .75.34.75.75s-.34.75-.75.75zM16 17.75H8c-.41
+                0-.75-.34-.75-.75s.34-.75.75-.75h8c.41
+                0 .75.34.75.75s-.34.75-.75.75z"></path>
+            </svg>
+          </div>
+
+          <div class="flex-grow-1">
+            <div class="event-title">{{ 'calendar.teamMeeting' | translate }}</div>
+            <div class="event-sub">
+              {{ 'calendar.with' | translate }}: Robert Ransdell — 10:00 AM
+            </div>
+          </div>
+
+          <!-- Reminder Bell -->
+          <button type="button" class="bell" title="{{ 'calendar.remindMe' | translate }}">
+            <svg class="icons text-primary" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="bell"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0-6 6v2c0 1.7-.8 3.2-2.1
+                  4.2l-.9.7a1 1 0 0 0 .6 1.8h16.8a1 1
+                  0 0 0 .6-1.8l-.9-.7A5.5 5.5 0 0 1
+                  18 11V9a6 6 0 0 0-6-6z" />
+              <circle cx="12" cy="19.5" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+          </button>
+        </div>
+        <!-- End Event Card -->
+      </div>
+    </div>
+  </div>
 </div>

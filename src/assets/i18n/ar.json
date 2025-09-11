@@ -290,9 +290,24 @@
     "emailPlaceholder": "أدخل بريدك الإلكتروني",
     "phonePlaceholder": "أدخل رقم الهاتف",
     "birthdayPlaceholder": "تاريخ الميلاد",
-    "myCalendar": "التقويم",
-    "calendar_intro": "مواعيد الاجتماعات القادمة",
-    "calendar_info": "اعرف مواعيد محاضراتك بسهولة"
+    "myCalendar": "التقويم"
+  },
+  "calendar": {
+    "pageTitle": "التقويم",
+    "selectDateTitle": "اختر تاريخ",
+    "pageSubTitle": "إطّلع على الأحداث التعليمية والاجتماعات القادمة بسهولة",
+    "selectDateSub": "اختر تاريخ من التقويم لعرض الأحداث",
+    "upcomingTitle": "الأحداث القادمة",
+    "upcomingSub": "تحقق من الأحداث القادمة",
+    "dayEventsTitle": "الأحداث بتاريخ {{date}}",
+    "dayEventsSub": "تحقق من الأحداث",
+    "noEvents": "لا توجد أحداث لهذا اليوم",
+    "meeting": "اجتماع",
+    "assignmentExpiration": "انتهاء الواجب",
+    "courseExpiration": "انتهاء الكورس",
+    "teamMeeting": "اجتماع الفريق",
+    "with": "مع",
+    "remindMe": "ذكرني"
   },
   "instructor": {
     "courses_number": "عدد الدورات: {{count}}",

@@ -1,0 +1,247 @@
+/* =========================
+   Booking Header
+========================= */
+.booking-header {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--booking-instractor-bg-light);
+    color: var(--booking-instractor-text-light);
+    font-size: 18px;
+    margin-bottom: 6px;
+
+    &.blue {
+      background: var(--booking-instractor-primary-light);
+      color: var(--booking-instractor-primary);
+    }
+
+    &.green {
+      background: var(--booking-instractor-green-light);
+      color: var(--booking-instractor-green);
+    }
+
+    &.orange {
+      background: var(--booking-instractor-orange-light);
+      color: var(--booking-instractor-orange);
+    }
+
+    &.purple {
+      background: var(--booking-instractor-purple-light);
+      color: var(--booking-instractor-purple);
+    }
+  }
+
+  small {
+    font-size: 12px;
+    color: var(--booking-instractor-text-muted);
+  }
+
+  strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--booking-instractor-text-dark);
+  }
+}
+
+/* =========================
+   Booking Card
+========================= */
+.booking-card {
+  background: var(--booking-instractor-white);
+  border-radius: 16px;
+  box-shadow: var(--booking-instractor-shadow-sm);
+  padding: 24px;
+
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    .slot-btn {
+      flex: 1 1 calc(50% - 12px);
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--booking-instractor-border);
+      background: var(--booking-instractor-white);
+      font-weight: 500;
+      text-align: center;
+      transition: 0.2s;
+      color: var(--booking-instractor-text);
+
+      &.active {
+        background: var(--booking-instractor-primary);
+        border-color: var(--booking-instractor-primary);
+        color: var(--booking-instractor-white);
+        font-weight: 600;
+      }
+
+      &:hover {
+        background: var(--booking-instractor-primary);
+        border-color: var(--booking-instractor-primary);
+        color: var(--booking-instractor-white);
+      }
+    }
+  }
+
+  .btn-primary {
+    background: var(--booking-instractor-primary);
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   Datepicker Styles
+========================= */
+::ng-deep .bs-datepicker {
+  box-shadow: var(--booking-instractor-shadow-md) !important;
+  border: 1px solid var(--booking-instractor-border-light) !important;
+  border-radius: 16px !important;
+  min-width: 320px !important;
+  font-family: "Inter", sans-serif !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-head {
+  color: var(--booking-instractor-white) !important;
+  padding: 12px 16px !important;
+
+  .current {
+    font-weight: 600 !important;
+    font-size: 16px !important;
+  }
+
+  button {
+    color: var(--booking-instractor-white) !important;
+    font-size: 18px !important;
+  }
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body {
+  background: var(--booking-instractor-white) !important;
+  padding: 16px !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+
+  table {
+    width: 100% !important;
+    table-layout: fixed !important;
+
+    td {
+      text-align: center !important;
+      font-size: 14px !important;
+
+      span {
+        display: inline-block !important;
+        width: 42px !important;
+        height: 42px !important;
+        line-height: 42px !important;
+        border-radius: 10px !important;
+        transition: 0.2s !important;
+        margin: auto !important;
+        margin-bottom: 5px !important;
+
+        &:hover {
+          background: var(--booking-instractor-primary-light);
+          color: var(--booking-instractor-primary);
+        }
+      }
+
+      &.selected span,
+      span.selected {
+        background: var(--booking-instractor-primary);
+        color: var(--booking-instractor-white);
+        font-weight: 600;
+      }
+
+      &.disabled span,
+      span.disabled {
+        background: var(--booking-instractor-disabled-bg) !important;
+        color: var(--booking-instractor-disabled-text) !important;
+        border-radius: 10px !important;
+        opacity: 1 !important;
+        cursor: not-allowed !important;
+
+        &:hover {
+          background: var(--booking-instractor-disabled-bg) !important;
+          color: var(--booking-instractor-disabled-text) !important;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .bs-datepicker-container {
+  padding: 0 !important;
+}
+
+/* =========================
+   Responsive Breakpoints
+========================= */
+.booking-header {
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr); /* Tablet */
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr; /* Mobile */
+  }
+}
+
+@media (max-width: 991px) {
+  .theme-custom {
+    width: 100% !important;
+  }
+}
+/* Booking Header */
+.booking-header {
+  background: var(--booking-instractor-header-bg);
+}
+
+/* Booking Card */
+.booking-card {
+  background: var(--booking-instractor-card-bg);
+}
+
+/* Datepicker Head */
+::ng-deep .bs-datepicker .bs-datepicker-head {
+  background: var(--booking-instractor-datepicker-head-bg) !important;
+  color: var(--booking-instractor-datepicker-head-text) !important;
+  border-radius: 16px 16px 0 0;
+  -webkit-border-radius: 16px 16px 0 0;
+  -moz-border-radius: 16px 16px 0 0;
+  -ms-border-radius: 16px 16px 0 0;
+  -o-border-radius: 16px 16px 0 0;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-head button {
+  color: var(--booking-instractor-datepicker-head-text) !important;
+}
+
+h6 {
+  color: var(--heading-color) !important;
+}

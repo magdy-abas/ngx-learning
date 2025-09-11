@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     const link = document.createElement('link');
     link.rel = 'icon';
     link.type = 'image/png';
-    link.href = iconUrl + '?v=' + new Date().getTime();
+    link.href = iconUrl;
     document.head.appendChild(link);
   }
 }

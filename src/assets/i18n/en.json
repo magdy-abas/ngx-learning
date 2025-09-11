@@ -308,6 +308,24 @@
     "calendar_info": "Easily find your lecture times"
   },
 
+  "calendar": {
+    "pageTitle": "Events Calendar",
+    "selectDateTitle": "Select a Date",
+    "pageSubTitle": "Stay updated with upcoming educational events and meetings effortlessly.",
+    "selectDateSub": "Select a date from the calendar to view events",
+    "upcomingTitle": "Upcoming Events",
+    "upcomingSub": "Check upcoming events",
+    "dayEventsTitle": "Events for {{date}}",
+    "dayEventsSub": "Check events ",
+    "noEvents": "No events for this day",
+    "meeting": "Meeting",
+    "assignmentExpiration": "Assignment Expiration",
+    "courseExpiration": "Course Expiration",
+    "teamMeeting": "Team Meeting",
+    "with": "With",
+    "remindMe": "Remind me"
+  },
+
   "instructor": {
     "courses_number": "Courses Number: {{count}}",
     "bio_title": "Bio",

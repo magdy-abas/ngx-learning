@@ -18,6 +18,7 @@ export const mainRoutes: Routes = [
       ),
     title: 'home',
   },
+
   {
     path: 'courses',
     loadComponent: () =>
@@ -25,6 +26,14 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses/courses.component'
       ).then((m) => m.CoursesComponent),
     title: 'courses',
+  },
+  {
+    path: 'booking',
+    loadComponent: () =>
+      import(
+        '../../../components/doctors-components/booking/booking.component'
+      ).then((m) => m.BookingComponent),
+    title: 'booking',
   },
   {
     path: 'instructor-register',

@@ -6,6 +6,7 @@
 // Third-party imports
 @import "bootstrap/scss/bootstrap";
 @import "ngx-bootstrap/datepicker/bs-datepicker";
+/* ==================== CELENDER THEME VARIABLES ==================== */
 
 :root {
   --body-bg: #f5f3fc;
@@ -382,6 +383,90 @@
   --profile-user-subtext: #685f78;
 
   --profile-section-border: rgba(199, 199, 199, 0.25);
+
+  // Calender profile-colors
+  --celender-bg: #f5f7fb;
+  --celender-card: #ffffff;
+  --celender-line: #e9edf4;
+  --celender-text: #0f172a;
+  --celender-muted: #6b7280;
+
+  --celender-primary: #3b82f6;
+  --celender-primary-weak: #e8f0ff;
+  --celender-accent: #6366f1;
+
+  --celender-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  --celender-shadow-strong-rgba: rgba(15, 23, 42, 0.12);
+  --celender-shadow-soft-rgba: rgba(15, 23, 42, 0.08);
+  --celender-card-shadow-rgba: rgba(0, 0, 0, 0.05);
+
+  --celender-radius: 18px;
+
+  /* Headings */
+  --celender-title: #1e3a8a; /* Navy */
+  --celender-title-strong: #392c7d;
+
+  /* Timeline */
+  --celender-border-hover: #e3e9ff;
+  --celender-week-text: #94a3b8;
+  --celender-pill-grad-top: #fafcff;
+  --celender-pill-grad-bot: #f3f6fb;
+
+  /* Brand duo (Orange/Purple) */
+  --celender-orange: #f97316;
+  --celender-orange-weak-rgba: rgba(249, 115, 22, 0.35);
+  --celender-orange-hover-rgba: rgba(249, 115, 22, 0.1);
+  --celender-purple: #6d28d9;
+  --celender-purple-glow-rgba: rgba(109, 40, 217, 0.15);
+
+  /* Datepicker neutrals */
+  --celender-dp-border: #eeeeee;
+  --celender-dp-head-bg: #fafafa;
+  --celender-gray-333: #333333;
+  --celender-gray-555: #555555;
+  --celender-gray-aaa: #aaaaaa;
+  --celender-gray-ccc: #cccccc;
+
+  /* Event icon palette */
+  --celender-icon-blue: #2952e3;
+  --celender-icon-grad-top: #eef4ff;
+  --celender-icon-grad-bot: #e9f1ff;
+  --celender-icon-border: #e5edff;
+
+  // booking - instractor -page
+
+  /* Primary Colors */
+  --booking-instractor-primary: #0d6efd;
+  --booking-instractor-primary-light: #e9f3ff;
+
+  /* Status Colors */
+  --booking-instractor-green: #28a745;
+  --booking-instractor-green-light: #e9f9f0;
+  --booking-instractor-orange: #fd7e14;
+  --booking-instractor-orange-light: #fff3e6;
+  --booking-instractor-purple: #6f42c1;
+  --booking-instractor-purple-light: #f6f0ff;
+
+  /* Neutral Colors */
+  --booking-instractor-white: #fff;
+  --booking-instractor-bg-light: #f0f4f9;
+  --booking-instractor-border: #d6d6e7;
+  --booking-instractor-border-light: #e9ecef;
+  --booking-instractor-text-dark: #212529;
+  --booking-instractor-text: #495057;
+  --booking-instractor-text-muted: #6c757d;
+  --booking-instractor-text-light: #97a7bf;
+  --booking-instractor-disabled-bg: #f8f9fa;
+  --booking-instractor-disabled-text: #adb5bd;
+  /* Component Backgrounds */
+  --booking-instractor-header-bg: #ffffff;
+  --booking-instractor-card-bg: #ffffff;
+  --booking-instractor-datepicker-head-bg: #ffffff;
+  --booking-instractor-datepicker-head-text: #212529;
+
+  /* Shadow */
+  --booking-instractor-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --booking-instractor-shadow-md: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 body {

@@ -1,147 +1,233 @@
-:host ::ng-deep {
-  --calender-light-bg: #ffffff;
-  --calender-primary-bg: #6c5ce7;
-  --calender-primary-bg-hover: #5a4cd1;
-  --calender-primary-bg-active: #4834d4;
-  --calender-today-bg: #9a89f7;
-  --calender-event-bg: #2d2a78;
-  --calender-event-text: #ffffff;
-  --calender-toolbar-title: #2d2a78;
-  --calender-white: #ffffff;
-}
-body.dark-mode {
-  :host ::ng-deep {
-    --calender-light-bg: transparent !important;
-    --calender-primary-bg: #a18bff !important;
-    --calender-primary-bg-hover: #cfc8ff !important;
-    --calender-primary-bg-active: #7d6cd1 !important;
-    --calender-today-bg: #392c7d !important;
-    --calender-event-bg: #2c2944 !important;
-    --calender-event-text: #e4e4e7 !important;
-    --calender-toolbar-title: #cfc8ff !important;
-    --calender-white: #e4e4e7 !important;
-  }
-}
-
-.calendar-wrapper {
-  background-color: var(--calender-light-bg);
-  padding: 0.5rem;
+/* ==================== PAGE WRAPPER ==================== */
+.page-wrap {
+  color: var(--celender-text) !important;
+  background: var(--celender-card) !important;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+}
+.page-title {
+  padding: 25px 25px 10px 25px;
+  border-bottom: 1px solid var(--celender-line) !important;
+}
+.page-title h3 {
+  color: var(--celender-title-strong) !important;
 }
 
-:host ::ng-deep .fc .fc-toolbar {
-  margin-block: 25px;
+/* Section titles */
+.sec-calender-title {
+  color: var(--celender-title) !important;
+  font-weight: 700;
+}
+.sec-calender {
+  color: var(--celender-title) !important;
 }
 
-:host ::ng-deep .fc-event {
-  border-radius: 6px;
-  padding: 4px 6px;
-  background-color: var(--calender-event-bg) !important;
-  color: var(--calender-event-text) !important;
-  border: none !important;
-  font-weight: 600 !important;
-  transition: background 0.3s ease;
-  cursor: pointer !important;
+/* RTL Support */
+.rtl {
+  direction: rtl !important;
+}
+.page-wrap.rtl .timeline {
+  padding-right: 18px;
+  padding-left: 0;
 }
 
-:host ::ng-deep .fc-toolbar-title {
-  color: var(--calender-toolbar-title) !important;
-}
-
-:host ::ng-deep fc-daygrid-day-top a:hover {
-  color: currentColor !important;
-}
-
-:host ::ng-deep .fc-daygrid-day-events {
-  min-height: 60px;
-}
-
-@media (max-width: 768px) {
-  :host ::ng-deep .fc-toolbar.fc-header-toolbar {
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  :host ::ng-deep .fc-toolbar-title {
-    font-size: 1rem;
-  }
-  :host ::ng-deep .fc-button {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-  }
-  :host ::ng-deep .fc-event {
-    font-size: 0.75rem;
-    padding: 2px 4px;
-  }
-  :host ::ng-deep .fc-list-event-title {
-    font-size: 0.8rem;
-    white-space: normal;
-    word-break: break-word;
-  }
-}
-
-:host ::ng-deep .fc-event-title,
-:host ::ng-deep .fc-event-time {
-  white-space: normal !important;
-  word-break: break-word !important;
-  overflow: hidden !important;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-:host ::ng-deep .fc .fc-button-primary,
-:host ::ng-deep .fc .fc-button {
-  background-color: var(--calender-primary-bg) !important;
-  color: var(--calender-white) !important;
-  border: none !important;
-  padding: 0.4rem 1rem !important;
-  font-weight: 600 !important;
-  transition: background 0.3s ease, transform 0.2s ease;
-  -webkit-transition: background 0.3s ease, transform 0.2s ease;
-  -moz-transition: background 0.3s ease, transform 0.2s ease;
-  -ms-transition: background 0.3s ease, transform 0.2s ease;
-  -o-transition: background 0.3s ease, transform 0.2s ease;
-}
-
-:host ::ng-deep .fc .fc-button-primary:hover,
-:host ::ng-deep .fc .fc-button:hover {
-  background-color: var(--calender-primary-bg-hover) !important;
-}
-
-:host ::ng-deep .fc .fc-button-primary.fc-button-active,
-:host ::ng-deep .fc .fc-button.fc-button-active {
-  background-color: var(--calender-primary-bg-active) !important;
-  color: var(--calender-white) !important;
-}
-
-:host ::ng-deep .fc-today-button {
-  background-color: var(--calender-today-bg) !important;
-  color: var(--calender-white) !important;
-}
-
-:host ::ng-deep .fc .fc-button .fc-icon {
-  color: var(--calender-white) !important;
-}
-
-.custom-event {
+/* ==================== CARD COMPONENTS ==================== */
+.card-head {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.eyebrow {
+  color: var(--celender-muted) !important;
+  font-size: 0.9rem;
+}
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--celender-line),
+    transparent
+  ) !important;
 }
 
-.evt-time {
-  font-size: 0.8rem;
+/* ==================== TIMELINE ==================== */
+.timeline {
+  position: relative;
+  padding-left: 18px;
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 14px;
+  border: 1px solid var(--celender-line) !important;
+  border-radius: 16px;
+  background: var(--celender-card) !important;
+  padding: 12px 14px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 12px var(--celender-shadow-soft-rgba);
+}
+.tl-item:hover {
+  box-shadow: 0 6px 18px var(--celender-shadow-strong-rgba);
+  border-color: var(--celender-border-hover) !important;
+}
+.date-pill {
+  width: 60px;
+  text-align: center;
+  border: 1px solid var(--celender-line) !important;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px var(--celender-shadow-soft-rgba);
+  background: linear-gradient(
+    180deg,
+    var(--celender-pill-grad-top),
+    var(--celender-pill-grad-bot)
+  ) !important;
+  padding: 0.4rem 0.25rem;
+  line-height: 1;
+}
+.date-pill .d {
   font-weight: 600;
-  margin-bottom: 2px;
-  color: var(--calender-white);
+  font-size: 1.1rem;
+  color: var(--celender-orange) !important;
+}
+.date-pill .m {
+  color: var(--celender-orange) !important;
+  font-size: 0.8rem;
+  text-transform: uppercase;
 }
 
-.evt-title {
-  font-size: 0.85rem;
-  font-weight: 500;
-  white-space: normal;
-  word-break: break-word;
-  color: var(--calender-white);
+/* ==================== EVENTS ==================== */
+.event-card {
+  border: 1px solid var(--celender-line) !important;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--celender-card) !important;
+  box-shadow: 0 4px 12px var(--celender-card-shadow-rgba);
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.event-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--celender-border-hover) !important;
+}
+.event-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--celender-icon-blue) !important;
+  background: linear-gradient(
+    180deg,
+    var(--celender-icon-grad-top),
+    var(--celender-icon-grad-bot)
+  ) !important;
+  border: 1px solid var(--celender-icon-border) !important;
+}
+.event-title {
+  font-weight: 600;
+}
+.event-sub {
+  color: var(--celender-muted) !important;
+  font-size: 0.95rem;
+}
+.bell {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid var(--celender-line) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--celender-card) !important;
+  color: #a6b0bf;
+  transition: all 0.2s ease;
+}
+.bell:hover {
+  color: var(--celender-accent) !important;
+  border-color: var(--celender-border-hover) !important;
+}
+.empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #8a94a7;
+}
+
+/* ==================== DATEPICKER OVERRIDES (force styling) ==================== */
+::ng-deep .bs-datepicker {
+  background: var(--celender-card);
+  border: 1px solid var(--celender-dp-border);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-head {
+  background: var(--celender-dp-head-bg);
+  border-bottom: 1px solid var(--celender-dp-border);
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-head .current {
+  color: var(--celender-gray-333) !important;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-head button {
+  color: var(--celender-gray-555) !important;
+  border-radius: 12px;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-head button:hover {
+  background: var(--celender-orange-hover-rgba) !important;
+  color: var(--celender-orange) !important;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body table td span {
+  color: var(--celender-gray-333) !important;
+  border-radius: 12px;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body table td span:hover {
+  background: var(--celender-orange-hover-rgba) !important;
+  color: var(--celender-orange) !important;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body table td span.active,
+::ng-deep .bs-datepicker .bs-datepicker-body table td.active span {
+  background: var(--celender-orange) !important;
+  color: var(--celender-card) !important;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body table td span.has-event::after {
+  background: var(--celender-orange) !important;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-container {
+  padding: 2px;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body {
+  border: none;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body table td span.selected {
+  background: var(--celender-orange) !important;
+  color: var(--celender-card) !important;
+  border-radius: 8px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px var(--celender-orange-weak-rgba),
+    0 0 0 3px var(--celender-purple-glow-rgba) !important;
+}
+
+::ng-deep .bs-datepicker .bs-datepicker-body table td span.is-other-month,
+::ng-deep .bs-datepicker .bs-datepicker-body table td.is-other-month span {
+  color: var(--celender-gray-ccc) !important;
+  opacity: 0.5;
 }
