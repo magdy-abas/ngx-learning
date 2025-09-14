@@ -1,485 +1,44 @@
 <!-- hero  -->
-<section class="hero">
-  <div class="overlay"></div>
-  <div class="container">
-
-
-
-    <!--  copy  text-->
-    <div class="hero-copy">
-      <h1 class="hero-title">
-        {{ 'home_two.hero.title1' | translate }}<br>
-        <span class="em"> {{ 'home_two.hero.title2' | translate }}
-          <span class="hero-p">{{ 'home_two.hero.title3' | translate }}</span>
-          <img class="underline-img" src="../../../assets/img/home-two/Vector 6.png" alt="">
-        </span>
-        <img class="scribble" src="../../../assets/img/home-two/Vector 7.png" alt="">
-      </h1>
-      <p class="hero-sub">{{ 'home_two.hero.subtitle' | translate }}</p>
-      <a href="#" class="btn btn-pill">{{ 'home_two.hero.cta' | translate }}</a>
-
-    </div>
-
-
-    <!-- images -->
-    <div class="students">
-      <div class="card-round">
-        <img src="../../../assets/img/home-two/student3.png" alt="Student" data-aos="fade-up">
-      </div>
-      <div class="card-circ">
-        <img src="../../../assets/img/home-two/student4.png" alt="Student" data-aos="fade-up">
-      </div>
-
-      <div class="card-round card-mid-circ" style="background:#ffe29b;">
-        <img src="../../../assets/img/home-two/student1.png" alt="Student" data-aos="fade-up">
-      </div>
-      <div class="card-round">
-        <img src="../../../assets/img/home-two/student2.png" alt="Student" style="background:rgb(245, 195, 98);"
-          data-aos="fade-up">
-      </div>
-
-    </div>
-
-  </div>
-</section>
+<app-hero-home-v2></app-hero-home-v2>
 
 <!-- counter stats -->
-<section class="stats my-5" data-aos="fade-up">
-  <div class="container">
-    <div class="stats-pill text-white p-4 p-md-5 shadow-sm">
-      <div class="row row-cols-1 row-cols-md-4 g-0 text-center">
-
-        <div class="col stat-item">
-          <div id="stat-courses" class="stat-number">50</div>
-          <div class="stat-text">{{ 'home_two.stats.courses' | translate }}</div>
-        </div>
-
-        <div class="col stat-item">
-          <div id="stat-students" class="stat-number">2000</div>
-          <div class="stat-text">{{ 'home_two.stats.students' | translate }}</div>
-        </div>
-
-        <div class="col stat-item">
-          <div id="stat-teachers" class="stat-number">150</div>
-          <div class="stat-text">{{ 'home_two.stats.teachers' | translate }}</div>
-        </div>
-
-        <div class="col stat-item">
-          <div id="stat-fields" class="stat-number">10</div>
-          <div class="stat-text">{{ 'home_two.stats.fields' | translate }}</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
+<app-counter-home-v2></app-counter-home-v2>
 
 <!-- Why  us -->
-<section class="why py-5 py-lg-6" data-aos="fade-up">
-  <div class="container py-5">
-    <div class="row g-4 align-items-center">
-      <div class="col-lg-5">
-        <p class="why-kicker mb-2">{{ 'home_two.why.kicker' | translate }}</p>
-        <h2 class="why-title mb-3">{{ 'home_two.why.title' | translate }}</h2>
-
-        <p class="why-text mb-4">{{ 'home_two.why.text' | translate }}</p>
-
-        <a href="#" class="btn btn-pill px-4">{{ 'home_two.why.cta' | translate }}</a>
-      </div>
-      <div class="col-lg-7">
-        <div class="row g-4">
-
-          <!-- Feature 1 -->
-          <div class="col-md-6">
-            <div class="feature-card corners tl-gold ">
-              <div class="d-flex flex-column">
-                <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon2.svg" alt="icon">
-                </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature1.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature1.text' | translate }}</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 2 -->
-          <div class="col-md-6">
-            <div class="feature-card corner tl-blue ">
-              <div class="d-flex flex-column">
-                <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon1.svg" alt="icon">
-                </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature2.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature2.text' | translate }}</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 3 -->
-          <div class="col-md-6">
-            <div class="feature-card corners tl-w-blue ">
-              <div class="d-flex flex-column">
-                <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon4.svg" alt="icon">
-                </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature3.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature3.text' | translate }}</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature 4 -->
-          <div class="col-md-6">
-            <div class="feature-card corners tl-gray ">
-              <div class="d-flex flex-column">
-                <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon3.svg" alt="icon">
-                </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature4.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature4.text' | translate }}</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<app-why-us-home-v2></app-why-us-home-v2>
 
 
-
-<!-- courses section -->
-<section class="courses py-5" data-aos="fade-up">
-  <div class="container py-5">
-    <!-- title -->
-    <div class="text-center mb-5">
-      <h2 class="courses-title">
-        <img src="../../../assets/img/home-two/shape-e.svg" alt="icon" class="title-icon">
-        {{ 'home_two.courses.title' | translate }}
-      </h2>
-      <p class="courses-sub">{{ 'home_two.courses.subtitle' | translate }}</p>
-    </div>
-
-    <!-- courses grid -->
-    <div class="row g-4 justify-content-between">
-
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="course-card">
-          <div class="course-img">
-            <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
-          </div>
-          <div class="course-label">
-            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
-            {{ 'home_two.courses.private' | translate }}
-          </div>
-        </div>
-
-      </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="course-card">
-          <div class="course-img">
-            <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
-          </div>
-          <div class="course-label">
-            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
-            {{ 'home_two.courses.private' | translate }}
-          </div>
-        </div>
-
-      </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="course-card">
-          <div class="course-img">
-            <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
-          </div>
-          <div class="course-label">
-            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
-            {{ 'home_two.courses.private' | translate }}
-          </div>
-        </div>
-
-      </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="course-card">
-          <div class="course-img">
-            <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
-          </div>
-          <div class="course-label">
-            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
-            {{ 'home_two.courses.private' | translate }}
-          </div>
-        </div>
-
-      </div>
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="course-card">
-          <div class="course-img">
-            <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
-          </div>
-          <div class="course-label">
-            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
-            {{ 'home_two.courses.private' | translate }}
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- lessons section -->
+<app-lessons-home-v2></app-lessons-home-v2>
 
 
 <!-- featured courses -->
-<section class="py-5" data-aos="fade-up">
-  <div class="container text-center">
-    <div class="featured-courses">
-      <!-- title -->
-      <h2 class="fc-title mb-2">{{ 'home_two.featured.title' | translate }}</h2>
-      <p class="fc-sub mb-5">{{ 'home_two.featured.subtitle' | translate }}</p>
-
-      <!-- cards row -->
-      <div class="row g-4 justify-content-center">
-
-        <div class="col-11 col-md-6 col-lg-3">
-          <div class="fc-card">
-            <img src="../../../assets/img/home-two/courses.png" alt="Course">
-            <div class="fc-body">
-              <h5 class="fc-name">تطوير الذات</h5>
-              <div class="fc-rating">
-                <span class="stars text-warning">
-                  ★★★★★
-                </span>
-                <span class="rating-text">5.0 <small>(7 rating)</small></span>
-              </div>
-              <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
-            </div>
-          </div>
-        </div>
-
-        <div class=" col-11 col-md-6 col-lg-3">
-          <div class="fc-card">
-            <img src="../../../assets/img/home-two/courses.png" alt="Course">
-            <div class="fc-body">
-              <h5 class="fc-name">تطوير الذات</h5>
-              <div class="fc-rating">
-                <span class="stars text-warning">★★★★★</span>
-                <span class="rating-text">5.0 <small>(7 rating)</small></span>
-              </div>
-              <a href="#" class="btn btn-outline-pill">احجز الآن</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-11 col-md-6 col-lg-3">
-          <div class="fc-card">
-            <img src="../../../assets/img/home-two/courses.png" alt="Course">
-            <div class="fc-body">
-              <h5 class="fc-name">تطوير الذات</h5>
-              <div class="fc-rating">
-                <span class="stars text-warning">★★★★★</span>
-                <span class="rating-text">5.0 <small>(7 rating)</small></span>
-              </div>
-              <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CTA button -->
-      <div class="mt-5">
-        <a href="#" class="btn btn-light-pill">{{ 'home_two.featured.cta' | translate }}</a>
-      </div>
-
-      <!-- decoration -->
-      <img src="../../../assets/img/home-two/Vector-shape.svg" class="fc-shape" alt="shape">
-
-    </div>
-  </div>
-
-</section>
-
+<app-featured-courses-home-v2></app-featured-courses-home-v2>
 <!-- smart courses -->
-<section class="smart-edu py-5" data-aos="fade-up">
-  <div class="container">
-    <div class="row align-items-center g-4">
-      <!-- text -->
-      <div class="col-lg-6 edu-content">
-        <p class="edu-kicker">{{ 'home_two.smart.kicker' | translate }}</p>
-        <h2 class="edu-title">{{ 'home_two.smart.title' | translate }}</h2>
-
-        <p class="edu-text">{{ 'home_two.smart.text' | translate }}</p>
-
-        <a href="#" class="btn btn-pill btn-dark-blue">{{ 'home_two.smart.cta' | translate }}</a>
-      </div>
-
-      <!-- images -->
-      <div class="col-lg-6 position-relative edu-graphics">
-        <!-- main image -->
-        <div>
-          <!-- squiggle svg -->
-          <img src="../../../assets/img/home-two/Vector-gll.svg" class="squiggle" alt="shape">
-          <div class="edu-main-img">
-            <img src="../../../assets/img/home-two/girl1.png" alt="student">
-
-          </div>
-        </div>
-
-
-        <!-- small image -->
-        <div class="edu-small-img">
-          <img src="../../../assets/img/home-two/girl2.png" alt="student">
-        </div>
-
-        <!-- circle shape -->
-        <div class="circle-shape"></div>
-
-
-      </div>
-
-
-
-    </div>
-  </div>
-</section>
+<app-smart-courses-home-v2></app-smart-courses-home-v2>
 
 
 
 <!-- best selling courses -->
-<section class="best-selling my-5" data-aos="fade-up">
-  <div class="container-fluid ">
-    <div class="row align-items-center">
-
-      <!-- text -->
-      <div class="col-lg-3 position-relative ">
-        <div class="bs-text">
-          <h2 class="bs-title">{{ 'home_two.best_selling.title' | translate }}</h2>
-          <p class="bs-sub">{{ 'home_two.best_selling.subtitle' | translate }}</p>
-          <img src="assets/img/home-two/shape-e.svg" alt="icon" class="title-icon position-absolute ">
-        </div>
-      </div>
-
-      <!-- slider -->
-      <div class="col-lg-9">
-        <owl-carousel-o [options]="customOptionsCrSlider">
-
-          <!-- card 1 -->
-          <ng-template carouselSlide>
-            <div class="fc-card" data-aos="fade-up" data-aos-delay="200">
-              <img src="assets/img/home-two/courses.png" alt="Course">
-              <div class="fc-body">
-                <h5 class="fc-name">تطوير الذات</h5>
-                <div class="fc-rating">
-                  <span class="stars text-warning">★★★★★</span>
-                  <span class="rating-text">5.0 <small>(7 rating)</small></span>
-                </div>
-                <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
-              </div>
-            </div>
-          </ng-template>
-
-          <!-- card 2 -->
-          <ng-template carouselSlide>
-            <div class="fc-card" data-aos="fade-up" data-aos-delay="200">
-              <img src="assets/img/home-two/courses.png" alt="Course">
-              <div class="fc-body">
-                <h5 class="fc-name">دروس خصوصية</h5>
-                <div class="fc-rating">
-                  <span class="stars text-warning">★★★★★</span>
-                  <span class="rating-text">4.9 <small>(12 rating)</small></span>
-                </div>
-                <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
-              </div>
-            </div>
-          </ng-template>
-
-          <!-- card 3 -->
-          <ng-template carouselSlide>
-            <div class="fc-card" data-aos="fade-up" data-aos-delay="200">
-              <img src="assets/img/home-two/courses.png" alt="Course">
-              <div class="fc-body">
-                <h5 class="fc-name">كورسات مهنية</h5>
-                <div class="fc-rating">
-                  <span class="stars text-warning">★★★★☆</span>
-                  <span class="rating-text">4.7 <small>(25 rating)</small></span>
-                </div>
-                <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
-              </div>
-            </div>
-          </ng-template>
-
-        </owl-carousel-o>
-      </div>
-
-    </div>
-  </div>
-</section>
-
+<app-best-selling-home-v2></app-best-selling-home-v2>
 
 
 
 <!-- testimonials  -->
-<section class="testimonials py-5" data-aos="fade-up">
-  <div class="container text-center">
-    <p class="ts-kicker">{{ 'home_two.testimonials.kicker' | translate }}</p>
-    <h2 class="ts-title mb-5">{{ 'home_two.testimonials.title' | translate }}</h2>
-    <!-- Owl Carousel -->
-    <owl-carousel-o [options]="customOptionsTsSlider" class="owl-theme ts-slider">
-
-      <!-- Slide 1 -->
-      <ng-template carouselSlide>
-        <div class="ts-item">
-          <!-- main avatar -->
-          <div class="ts-avatar">
-            <img src="assets/img/home-two/girl1.png" alt="Client">
-          </div>
-          <p class="ts-quote">"{{ 'home_two.testimonials.quote1' | translate }}"</p>
-
-          <!-- floating avatars -->
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left bottom" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right bottom" alt="client">
-        </div>
-      </ng-template>
-
-      <!-- Slide 2 -->
-      <ng-template carouselSlide>
-        <div class="ts-item">
-          <div class="ts-avatar">
-            <img src="assets/img/home-two/girl1.png" alt="Client">
-          </div>
-          <p class="ts-quote">"{{ 'home_two.testimonials.quote2' | translate }}"</p>
-
-
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left bottom" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right bottom" alt="client">
-        </div>
-      </ng-template>
-
-    </owl-carousel-o>
-  </div>
-</section>
-
-
+<app-testimonial-home-v2></app-testimonial-home-v2>
 <!--  footer -->
 <footer class="site-footer">
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-center gx-5">
 
       <!-- Logo -->
-      <div class="col-lg-4 text-lg-end mb-4 mb-lg-0">
+      <div class="col-auto text-lg-end mb-4 mb-lg-0">
         <img src="../../.../../../assets/img/home-two/logo-big.png" alt="LoopEDX" class="footer-logo">
-        <p class="footer-slogan">{{ 'home_two.footer.slogan' | translate }}</p>
       </div>
 
       <!-- Links -->
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <h6 class="footer-title">{{ 'home_two.footer.links.about' | translate }}</h6>
+      <div class="col-auto mb-4 mb-lg-0">
+        <h6 class="footer-title">{{ 'home_two.footer.links.links' | translate }}</h6>
         <ul class="footer-links">
           <li><a href="#">{{ 'home_two.footer.links.about' | translate }}</a></li>
           <li><a href="#">{{ 'home_two.footer.links.privacy' | translate }}</a></li>
@@ -489,11 +48,15 @@
       </div>
 
       <!-- Contact -->
-      <div class="col-lg-4">
+      <div class="col-auto ">
         <h6 class="footer-title">{{ 'home_two.footer.contact.title' | translate }}</h6>
         <ul class="footer-links">
-          <li><a href="#">{{ 'home_two.footer.contact.whatsapp' | translate }}</a></li>
-          <li><a href="#">{{ 'home_two.footer.contact.phone' | translate }}: 0100000000</a></li>
+          <li *ngIf="contactUs?.whatsapp"><a [href]="'https://wa.me/' + contactUs?.whatsapp">{{
+              'home_two.footer.contact.whatsapp' | translate }} :{{
+              contactUs?.whatsapp }} </a></li>
+          <li *ngIf="contactUs?.call_number"><a [href]="'tel:' + contactUs?.call_number">{{
+              'home_two.footer.contact.phone' | translate }}: {{
+              contactUs?.call_number }}</a></li>
         </ul>
       </div>
     </div>

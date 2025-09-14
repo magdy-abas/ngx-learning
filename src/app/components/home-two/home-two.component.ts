@@ -1,18 +1,60 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import Aos from 'aos';
 import { CountUp } from 'countup.js';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { DynamicHomeService } from '../../core/service/dynamic-home.service';
+import {
+  ContactUs,
+  HomeSection,
+  ICategory,
+  ICourse,
+  IDoctor,
+} from '../../core/interfaces/dynamic-home.interface';
+import { NgFor, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { HeroHomeV2Component } from './hero-home-v2/hero-home-v2.component';
+import { CounterHomeV2Component } from './counter-home-v2/counter-home-v2.component';
+import { WhyUsHomeV2Component } from './why-us-home-v2/why-us-home-v2.component';
+import { LessonsHomeV2Component } from './lessons-home-v2/lessons-home-v2.component';
+import { FeaturedCoursesHomeV2Component } from './featured-courses-home-v2/featured-courses-home-v2.component';
+import { SmartCoursesHomeV2Component } from './smart-courses-home-v2/smart-courses-home-v2.component';
+import { BestSellingHomeV2Component } from './best-selling-home-v2/best-selling-home-v2.component';
+import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-home-v2.component';
 
 @Component({
   selector: 'app-home-two',
   standalone: true,
-  imports: [CarouselModule, TranslateModule],
+  imports: [
+    CarouselModule,
+    TranslateModule,
+    NgIf,
+    RouterLink,
+    NgFor,
+    HeroHomeV2Component,
+    CounterHomeV2Component,
+    WhyUsHomeV2Component,
+    LessonsHomeV2Component,
+    FeaturedCoursesHomeV2Component,
+    SmartCoursesHomeV2Component,
+    BestSellingHomeV2Component,
+    TestimonialHomeV2Component,
+  ],
   templateUrl: './home-two.component.html',
   styleUrl: './home-two.component.scss',
 })
 export class HomeTwoComponent implements AfterViewInit, OnInit {
+  homeSections: HomeSection[] = [];
+  featuredCourses: ICourse[] = [];
+  universities: ICategory[] = [];
+  doctors: IDoctor[] = [];
+
+  contactUs: ContactUs | null = null;
+
+  private _DynamicHomeService = inject(DynamicHomeService);
+
   ngOnInit(): void {
+    this.getHomeData();
     Aos.init({
       offset: 20,
       duration: 1200,
@@ -55,36 +97,27 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
     });
   }
 
-  customOptionsCrSlider = {
-    loop: true,
-    margin: 20,
-    rtl: true,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    autoplayHoverPause: true,
-    smartSpeed: 800,
-    dots: false,
-    nav: false,
-    responsive: {
-      0: { items: 1 },
-      768: { items: 3 },
-      1200: { items: 3 },
-    },
-  };
+  getHomeData(): void {
+    this._DynamicHomeService.getHomeData().subscribe({
+      next: (res) => {
+        this.homeSections = res.data;
 
-  customOptionsTsSlider = {
-    loop: true,
-    rtl: true,
-    items: 1,
-    autoplay: true,
-    autoplayTimeout: 5000,
-    smartSpeed: 800,
-    dots: false,
-    nav: false,
-    responsive: {
-      0: { items: 1 },
-      768: { items: 1 },
-      1200: { items: 1 },
-    },
-  };
+        this.featuredCourses = this.homeSections.find(
+          (section) => section.type === 'courses'
+        )?.data as ICourse[];
+
+        this.universities = this.homeSections.find(
+          (section) => section.type === 'categories'
+        )?.data as ICategory[];
+        this.doctors = this.homeSections.find(
+          (section) => section.type === 'doctors'
+        )?.data as IDoctor[];
+
+        this.contactUs = res.contact_us;
+
+        console.log('contact_us:', this.universities);
+      },
+      error: (err) => console.error(err),
+    });
+  }
 }

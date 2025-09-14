@@ -1,7 +1,13 @@
-<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="medium" color="#ff602e" type="ball-spin-fade" [fullScreen]="true">
-  <!-- <p style="color: #ff602e">Loading...</p> -->
-</ngx-spinner>
+<!-- Loading Wrapper -->
+<div class="home-v1" *ngIf="isLoading && layout === 'v2'">
+  <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="medium" color="#23509f" type="ball-spin-fade" [fullScreen]="true">
+  </ngx-spinner>
+</div>
 
+<div class="home-v2" *ngIf="isLoading && layout === 'v1'">
+  <ngx-spinner bdColor="rgba(255,255,255,0.9)" size="medium" color="#ff602e" type="ball-spin-fade" [fullScreen]="true">
+  </ngx-spinner>
+</div>
 
-
+<!-- Main Content -->
 <router-outlet></router-outlet>

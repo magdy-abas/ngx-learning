@@ -73,7 +73,9 @@
     <!-- Main Navigation -->
     <nav #navbar [class.scrolled]="isScrolled" [class.transparent]="isTransparent" [class.home-page]="isHomePage"
       [class.other-page]="!isHomePage">
-      <div class="container d-flex  justify-content-between  align-items-center">
+      <!-- ========== DESKTOP V1  ========== -->
+
+      <div class="container desktop-v1   d-flex  justify-content-between  align-items-center">
         <!-- Logo -->
         <div class="logo" routerLink="/">
 
@@ -132,10 +134,6 @@
             <i class="fa-solid fa-magnifying-glass"></i>
           </a>
           <div class="nav-actions d-flex align-items-center">
-
-
-
-
             <!-- user -->
             <li *ngIf="isAuth" class="nav-item user-nav list-unstyled m-0">
               <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -235,7 +233,170 @@
         </button>
 
       </div>
+      <!-- ========== DESKTOP V2  ========== -->
+      <div class="container desktop-v2  d-lg-grid">
 
+        <!-- Links  -->
+        <div class="menu">
+          <div class="menu-item" *ngFor="let item of menuItems">
+            <!-- لو العنصر فيه Dropdown -->
+            <div *ngIf="item.hasDropdown">
+              <a href="#" class="menu-link has-dropdown" (click)="$event.preventDefault()">
+                {{ item.translationKey | translate }}
+                <i class="fas fa-chevron-down"></i>
+              </a>
+
+              <!-- Dropdown -->
+              <div class="dropdown" *ngIf="item.submenu">
+                <ng-container *ngFor="let subItem of item.submenu">
+
+                  <!-- SubItem عادي -->
+                  <a *ngIf="!subItem.hasDropdown" [routerLink]="subItem.route" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    {{ subItem.translationKey | translate }}
+                  </a>
+
+                  <!-- SubItem فيه submenu -->
+                  <div *ngIf="subItem.hasDropdown" class="submenu-item">
+                    <a href="#" (click)="$event.preventDefault()">
+                      {{ subItem.translationKey | translate }}
+                      <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <div class="submenu-box" *ngIf="subItem.submenu">
+                      <a *ngFor="let subSubItem of subItem.submenu" [routerLink]="subSubItem.route"
+                        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        {{ subSubItem.translationKey | translate }}
+                      </a>
+                    </div>
+                  </div>
+
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- عنصر بسيط -->
+            <a *ngIf="!item.hasDropdown" [routerLink]="item.route || '#'" class="menu-link"
+              [class.active]="item.route && isActiveRoute(item.route)" (click)="item.route && navigateTo(item.route)">
+              {{ item.translationKey | translate }}
+            </a>
+          </div>
+        </div>
+
+        <!-- Logo  -->
+        <div class="logo" routerLink="/">
+          <img *ngIf="logoUrl" [src]="logoUrl" alt="Logo" class="logo-img logo">
+        </div>
+
+        <!-- Search + Actions  -->
+        <div class="nav-actions desktop-search-v2 d-flex align-items-center justify-content-start">
+          <a class="btn-pill btn"> {{ 'home_two.nav.book'| translate }}</a>
+          <a (click)="openSearchPopup()" class="csr-pointer me-3">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </a>
+
+
+          <div class="nav-actions d-flex align-items-center">
+            <!-- user -->
+            <li *ngIf="isAuth" class="nav-item user-nav list-unstyled m-0">
+              <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
+                <span class="user-img">
+                  <img src="../../../assets/img/profile-img.png" alt="profile-img">
+                  <span class="status online"></span>
+                </span>
+              </a>
+
+              <div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
+                <div class="user-header d-flex align-items-center gap-2 px-3 py-2 border-bottom">
+                  <div class="avatar avatar-sm">
+                    <img src="../../../assets/img/profile-img.png" alt="User Image" class="avatar-img rounded-circle">
+                  </div>
+                  <div class="user-text">
+                    <h6 class="mb-0">{{ userName }}</h6>
+                    <p class="text-muted mb-0"> {{ 'navbar.student' | translate }}</p>
+
+                  </div>
+                </div>
+
+                <a class="dropdown-item" [routerLink]="'/profile'">
+                  <i class="fas fa-user me-1"></i>
+                  {{ 'navbar.profile' | translate }}
+                </a>
+
+
+                <a class="dropdown-item" [routerLink]="'/profile'" [queryParams]="{ section: 'courses' }">
+                  <i class="fa-solid fa-school me-1"></i>
+                  {{ 'navbar.allCourses' | translate }}
+                </a>
+
+
+
+                <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+                  <i class="fas fa-sign-out-alt me-1"></i>
+                  {{ 'navbar.logout' | translate }}
+                </a>
+              </div>
+            </li>
+          </div>
+        </div>
+
+
+        <div class="nav-actions d-flex align-items-center show-mobile">
+
+
+
+          <div *ngIf="!isAuth" class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
+            <div class="moon" [class.sun]="!isDarkMode"></div>
+          </div>
+          <!-- user -->
+          <li *ngIf="isAuth" class="nav-item user-nav list-unstyled m-0">
+            <a href="javascript:;" class="dropdown-toggle" data-bs-toggle="dropdown">
+              <span class="user-img">
+                <img src="../../../assets/img/profile-img.png" alt="profile-img">
+                <span class="status online"></span>
+              </span>
+            </a>
+
+            <div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
+              <div class="user-header d-flex align-items-center gap-2 px-3 py-2 border-bottom">
+                <div class="avatar avatar-sm">
+                  <img src="../../../assets/img/profile-img.png" alt="User Image" class="avatar-img rounded-circle">
+                </div>
+                <div class="user-text">
+                  <h6 class="mb-0">{{ userName }}</h6>
+                  <p class="text-muted mb-0"> {{ 'navbar.student' | translate }}</p>
+
+                </div>
+              </div>
+
+              <a class="dropdown-item" [routerLink]="'/profile'">
+                <i class="fas fa-user me-1"></i>
+                {{ 'navbar.profile' | translate }}
+              </a>
+
+
+              <a class="dropdown-item" [routerLink]="'/profile'" [queryParams]="{ section: 'courses' }">
+                <i class="fa-solid fa-school me-1"></i>
+                {{ 'navbar.allCourses' | translate }}
+              </a>
+
+              <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+                <i class="fas fa-sign-out-alt me-1"></i>
+                {{ 'navbar.logout' | translate }}
+              </a>
+            </div>
+          </li>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger" #hamburgerBtnv>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+
+
+      </div>
     </nav>
 
 

@@ -359,6 +359,7 @@
   },
 
   "home_two": {
+    "nav": { "book": "Book Now" },
     "hero": {
       "title1": "A Learning Experience Designed",
       "title2": "Specifically",
@@ -424,6 +425,7 @@
     "footer": {
       "slogan": "Learn Smarter, Grow Further",
       "links": {
+        "links": "Important Links",
         "about": "About Us",
         "privacy": "Privacy Policy",
         "terms": "Terms & Conditions",

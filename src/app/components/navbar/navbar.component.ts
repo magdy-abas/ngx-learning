@@ -55,6 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('sideMenu', { static: true }) sideMenu!: ElementRef;
   @ViewChild('overlay', { static: true }) overlay!: ElementRef;
   @ViewChild('hamburgerBtn', { static: true }) hamburgerBtn!: ElementRef;
+  @ViewChild('hamburgerBtnv', { static: true }) hamburgerBtnv!: ElementRef;
   @ViewChild('closeBtn', { static: true }) closeBtn!: ElementRef;
   setting!: SettingResponse;
   public isLangDropdownOpen = false;
@@ -70,6 +71,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   isAuth!: boolean;
   loginWithWats: boolean = false;
   private routerSubscription!: Subscription;
+  homeVersion: 'v1' | 'v2' = 'v1';
 
   public menuItems: MenuItem[] = [
     { title: 'Home', translationKey: 'navbar.home', route: '/' },
@@ -105,6 +107,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isAuth = this.AuthService.isAuthenticated();
     this.darkModeService.applyMode();
     this.isDarkMode = this.darkModeService.isDarkMode();
+    this.homeVersion = this.sharedService.getHomeVersion();
     this.sharedService.settings$.subscribe((settings) => {
       if (settings?.data) {
         this.setting = settings;
@@ -188,6 +191,11 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   private setupEventListeners() {
     if (this.hamburgerBtn) {
       this.hamburgerBtn.nativeElement.addEventListener('click', () =>
+        this.openMobileMenu()
+      );
+    }
+    if (this.hamburgerBtnv) {
+      this.hamburgerBtnv.nativeElement.addEventListener('click', () =>
         this.openMobileMenu()
       );
     }

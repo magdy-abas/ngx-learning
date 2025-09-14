@@ -17,7 +17,8 @@ import { setupDynamicRoutes } from './shared/utils/router.utils';
 })
 export class AppComponent implements OnInit {
   title = 'e-learning';
-
+  isLoading = true;
+  layout: 'v1' | 'v2' = 'v1';
   private router = inject(Router);
   private appAccessService = inject(AppAccessService);
 
@@ -28,6 +29,8 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.layout = this.sharedService.getHomeVersion();
+
     this.spinner.show();
 
     this.sharedService.loadSettings().then(() => {
