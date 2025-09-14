@@ -12,6 +12,7 @@ import { baseUrl } from '../../environment/environment.local';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CheckSecurityPointResponse } from '../interfaces/mobile-versions';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +26,13 @@ export class SharedService {
   securityStatus$ = this.isSecurityChecked.asObservable();
   initialized$ = this.initializationComplete.asObservable();
   private loginMethod: string | null = null;
-
+  private homeVersion: 'v1' | 'v2' = 'v2';
   constructor(private _HttpClient: HttpClient, private router: Router) {}
 
-  CheckSecurityPoint(): Observable<any> {
-    return this._HttpClient.get(`${baseUrl}mobile-versions/last-version`);
+  CheckSecurityPoint(): Observable<CheckSecurityPointResponse> {
+    return this._HttpClient.get<CheckSecurityPointResponse>(
+      `${baseUrl}mobile-versions/last-version`
+    );
   }
 
   checkApiStatus(): Observable<boolean> {
@@ -38,6 +41,9 @@ export class SharedService {
         if (response.status === 1) {
           this.isSecurityChecked.next(true);
           this.initializationComplete.next(true);
+          // home version (v1 or v2)
+          const version = this.extractHomeVersion(response.data);
+          this.setHomeVersion(version);
           this.setLoginMethod(response.data.settings.auth_login_with);
         } else {
           this.isSecurityChecked.next(false);
@@ -100,5 +106,23 @@ export class SharedService {
     }
     const local = localStorage.getItem('appSettings');
     return local ? JSON.parse(local) : null;
+  }
+  private extractHomeVersion(data: any): 'v1' | 'v2' {
+    const appAttrs = data?.app_attrs;
+    const homeAttr = appAttrs?.find((attr: any) => attr.key === 'home_version');
+
+    if (homeAttr?.value === 'v2' || homeAttr?.value === 'v1') {
+      return homeAttr.value;
+    }
+
+    return 'v1';
+  }
+
+  setHomeVersion(version: 'v1' | 'v2') {
+    this.homeVersion = version;
+  }
+
+  getHomeVersion(): 'v1' | 'v2' {
+    return this.homeVersion;
   }
 }

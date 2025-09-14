@@ -204,3 +204,33 @@ input[type="tel"] {
 input[type="tel"].has-value {
   text-align: center !important;
 }
+// ======================================
+// 1. Home V2
+// ======================================
+@media (min-width: 768px) {
+  .stat-item:not(:last-child)::after {
+    left: 0;
+  }
+}
+.edu-graphics {
+  place-items: end;
+}
+.edu-small-img {
+  left: 246px;
+}
+.circle-shape {
+  left: 182px;
+}
+.squiggle {
+  left: 374px;
+}
+.edu-content {
+  text-align: start;
+}
+.students {
+  margin-right: auto;
+}
+
+.hero-copy {
+  margin-left: auto;
+}

@@ -1,3 +1,4 @@
+// mainRoutes.ts
 import { MainLayoutComponent } from '../../../layouts/main-layout/main-layout.component';
 import { authGuard } from '../../guard/auth.guard';
 import { publicGuard } from '../../guard/public.guard';
@@ -13,8 +14,8 @@ export const mainRoutes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('../../../components/home/home.component').then(
-        (m) => m.HomeComponent
+      import('../../../components/home-selector/home-selector.component').then(
+        (m) => m.HomeSelectorComponent
       ),
     title: 'home',
   },

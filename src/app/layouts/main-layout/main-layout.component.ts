@@ -1,3 +1,5 @@
+// main-layout.component.ts
+
 import { Component } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';

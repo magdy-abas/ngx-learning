@@ -467,7 +467,636 @@
   /* Shadow */
   --booking-instractor-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --booking-instractor-shadow-md: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+  /* ================= Home V2 ================= */
+  --brand: #1f4f9a;
+
+  /* ================= Hero Section ================= */
+  --hero-overlay: rgba(228, 228, 228, 0.65);
+
+  --hero-card-bg: #9cb1d3;
+  --hero-card-circ-bg: #95d5ea;
+  --hero-shape-bg: rgba(35, 80, 159, 0.09);
+
+  --hero-title: #23509f;
+  --hero-title-accent: rgba(31, 79, 154, 0.5);
+  --hero-sub: #29425f;
+
+  --hero-btn-bg: #23509f;
+  --hero-btn-border: #23509f;
+  --hero-btn-hover-bg: #1a448f;
+  --hero-btn-hover-border: #1a448f;
+  --hero-btn-text: #ffffff;
+  /* ================= Stats Section ================= */
+  --stats-bg: #23509f;
+  --stats-divider: rgba(255, 255, 255, 0.6);
+  /* ================= Why Us Section ================= */
+  --why-kicker: #6c83b3;
+  --why-title: #23509f;
+  --why-text: #4a5b72;
+
+  --why-card-bg: #ffffff;
+  --why-card-border: #e9edf3;
+  --why-card-shadow: rgba(30, 58, 138, 0.08);
+  --why-icon-shadow: rgba(0, 0, 0, 0.4);
+  --why-feature-text: #3b4b63;
+
+  --why-icon-blue: #23509f;
+  --why-icon-gold: #f5c362;
+  --why-icon-gray: #bfbfbf;
+  --why-icon-w-blue: #6c8bbc;
+
+  /* ================= Courses Section ================= */
+  --courses-bg: #f9fbfe;
+  --courses-title: #23509f;
+  --courses-sub: #4a5b72;
+
+  --courses-border-1: #23509f;
+  --courses-border-2: #c7d9f7;
+
+  --courses-label: #23509f;
+  --courses-label-arrow: #23509f;
+
+  /* ================= Featured Courses Section ================= */
+  --fc-bg: #1f4f9a;
+
+  --fc-title: #ffffff;
+  --fc-sub: rgba(255, 255, 255, 0.85);
+
+  --fc-card-bg: #ffffff;
+  --fc-card-shadow: rgba(0, 0, 0, 0.12);
+  --fc-card-hover-shadow: rgba(0, 0, 0, 0.2);
+
+  --fc-name: #1f4f9a;
+  --fc-rating-text: #555555;
+
+  --fc-btn-outline-border: #1f4f9a;
+  --fc-btn-outline-text: #1f4f9a;
+  --fc-btn-outline-bg: #ffffff;
+  --fc-btn-outline-hover-bg: #1f4f9a;
+  --fc-btn-outline-hover-text: #ffffff;
+
+  --fc-btn-light-text: #1f4f9a;
+  --fc-btn-light-bg: #ffffff;
+  --fc-btn-light-hover-bg: #f3f7fc;
+
+  --fc-shape: #ffffff;
+  /* ================= Smart Section ================= */
+  --smart-kicker: #5475a6;
+
+  --smart-title: #1f4f9a;
+  --smart-title-accent: #1a468f;
+
+  --smart-text: #4a5b72;
+
+  --smart-btn-bg: #1f4f9a;
+  --smart-btn-border: #1f4f9a;
+  --smart-btn-text: #ffffff;
+  --smart-btn-hover-bg: #1a468f;
+  --smart-btn-hover-border: #1a468f;
+
+  --smart-main-img-bg: #f2f2f2;
+  --smart-small-img-bg: #ffffff;
+  --smart-small-img-shadow: rgba(0, 0, 0, 0.12);
+
+  --smart-circle-shape: #d9ebf8;
+
+  /* ================= Best Selling Section ================= */
+  --bs-bg: #6c8abb;
+  --bs-title: #ffffff;
+  --bs-sub: #ffffff;
+
+  /* ================= Testimonials Section ================= */
+  --ts-bg: #ffffff;
+  --ts-kicker: #5475a6;
+  --ts-title: #1f4f9a;
+  --ts-quote: #333333;
+
+  --ts-float-avatar-border: #ffffff;
+  --ts-float-avatar-shadow: rgba(0, 0, 0, 0.15);
+  --ts-avatar-border: #1f4f9a;
+
+  /* ================= Footer Section ================= */
+  --footer-bg: #1f4f9a;
+  --footer-text: #ffffff;
+
+  --footer-wave-opacity: 0.2;
+
+  --footer-slogan: rgba(255, 255, 255, 0.8);
+
+  --footer-link: rgba(255, 255, 255, 0.85);
+  --footer-link-hover: #f5c362;
+
+  --footer-border: rgba(255, 255, 255, 0.15);
+  --footer-bottom-text: rgba(255, 255, 255, 0.7);
 }
+
+// new
+// :root {
+//   --body-bg: #f9fbfe;
+//   --body-text: #22100d;
+//   --body-font-size: 16px;
+
+//   /* Text Styles */
+//   --heading-color: #1f4f9a;
+//   --text-main: #303030;
+//   --text-muted: #6c757d;
+//   --link-color: #1f4f9a;
+//   --link-hover: #f5c362;
+
+//   /* Primary Palette */
+//   --color-primary: #1f4f9a; /* الأزرق الأساسي */
+//   --color-secondary: #23509f; /* الأزرق المكمل */
+//   --color-accent: #f5c362; /* الذهبي */
+//   --color-dark-blue: #29425f;
+
+//   /* Common Colors */
+//   --color-white: #ffffff;
+//   --color-light-bg: #f9fbfe;
+//   --color-light-border: #e0ebff;
+//   --color-dark-border: rgba(0, 0, 0, 0.1);
+//   --color-black: #000000;
+//   --color-gray-text: #4f4f4f;
+
+//   /* Buttons */
+//   --btn-primary-bg: var(--color-primary);
+//   --btn-primary-text: #ffffff;
+//   --btn-primary-border: var(--color-primary);
+
+//   --btn-secondary-bg: var(--color-accent);
+//   --btn-secondary-text: #1f4f9a;
+//   --btn-secondary-border: var(--color-accent);
+
+//   --btn-hover-bg: #ffffff;
+//   --btn-hover-text-dark: var(--color-primary);
+//   --btn-hover-border-dark: var(--color-primary);
+
+//   --btn-outline-border: var(--color-primary);
+//   --btn-outline-hover-bg: var(--color-primary);
+//   --btn-outline-hover-text: #ffffff;
+
+//   --btn-shadow-hover: inset 0 50px 0 0 #ffffff;
+
+//   /* Toggle */
+//   --toggle-wrapper-bg: #f3f4f6;
+//   --toggle-wrapper-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+//   --toggle-btn-text: #6b7280;
+//   --toggle-hover-text: #374151;
+
+//   --toggle-active-bg: #ffffff;
+//   --toggle-active-text: var(--color-primary);
+//   --toggle-active-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+//   /* Inputs */
+//   --input-bg: #ffffff;
+//   --input-border: #c7d9f7;
+//   --input-focus-border: var(--color-primary);
+//   --input-text: #333333;
+//   --input-placeholder: #999999;
+//   --label-color: #444;
+
+//   /* Owl Dots */
+//   --owl-dot-default: var(--color-primary);
+//   --owl-dot-hover: var(--color-accent);
+//   --owl-dot-active: var(--color-accent);
+
+//   /* Sweet Alerts */
+//   --swal-bg: #ffffff;
+//   --swal-text: #444444;
+//   --swal-title: var(--color-primary);
+//   --swal-border-radius: 8px;
+
+//   --swal-confirm-bg: var(--color-primary);
+//   --swal-confirm-hover-bg: #173d7c;
+
+//   --swal-cancel-bg: #d33;
+//   --swal-cancel-hover-bg: #a72020;
+
+//   --swal-icon-info: var(--color-primary);
+//   --swal-icon-warning: #ffc107;
+//   --swal-icon-success: #28a745;
+//   --swal-icon-error: #dc3545;
+
+//   /* Home */
+//   --hero-title-color: var(--color-primary);
+//   --hero-subtitle-color: var(--color-accent);
+//   --hero-description-color: var(--color-dark-blue);
+
+//   /* Instructor */
+//   --instructors-section-bg: #f9fbfe;
+//   --instructors-card-bg: #ffffff;
+//   --instructors-card-border: #e9ecef;
+//   --instructors-card-border-radius: 10px;
+//   --instructors-card-shadow: 0px 5px 13px 6px rgba(30, 80, 159, 0.1);
+//   --instructors-card-info-border: #e0ebff;
+//   --instructors-card-icon-color: var(--color-primary);
+//   --instructors-card-text-color: var(--color-primary);
+//   --instructor-profile-bg: #ffffff;
+
+//   /* Courses Section */
+//   --courses-section-bg: #f9fbfe;
+//   --courses-section-bg-image: url(./assets/img/bg/home-main.png);
+
+//   /* Course Card */
+//   --course-card-bg: #ffffff;
+//   --course-card-radius: 10px;
+//   --course-card-padding: 20px;
+//   --course-card-text-color: #000000;
+//   --course-card-subtext-color: #685f78;
+//   --course-card-hover-icon: var(--color-accent);
+//   --course-card-hover-link: var(--color-primary);
+
+//   --pending-btn-bg: #ccc;
+//   --pending-btn-text: #ffc107;
+//   --pending-btn-border: #ffc107;
+
+//   --progress-bg: #cccccc;
+//   --progress-fill-gradient: linear-gradient(45deg, #1f4f9a, #23509f);
+//   --progress-text-color: #ffffff;
+
+//   --course-card-separator: #f4f4f4;
+//   --course-section-bg: #f9fbfe;
+//   --course-design-border: #e9ecef;
+
+//   /* Course Page */
+//   --course-page-title-color: var(--heading-color);
+//   --course-view-icon-hover: var(--color-accent);
+
+//   /* Categories */
+//   --categories-section-bg: #f9fbfe;
+//   --categories-card-bg: #ffffff;
+//   --categories-card-border: #e0ebff;
+//   --categories-card-shadow: 0px 4px 34px #e0ebff;
+//   --categories-card-radius: 10px;
+
+//   --categories-card-title-color: var(--color-primary);
+//   --categories-card-hover-bg: var(--color-primary);
+//   --categories-card-hover-border: var(--color-primary);
+//   --categories-card-hover-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+//   --categories-card-hover-title-color: #ffffff;
+//   --categories-card-hover-text-color: #ffffff;
+
+//   --categories-header-title: var(--color-primary);
+//   --categories-header-border: rgba(199, 199, 199, 0.25);
+//   --categories-header-text: #303030;
+
+//   /* Course Details */
+//   --cd-text-muted: #6c757d;
+//   --cd-text-dark: #333333;
+//   --cd-text-strong: #111827;
+//   --cd-text-gray-500: #97a7bf;
+
+//   --cd-icon-primary: var(--color-primary);
+//   --cd-icon-accent: var(--color-accent);
+
+//   --cd-white: #ffffff;
+//   --cd-black: #000000;
+//   --cd-border: #e5e7eb;
+
+//   --cd-shadow-weak: rgba(0, 0, 0, 0.05);
+//   --cd-shadow-medium: rgba(0, 0, 0, 0.06);
+
+//   --cd-video-bg: #000000;
+//   --cd-video-placeholder-bg: #000000;
+
+//   --cd-tabs-bg: #f3f4f6;
+//   --cd-tab-text: #6b7280;
+//   --cd-tab-hover-text: #333333;
+//   --cd-tab-active-bg: #ffffff;
+//   --cd-tab-active-text: #111827;
+
+//   --cd-chapter-bg: #ffffff;
+//   --cd-chapter-icon-bg: #eff6ff;
+//   --cd-chapter-icon-text: #2563eb;
+//   --cd-arrow: #9ca3af;
+
+//   --cd-item-bg: #ffffff;
+//   --cd-item-hover-bg: #f9fafb;
+//   --cd-thumb-bg: #f3f4f6;
+
+//   --cd-scrollbar-thumb: #e5e7eb;
+//   --cd-aside-bg: #f9fafb;
+//   --cd-btn-bg: #ffffff;
+//   --cd-btn-hover-bg: #f9fafb;
+
+//   --cd-progress-track: #e5e7eb;
+//   --cd-progress-fill: var(--color-primary);
+//   --cd-progress-text: #ffffff;
+//   --cd-accent: var(--color-accent);
+
+//   --cd-badge-text: #ffffff;
+//   --cd-badge-success-bg: #28a7451f;
+//   --cd-badge-success-border: #28a745;
+//   --cd-badge-warning-bg: #ffc1071f;
+//   --cd-badge-warning-border: #ffc107;
+//   --cd-badge-danger-bg: #dc35451f;
+//   --cd-badge-danger-border: #dc3545;
+
+//   --cd-lesson-icon-bg: #f0f4f9;
+//   --cd-breadcrumb-bg: #ffffff;
+
+//   /* Quiz */
+//   --quiz-primary-color: var(--color-primary);
+//   --quiz-btn-bg: var(--color-primary);
+//   --quiz-btn-text: #ffffff;
+//   --quiz-btn-hover-bg: var(--color-secondary);
+//   --quiz-btn-hover-text: #ffffff;
+
+//   --quiz-back-btn-bg: #ffffff;
+//   --quiz-back-btn-text: var(--color-primary);
+//   --quiz-back-btn-hover-bg: var(--color-primary);
+//   --quiz-back-btn-hover-text: #ffffff;
+
+//   --quiz-disabled-bg: #d9d9d9;
+//   --quiz-card-bg: #ffffff;
+//   --quiz-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+//   --quiz-question-number-color: #6e6e73;
+//   --quiz-option-bg: #fcfcfc;
+//   --quiz-option-border: transparent;
+//   --quiz-option-checked-border: var(--color-primary);
+//   --quiz-option-focus-shadow: rgba(0, 0, 0, 0.1);
+//   --quiz-radio-border: #ccc;
+//   --quiz-radio-inner: var(--color-primary);
+
+//   --quiz-answer-correct-bg: rgba(0, 255, 0, 0.1);
+//   --quiz-answer-wrong-bg: rgba(255, 0, 0, 0.1);
+//   --quiz-option-correct-border: #4cd96452;
+//   --quiz-option-wrong-border: #c62828;
+
+//   --quiz-result-bg: #ffffff;
+//   --quiz-result-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+//   --quiz-result-border-success: #28a745;
+//   --quiz-result-border-warning: #ffc107;
+//   --quiz-result-border-danger: #dc3545;
+
+//   /* Top Nav */
+//   --topnav-bg: #e8e6f7;
+//   --topnav-text: var(--color-primary);
+//   --topnav-icon: #ffffff;
+//   --topnav-link: var(--color-primary);
+//   --topnav-link-hover: var(--color-accent);
+//   --topnav-link-active: #d43370;
+//   --topnav-divider: var(--color-primary);
+
+//   --lang-color: var(--color-primary);
+//   --lang-hover: var(--color-accent);
+//   --lang-active: var(--color-accent);
+//   --lang-divider-color: var(--color-primary);
+
+//   /* Theme Toggle */
+//   --theme-toggle-bg: #423966;
+//   --theme-toggle-bg-day: #f5c362;
+//   --moon-color: #d9fbff;
+//   --sun-core-color: #fff;
+//   --sun-halo-color: #ffffcc;
+
+//   /* Nav */
+//   --navbar-bg: #ffffff;
+//   --navbar-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+
+//   --side-bg: var(--color-primary);
+//   --side-text: #ffffff;
+//   --side-divider: rgba(255, 255, 255, 0.15);
+//   --side-hover: rgba(255, 255, 255, 0.1);
+//   --side-submenu-bg: rgba(255, 255, 255, 0.08);
+//   --side-submenu-hover: rgba(255, 255, 255, 0.12);
+
+//   --side-header-bg: #ffffff;
+//   --side-header-text: #333333;
+//   --side-close-color: #333333;
+
+//   /* Dropdown */
+//   --dropdown-bg: #fff;
+//   --dropdown-text: #333;
+//   --dropdown-subtext: #777;
+//   --dropdown-border: #eee;
+//   --dropdown-hover-bg: #f7f7f7;
+//   --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+//   /* Video Player */
+//   --video-bg: #1f4f9a;
+//   --video-placeholder-bg: #fff;
+//   --video-shadow-light: rgba(0, 0, 0, 0.1);
+//   --video-shadow-medium: rgba(0, 0, 0, 0.35);
+//   --video-shadow-strong: rgba(0, 0, 0, 0.5);
+//   --video-overlay-bg: rgba(0, 0, 0, 0.4);
+//   --video-player-main: var(--color-accent);
+//   --video-btn-text: #ffffff;
+
+//   /* My Courses */
+//   --mycourses-card-border: #ddd;
+//   --mycourses-card-radius: 8px;
+//   --mycourses-card-bg: #ffffff;
+//   --mycourses-hover-title: var(--color-accent);
+
+//   /* Profile */
+//   --profile-tooltip-bg: #ffffff;
+//   --profile-tooltip-text: var(--color-primary);
+//   --profile-icon-default: #6c757d;
+//   --profile-input-disabled-bg: #f5f5f5;
+//   --profile-input-disabled-text: #6c757d;
+//   --profile-card-border: #e9ecef;
+//   --profile-card-bg: #ffffff;
+//   --profile-card-title: var(--color-primary);
+//   --profile-card-subtitle: #303030;
+//   --profile-card-border-light: rgba(199, 199, 199, 0.25);
+//   --profile-active-hover-bg: rgba(245, 195, 98, 0.15);
+//   --profile-active-border: var(--color-accent);
+//   --profile-icon-active: var(--color-accent);
+//   --profile-btn-bg: var(--color-primary);
+//   --profile-btn-border: var(--color-primary);
+//   --profile-btn-text: #ffffff;
+//   --profile-label-bg: #ffffff;
+//   --profile-label-text: #000000;
+//   --profile-user-border: #ffffff;
+//   --profile-user-subtext: #685f78;
+//   --profile-section-border: rgba(199, 199, 199, 0.25);
+
+//   /* Calendar */
+//   --celender-bg: #f5f7fb;
+//   --celender-card: #ffffff;
+//   --celender-line: #e9edf4;
+//   --celender-text: #0f172a;
+//   --celender-muted: #6b7280;
+//   --celender-primary: var(--color-primary);
+//   --celender-primary-weak: #e8f0ff;
+//   --celender-accent: var(--color-accent);
+//   --celender-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+//   --celender-shadow-strong-rgba: rgba(15, 23, 42, 0.12);
+//   --celender-shadow-soft-rgba: rgba(15, 23, 42, 0.08);
+//   --celender-card-shadow-rgba: rgba(0, 0, 0, 0.05);
+//   --celender-radius: 18px;
+//   --celender-title: var(--color-primary);
+//   --celender-title-strong: var(--color-secondary);
+//   --celender-border-hover: #e3e9ff;
+//   --celender-week-text: #94a3b8;
+//   --celender-pill-grad-top: #fafcff;
+//   --celender-pill-grad-bot: #f3f6fb;
+//   --celender-orange: var(--color-accent);
+//   --celender-orange-weak-rgba: rgba(245, 195, 98, 0.35);
+//   --celender-orange-hover-rgba: rgba(245, 195, 98, 0.1);
+//   --celender-purple: var(--color-primary);
+//   --celender-purple-glow-rgba: rgba(31, 79, 154, 0.15);
+//   --celender-dp-border: #eeeeee;
+//   --celender-dp-head-bg: #fafafa;
+//   --celender-gray-333: #333333;
+//   --celender-gray-555: #555555;
+//   --celender-gray-aaa: #aaaaaa;
+//   --celender-gray-ccc: #cccccc;
+//   --celender-icon-blue: #2952e3;
+//   --celender-icon-grad-top: #eef4ff;
+//   --celender-icon-grad-bot: #e9f1ff;
+//   --celender-icon-border: #e5edff;
+
+//   /* Booking - Instructor Page */
+//   --booking-instractor-primary: var(--color-primary);
+//   --booking-instractor-primary-light: #e9f3ff;
+//   --booking-instractor-green: #28a745;
+//   --booking-instractor-green-light: #e9f9f0;
+//   --booking-instractor-orange: #fd7e14;
+//   --booking-instractor-orange-light: #fff3e6;
+//   --booking-instractor-purple: #6f42c1;
+//   --booking-instractor-purple-light: #f6f0ff;
+//   --booking-instractor-white: #fff;
+//   --booking-instractor-bg-light: #f0f4f9;
+//   --booking-instractor-border: #d6d6e7;
+//   --booking-instractor-border-light: #e9ecef;
+//   --booking-instractor-text-dark: #212529;
+//   --booking-instractor-text: #495057;
+//   --booking-instractor-text-muted: #6c757d;
+//   --booking-instractor-text-light: #97a7bf;
+//   --booking-instractor-disabled-bg: #f8f9fa;
+//   --booking-instractor-disabled-text: #adb5bd;
+//   --booking-instractor-header-bg: #ffffff;
+//   --booking-instractor-card-bg: #ffffff;
+//   --booking-instractor-datepicker-head-bg: #ffffff;
+//   --booking-instractor-datepicker-head-text: #212529;
+//   --booking-instractor-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+//   --booking-instractor-shadow-md: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+//   /* ================= Home V2 ================= */
+//   --brand: #1f4f9a;
+
+//   /* ================= Hero Section ================= */
+//   --hero-overlay: rgba(228, 228, 228, 0.65);
+
+//   --hero-card-bg: #9cb1d3;
+//   --hero-card-circ-bg: #95d5ea;
+//   --hero-shape-bg: rgba(35, 80, 159, 0.09);
+
+//   --hero-title: #23509f;
+//   --hero-title-accent: rgba(31, 79, 154, 0.5);
+//   --hero-sub: #29425f;
+
+//   --hero-btn-bg: #23509f;
+//   --hero-btn-border: #23509f;
+//   --hero-btn-hover-bg: #1a448f;
+//   --hero-btn-hover-border: #1a448f;
+//   --hero-btn-text: #ffffff;
+//   /* ================= Stats Section ================= */
+//   --stats-bg: #23509f;
+//   --stats-divider: rgba(255, 255, 255, 0.6);
+//   /* ================= Why Us Section ================= */
+//   --why-kicker: #6c83b3;
+//   --why-title: #23509f;
+//   --why-text: #4a5b72;
+
+//   --why-card-bg: #ffffff;
+//   --why-card-border: #e9edf3;
+//   --why-card-shadow: rgba(30, 58, 138, 0.08);
+//   --why-icon-shadow: rgba(0, 0, 0, 0.4);
+//   --why-feature-text: #3b4b63;
+
+//   --why-icon-blue: #23509f;
+//   --why-icon-gold: #f5c362;
+//   --why-icon-gray: #bfbfbf;
+//   --why-icon-w-blue: #6c8bbc;
+
+//   /* ================= Courses Section ================= */
+//   --courses-bg: #f9fbfe;
+//   --courses-title: #23509f;
+//   --courses-sub: #4a5b72;
+
+//   --courses-border-1: #23509f;
+//   --courses-border-2: #c7d9f7;
+
+//   --courses-label: #23509f;
+//   --courses-label-arrow: #23509f;
+
+//   /* ================= Featured Courses Section ================= */
+//   --fc-bg: #1f4f9a;
+
+//   --fc-title: #ffffff;
+//   --fc-sub: rgba(255, 255, 255, 0.85);
+
+//   --fc-card-bg: #ffffff;
+//   --fc-card-shadow: rgba(0, 0, 0, 0.12);
+//   --fc-card-hover-shadow: rgba(0, 0, 0, 0.2);
+
+//   --fc-name: #1f4f9a;
+//   --fc-rating-text: #555555;
+
+//   --fc-btn-outline-border: #1f4f9a;
+//   --fc-btn-outline-text: #1f4f9a;
+//   --fc-btn-outline-bg: #ffffff;
+//   --fc-btn-outline-hover-bg: #1f4f9a;
+//   --fc-btn-outline-hover-text: #ffffff;
+
+//   --fc-btn-light-text: #1f4f9a;
+//   --fc-btn-light-bg: #ffffff;
+//   --fc-btn-light-hover-bg: #f3f7fc;
+
+//   --fc-shape: #ffffff;
+//   /* ================= Smart Section ================= */
+//   --smart-kicker: #5475a6;
+
+//   --smart-title: #1f4f9a;
+//   --smart-title-accent: #1a468f;
+
+//   --smart-text: #4a5b72;
+
+//   --smart-btn-bg: #1f4f9a;
+//   --smart-btn-border: #1f4f9a;
+//   --smart-btn-text: #ffffff;
+//   --smart-btn-hover-bg: #1a468f;
+//   --smart-btn-hover-border: #1a468f;
+
+//   --smart-main-img-bg: #f2f2f2;
+//   --smart-small-img-bg: #ffffff;
+//   --smart-small-img-shadow: rgba(0, 0, 0, 0.12);
+
+//   --smart-circle-shape: #d9ebf8;
+
+//   /* ================= Best Selling Section ================= */
+//   --bs-bg: #6c8abb;
+//   --bs-title: #ffffff;
+//   --bs-sub: #ffffff;
+
+//   /* ================= Testimonials Section ================= */
+//   --ts-bg: #ffffff;
+//   --ts-kicker: #5475a6;
+//   --ts-title: #1f4f9a;
+//   --ts-quote: #333333;
+
+//   --ts-float-avatar-border: #ffffff;
+//   --ts-float-avatar-shadow: rgba(0, 0, 0, 0.15);
+//   --ts-avatar-border: #1f4f9a;
+
+//   /* ================= Footer Section ================= */
+//   --footer-bg: #1f4f9a;
+//   --footer-text: #ffffff;
+
+//   --footer-wave-opacity: 0.2;
+
+//   --footer-slogan: rgba(255, 255, 255, 0.8);
+
+//   --footer-link: rgba(255, 255, 255, 0.85);
+//   --footer-link-hover: #f5c362;
+
+//   --footer-border: rgba(255, 255, 255, 0.15);
+//   --footer-bottom-text: rgba(255, 255, 255, 0.7);
+// }
 
 body {
   background-color: var(--body-bg);

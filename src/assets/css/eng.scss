@@ -84,3 +84,30 @@ body {
     right: 0 !important;
   }
 }
+// ======================================
+// 1. Home V2
+// ======================================
+@media (min-width: 768px) {
+  .stat-item:not(:last-child)::after {
+    right: 0;
+  }
+}
+.students {
+  margin-left: auto;
+}
+
+.hero-copy {
+  margin-right: auto;
+}
+.edu-graphics {
+  place-items: center;
+}
+.edu-small-img {
+  right: 40px;
+}
+.circle-shape {
+  right: 125px;
+}
+.squiggle {
+  right: 101px;
+}
