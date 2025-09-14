@@ -605,7 +605,18 @@ body.dark-mode {
   --footer-border: rgba(255, 255, 255, 0.1);
   --footer-bottom-text: #777777;
 }
+.body.dark-mode {
+  --navbar-bg: #231f39;
+  --navbar-box-shadow: 0 4px 12px rgba(161, 139, 255, 0.08);
 
+  --navbar-link-color: #cfc8ff;
+  --navbar-link-hover: #a18bff;
+  --navbar-link-active: #ffb54a;
+
+  --navbar-icon-color: #cfc8ff;
+  --navbar-icon-dark: #a18bff;
+  --navbar-border-hover: #a18bff;
+}
 // body.dark-mode {
 //   background-color: var(--color-bg-main) !important;
 //   color: var(--color-text-main);

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FeatherIconModule } from '../../utils/feather-icons.utils';
-import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
+import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../../core/service/auth.service';
 import Swal from 'sweetalert2';
 import { CoursesService } from '../../../core/service/courses.service';
@@ -29,6 +29,7 @@ import { RequestJoinDto } from './../../../core/Dtos/coursesDtos';
     CurrencyPipe,
     MatProgressBarModule,
     TranslateModule,
+    NgIf,
   ],
 
   templateUrl: './courses-card.component.html',
@@ -43,6 +44,7 @@ export class CoursesCardComponent implements OnInit, AfterViewChecked {
   ) {}
   @Input() coursesData: any[] = [];
   @Input() fromHome: boolean = true;
+  @Input() version: 'v1' | 'v2' = 'v2';
 
   isItPending: boolean = false;
 

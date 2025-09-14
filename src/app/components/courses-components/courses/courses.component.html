@@ -1,22 +1,3 @@
-<!-- Breadcrumb -->
-<!-- <div class="breadcrumb-bar">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 col-12">
-        <div class="breadcrumb-list">
-          <nav aria-label="breadcrumb" class="page-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a routerLink="/home">{{'courses.home' | translate}}</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{'courses.allCourses' | translate}}</li>
-            </ol>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- /Breadcrumb -->
-
 <!-- Course -->
 <section class="course-content">
   <div class="container">
@@ -67,29 +48,15 @@
         <!-- /Filter -->
 
         <div class="row">
-
-
           <app-courses-card [coursesData]="coursesData" [fromHome]="false"></app-courses-card>
-
-
 
           <div class="loading d-flex justify-content-center" *ngIf="isLoading">
             <div class="loader"></div>
-
           </div>
-
-
-
-
           <p *ngIf="!isLoading && coursesData.length === 0" class="text-center w-100"> {{ 'courses.notFound' | translate
             }}</p>
-
         </div>
-
-
-
       </div>
-
     </div>
   </div>
 </section>

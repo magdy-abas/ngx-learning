@@ -9,19 +9,21 @@
 
 
 <!-- lessons section -->
-<app-lessons-home-v2></app-lessons-home-v2>
-
+<app-lessons-home-v2 [categories]="universities">
+</app-lessons-home-v2>
 
 <!-- featured courses -->
-<app-featured-courses-home-v2></app-featured-courses-home-v2>
+<app-featured-courses-home-v2 [courses]="featuredCourses">
+</app-featured-courses-home-v2>
 <!-- smart courses -->
-<app-smart-courses-home-v2></app-smart-courses-home-v2>
+<!-- smart courses (doctors) -->
+<app-smart-courses-home-v2>
+</app-smart-courses-home-v2>
 
 
 
 <!-- best selling courses -->
-<app-best-selling-home-v2></app-best-selling-home-v2>
-
+<app-best-selling-home-v2 [doctors]="doctors"></app-best-selling-home-v2>
 
 
 <!-- testimonials  -->

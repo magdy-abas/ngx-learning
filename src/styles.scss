@@ -517,6 +517,15 @@ body.home-v2 {
   --btn-outline-hover-text: #ffffff;
 
   --btn-shadow-hover: inset 0 50px 0 0 #ffffff;
+  // navbar
+  /* Navbar Colors */
+  --navbar-bg: rgb(150, 175, 215);
+  --navbar-link-color: #23509f;
+  --navbar-link-hover: #003c96;
+  --navbar-icon-color: #ffffff;
+  --navbar-icon-dark: #003c96;
+
+  --navbar-border-hover: #003c96;
 
   /* Toggle */
   --toggle-wrapper-bg: #f3f4f6;
@@ -733,7 +742,7 @@ body.home-v2 {
   --sun-halo-color: #ffffcc;
 
   /* Nav */
-  --navbar-bg: #ffffff;
+
   --navbar-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
 
   --side-bg: var(--color-primary);

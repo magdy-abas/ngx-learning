@@ -3944,8 +3944,8 @@ body.home-v2 {
   .course-img img {
     display: block;
     width: 100%;
-    max-width: 240px;
-    height: auto;
+    width: 200px;
+    height: 280px;
     border-radius: 16px;
     position: relative;
     z-index: 3;
@@ -4154,6 +4154,11 @@ body.home-v2 {
 
   .edu-graphics {
     position: relative;
+  }
+  @media (max-width: 768px) {
+    .edu-graphics {
+      margin-top: 24px;
+    }
   }
 
   .edu-main-img {
@@ -4493,10 +4498,10 @@ body.home-v2 {
 
 body.home-v2 .auth-nav,
 body.home-v2 nav {
-  background-color: rgb(150 175 215) !important;
+  background-color: var(--navbar-bg) !important;
 
   .desktop-v2 .fa-magnifying-glass {
-    color: #ffff;
+    color: var(--navbar-icon-color);
     margin-inline-start: 10px;
   }
   .desktop-v2 .btn-pill {
@@ -4511,7 +4516,7 @@ body.home-v2 nav {
     position: relative;
     display: inline-block;
     padding-bottom: 4px;
-    color: #23509f;
+    color: var(--navbar-link-color);
     text-decoration: none;
     transition: color 0.3s ease;
   }
@@ -4523,7 +4528,7 @@ body.home-v2 nav {
     bottom: -60%;
     width: 0;
     height: 3px;
-    background-color: #003c96;
+    background-color: var(--navbar-border-hover);
     transition: width 0.3s ease;
   }
 
@@ -4535,7 +4540,7 @@ body.home-v2 nav {
 
 body.home-v2 .auth-nav .other-page {
   .desktop-v2 .fa-magnifying-glass {
-    color: #003c96;
+    color: var(--navbar-icon-dark);
   }
   .desktop-v2 .menu .menu-link::after {
     bottom: -45%;
@@ -4588,4 +4593,7 @@ body.home-v1 .desktop-v2 {
     display: flex;
     place-items: center;
   }
+}
+body.home-v2 .top-info-bar::before {
+  background-color: var(--navbar-bg) !important;
 }

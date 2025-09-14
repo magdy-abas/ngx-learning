@@ -105,14 +105,17 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
         this.featuredCourses = this.homeSections.find(
           (section) => section.type === 'courses'
         )?.data as ICourse[];
+        console.log(this.featuredCourses);
 
         this.universities = this.homeSections.find(
           (section) => section.type === 'categories'
         )?.data as ICategory[];
+        console.log(this.universities);
+
         this.doctors = this.homeSections.find(
           (section) => section.type === 'doctors'
         )?.data as IDoctor[];
-
+        console.log(this.doctors);
         this.contactUs = res.contact_us;
 
         console.log('contact_us:', this.universities);

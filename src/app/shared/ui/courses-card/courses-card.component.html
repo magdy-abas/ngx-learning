@@ -1,16 +1,11 @@
-<!-- Course -->
-<div class="course-card-cover">
+<!-- Course v2 -->
+<div *ngIf="version === 'v1'" class="course-card-cover">
   <div class="row  " [ngClass]="fromHome && coursesData.length < 4 ? 'justify-content-center' : ''">
-
-
-
     <div class="    d-flex" *ngFor="let data of coursesData; let i = index"
       [ngClass]="fromHome ? 'col-lg-3 col-md-4  col-sm-6' : 'col-lg-3 col-md-4  col-sm-6'">
 
       <div class="course-box course-design d-flex" [routerLink]="getRouterLink(data.id)" style="cursor: pointer;">
         <div class="product">
-
-
           <div class="product-img">
             <a href="javascript:;">
               <div class="product-img-courses">
@@ -18,28 +13,19 @@
                   [src]="data.image || '../../../../assets/img/course-placeholder.png'"
                   onerror="this.src='../../../../assets/img/course-placeholder.png'">
               </div>
-
             </a>
             <!-- [ngClass]="{'combo': data.idle === 'FREE'}" -->
-
-
             @if (data.price) {
             <div class="price">
               <!-- <h3>{{data.doctor}}</h3> -->
               <h3>{{ data.price | currency:'GBP':'symbol' }}</h3>
-
               <!-- <span>200</span> -->
             </div>
-
             }
-
-
-
           </div>
           <div class="product-content">
             <h3 class="title"><a href="javascript:;">{{data.title}}</a></h3>
             <div class="course-group d-flex justify-content-between">
-
               <div class="course-group-img d-flex ">
                 <!-- <div class="courses-doctor-img rounded-circle">
                   <img [src]="data.doctor_image || './assets/img/course/doctor.png'"
@@ -138,3 +124,51 @@
 </div>
 
 <!-- /Course -->
+
+<!-- Course v2 -->
+<div class="" *ngIf="version === 'v2'">
+  <div class="row " [ngClass]="coursesData.length < 4 ? 'justify-content-center' : ''">
+    <div class="" *ngFor="let data of coursesData; let i = index" [ngClass]="'col-lg-3 col-md-4 col-sm-6 mb-5'">
+
+      <div class="fc-card d-flex flex-column" [routerLink]="getRouterLink(data.id)" style="cursor: pointer;">
+        <img class="img-fluid" [src]="data.image || '../../../../assets/img/course-placeholder.png'" alt="img-course"
+          onerror="this.src='../../../../assets/img/course-placeholder.png'">
+
+        <div class="fc-body justify-content-between ">
+          <h5 class="fc-name text-end">{{ data.title }}</h5>
+          <div class="d-flex justify-content-between">
+            <div class="fc-rating mb-2" *ngIf="data.rate && data.rate !== '0.0'">
+              <div class="d-flex align-items-center justify-content-center">
+                <ng-container *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))">
+                  <i class="fas fa-star text-warning me-1"></i>
+                </ng-container>
+                <ng-container *ngIf="data.rate % 1 !== 0">
+                  <i class="fa-solid fa-star-half-stroke text-warning me-1"></i>
+                </ng-container>
+                <span class="rating-text">{{ data.rate }}</span>
+              </div>
+            </div>
+
+            <p class="fc-doctor mb-2" *ngIf="data.doctor">{{ data.doctor }}</p>
+          </div>
+
+
+          <div class="fc-progress w-100" *ngIf="data.client_status === 'accepted'">
+            <span class="progress-text">{{ data.client_complete_percentage }}%</span>
+            <div class="progress-container">
+              <div class="progress-fill" [style.width.%]="data.client_complete_percentage"></div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <button class="btn btn-outline-pill w-100" *ngIf="data.client_status !== 'accepted'">
+              {{ "courses.showCourse" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- /Course v2 -->

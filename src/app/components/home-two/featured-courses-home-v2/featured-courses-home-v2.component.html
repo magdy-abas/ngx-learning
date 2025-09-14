@@ -1,5 +1,5 @@
 <!-- featured courses -->
-<section class="py-5" data-aos="fade-up">
+<section class="py-5" data-aos="fade-up" *ngIf="courses?.length">
   <div class="container text-center">
     <div class="featured-courses">
       <!-- title -->
@@ -8,62 +8,35 @@
 
       <!-- cards row -->
       <div class="row g-4 justify-content-center">
-
-        <div class="col-11 col-md-6 col-lg-3">
+        <div class="col-11 col-md-6 col-lg-3" *ngFor="let course of courses">
           <div class="fc-card">
-            <img src="../../../assets/img/home-two/courses.png" alt="Course">
+            <img [src]="course.image" [alt]="course.title" class="img-fluid">
             <div class="fc-body">
-              <h5 class="fc-name">تطوير الذات</h5>
+              <h5 class="fc-name">{{ course.title }}</h5>
               <div class="fc-rating">
-                <span class="stars text-warning">
-                  ★★★★★
+                <span class="stars text-warning">★★★★★</span>
+                <span class="rating-text">
+                  {{ course.rate }}
+
                 </span>
-                <span class="rating-text">5.0 <small>(7 rating)</small></span>
               </div>
-              <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
+              <a href="#" class="btn btn-outline-pill">
+                {{ 'home_two.featured.book_now' | translate }}
+              </a>
             </div>
           </div>
         </div>
-
-        <div class=" col-11 col-md-6 col-lg-3">
-          <div class="fc-card">
-            <img src="../../../assets/img/home-two/courses.png" alt="Course">
-            <div class="fc-body">
-              <h5 class="fc-name">تطوير الذات</h5>
-              <div class="fc-rating">
-                <span class="stars text-warning">★★★★★</span>
-                <span class="rating-text">5.0 <small>(7 rating)</small></span>
-              </div>
-              <a href="#" class="btn btn-outline-pill">احجز الآن</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-11 col-md-6 col-lg-3">
-          <div class="fc-card">
-            <img src="../../../assets/img/home-two/courses.png" alt="Course">
-            <div class="fc-body">
-              <h5 class="fc-name">تطوير الذات</h5>
-              <div class="fc-rating">
-                <span class="stars text-warning">★★★★★</span>
-                <span class="rating-text">5.0 <small>(7 rating)</small></span>
-              </div>
-              <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <!-- CTA button -->
       <div class="mt-5">
-        <a href="#" class="btn btn-light-pill">{{ 'home_two.featured.cta' | translate }}</a>
+        <a href="#" class="btn btn-light-pill">
+          {{ 'home_two.featured.cta' | translate }}
+        </a>
       </div>
 
       <!-- decoration -->
       <img src="../../../assets/img/home-two/Vector-shape.svg" class="fc-shape" alt="shape">
-
     </div>
   </div>
-
 </section>

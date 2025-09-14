@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { IDoctor } from '../../../core/interfaces/dynamic-home.interface';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-smart-courses-home-v2',

@@ -212,12 +212,14 @@ input[type="tel"].has-value {
     left: 0;
   }
 }
+
 .edu-graphics {
   place-items: end;
 }
 .edu-small-img {
   left: 246px;
 }
+
 .circle-shape {
   left: 182px;
 }
@@ -233,4 +235,9 @@ input[type="tel"].has-value {
 
 .hero-copy {
   margin-left: auto;
+}
+@media (max-width: 768px) {
+  .edu-small-img {
+    left: 178px;
+  }
 }
