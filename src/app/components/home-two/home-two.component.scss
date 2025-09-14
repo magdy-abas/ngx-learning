@@ -1,136 +1,146 @@
-body.dark-mode {
-  --brand: #a18bff;
+// body.dark-mode {
+//   --brand: #a18bff;
 
-  /* ================= Hero Section ================= */
-  --hero-overlay: rgba(30, 27, 46, 0.7);
+//   /* ================= Hero Section ================= */
+//   --hero-overlay: rgba(30, 27, 46, 0.7);
 
-  --hero-card-bg: #2c2944;
-  --hero-card-circ-bg: #392c7d;
-  --hero-shape-bg: rgba(161, 139, 255, 0.1);
+//   --hero-card-bg: #2c2944;
+//   --hero-card-circ-bg: #392c7d;
+//   --hero-shape-bg: rgba(161, 139, 255, 0.1);
 
-  --hero-title: #e0d8ff;
-  --hero-title-accent: #bbb5dd;
-  --hero-sub: #f6945e;
+//   --hero-title: #e0d8ff;
+//   --hero-title-accent: #bbb5dd;
+//   --hero-sub: #f6945e;
 
-  --hero-btn-bg: #a18bff;
-  --hero-btn-border: #a18bff;
-  --hero-btn-hover-bg: #7d6cd1;
-  --hero-btn-hover-border: #7d6cd1;
-  --hero-btn-text: #1e1b2e;
+//   --hero-btn-bg: #a18bff;
+//   --hero-btn-border: #a18bff;
+//   --hero-btn-hover-bg: #7d6cd1;
+//   --hero-btn-hover-border: #7d6cd1;
+//   --hero-btn-text: #1e1b2e;
 
-  /* ================= Stats Section ================= */
-  --stats-bg: #392c7d;
-  --stats-divider: rgba(255, 255, 255, 0.1);
+//   /* ================= Stats Section ================= */
+//   --stats-bg: #392c7d;
+//   --stats-divider: rgba(255, 255, 255, 0.1);
 
-  /* ================= Why Us Section ================= */
-  --why-kicker: #cfc8ff;
-  --why-title: #a18bff;
-  --why-text: #a7a7b5;
+//   /* ================= Why Us Section ================= */
+//   --why-kicker: #cfc8ff;
+//   --why-title: #a18bff;
+//   --why-text: #a7a7b5;
 
-  --why-card-bg: #2c2944;
-  --why-card-border: rgba(255, 255, 255, 0.08);
-  --why-card-shadow: rgba(161, 139, 255, 0.1);
-  --why-icon-shadow: rgba(0, 0, 0, 0.4);
-  --why-feature-text: #d4d4dd;
+//   --why-card-bg: #2c2944;
+//   --why-card-border: rgba(255, 255, 255, 0.08);
+//   --why-card-shadow: rgba(161, 139, 255, 0.1);
+//   --why-icon-shadow: rgba(0, 0, 0, 0.4);
+//   --why-feature-text: #d4d4dd;
 
-  --why-icon-blue: #a18bff;
-  --why-icon-gold: #ffb54a;
-  --why-icon-gray: #777777;
-  --why-icon-w-blue: #7d6cd1;
+//   --why-icon-blue: #a18bff;
+//   --why-icon-gold: #ffb54a;
+//   --why-icon-gray: #777777;
+//   --why-icon-w-blue: #7d6cd1;
 
-  /* ================= Courses Section ================= */
-  --courses-bg: #1e1b2e;
-  --courses-title: #cfc8ff;
-  --courses-sub: #a7a7b5;
+//   /* ================= Courses Section ================= */
+//   --courses-bg: #1e1b2e;
+//   --courses-title: #cfc8ff;
+//   --courses-sub: #a7a7b5;
 
-  --courses-border-1: #a18bff;
-  --courses-border-2: #3b3657;
+//   --courses-border-1: #a18bff;
+//   --courses-border-2: #3b3657;
 
-  --courses-label: #a18bff;
-  --courses-label-arrow: #a18bff;
+//   --courses-label: #a18bff;
+//   --courses-label-arrow: #a18bff;
 
-  /* ================= Featured Courses Section ================= */
-  --fc-bg: #2c2944;
+//   /* ================= Featured Courses Section ================= */
+//   --fc-bg: #2c2944;
 
-  --fc-title: #e4e4e7;
-  --fc-sub: #a7a7b5;
+//   --fc-title: #e4e4e7;
+//   --fc-sub: #a7a7b5;
 
-  --fc-card-bg: #26233a;
-  --fc-card-shadow: rgba(0, 0, 0, 0.25);
-  --fc-card-hover-shadow: rgba(0, 0, 0, 0.4);
+//   --fc-card-bg: #26233a;
+//   --fc-card-shadow: rgba(0, 0, 0, 0.25);
+//   --fc-card-hover-shadow: rgba(0, 0, 0, 0.4);
 
-  --fc-name: #a18bff;
-  --fc-rating-text: #bbb5dd;
+//   --fc-name: #a18bff;
+//   --fc-rating-text: #bbb5dd;
 
-  --fc-btn-outline-border: #a18bff;
-  --fc-btn-outline-text: #a18bff;
-  --fc-btn-outline-bg: #2c2944;
-  --fc-btn-outline-hover-bg: #a18bff;
-  --fc-btn-outline-hover-text: #1e1b2e;
+//   --fc-btn-outline-border: #a18bff;
+//   --fc-btn-outline-text: #a18bff;
+//   --fc-btn-outline-bg: #2c2944;
+//   --fc-btn-outline-hover-bg: #a18bff;
+//   --fc-btn-outline-hover-text: #1e1b2e;
 
-  --fc-btn-light-text: #a18bff;
-  --fc-btn-light-bg: #2c2944;
-  --fc-btn-light-hover-bg: #3b3657;
+//   --fc-btn-light-text: #a18bff;
+//   --fc-btn-light-bg: #2c2944;
+//   --fc-btn-light-hover-bg: #3b3657;
 
-  --fc-shape: #a18bff;
+//   --fc-shape: #a18bff;
 
-  /* ================= Smart Section ================= */
-  --smart-kicker: #cfc8ff;
+//   /* ================= Smart Section ================= */
+//   --smart-kicker: #cfc8ff;
 
-  --smart-title: #cfc8ff;
-  --smart-title-accent: #a18bff;
+//   --smart-title: #cfc8ff;
+//   --smart-title-accent: #a18bff;
 
-  --smart-text: #a7a7b5;
+//   --smart-text: #a7a7b5;
 
-  --smart-btn-bg: #a18bff;
-  --smart-btn-border: #a18bff;
-  --smart-btn-text: #1e1b2e;
-  --smart-btn-hover-bg: #7d6cd1;
-  --smart-btn-hover-border: #7d6cd1;
+//   --smart-btn-bg: #a18bff;
+//   --smart-btn-border: #a18bff;
+//   --smart-btn-text: #1e1b2e;
+//   --smart-btn-hover-bg: #7d6cd1;
+//   --smart-btn-hover-border: #7d6cd1;
 
-  --smart-main-img-bg: #2c2944;
-  --smart-small-img-bg: #26233a;
-  --smart-small-img-shadow: rgba(0, 0, 0, 0.35);
+//   --smart-main-img-bg: #2c2944;
+//   --smart-small-img-bg: #26233a;
+//   --smart-small-img-shadow: rgba(0, 0, 0, 0.35);
 
-  --smart-circle-shape: #3b3657;
+//   --smart-circle-shape: #3b3657;
 
-  /* ================= Best Selling Section ================= */
-  --bs-bg: #2c2944;
-  --bs-title: #cfc8ff;
-  --bs-sub: #a7a7b5;
+//   /* ================= Best Selling Section ================= */
+//   --bs-bg: #2c2944;
+//   --bs-title: #cfc8ff;
+//   --bs-sub: #a7a7b5;
 
-  /* ================= Testimonials Section ================= */
-  --ts-bg: #1e1b2e;
-  --ts-kicker: #cfc8ff;
-  --ts-title: #a18bff;
-  --ts-quote: #d4d4dd;
+//   /* ================= Testimonials Section ================= */
+//   --ts-bg: #1e1b2e;
+//   --ts-kicker: #cfc8ff;
+//   --ts-title: #a18bff;
+//   --ts-quote: #d4d4dd;
 
-  --ts-float-avatar-border: #2c2944;
-  --ts-float-avatar-shadow: rgba(0, 0, 0, 0.35);
-  --ts-avatar-border: #a18bff;
+//   --ts-float-avatar-border: #2c2944;
+//   --ts-float-avatar-shadow: rgba(0, 0, 0, 0.35);
+//   --ts-avatar-border: #a18bff;
 
-  /* ================= Footer Section ================= */
-  --footer-bg: #1e1b2e;
-  --footer-text: #e4e4e7;
+//   /* ================= Footer Section ================= */
+//   --footer-bg: #1e1b2e;
+//   --footer-text: #e4e4e7;
 
-  --footer-wave-opacity: 0.1;
+//   --footer-wave-opacity: 0.1;
 
-  --footer-slogan: #a7a7b5;
+//   --footer-slogan: #a7a7b5;
 
-  --footer-link: #cfc8ff;
-  --footer-link-hover: #ffb54a;
+//   --footer-link: #cfc8ff;
+//   --footer-link-hover: #ffb54a;
 
-  --footer-border: rgba(255, 255, 255, 0.1);
-  --footer-bottom-text: #777777;
-}
+//   --footer-border: rgba(255, 255, 255, 0.1);
+//   --footer-bottom-text: #777777;
+// }
 
 /* ================= Base ================= */
+.hero,
+.stats,
+.why,
+.courses,
+.featured-courses,
+.smart-edu,
+.best-selling,
+.testimonials {
+  overflow: hidden !important; /* يمنع أي فراغ ناتج عن التحريك */
+}
 
 .hero {
   position: relative;
   background: url("../../../assets/img/home-two/bg.png") center center / cover
     no-repeat;
-  padding: 88px 0 96px;
+  padding: 130px 0 96px;
   overflow: hidden;
 }
 
@@ -267,6 +277,7 @@ body.dark-mode {
   color: var(--hero-sub);
   font-size: 20px;
   line-height: 1.8;
+  font-weight: 600;
   margin: 10px 0 22px;
 }
 

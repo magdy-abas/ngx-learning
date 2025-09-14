@@ -356,5 +356,85 @@
   "notfound": {
     "title": "Page Not Found!",
     "backHome": "Back to Home"
+  },
+
+  "home_two": {
+    "hero": {
+      "title1": "A Learning Experience Designed",
+      "title2": "Specifically",
+      "title3": "for You",
+      "subtitle": "📚 Live lessons and high-quality training courses",
+      "cta": "Start Now"
+    },
+    "stats": {
+      "courses": "Courses Available",
+      "students": "Active Students",
+      "teachers": "Certified Teachers",
+      "fields": "Covering Various Fields"
+    },
+    "why": {
+      "kicker": "Learn Smarter…",
+      "title": "An innovative learning platform… opening doors to knowledge in a modern way",
+      "text": "We design a personalized learning experience tailored to your needs...",
+      "cta": "Start Now",
+      "feature1": {
+        "title": "Live & Recorded Learning",
+        "text": "Choose the method that suits you: live sessions or on-demand content"
+      },
+      "feature2": {
+        "title": "Professional Trainers",
+        "text": "Learn from experts with both academic and practical experience"
+      },
+      "feature3": {
+        "title": "Certified Certificates",
+        "text": "Get trusted certificates that prove your skills and support your career"
+      },
+      "feature4": {
+        "title": "AI-Powered Learning",
+        "text": "An intelligent learning path designed to accelerate your progress"
+      }
+    },
+    "courses": {
+      "title": "Discover the Best Courses",
+      "subtitle": "A wide variety of courses to boost your skills",
+      "private": "Private Lessons"
+    },
+    "featured": {
+      "title": "Featured Courses",
+      "subtitle": "Learning that fits your time, level, and ambition",
+      "cta": "Discover More",
+      "book_now": "Book Now"
+    },
+    "smart": {
+      "kicker": "Everything you need to grow in one place",
+      "title": "Smart Learning that Matches Your Ambitions... Step by Step",
+      "text": "Our platform gives you modern tools for development and success.",
+      "cta": "Start Now"
+    },
+    "best_selling": {
+      "title": "Best Selling Courses",
+      "subtitle": "Your learning journey starts here!"
+    },
+    "testimonials": {
+      "kicker": "Success Stories We Are Proud Of",
+      "title": "What Our Clients Say",
+      "quote1": "My experience with this learning platform was truly unique...",
+      "quote2": "The best interactive learning platform ever! Highly recommended..."
+    },
+    "footer": {
+      "slogan": "Learn Smarter, Grow Further",
+      "links": {
+        "about": "About Us",
+        "privacy": "Privacy Policy",
+        "terms": "Terms & Conditions",
+        "support": "Support"
+      },
+      "contact": {
+        "title": "Contact Us",
+        "whatsapp": "WhatsApp",
+        "phone": "Phone"
+      },
+      "bottom": "© 2025 . All Rights Reserved."
+    }
   }
 }

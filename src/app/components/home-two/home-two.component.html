@@ -8,32 +8,34 @@
     <!--  copy  text-->
     <div class="hero-copy">
       <h1 class="hero-title">
-        تجربة تعليمية مصممة<br>
-        <span class="em">خصيصاً <span class="hero-p">لك</span>
+        {{ 'home_two.hero.title1' | translate }}<br>
+        <span class="em"> {{ 'home_two.hero.title2' | translate }}
+          <span class="hero-p">{{ 'home_two.hero.title3' | translate }}</span>
           <img class="underline-img" src="../../../assets/img/home-two/Vector 6.png" alt="">
         </span>
         <img class="scribble" src="../../../assets/img/home-two/Vector 7.png" alt="">
       </h1>
+      <p class="hero-sub">{{ 'home_two.hero.subtitle' | translate }}</p>
+      <a href="#" class="btn btn-pill">{{ 'home_two.hero.cta' | translate }}</a>
 
-      <p class="hero-sub">📚 دروس مباشرة ودورات تدريبية بجودة عالية</p>
-      <a href="#" class="btn btn-pill">ابدأ الآن</a>
     </div>
 
 
     <!-- images -->
     <div class="students">
       <div class="card-round">
-        <img src="../../../assets/img/home-two/student3.png" alt="Student">
+        <img src="../../../assets/img/home-two/student3.png" alt="Student" data-aos="fade-up">
       </div>
       <div class="card-circ">
-        <img src="../../../assets/img/home-two/student4.png" alt="Student">
+        <img src="../../../assets/img/home-two/student4.png" alt="Student" data-aos="fade-up">
       </div>
 
       <div class="card-round card-mid-circ" style="background:#ffe29b;">
-        <img src="../../../assets/img/home-two/student1.png" alt="Student">
+        <img src="../../../assets/img/home-two/student1.png" alt="Student" data-aos="fade-up">
       </div>
       <div class="card-round">
-        <img src="../../../assets/img/home-two/student2.png" alt="Student" style="background:rgb(245, 195, 98);">
+        <img src="../../../assets/img/home-two/student2.png" alt="Student" style="background:rgb(245, 195, 98);"
+          data-aos="fade-up">
       </div>
 
     </div>
@@ -42,29 +44,29 @@
 </section>
 
 <!-- counter stats -->
-<section class="stats my-5">
+<section class="stats my-5" data-aos="fade-up">
   <div class="container">
     <div class="stats-pill text-white p-4 p-md-5 shadow-sm">
       <div class="row row-cols-1 row-cols-md-4 g-0 text-center">
 
         <div class="col stat-item">
-          <div class="stat-number">50</div>
-          <div class="stat-text">دورة تدريبية<br>متاحة</div>
+          <div id="stat-courses" class="stat-number">50</div>
+          <div class="stat-text">{{ 'home_two.stats.courses' | translate }}</div>
         </div>
 
         <div class="col stat-item">
-          <div class="stat-number">2000</div>
-          <div class="stat-text">طالب نشط على<br>المنصة</div>
+          <div id="stat-students" class="stat-number">2000</div>
+          <div class="stat-text">{{ 'home_two.stats.students' | translate }}</div>
         </div>
 
         <div class="col stat-item">
-          <div class="stat-number">150</div>
-          <div class="stat-text">معلم وخبير<br>معتمد</div>
+          <div id="stat-teachers" class="stat-number">150</div>
+          <div class="stat-text">{{ 'home_two.stats.teachers' | translate }}</div>
         </div>
 
         <div class="col stat-item">
-          <div class="stat-number">10</div>
-          <div class="stat-text">تغطي مختلف<br>المجالات</div>
+          <div id="stat-fields" class="stat-number">10</div>
+          <div class="stat-text">{{ 'home_two.stats.fields' | translate }}</div>
         </div>
 
       </div>
@@ -74,110 +76,90 @@
 
 
 <!-- Why  us -->
-<section class="why py-5 py-lg-6">
+<section class="why py-5 py-lg-6" data-aos="fade-up">
   <div class="container py-5">
     <div class="row g-4 align-items-center">
       <div class="col-lg-5">
-        <p class="why-kicker mb-2">…تعلّم بطريقة أذكى</p>
-        <h2 class="why-title mb-3">
-          منصة تعليمية مبتكرة… تفتح لك<br>
-          أبواب المعرفة بأسلوب عصري
-        </h2>
-        <p class="why-text mb-4">
-          نصمم لك تجربة تعلّم شخصية تناسب احتياجاتك وتدعم أهدافك، سواء كنت طالبًا
-          تسعى لتقوية مهاراتك، أو معلمًا يبحث عن أسلوب أكثر تفاعلاً مع طلابه.
-          في منصتنا ستجد الأدوات الحديثة لتطوير قدراتك وصناعة مستقبل أفضل،
-          مع محتوى متنوع.
-        </p>
-        <a href="#" class="btn btn-pill px-4">ابدأ الآن</a>
+        <p class="why-kicker mb-2">{{ 'home_two.why.kicker' | translate }}</p>
+        <h2 class="why-title mb-3">{{ 'home_two.why.title' | translate }}</h2>
+
+        <p class="why-text mb-4">{{ 'home_two.why.text' | translate }}</p>
+
+        <a href="#" class="btn btn-pill px-4">{{ 'home_two.why.cta' | translate }}</a>
       </div>
       <div class="col-lg-7">
         <div class="row g-4">
 
-
+          <!-- Feature 1 -->
           <div class="col-md-6">
             <div class="feature-card corners tl-gold ">
-              <div class="d-flex flex-column  ">
+              <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
                   <img src="../../../assets/img/home-two/icon2.svg" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">تعلّم مباشر ومسجل</h5>
-                <p class="feature-home-text mb-0">
-                  اختر الطريقة التي تناسبك بين الجلسات الحيّة والمحتوى المسجّل المتاح في أي وقت
-                </p>
+                <h5 class="feature-title mb-3">{{ 'home_two.why.feature1.title' | translate }}</h5>
+                <p class="feature-home-text mb-0">{{ 'home_two.why.feature1.text' | translate }}</p>
               </div>
-
-
             </div>
           </div>
 
+          <!-- Feature 2 -->
           <div class="col-md-6">
-            <div class="feature-card corner  tl-blue ">
-              <div class="d-flex flex-column  ">
-                <div class="feat-icon  mb-3">
-
+            <div class="feature-card corner tl-blue ">
+              <div class="d-flex flex-column">
+                <div class="feat-icon mb-3">
                   <img src="../../../assets/img/home-two/icon1.svg" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">مدربين محترفين</h5>
-                <p class="feature-home-text mb-0">
-                  تعلّم على يد خبراء يمتلكون خبرة عملية وأكاديمية عالية
-                </p>
+                <h5 class="feature-title mb-3">{{ 'home_two.why.feature2.title' | translate }}</h5>
+                <p class="feature-home-text mb-0">{{ 'home_two.why.feature2.text' | translate }}</p>
               </div>
-
-
             </div>
           </div>
 
-
-
-
+          <!-- Feature 3 -->
           <div class="col-md-6">
             <div class="feature-card corners tl-w-blue ">
-              <div class="d-flex flex-column  ">
+              <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
                   <img src="../../../assets/img/home-two/icon4.svg" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">شهادات معتمدة</h5>
-                <p class="feature-home-text mb-0">
-                  احصل على شهادة موثوقة تثبت مهاراتك وتدعم مسارك المهني
-                </p>
+                <h5 class="feature-title mb-3">{{ 'home_two.why.feature3.title' | translate }}</h5>
+                <p class="feature-home-text mb-0">{{ 'home_two.why.feature3.text' | translate }}</p>
               </div>
             </div>
           </div>
 
+          <!-- Feature 4 -->
           <div class="col-md-6">
             <div class="feature-card corners tl-gray ">
-              <div class="d-flex flex-column  ">
+              <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
                   <img src="../../../assets/img/home-two/icon3.svg" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">ذكاء اصطناعي لتحسين التعلّم</h5>
-                <p class="feature-home-text mb-0">
-                  مسار تعلّم ذكي مصمم خصيصًا لتطويرك وتحقيق أهدافك بسرعة
-                </p>
+                <h5 class="feature-title mb-3">{{ 'home_two.why.feature4.title' | translate }}</h5>
+                <p class="feature-home-text mb-0">{{ 'home_two.why.feature4.text' | translate }}</p>
               </div>
             </div>
           </div>
 
         </div>
       </div>
-
-
     </div>
   </div>
 </section>
 
 
+
 <!-- courses section -->
-<section class="courses py-5">
+<section class="courses py-5" data-aos="fade-up">
   <div class="container py-5">
     <!-- title -->
     <div class="text-center mb-5">
       <h2 class="courses-title">
         <img src="../../../assets/img/home-two/shape-e.svg" alt="icon" class="title-icon">
-        اكتشف أفضل الدورات التعليمية
+        {{ 'home_two.courses.title' | translate }}
       </h2>
-      <p class="courses-sub">مجموعة متنوعة من الكورسات لتطوير مهاراتك</p>
+      <p class="courses-sub">{{ 'home_two.courses.subtitle' | translate }}</p>
     </div>
 
     <!-- courses grid -->
@@ -189,8 +171,8 @@
             <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
           </div>
           <div class="course-label">
-            <span class="arrow"> <i class="fa-solid fa-arrow-left"></i>
-            </span> دروس خصوصية
+            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+            {{ 'home_two.courses.private' | translate }}
           </div>
         </div>
 
@@ -201,8 +183,8 @@
             <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
           </div>
           <div class="course-label">
-            <span class="arrow"> <i class="fa-solid fa-arrow-left"></i>
-            </span> دروس خصوصية
+            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+            {{ 'home_two.courses.private' | translate }}
           </div>
         </div>
 
@@ -213,8 +195,8 @@
             <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
           </div>
           <div class="course-label">
-            <span class="arrow"> <i class="fa-solid fa-arrow-left"></i>
-            </span> دروس خصوصية
+            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+            {{ 'home_two.courses.private' | translate }}
           </div>
         </div>
 
@@ -225,8 +207,8 @@
             <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
           </div>
           <div class="course-label">
-            <span class="arrow"> <i class="fa-solid fa-arrow-left"></i>
-            </span> دروس خصوصية
+            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+            {{ 'home_two.courses.private' | translate }}
           </div>
         </div>
 
@@ -237,8 +219,8 @@
             <img src="../../../assets/img/home-two/courses.png" alt="دروس خصوصية">
           </div>
           <div class="course-label">
-            <span class="arrow"> <i class="fa-solid fa-arrow-left"></i>
-            </span> دروس خصوصية
+            <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+            {{ 'home_two.courses.private' | translate }}
           </div>
         </div>
 
@@ -250,12 +232,12 @@
 
 
 <!-- featured courses -->
-<section class=" py-5">
+<section class="py-5" data-aos="fade-up">
   <div class="container text-center">
     <div class="featured-courses">
       <!-- title -->
-      <h2 class="fc-title mb-2">الكورسات المميزة</h2>
-      <p class="fc-sub mb-5">تعليم يناسب وقتك، مستواك، وطموحك</p>
+      <h2 class="fc-title mb-2">{{ 'home_two.featured.title' | translate }}</h2>
+      <p class="fc-sub mb-5">{{ 'home_two.featured.subtitle' | translate }}</p>
 
       <!-- cards row -->
       <div class="row g-4 justify-content-center">
@@ -271,7 +253,7 @@
                 </span>
                 <span class="rating-text">5.0 <small>(7 rating)</small></span>
               </div>
-              <a href="#" class="btn btn-outline-pill">احجز الآن</a>
+              <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
             </div>
           </div>
         </div>
@@ -299,7 +281,7 @@
                 <span class="stars text-warning">★★★★★</span>
                 <span class="rating-text">5.0 <small>(7 rating)</small></span>
               </div>
-              <a href="#" class="btn btn-outline-pill">احجز الآن</a>
+              <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
             </div>
           </div>
         </div>
@@ -308,7 +290,7 @@
 
       <!-- CTA button -->
       <div class="mt-5">
-        <a href="#" class="btn btn-light-pill">اكتشف المزيد</a>
+        <a href="#" class="btn btn-light-pill">{{ 'home_two.featured.cta' | translate }}</a>
       </div>
 
       <!-- decoration -->
@@ -320,22 +302,17 @@
 </section>
 
 <!-- smart courses -->
-<section class="smart-edu py-5">
+<section class="smart-edu py-5" data-aos="fade-up">
   <div class="container">
     <div class="row align-items-center g-4">
       <!-- text -->
       <div class="col-lg-6 edu-content">
-        <p class="edu-kicker">كل ما تحتاجه لتتطور في مكان واحد</p>
-        <h2 class="edu-title">
-          تعليم ذكي يواكب طموحاتك... <br>
-          <span>خطوة بخطوة نحو المستقبل</span>
-        </h2>
-        <p class="edu-text">
-          منصتنا تمنحك الأدوات الحديثة لتطوير قدراتك وصناعة مستقبل أفضل. مع محتوى متنوع، تفاعل مباشر،
-          وتكلفة مناسبة،
-          نضع بين يديك تجربة تعليمية شاملة تجعل التعلم أكثر متعة وفعالية.
-        </p>
-        <a href="#" class="btn btn-pill btn-dark-blue">ابدأ الآن</a>
+        <p class="edu-kicker">{{ 'home_two.smart.kicker' | translate }}</p>
+        <h2 class="edu-title">{{ 'home_two.smart.title' | translate }}</h2>
+
+        <p class="edu-text">{{ 'home_two.smart.text' | translate }}</p>
+
+        <a href="#" class="btn btn-pill btn-dark-blue">{{ 'home_two.smart.cta' | translate }}</a>
       </div>
 
       <!-- images -->
@@ -371,15 +348,15 @@
 
 
 <!-- best selling courses -->
-<section class="best-selling my-5">
+<section class="best-selling my-5" data-aos="fade-up">
   <div class="container-fluid ">
     <div class="row align-items-center">
 
       <!-- text -->
       <div class="col-lg-3 position-relative ">
         <div class="bs-text">
-          <h2 class="bs-title">الكورسات الأكثر مبيعًا</h2>
-          <p class="bs-sub">رحلتك للتعلم تبدأ من هنا! برامج تعليمية تفتح لك آفاق جديدة</p>
+          <h2 class="bs-title">{{ 'home_two.best_selling.title' | translate }}</h2>
+          <p class="bs-sub">{{ 'home_two.best_selling.subtitle' | translate }}</p>
           <img src="assets/img/home-two/shape-e.svg" alt="icon" class="title-icon position-absolute ">
         </div>
       </div>
@@ -390,7 +367,7 @@
 
           <!-- card 1 -->
           <ng-template carouselSlide>
-            <div class="fc-card">
+            <div class="fc-card" data-aos="fade-up" data-aos-delay="200">
               <img src="assets/img/home-two/courses.png" alt="Course">
               <div class="fc-body">
                 <h5 class="fc-name">تطوير الذات</h5>
@@ -398,14 +375,14 @@
                   <span class="stars text-warning">★★★★★</span>
                   <span class="rating-text">5.0 <small>(7 rating)</small></span>
                 </div>
-                <a href="#" class="btn btn-outline-pill">احجز الآن</a>
+                <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
               </div>
             </div>
           </ng-template>
 
           <!-- card 2 -->
           <ng-template carouselSlide>
-            <div class="fc-card">
+            <div class="fc-card" data-aos="fade-up" data-aos-delay="200">
               <img src="assets/img/home-two/courses.png" alt="Course">
               <div class="fc-body">
                 <h5 class="fc-name">دروس خصوصية</h5>
@@ -413,14 +390,14 @@
                   <span class="stars text-warning">★★★★★</span>
                   <span class="rating-text">4.9 <small>(12 rating)</small></span>
                 </div>
-                <a href="#" class="btn btn-outline-pill">احجز الآن</a>
+                <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
               </div>
             </div>
           </ng-template>
 
           <!-- card 3 -->
           <ng-template carouselSlide>
-            <div class="fc-card">
+            <div class="fc-card" data-aos="fade-up" data-aos-delay="200">
               <img src="assets/img/home-two/courses.png" alt="Course">
               <div class="fc-body">
                 <h5 class="fc-name">كورسات مهنية</h5>
@@ -428,7 +405,7 @@
                   <span class="stars text-warning">★★★★☆</span>
                   <span class="rating-text">4.7 <small>(25 rating)</small></span>
                 </div>
-                <a href="#" class="btn btn-outline-pill">احجز الآن</a>
+                <a href="#" class="btn btn-outline-pill">{{ 'home_two.featured.book_now' | translate }}</a>
               </div>
             </div>
           </ng-template>
@@ -444,11 +421,10 @@
 
 
 <!-- testimonials  -->
-<section class="testimonials py-5">
+<section class="testimonials py-5" data-aos="fade-up">
   <div class="container text-center">
-    <p class="ts-kicker">قصص نجاح نعتز بها من عملائنا</p>
-    <h2 class="ts-title mb-5">ماذا يقول العملاء عنا</h2>
-
+    <p class="ts-kicker">{{ 'home_two.testimonials.kicker' | translate }}</p>
+    <h2 class="ts-title mb-5">{{ 'home_two.testimonials.title' | translate }}</h2>
     <!-- Owl Carousel -->
     <owl-carousel-o [options]="customOptionsTsSlider" class="owl-theme ts-slider">
 
@@ -459,10 +435,7 @@
           <div class="ts-avatar">
             <img src="assets/img/home-two/girl1.png" alt="Client">
           </div>
-          <p class="ts-quote">
-            "لقد كانت تجربتي مع هذه المنصة التعليمية فريدة بحق، فقد وجدت الدورات بسهولة واستفدت من أسلوب
-            العرض التفاعلي."
-          </p>
+          <p class="ts-quote">"{{ 'home_two.testimonials.quote1' | translate }}"</p>
 
           <!-- floating avatars -->
           <img src="assets/img/home-two/girl1.png" class="float-avatar left top" alt="client">
@@ -478,9 +451,8 @@
           <div class="ts-avatar">
             <img src="assets/img/home-two/girl1.png" alt="Client">
           </div>
-          <p class="ts-quote">
-            "أفضل منصة تعليمية تفاعلية على الإطلاق! أنصح بها لكل من يسعى لتطوير نفسه."
-          </p>
+          <p class="ts-quote">"{{ 'home_two.testimonials.quote2' | translate }}"</p>
+
 
           <img src="assets/img/home-two/girl1.png" class="float-avatar left top" alt="client">
           <img src="assets/img/home-two/girl1.png" class="float-avatar left bottom" alt="client">
@@ -502,33 +474,33 @@
       <!-- Logo -->
       <div class="col-lg-4 text-lg-end mb-4 mb-lg-0">
         <img src="../../.../../../assets/img/home-two/logo-big.png" alt="LoopEDX" class="footer-logo">
-        <p class="footer-slogan">Learn Smarter, Grow Further</p>
+        <p class="footer-slogan">{{ 'home_two.footer.slogan' | translate }}</p>
       </div>
 
       <!-- Links -->
       <div class="col-lg-4 mb-4 mb-lg-0">
-        <h6 class="footer-title">روابط مهمة</h6>
+        <h6 class="footer-title">{{ 'home_two.footer.links.about' | translate }}</h6>
         <ul class="footer-links">
-          <li><a href="#">من نحن</a></li>
-          <li><a href="#">سياسة الخصوصية</a></li>
-          <li><a href="#">الشروط والاحكام</a></li>
-          <li><a href="#">الدعم الفني</a></li>
+          <li><a href="#">{{ 'home_two.footer.links.about' | translate }}</a></li>
+          <li><a href="#">{{ 'home_two.footer.links.privacy' | translate }}</a></li>
+          <li><a href="#">{{ 'home_two.footer.links.terms' | translate }}</a></li>
+          <li><a href="#">{{ 'home_two.footer.links.support' | translate }}</a></li>
         </ul>
       </div>
 
       <!-- Contact -->
       <div class="col-lg-4">
-        <h6 class="footer-title">تواصل معنا</h6>
+        <h6 class="footer-title">{{ 'home_two.footer.contact.title' | translate }}</h6>
         <ul class="footer-links">
-          <li><a href="#">واتساب</a></li>
-          <li><a href="#">جوال: 0100000000</a></li>
+          <li><a href="#">{{ 'home_two.footer.contact.whatsapp' | translate }}</a></li>
+          <li><a href="#">{{ 'home_two.footer.contact.phone' | translate }}: 0100000000</a></li>
         </ul>
       </div>
     </div>
 
     <!-- bottom -->
     <div class="footer-bottom">
-      © 2025 LoopEDX. جميع الحقوق محفوظة.
+      {{ 'home_two.footer.bottom' | translate }}
     </div>
   </div>
 </footer>
