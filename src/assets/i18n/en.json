@@ -352,5 +352,9 @@
   "otp_input": {
     "resend_timer": "Resend code in {{time}}",
     "resend_code": "Resend Code"
+  },
+  "notfound": {
+    "title": "Page Not Found!",
+    "backHome": "Back to Home"
   }
 }

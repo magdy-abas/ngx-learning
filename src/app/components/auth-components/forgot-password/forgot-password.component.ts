@@ -18,7 +18,7 @@ import {
 } from '../../../core/service/data/data.service';
 
 import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { OtpInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
 @Component({
@@ -73,7 +73,8 @@ export class ForgotPasswordComponent implements OnInit {
     private _AuthService: AuthService,
     private router: Router,
     private DataService: DataService,
-    private darkModeService: DarkModeService
+    private darkModeService: DarkModeService,
+    private translate: TranslateService
   ) {
     // Forms Initialization
     this.emailForm = this.fb.group({
@@ -101,7 +102,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
   ngOnInit(): void {
     Aos.init();
-
     this.darkModeService.applyMode();
 
     const settingsString = localStorage.getItem('appSettings');
@@ -109,7 +109,7 @@ export class ForgotPasswordComponent implements OnInit {
       const settings = JSON.parse(settingsString);
       this.logoUrl = this.darkModeService.getLogo(settings);
 
-      const lang = (settings.lang || 'en') as Lang;
+      const lang = (this.translate.currentLang || 'en') as Lang;
       this.appName = settings.data.app_name?.[lang] || '';
 
       this.forgotPassword = this.DataService.getWelcomeSlides(

@@ -120,9 +120,15 @@ export class SharedService {
 
   setHomeVersion(version: 'v1' | 'v2') {
     this.homeVersion = version;
+    this.applyHomeClass(version);
   }
 
   getHomeVersion(): 'v1' | 'v2' {
     return this.homeVersion;
+  }
+
+  private applyHomeClass(version: 'v1' | 'v2') {
+    document.body.classList.remove('home-v1', 'home-v2');
+    document.body.classList.add(version === 'v1' ? 'home-v1' : 'home-v2');
   }
 }

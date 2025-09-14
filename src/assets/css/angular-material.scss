@@ -85,7 +85,7 @@ body.dark-mode {
 /* =======================================
    4. Custom CSS Variables for ngx-material-intl-tel-input
 ========================================== */
-:root {
+body.home-v1 {
   --mdc-theme-primary: #f97316;
   --mdc-theme-primary-rgb: 249, 115, 22;
   --mdc-filled-tel-form-outline-color: #f97316;
@@ -93,6 +93,17 @@ body.dark-mode {
   --mdc-tel-form-icon-color: #f97316;
   --mdc-tel-form-placeholder-color: #a0aec0;
   --mdc-focus-ring-color: rgba(249, 115, 22, 0.3);
+  --mat-select-panel-background-color: white;
+  --input-bg-mask: #ffffff;
+}
+body.home-v2 {
+  --mdc-theme-primary: #1f4f9a;
+  --mdc-theme-primary-rgb: 31, 79, 154;
+  --mdc-filled-tel-form-outline-color: #1f4f9a;
+  --mdc-filled-tel-form-focus-outline-color: #1f4f9a;
+  --mdc-tel-form-icon-color: #1f4f9a;
+  --mdc-tel-form-placeholder-color: #6c757d;
+  --mdc-focus-ring-color: rgba(31, 79, 154, 0.3);
   --mat-select-panel-background-color: white;
   --input-bg-mask: #ffffff;
 }

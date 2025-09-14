@@ -22,9 +22,6 @@ export class HomeSelectorComponent implements OnInit {
   async ngOnInit() {
     const version = this.shared.getHomeVersion();
 
-    document.body.classList.remove('home-v1', 'home-v2');
-    document.body.classList.add(version === 'v1' ? 'home-v1' : 'home-v2');
-
     if (version === 'v1') {
       const { HomeComponent } = await import('../home/home.component');
       this.vcr.createComponent(HomeComponent, {
