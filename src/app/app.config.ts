@@ -30,7 +30,7 @@ import { SharedService } from './core/service/shared.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=1.0.3');
 }
 
 export function initLanguage(
