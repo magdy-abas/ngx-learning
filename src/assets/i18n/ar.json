@@ -422,5 +422,13 @@
       },
       "bottom": "© 2025 . جميع الحقوق محفوظة."
     }
+  },
+  "errors": {
+    "noInternetTitle": "مشكلة بالإنترنت",
+    "noInternetText": "تأكد من اتصالك بالشبكة وحاول مرة أخرى",
+    "serverUnavailableTitle": "السيرفر غير متاح",
+    "serverUnavailableText": "حاول مرة أخرى بعد قليل",
+    "defaultTitle": "خطأ",
+    "defaultText": "حدث خطأ غير متوقع"
   }
 }

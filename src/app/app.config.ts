@@ -28,6 +28,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { GlobalTranslateService } from './core/service/global-translate.service';
 import { SharedService } from './core/service/shared.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import { errorInterceptor } from './core/interceptor/error.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=1.0.3');
@@ -58,6 +59,7 @@ export const appConfig: ApplicationConfig = {
         authInterceptor,
         securityInterceptor,
         headerInterceptor,
+        errorInterceptor,
       ])
     ),
     importProvidersFrom(
