@@ -124,12 +124,14 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     id: number,
     type: string,
     chapterId: number,
-    isFree: boolean
+    isFree: boolean,
+    lesson?: any
   ): void {
     const lessonType = type.toLowerCase();
 
     this.videoUrl = '';
     this.videoLoaded = false;
+
     if (!isFree && !this._AuthService.isAuthenticated()) {
       this.confirmBox();
       return;
@@ -141,8 +143,12 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
     switch (lessonType) {
       case 'quiz':
-        this._Router.navigate([`/course-quiz/${this.courseId}/${id}`]);
-
+        this._Router.navigate([`/course-quiz/${this.courseId}/${id}`], {
+          state: {
+            courseTitle: this.courseDetails?.course?.title,
+            quizTitle: lesson,
+          },
+        });
         break;
 
       case 'video':

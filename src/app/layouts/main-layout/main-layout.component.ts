@@ -36,7 +36,8 @@ export class MainLayoutComponent {
       url.startsWith('/signup') ||
       url.startsWith('/forgotpass') ||
       url.startsWith('/resetpass') ||
-      url.startsWith('/course-details/')
+      url.startsWith('/course-details/') ||
+      url.startsWith('/course-quiz/')
     );
   }
 }

@@ -1,6 +1,33 @@
 <div class="cstm-quiz">
+
   <div class="quiz-container">
+    <div class="row justify-content-start">
+      <div class="breadcrumb-lay">
+        <div class="mb-3 breadcrumb-bar-cstm ">
+          <h1 class="h5 fw-bold mb-3 text-main-cstm">{{quizTitle}}</h1>
+          <div class="small text-secondary ">
+            <a routerLink="/" class="text-decoration-none text-secondary"> {{ 'courses.home' | translate }}</a>
+            <span class="px-1">›</span>
+
+            <a routerLink="/courses" class="text-decoration-none text-secondary">{{ 'courses.courses' | translate
+              }}</a>
+            <span class="px-1">›</span>
+            <a [routerLink]="['/course-details', courseId]" class="text-decoration-none text-secondary">
+              {{ courseTitle }}
+            </a>
+
+            <span class="px-1">›</span>
+
+            <span class="px-1">{{quizTitle}}</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
     <div class="container">
+
       <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-6">
           @if (showIntro) {

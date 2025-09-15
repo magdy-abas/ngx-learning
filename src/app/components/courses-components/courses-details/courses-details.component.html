@@ -1,4 +1,3 @@
-<!-- NEW DESIGN TEMPLATE (logic preserved) -->
 <div *ngIf="courseDetails" class="courses-det">
   <div class="layout">
     <!-- MAIN -->
@@ -158,7 +157,7 @@
                     data-bs-parent="#program-accordion">
                     <ul *ngIf="chapter.lessons?.length; else noLessons">
                       <li *ngFor="let lesson of chapter.lessons" class="item-row csr-pointer"
-                        (click)="redirectToLesson(lesson.id, lesson.type, chapter.id, lesson.is_free)"
+                        (click)="redirectToLesson(lesson.id, lesson.type, chapter.id, lesson.is_free , lesson.title)"
                         [class.locked]="isLocked(lesson)">
                         <div [ngSwitch]="getDisplayIcon(lesson)" class="chapter-content-icon">
                           <!-- Video -->

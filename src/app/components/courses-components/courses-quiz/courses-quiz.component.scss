@@ -1,0 +1,19 @@
+.breadcrumb-bar-cstm {
+  background-color: var(--quiz-card-bg);
+  box-shadow: var(--quiz-card-shadow);
+  border-radius: 16px;
+  padding: 2rem;
+}
+.breadcrumb-lay {
+  min-width: 200px;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline-end: auto;
+}
+
+@media (max-width: 768px) {
+  .readcrumb-bar-cstm a,
+  .readcrumb-bar-cstm span {
+    font-size: 0.6rem;
+  }
+}

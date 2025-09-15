@@ -182,7 +182,7 @@
 
 
 
-          <div *ngIf="!isAuth" class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
+          <div class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
             <div class="moon" [class.sun]="!isDarkMode"></div>
           </div>
           <!-- user -->
@@ -274,7 +274,6 @@
               </div>
             </div>
 
-            <!-- عنصر بسيط -->
             <a *ngIf="!item.hasDropdown" [routerLink]="item.route || '#'" class="menu-link"
               [class.active]="item.route && isActiveRoute(item.route)" (click)="item.route && navigateTo(item.route)">
               {{ item.translationKey | translate }}
@@ -344,6 +343,9 @@
 
 
 
+          <div class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
+            <div class="moon" [class.sun]="!isDarkMode"></div>
+          </div>
           <div *ngIf="!isAuth" class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
             <div class="moon" [class.sun]="!isDarkMode"></div>
           </div>

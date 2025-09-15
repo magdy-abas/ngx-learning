@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { AuthService } from '../../../core/service/auth.service';
 import { CoursesService } from '../../../core/service/courses.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { QuizDTO } from '../../../core/Dtos/coursesDtos';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
@@ -21,10 +21,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
+import { DarkModeService } from '../../../core/service/dark-mode.service';
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
-  imports: [FormsModule, NgClass, TranslateModule, NgIf],
+  imports: [FormsModule, NgClass, TranslateModule, NgIf, RouterLink],
 
   templateUrl: './courses-quiz.component.html',
   styleUrl: './courses-quiz.component.scss',
@@ -49,6 +50,9 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   showResult: boolean = false;
   rate: boolean = true;
   showIntro: boolean = true;
+  courseTitle: string = '';
+  quizTitle: string = '';
+
   // time quiz
   remaining_seconds: number = 0;
   formattedTime: string = '';
@@ -60,13 +64,16 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _Router: Router,
     private translate: TranslateService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private darkModeService: DarkModeService
   ) {}
 
   /**
    * Initialize component and fetch quiz data
    */
   ngOnInit() {
+    this.darkModeService.applyMode();
+
     const quizId = this._route.snapshot.paramMap.get('quizId');
     const courseId = this._route.snapshot.paramMap.get('courseId');
 
@@ -74,6 +81,34 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     if (quizId) {
       this.quizId = +quizId;
       this.getQuiz(this.quizId);
+    }
+
+    const state = history.state;
+    console.log(state);
+
+    this.courseTitle = state.courseTitle || '';
+    this.quizTitle = state.quizTitle || '';
+
+    if (state.courseTitle && state.quizTitle) {
+      this.courseTitle = state.courseTitle;
+      this.quizTitle = state.quizTitle;
+
+      localStorage.setItem(
+        'quiz_meta',
+        JSON.stringify({
+          courseId: this.courseId,
+          courseTitle: this.courseTitle,
+          quizTitle: this.quizTitle,
+        })
+      );
+    } else {
+      const saved = localStorage.getItem('quiz_meta');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        this.courseId = parsed.courseId || this.courseId;
+        this.courseTitle = parsed.courseTitle || '';
+        this.quizTitle = parsed.quizTitle || '';
+      }
     }
   }
 
