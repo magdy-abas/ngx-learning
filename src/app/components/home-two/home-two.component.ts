@@ -33,8 +33,7 @@ import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-ho
     CarouselModule,
     TranslateModule,
     NgIf,
-    RouterLink,
-    NgFor,
+
     HeroHomeV2Component,
     CounterHomeV2Component,
     WhyUsHomeV2Component,
