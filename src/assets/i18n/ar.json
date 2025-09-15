@@ -424,11 +424,13 @@
     }
   },
   "errors": {
-    "noInternetTitle": "مشكلة بالإنترنت",
-    "noInternetText": "تأكد من اتصالك بالشبكة وحاول مرة أخرى",
-    "serverUnavailableTitle": "السيرفر غير متاح",
-    "serverUnavailableText": "حاول مرة أخرى بعد قليل",
+    "noInternetTitle": "لا يوجد اتصال بالإنترنت",
+    "noInternetText": "تأكد من اتصالك وحاول مرة أخرى",
+    "serverUnavailableTitle": "الخادم غير متاح",
+    "serverUnavailableText": "يرجى المحاولة لاحقًا",
     "defaultTitle": "خطأ",
-    "defaultText": "حدث خطأ غير متوقع"
+    "defaultText": "حدث خطأ غير متوقع",
+    "ok": "حسناً",
+    "cancel": "إلغاء"
   }
 }

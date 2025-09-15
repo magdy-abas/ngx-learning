@@ -439,12 +439,12 @@
       "bottom": "© 2025 . All Rights Reserved."
     }
   },
-  "errors": {
-    "noInternetTitle": "Internet Issue",
-    "noInternetText": "Please check your connection and try again",
-    "serverUnavailableTitle": "Server Unavailable",
-    "serverUnavailableText": "Please try again later",
-    "defaultTitle": "Error",
-    "defaultText": "An unexpected error occurred"
-  }
+  "noInternetTitle": "No Internet Connection",
+  "noInternetText": "Please check your connection and try again",
+  "serverUnavailableTitle": "Server Unavailable",
+  "serverUnavailableText": "Please try again later",
+  "defaultTitle": "Error",
+  "defaultText": "An unexpected error occurred",
+  "ok": "OK",
+  "cancel": "Cancel"
 }

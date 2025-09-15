@@ -139,15 +139,22 @@
           <h5 class="fc-name ">{{ data.title }}</h5>
           <div class="d-flex justify-content-between">
             <p class="fc-doctor mb-2" *ngIf="data.doctor">{{ data.doctor }}</p>
-            <div class="fc-rating mb-2" *ngIf="data.rate && data.rate !== '0.0'">
+            <!-- <div class="fc-rating mb-2" *ngIf="data.rate && data.rate !== '0.0'"> -->
+            <div class="fc-rating mb-2">
               <div class="d-flex align-items-center justify-content-center">
-                <ng-container *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))">
+                <!-- <ng-container *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))"> -->
+                <ng-container>
+                  <i class="fas fa-star text-warning me-1"></i>
+                  <i class="fas fa-star text-warning me-1"></i>
+                  <i class="fas fa-star text-warning me-1"></i>
+                  <i class="fas fa-star text-warning me-1"></i>
                   <i class="fas fa-star text-warning me-1"></i>
                 </ng-container>
                 <ng-container *ngIf="data.rate % 1 !== 0">
                   <i class="fa-solid fa-star-half-stroke text-warning me-1"></i>
                 </ng-container>
-                <span class="rating-text">{{ data.rate }}</span>
+                <!-- <span class="rating-text">{{ data.rate }}</span> -->
+                <span class="rating-text">(54)</span>
               </div>
             </div>
 
