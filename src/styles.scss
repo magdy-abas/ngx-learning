@@ -489,13 +489,13 @@ body.home-v2 {
   --text-main: #303030;
   --text-muted: #6c757d;
   --link-color: #1f4f9a;
-  --link-hover: #f5c362;
+  --link-hover: #3bc9db;
 
   /* Primary Palette */
   --color-primary: #1f4f9a;
   --color-secondary: #23509f;
   --color-secondery: #23509f;
-  --color-accent: #f5c362;
+  --color-accent: #3bc9db;
   --color-dark-blue: #29425f;
 
   /* Common Colors */
@@ -574,7 +574,7 @@ body.home-v2 {
   --swal-cancel-hover-bg: #a72020;
 
   --swal-icon-info: var(--color-primary);
-  --swal-icon-warning: #ffc107;
+  --swal-icon-warning: #3bc9db;
   --swal-icon-success: #28a745;
   --swal-icon-error: #dc3545;
 
@@ -608,8 +608,8 @@ body.home-v2 {
   --course-card-hover-link: var(--color-primary);
 
   --pending-btn-bg: #ccc;
-  --pending-btn-text: #ffc107;
-  --pending-btn-border: #ffc107;
+  --pending-btn-text: #3bc9db;
+  --pending-btn-border: #3bc9db;
 
   --progress-bg: #cccccc;
   --progress-fill-gradient: linear-gradient(45deg, #1f4f9a, #23509f);
@@ -688,8 +688,8 @@ body.home-v2 {
   --cd-badge-text: #ffffff;
   --cd-badge-success-bg: #28a7451f;
   --cd-badge-success-border: #28a745;
-  --cd-badge-warning-bg: #ffc1071f;
-  --cd-badge-warning-border: #ffc107;
+  --cd-badge-warning-bg: #3bc9db1f;
+  --cd-badge-warning-border: #3bc9db;
   --cd-badge-danger-bg: #dc35451f;
   --cd-badge-danger-border: #dc3545;
 
@@ -727,7 +727,7 @@ body.home-v2 {
   --quiz-result-bg: #ffffff;
   --quiz-result-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   --quiz-result-border-success: #28a745;
-  --quiz-result-border-warning: #ffc107;
+  --quiz-result-border-warning: #3bc9db;
   --quiz-result-border-danger: #dc3545;
 
   /* Top Nav */
@@ -746,10 +746,10 @@ body.home-v2 {
 
   /* Theme Toggle */
   --theme-toggle-bg: #423966;
-  --theme-toggle-bg-day: #f5c362;
+  --theme-toggle-bg-day: #3bc9db;
   --moon-color: #d9fbff;
   --sun-core-color: #fff;
-  --sun-halo-color: #ffffcc;
+  --sun-halo-color: #ccffff;
 
   /* Nav */
 
@@ -801,7 +801,7 @@ body.home-v2 {
   --profile-card-title: var(--color-primary);
   --profile-card-subtitle: #303030;
   --profile-card-border-light: rgba(199, 199, 199, 0.25);
-  --profile-active-hover-bg: rgba(245, 195, 98, 0.15);
+  --profile-active-hover-bg: rgba(59, 201, 219, 0.15);
   --profile-active-border: var(--color-accent);
   --profile-icon-active: var(--color-accent);
   --profile-btn-bg: var(--color-primary);
@@ -834,8 +834,8 @@ body.home-v2 {
   --celender-pill-grad-top: #fafcff;
   --celender-pill-grad-bot: #f3f6fb;
   --celender-orange: var(--color-accent);
-  --celender-orange-weak-rgba: rgba(245, 195, 98, 0.35);
-  --celender-orange-hover-rgba: rgba(245, 195, 98, 0.1);
+  --celender-orange-weak-rgba: rgba(59, 201, 219, 0.35);
+  --celender-orange-hover-rgba: rgba(59, 201, 219, 0.1);
   --celender-purple: var(--color-primary);
   --celender-purple-glow-rgba: rgba(31, 79, 154, 0.15);
   --celender-dp-border: #eeeeee;
@@ -992,7 +992,7 @@ body.home-v2 {
   --footer-slogan: rgba(255, 255, 255, 0.8);
 
   --footer-link: rgba(255, 255, 255, 0.85);
-  --footer-link-hover: #f5c362;
+  --footer-link-hover: #3bc9db;
 
   --footer-border: rgba(255, 255, 255, 0.15);
   --footer-bottom-text: rgba(255, 255, 255, 0.7);

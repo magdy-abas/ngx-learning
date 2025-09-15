@@ -2385,7 +2385,9 @@ nav.other-page.scrolled {
 
 /* Accent icon color inside button */
 .courses-det button .icon-quad svg {
-  color: var(--cd-icon-accent);
+  // color: var(--cd-icon-accent);
+
+  fill: var(--cd-progress-fill);
 }
 /* ======================================
    4) Video Placeholder + Player (GLOBAL)
@@ -4533,7 +4535,16 @@ body.home-v2 {
     -webkit-filter: hue-rotate(210deg) saturate(150%) brightness(75%)
       contrast(110%);
   }
+  .placeholder-img {
+    filter: hue-rotate(210deg) saturate(150%) brightness(75%) contrast(110%);
+    -webkit-filter: hue-rotate(210deg) saturate(150%) brightness(75%)
+      contrast(110%);
+  }
 
+  .chapter-content-icon svg {
+    // fill: var(--cd-icon-accent);
+    fill: var(--cd-progress-fill);
+  }
   @media (max-width: 769px) {
     .login-bg {
       display: none !important;
