@@ -468,6 +468,14 @@ body.home-v1 {
   /* Shadow */
   --booking-instractor-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --booking-instractor-shadow-md: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+  // otp input
+  --otp-primary: #ff875a;
+  --otp-primary-light: rgba(255, 135, 90, 0.5);
+  --otp-bg: rgba(255, 255, 255, 0.2);
+  --otp-bg-focus: rgba(255, 255, 255, 0.4);
+  --otp-error: #ff0100;
+  --otp-text: #555;
 }
 
 body.home-v2 {
@@ -986,6 +994,14 @@ body.home-v2 {
 
   --footer-border: rgba(255, 255, 255, 0.15);
   --footer-bottom-text: rgba(255, 255, 255, 0.7);
+
+  // otp input
+  --otp-primary: #23509f;
+  --otp-primary-light: rgba(35, 80, 159, 0.5);
+  --otp-bg: rgba(255, 255, 255, 0.2);
+  --otp-bg-focus: rgba(255, 255, 255, 0.4);
+  --otp-error: #ff0100;
+  --otp-text: #555;
 }
 
 body {

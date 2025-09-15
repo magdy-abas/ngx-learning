@@ -3604,7 +3604,6 @@ body.home-v2 {
   }
   .hero-title .em .underline-img {
     position: absolute;
-    left: 0;
     bottom: 0;
     width: 150px;
     height: auto;
@@ -4003,6 +4002,17 @@ body.home-v2 {
     font-size: 1.2rem;
     color: var(--courses-label-arrow);
   }
+
+  .lesson-title .title-icon {
+    right: -35px;
+    top: -20px;
+  }
+
+  @media (max-width: 575.98px) {
+    .lesson-title .title-icon {
+      right: 35px;
+    }
+  }
   /* ================= Featured Courses Section ================= */
 
   .featured-courses {
@@ -4036,6 +4046,7 @@ body.home-v2 {
     width: 100%;
     height: 230px;
     object-fit: cover;
+    object-position: top;
   }
   .fc-body {
     padding: 1rem;
@@ -4065,6 +4076,7 @@ body.home-v2 {
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+    margin: 0 !important;
   }
   .btn-outline-pill {
     display: inline-block;
@@ -4107,6 +4119,13 @@ body.home-v2 {
     opacity: 0.5;
     fill: var(--fc-shape);
   }
+  @media (max-width: 768px) {
+    .fc-card {
+      max-width: 90%;
+      margin: auto;
+    }
+  }
+
   /* ================= smart Section ================= */
 
   .smart-edu {
@@ -4239,6 +4258,28 @@ body.home-v2 {
 
   .owl-carousel .fc-card {
     margin: 10px;
+  }
+
+  @media (max-width: 991px) {
+    .best-selling {
+      padding: 70px 20px;
+    }
+
+    .best-selling {
+      text-align: center;
+    }
+  }
+
+  .best-selling-title .title-icon {
+    left: -10px;
+    top: -50px;
+  }
+
+  @media (max-width: 575.98px) {
+    .best-selling-title .title-icon {
+      left: 0;
+      top: -30px;
+    }
   }
   /* ================= testimonials section ================= */
   .testimonials .owl-carousel .owl-item img {
@@ -4488,12 +4529,20 @@ body.home-v2 {
     -webkit-filter: hue-rotate(210deg) saturate(150%) brightness(80%)
       contrast(110%);
   }
+
+  .login-banner img {
+    filter: hue-rotate(210deg) saturate(150%) brightness(75%) contrast(110%);
+    -webkit-filter: hue-rotate(210deg) saturate(150%) brightness(75%)
+      contrast(110%);
+  }
+
+  @media (max-width: 769px) {
+    .login-bg {
+      display: none !important;
+    }
+  }
 }
-.login-banner img {
-  filter: hue-rotate(210deg) saturate(150%) brightness(75%) contrast(110%);
-  -webkit-filter: hue-rotate(210deg) saturate(150%) brightness(75%)
-    contrast(110%);
-}
+
 // nav
 
 body.home-v2 .auth-nav,

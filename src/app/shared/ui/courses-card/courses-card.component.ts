@@ -18,6 +18,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SweetAlertUtils } from './../../utils/SweetAlert.utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { RequestJoinDto } from './../../../core/Dtos/coursesDtos';
+import { SharedService } from '../../../core/service/shared.service';
 @Component({
   selector: 'app-courses-card',
   standalone: true,
@@ -40,11 +41,12 @@ export class CoursesCardComponent implements OnInit, AfterViewChecked {
     private _AuthService: AuthService,
     private _Router: Router,
     private _CoursesService: CoursesService,
-    private _ChangeDetectorRef: ChangeDetectorRef
+    private _ChangeDetectorRef: ChangeDetectorRef,
+    private sharedService: SharedService
   ) {}
   @Input() coursesData: any[] = [];
   @Input() fromHome: boolean = true;
-  @Input() version: 'v1' | 'v2' = 'v2';
+  @Input() version: 'v1' | 'v2' = 'v1';
 
   isItPending: boolean = false;
 
@@ -57,6 +59,7 @@ export class CoursesCardComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.isAuth = this._AuthService.isAuthenticated();
+    this.version = this.sharedService.getHomeVersion();
   }
 
   getRouterLink(courseId: number): string[] {

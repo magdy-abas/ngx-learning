@@ -1,4 +1,5 @@
 /* OTP Input Styles */
+
 .otp-group {
   text-align: center;
   margin-top: 20px;
@@ -20,22 +21,22 @@
 
   .otp-input {
     text-align: center;
-
+    border: 2px solid var(--otp-primary);
+    background-color: var(--otp-bg) !important;
     font-weight: 400;
-    border: 2px solid #ff875a;
+
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.2) !important;
     transition: all 0.3s ease-in-out;
 
     &:focus {
-      border-color: #ff875a;
       outline: none;
-      box-shadow: 0 0 8px rgba(255, 135, 90, 0.5);
-      background-color: rgba(255, 255, 255, 0.4);
+      border-color: var(--otp-primary);
+      box-shadow: 0 0 8px var(--otp-primary-light);
+      background-color: var(--otp-bg-focus);
     }
 
     &.is-invalid {
-      border-color: #ff0100;
+      border-color: var(--otp-error);
     }
   }
 
@@ -49,13 +50,13 @@
 
     .resend-timer {
       font-size: 13px;
-      color: #555;
+      color: var(--otp-text);
     }
 
     .resend-button {
       background: none;
       border: none;
-      color: #ff875a;
+      color: var(--otp-primary);
       font-weight: 500;
       cursor: pointer;
       margin-top: 5px;
