@@ -1,6 +1,8 @@
 body.dark-mode {
   --body-bg: #1e1b2e;
   --body-text: #e4e4e7;
+  --navbar-top-bg: rgb(77 98 130);
+  --navbar-border-hover: #a18bff;
   /* Text Styles */
   --heading-color: #e4e4e7;
   --text-main: #d4d4dd;
@@ -606,7 +608,7 @@ body.dark-mode {
   --footer-bottom-text: #777777;
 }
 .body.dark-mode {
-  --navbar-bg: #231f39;
+  --top-nav-bg: #726d90;
   --navbar-box-shadow: 0 4px 12px rgba(161, 139, 255, 0.08);
 
   --navbar-link-color: #cfc8ff;
@@ -615,7 +617,6 @@ body.dark-mode {
 
   --navbar-icon-color: #cfc8ff;
   --navbar-icon-dark: #a18bff;
-  --navbar-border-hover: #a18bff;
 }
 // body.dark-mode {
 //   background-color: var(--color-bg-main) !important;

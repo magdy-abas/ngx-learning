@@ -4402,7 +4402,6 @@ body.home-v2 {
     font-weight: 700;
     margin-bottom: 14px;
     font-size: 1.05rem;
-    text-align: right;
     color: var(--footer-link) !important;
   }
 
@@ -4410,7 +4409,6 @@ body.home-v2 {
     padding: 0;
     margin: 0;
     list-style: none;
-    text-align: right;
   }
   .footer-links li {
     margin-bottom: 8px;
@@ -4644,5 +4642,5 @@ body.home-v1 .desktop-v2 {
   }
 }
 body.home-v2 .top-info-bar::before {
-  background-color: var(--navbar-bg) !important;
+  background-color: var(--navbar-top-bg) !important;
 }
