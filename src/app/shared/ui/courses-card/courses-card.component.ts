@@ -46,6 +46,7 @@ export class CoursesCardComponent implements OnInit, AfterViewChecked {
   ) {}
   @Input() coursesData: any[] = [];
   @Input() fromHome: boolean = true;
+  @Input() bestSelling?: boolean = false;
   @Input() version: 'v1' | 'v2' = 'v1';
 
   isItPending: boolean = false;

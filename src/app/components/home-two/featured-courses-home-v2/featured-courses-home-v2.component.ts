@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { ICourse } from '../../../core/interfaces/dynamic-home.interface';
+import {
+  CoursesSection,
+  ICourse,
+} from '../../../core/interfaces/dynamic-home.interface';
 import { NgFor, NgIf } from '@angular/common';
 import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
 import { RouterLink } from '@angular/router';
@@ -13,5 +16,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './featured-courses-home-v2.component.scss',
 })
 export class FeaturedCoursesHomeV2Component {
-  @Input() courses: ICourse[] = [];
+  @Input() courses: CoursesSection | null = null;
 }

@@ -159,3 +159,45 @@ export interface IBanner {
   image: string;
   video: string | null;
 }
+// ============== V2 Interfaces ==============
+
+export interface HomeSectionBase<T> {
+  id: number;
+  title: string;
+  short_title: string;
+  description: string;
+  display_type: 'carousel' | 'grid';
+  grid_columns_count: number;
+  type: 'sliders' | 'doctors' | 'categories' | 'courses' | 'banar';
+  data: T[];
+}
+
+// Specialized sections
+export type SliderSection = HomeSectionBase<ISlider>;
+export type DoctorSection = HomeSectionBase<IDoctor>;
+export type CategorySection = HomeSectionBase<ICategory>;
+export type BannerSection = HomeSectionBase<IBanner>;
+export type CourseSection = HomeSectionBase<ICourse>;
+
+//  response
+export interface DynamicHomeResponseV2 {
+  data: (
+    | SliderSection
+    | DoctorSection
+    | CategorySection
+    | BannerSection
+    | CourseSection
+  )[];
+  links: PaginationLinks;
+  meta: PaginationMeta;
+  status: number;
+  message: string;
+  contact_us: ContactUs;
+  client_user_is_verified: number;
+}
+export interface CoursesSection {
+  data: ICourse[];
+  title: string;
+  short_title: string;
+  description: string;
+}

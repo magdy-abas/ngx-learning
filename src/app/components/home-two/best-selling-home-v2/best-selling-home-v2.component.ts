@@ -1,18 +1,22 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { IDoctor } from '../../../core/interfaces/dynamic-home.interface';
+import {
+  CoursesSection,
+  ICourse,
+} from '../../../core/interfaces/dynamic-home.interface';
 import { NgFor, NgIf } from '@angular/common';
+import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
 
 @Component({
   selector: 'app-best-selling-home-v2',
   standalone: true,
-  imports: [TranslateModule, CarouselModule, NgFor],
+  imports: [TranslateModule, CarouselModule, NgFor, CoursesCardComponent],
   templateUrl: './best-selling-home-v2.component.html',
   styleUrl: './best-selling-home-v2.component.scss',
 })
 export class BestSellingHomeV2Component {
-  @Input() doctors: IDoctor[] = [];
+  @Input() bestSellingCourses: CoursesSection | null = null;
   customOptionsCrSlider = {
     loop: true,
     margin: 20,

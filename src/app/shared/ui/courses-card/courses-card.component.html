@@ -128,7 +128,8 @@
 <!-- Course v2 -->
 <div class="card-v2" *ngIf="version === 'v2'">
   <div class="row " [ngClass]="coursesData.length < 4 ? 'justify-content-center' : ''">
-    <div class="" *ngFor="let data of coursesData; let i = index" [ngClass]="'col-lg-3 col-md-4 col-sm-6 mb-5'">
+    <div class=" '" *ngFor="let data of coursesData; let i = index"
+      [ngClass]="bestSelling ? 'col-12' : 'col-lg-3 col-md-4 col-sm-6  mb-4'">
 
       <div class="fc-card d-flex flex-column" [routerLink]="getRouterLink(data.id)" style="cursor: pointer;">
         <img class="img-fluid" [src]="data.image || '../../../../assets/img/course-placeholder.png'" alt="img-course"

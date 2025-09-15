@@ -1,10 +1,10 @@
 <!-- featured courses -->
-<section class="py-5" data-aos="fade-up" *ngIf="courses?.length">
+<section class="py-5" data-aos="fade-up" *ngIf="courses?.data?.length">
   <div class="container text-center">
     <div class="featured-courses">
       <!-- title -->
-      <h2 class="fc-title mb-2">{{ 'home_two.featured.title' | translate }}</h2>
-      <p class="fc-sub mb-5">{{ 'home_two.featured.subtitle' | translate }}</p>
+      <h2 class="fc-title mb-2">{{courses?.title}}</h2>
+      <p class="fc-sub mb-5">{{courses?.description}}</p>
 
       <!-- cards row -->
       <!-- <div class="row g-4 justify-content-center">
@@ -27,8 +27,10 @@
           </div>
         </div>
       </div> -->
-      <app-courses-card [coursesData]="courses" [fromHome]="true" [version]="'v2'">
-      </app-courses-card> <!-- CTA button -->
+      <app-courses-card [coursesData]="courses?.data || []" [fromHome]="true" [version]="'v2'">
+      </app-courses-card>
+
+
       <div class="mt-5">
         <a routerLink="/courses" class="btn btn-light-pill">
           {{ 'home_two.featured.cta' | translate }}
