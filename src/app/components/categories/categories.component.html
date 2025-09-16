@@ -9,10 +9,11 @@
           <h3>{{'categories.heading'| translate}}</h3>
           <p>{{'categories.description'| translate}}</p>
         </div>
-        <div *ngIf="isSubCategoryView" class="back-to-categories">
-          <button class="btn btn-back" (click)="backToCategories()">ِ{{ 'categories.button_text'| translate}}</button>
-        </div>
 
+
+        <div *ngIf="isSubCategoryView" class="back-to-categories mt-4">
+          <button class="btn btn-back" (click)="backToCategories()">{{'categories.button_text'| translate}}</button>
+        </div>
         <!-- Top Categories -->
         <section class="topcategory-sec">
           <div class="container">

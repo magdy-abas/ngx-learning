@@ -21,9 +21,9 @@ export class HomeCategoriesComponent {
 
   onCategoryClick(category: Category): void {
     if (category.has_sub_categories === 1) {
-      this.router.navigate([`/courses/category/${category.id}`]);
-    } else {
       this.router.navigate([`/category/${category.id}`]);
+    } else {
+      this.router.navigate([`/courses/category/${category.id}`]);
     }
   }
 
