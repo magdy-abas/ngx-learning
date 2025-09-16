@@ -239,7 +239,7 @@
         <!-- Links  -->
         <div class="menu">
           <div class="menu-item" *ngFor="let item of menuItems">
-            <!-- لو العنصر فيه Dropdown -->
+            <!--  Dropdown -->
             <div *ngIf="item.hasDropdown">
               <a href="#" class="menu-link has-dropdown" (click)="$event.preventDefault()">
                 {{ item.translationKey | translate }}
@@ -250,13 +250,13 @@
               <div class="dropdown" *ngIf="item.submenu">
                 <ng-container *ngFor="let subItem of item.submenu">
 
-                  <!-- SubItem عادي -->
+                  <!-- SubItem  -->
                   <a *ngIf="!subItem.hasDropdown" [routerLink]="subItem.route" routerLinkActive="active"
                     [routerLinkActiveOptions]="{ exact: true }">
                     {{ subItem.translationKey | translate }}
                   </a>
 
-                  <!-- SubItem فيه submenu -->
+                  <!-- SubItem  submenu -->
                   <div *ngIf="subItem.hasDropdown" class="submenu-item">
                     <a href="#" (click)="$event.preventDefault()">
                       {{ subItem.translationKey | translate }}
@@ -343,7 +343,7 @@
 
 
 
-          <div class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
+          <div *ngIf="isAuth" class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
             <div class="moon" [class.sun]="!isDarkMode"></div>
           </div>
           <div *ngIf="!isAuth" class="tdnn" (click)="toggleThemeManually()" [class.day]="!isDarkMode">
