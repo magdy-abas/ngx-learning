@@ -1,7 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { ICategory } from '../../../core/interfaces/dynamic-home.interface';
+import {
+  Category,
+  ICategory,
+} from '../../../core/interfaces/dynamic-home.interface';
 import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lessons-home-v2',
@@ -12,4 +16,13 @@ import { NgFor } from '@angular/common';
 })
 export class LessonsHomeV2Component {
   @Input() categories: ICategory[] = [];
+  constructor(private router: Router) {}
+
+  onCategoryClick(category: Category): void {
+    if (category.has_sub_categories === 1) {
+      this.router.navigate([`/courses/category/${category.id}`]);
+    } else {
+      this.router.navigate([`/category/${category.id}`]);
+    }
+  }
 }

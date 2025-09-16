@@ -11,7 +11,7 @@
 
     <!-- dynamic courses grid -->
     <div class="row g-4 justify-content-between">
-      <div class="col-12 col-md-4 col-lg-2" *ngFor="let category of categories">
+      <div class="col-12 col-md-4 col-lg-2" *ngFor="let category of categories" (click)="onCategoryClick(category)">
         <div class="course-card">
           <div class="course-img">
             <img [src]="category.image" [alt]="category.title">

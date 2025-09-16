@@ -44,11 +44,25 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           ),
           confirmButtonText: okBtn,
         });
+      } else if (error.status === 401) {
+        Swal.fire({
+          icon: 'warning',
+          title: getTranslation('errors.unauthorizedTitle', 'تم رفض الوصول'),
+          text:
+            error.error?.message ||
+            getTranslation(
+              'errors.unauthorizedText',
+              'صلاحيتك غير كافية أو انتهت الجلسة. يرجى تسجيل الدخول مرة أخرى.'
+            ),
+          confirmButtonText: okBtn,
+        });
       } else {
         Swal.fire({
           icon: 'error',
           title: getTranslation('errors.defaultTitle', 'خطأ'),
-          text: getTranslation('errors.defaultText', 'حدث خطأ غير متوقع'),
+          text:
+            error.error?.message ||
+            getTranslation('errors.defaultText', 'حدث خطأ غير متوقع'),
           confirmButtonText: okBtn,
           showCancelButton: true,
           cancelButtonText: cancelBtn,
