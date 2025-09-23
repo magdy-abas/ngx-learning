@@ -6,8 +6,8 @@ function getMainDomain(): string {
   }
   const parts = hostname.split('.');
 
-  if (parts.length >= 2) {
-    return parts[parts.length - 2];
+  if (parts.length >= 3) {
+    return parts[parts.length - 3];
   }
 
   return parts[0];
