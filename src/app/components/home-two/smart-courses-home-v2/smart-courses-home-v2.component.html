@@ -9,7 +9,8 @@
 
         <p class="edu-text">{{ text }}</p>
 
-        <a href="#" class="btn btn-pill btn-dark-blue">{{ 'home_two.smart.cta' | translate }}</a>
+        <a [routerLink]="['/courses']" routerLinkActive="router-link-active" class="btn btn-pill btn-dark-blue">{{
+          'home_two.smart.cta' | translate }}</a>
       </div>
 
       <!-- images -->

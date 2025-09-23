@@ -1,7 +1,0 @@
-<div class="video-container" [class.ready]="!showInitialLoader">
-  <video #videoPlayer playsinline controls crossorigin [attr.preload]="preload"></video>
-
-  <div *ngIf="showInitialLoader" class="video-loading-overlay">
-    <div class="spinner"></div>
-  </div>
-</div>

@@ -1732,11 +1732,18 @@ nav {
   padding: 0;
   margin: 0;
 }
-.side-menu span {
+.side-menu span:not(.lang-text-side) {
   color: var(--side-text) !important;
   border-bottom: 1px solid var(--side-divider);
 }
-.side-menu li {
+.lang-text-side {
+  color: var(--side-text) !important;
+}
+
+.lang-options-en {
+  color: var(--side-text) !important;
+}
+.side-menu li:not(.lang-options-en) {
   border-bottom: 1px solid var(--side-divider);
   color: var(--side-text) !important;
 }

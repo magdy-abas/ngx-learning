@@ -110,6 +110,7 @@ export class CoursesService {
   getVideo(lesson_id: number): Observable<any> {
     return this._HttpClient.post(`${baseUrl}lessons/show`, {
       lesson_id: lesson_id,
+      type: 'iframe',
     });
   }
 

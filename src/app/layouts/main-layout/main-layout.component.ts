@@ -5,7 +5,6 @@ import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { NgIf } from '@angular/common';
-import { AuthNavbarComponent } from '../../components/auth-navbar/auth-navbar.component';
 
 @Component({
   selector: 'app-main-layout',

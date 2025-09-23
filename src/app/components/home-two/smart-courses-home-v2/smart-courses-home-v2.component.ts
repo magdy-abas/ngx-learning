@@ -3,11 +3,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IDoctor } from '../../../core/interfaces/dynamic-home.interface';
 import { NgFor, NgIf } from '@angular/common';
 import { SharedService } from '../../../core/service/shared.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-smart-courses-home-v2',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, RouterLink],
   templateUrl: './smart-courses-home-v2.component.html',
   styleUrl: './smart-courses-home-v2.component.scss',
 })

@@ -1,16 +1,18 @@
 function getMainDomain(): string {
-  const hostname = window.location.hostname;
+  let hostname = window.location.hostname;
 
+  if (hostname.startsWith('www.')) {
+    hostname = hostname.replace('www.', '');
+  }
   const parts = hostname.split('.');
 
-  if (parts.length >= 3) {
-    return parts[parts.length - 3];
+  if (parts.length >= 2) {
+    return parts[parts.length - 2];
   }
 
-  // return parts[0];
-  return 'farida';
+  return parts[0];
+  // return 'farida';
 }
-// export const baseUrl = `https://farida.stepsio.com/api/`;
 export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
 
 export const headers = {

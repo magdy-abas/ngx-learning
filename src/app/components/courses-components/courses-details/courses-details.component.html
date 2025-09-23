@@ -28,10 +28,14 @@
             </div>
           </ng-container>
 
+
+
+
           <ng-template #showVideo>
-            <app-hls-player [src]="videoUrl" [autoplay]="false" [muted]="false" (playerReady)="onPlayerReady()"
-              (error)="onPlayerError($event)">
-            </app-hls-player>
+            <iframe [src]="videoUrl" width="100%" height="500" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
           </ng-template>
         </section>
       </div>

@@ -16,14 +16,13 @@ import {
   NgSwitch,
   NgSwitchCase,
 } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { SweetAlertUtils } from './../../../shared/utils/SweetAlert.utils';
 import { CourseDetailsResponse } from './../../../core/interfaces/courses-details.interface';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EncryptionService } from '../../../core/service/encryption.service';
-import { HlsPlayerComponent } from '../../hls-player/hls-player.component';
 import { DoctorComment } from '../../../core/interfaces/doctor-comments';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 
@@ -36,7 +35,7 @@ import { DarkModeService } from '../../../core/service/dark-mode.service';
     NgFor,
     PdfViewerComponent,
     TranslateModule,
-    HlsPlayerComponent,
+
     DatePipe,
     NgClass,
     NgSwitch,
@@ -63,7 +62,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   userInfo!: any;
   resourceId!: number;
   chapterId!: number;
-  public videoUrl: string = '';
+  public videoUrl: SafeResourceUrl | null = null;
   public videoLoaded: boolean = false;
   public resources: any[] = [];
 
@@ -399,7 +398,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
           console.log('Decrypted Video URL:', decryptedUrl);
 
-          this.videoUrl = decryptedUrl;
+          this.videoUrl =
+            this.sanitizer.bypassSecurityTrustResourceUrl(decryptedUrl);
           this.videoLoaded = true;
         }
       },

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedService } from '../../../core/service/shared.service';
 import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-hero-home-v2',
   standalone: true,
-  imports: [TranslateModule, NgIf],
+  imports: [TranslateModule, NgIf, RouterLink],
   templateUrl: './hero-home-v2.component.html',
   styleUrl: './hero-home-v2.component.scss',
 })

@@ -288,7 +288,8 @@
 
         <!-- Search + Actions  -->
         <div class="nav-actions desktop-search-v2 d-flex align-items-center justify-content-start">
-          <a class="btn-pill btn"> {{ 'home_two.nav.book'| translate }}</a>
+          <a [routerLink]="['/courses']" routerLinkActive="router-link-active" class="btn-pill btn"> {{
+            'home_two.nav.book'| translate }}</a>
           <a (click)="openSearchPopup()" class="csr-pointer me-3">
             <i class="fa-solid fa-magnifying-glass"></i>
           </a>
@@ -476,14 +477,14 @@
         <!-- Language Dropdown in Sidebar -->
         <li class="sidebar-lang" (click)="toggleLangDropdown($event)" style="cursor: pointer;">
           <div class="d-flex justify-content-between align-items-center px-3 py-2">
-            <span>{{ 'navbar.language' | translate }}</span>
+            <span class="lang-text-side">{{ 'navbar.language' | translate }}</span>
             <i class="fas fa-chevron-down"
               [style.transform]="isLangDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)'"></i>
           </div>
 
           <ul class="lang-options ps-3 pe-3 pb-2" *ngIf="isLangDropdownOpen">
             <li class="py-2" (click)="switchLanguage('ar')">العربية</li>
-            <li class="py-2" (click)="switchLanguage('en')">English</li>
+            <li class="py-2  lang-options-en" (click)="switchLanguage('en')">English</li>
           </ul>
         </li>
         <li>
