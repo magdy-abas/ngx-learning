@@ -1,15 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { SharedService } from '../../../core/service/shared.service';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+
+interface Avatar {
+  file: string;
+  position: string;
+}
+
+interface Testimonial {
+  text: string;
+  main: string | null;
+  avatars: Avatar[];
+}
 
 @Component({
   selector: 'app-testimonial-home-v2',
   standalone: true,
-  imports: [TranslateModule, CarouselModule],
+  imports: [TranslateModule, CarouselModule, NgIf, NgFor, NgClass],
   templateUrl: './testimonial-home-v2.component.html',
   styleUrl: './testimonial-home-v2.component.scss',
 })
-export class TestimonialHomeV2Component {
+export class TestimonialHomeV2Component implements OnInit {
+  kicker: string | null = null;
+  title: string | null = null;
+  testimonials: Testimonial[] = [];
+
   customOptionsTsSlider = {
     loop: true,
     rtl: true,
@@ -25,4 +42,44 @@ export class TestimonialHomeV2Component {
       1200: { items: 1 },
     },
   };
+
+  constructor(private sharedService: SharedService) {}
+
+  ngOnInit(): void {
+    this.kicker = this.sharedService.getAppAttrValue(
+      'testimonials',
+      'kicker_title'
+    );
+    this.title = this.sharedService.getAppAttrValue('testimonials', 'title');
+
+    [1, 2, 3].forEach((i) => {
+      const text = this.sharedService.getAppAttrValue(
+        'testimonials',
+        `quote${i}`
+      );
+
+      if (text) {
+        // main avatar
+        const main =
+          this.sharedService
+            .getAppAttrByCategory('testimonials')
+            .find((attr) => attr.key === `quote${i}_main1`)?.file || null;
+
+        // floating avatars
+        const avatars = this.sharedService
+          .getAppAttrByCategory('testimonials')
+          .filter((attr) => attr.key.startsWith(`quote${i}_avatar`))
+          .map((attr) => {
+            let position = '';
+            if (attr.key.endsWith('2')) position = 'left top';
+            if (attr.key.endsWith('3')) position = 'left bottom';
+            if (attr.key.endsWith('4')) position = 'right top';
+            if (attr.key.endsWith('5')) position = 'right bottom';
+            return { file: attr.file, position };
+          });
+
+        this.testimonials.push({ text, main, avatars });
+      }
+    });
+  }
 }

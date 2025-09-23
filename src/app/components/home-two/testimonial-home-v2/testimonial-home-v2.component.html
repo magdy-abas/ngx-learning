@@ -1,44 +1,26 @@
 <!-- testimonials  -->
 <section class="testimonials py-5" data-aos="fade-up">
   <div class="container text-center">
-    <p class="ts-kicker">{{ 'home_two.testimonials.kicker' | translate }}</p>
-    <h2 class="ts-title mb-5">{{ 'home_two.testimonials.title' | translate }}</h2>
+    <p class="ts-kicker">{{ kicker }}</p>
+    <h2 class="ts-title mb-5">{{ title }}</h2>
+
     <!-- Owl Carousel -->
     <owl-carousel-o [options]="customOptionsTsSlider" class="owl-theme ts-slider">
-
-      <!-- Slide 1 -->
-      <ng-template carouselSlide>
+      <ng-template carouselSlide *ngFor="let item of testimonials">
         <div class="ts-item">
           <!-- main avatar -->
-          <div class="ts-avatar">
-            <img src="assets/img/home-two/girl1.png" alt="Client">
+          <div class="ts-avatar" *ngIf="item.main">
+            <img [src]="item.main" alt="Client">
           </div>
-          <p class="ts-quote">"{{ 'home_two.testimonials.quote1' | translate }}"</p>
+
+          <p class="ts-quote">"{{ item.text }}"</p>
 
           <!-- floating avatars -->
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left bottom" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right bottom" alt="client">
+          <ng-container *ngFor="let avatar of item.avatars">
+            <img [src]="avatar.file" class="float-avatar" [ngClass]="avatar.position" alt="client" />
+          </ng-container>
         </div>
       </ng-template>
-
-      <!-- Slide 2 -->
-      <ng-template carouselSlide>
-        <div class="ts-item">
-          <div class="ts-avatar">
-            <img src="assets/img/home-two/girl1.png" alt="Client">
-          </div>
-          <p class="ts-quote">"{{ 'home_two.testimonials.quote2' | translate }}"</p>
-
-
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar left bottom" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right top" alt="client">
-          <img src="assets/img/home-two/girl1.png" class="float-avatar right bottom" alt="client">
-        </div>
-      </ng-template>
-
     </owl-carousel-o>
   </div>
 </section>

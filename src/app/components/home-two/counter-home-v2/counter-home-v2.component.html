@@ -5,25 +5,29 @@
       <div class="row row-cols-1 row-cols-md-4 g-0 text-center">
 
         <div class="col stat-item">
-          <div class="stat-number  text-white">+<span id="stat-courses" class="stat-number  text-white">50</span></div>
-          <div class="stat-text">{{ 'home_two.stats.courses' | translate }}</div>
+          <div class="stat-number  text-white">+<span id="stat-courses" class="stat-number  text-white">{{ coursesNumber
+              }}</span></div>
+          <div class="stat-text">{{ coursesLabel }}</div>
         </div>
 
         <div class="col stat-item">
-          <div class="stat-number  text-white">+<span id="stat-students" class="stat-number  text-white">2000</span>
+          <div class="stat-number  text-white">+<span id="stat-students" class="stat-number  text-white">{{
+              studentsNumber }}</span>
           </div>
-          <div class="stat-text">{{ 'home_two.stats.students' | translate }}</div>
+          <div class="stat-text">{{ studentsLabel }}</div>
         </div>
 
         <div class="col stat-item">
-          <div class="stat-number  text-white"> +<span id="stat-teachers" class="stat-number  text-white">150</span>
+          <div class="stat-number  text-white"> +<span id="stat-teachers" class="stat-number  text-white">{{
+              teachersNumber }}</span>
           </div>
-          <div class="stat-text">{{ 'home_two.stats.teachers' | translate }}</div>
+          <div class="stat-text">{{ teachersLabel }}</div>
         </div>
 
         <div class="col stat-item">
-          <div class="stat-number text-white">+<span id="stat-fields" class="stat-number  text-white">20</span></div>
-          <div class="stat-text">{{ 'home_two.stats.fields' | translate }}</div>
+          <div class="stat-number text-white">+<span id="stat-fields" class="stat-number  text-white">{{ fieldsNumber
+              }}</span></div>
+          <div class="stat-text">{{ fieldsLabel }}</div>
         </div>
 
       </div>

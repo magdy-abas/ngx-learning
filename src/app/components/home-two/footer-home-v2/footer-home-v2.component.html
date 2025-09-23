@@ -1,1 +1,43 @@
-<p>footer-home-v2 works!</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="row justify-content-center gx-5">
+
+      <!-- Logo -->
+      <div class="col-auto text-lg-end mb-4 mb-lg-0" *ngIf="footerLogo">
+        <img [src]="footerLogo" alt="LoopEDX" class="footer-logo">
+      </div>
+
+      <!-- Links -->
+      <div class="col-auto mb-4 mb-lg-0" *ngIf="footerLinks.length">
+        <h6 class="footer-title">{{ footerLinks[0] }}</h6>
+        <ul class="footer-links">
+          <li *ngFor="let link of footerLinks.slice(1)">
+            <a href="#">{{ link }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-auto" *ngIf="footerContactTitle">
+        <h6 class="footer-title">{{ footerContactTitle }}</h6>
+        <ul class="footer-links">
+          <li *ngIf="whatsappNumber">
+            <a [href]="'https://wa.me/' + whatsappNumber">
+              {{ footerWhatsappLabel }}: {{ whatsappNumber }}
+            </a>
+          </li>
+          <li *ngIf="contactNumber">
+            <a [href]="'tel:' + contactNumber">
+              {{ footerPhoneLabel }}: {{ contactNumber }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- bottom -->
+    <div class="footer-bottom" *ngIf="bottomFooter">
+      {{ bottomFooter }}
+    </div>
+  </div>
+</footer>

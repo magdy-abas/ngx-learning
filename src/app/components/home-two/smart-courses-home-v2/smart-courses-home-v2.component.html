@@ -4,10 +4,10 @@
     <div class="row align-items-center px-md-5 mt-5  pb-5">
       <!-- text -->
       <div class="col-lg-6 edu-content">
-        <p class="edu-kicker">{{ 'home_two.smart.kicker' | translate }}</p>
-        <h2 class="edu-title">{{ 'home_two.smart.title' | translate }}</h2>
+        <p class="edu-kicker">{{ kicker }}</p>
+        <h2 class="edu-title">{{ title }}</h2>
 
-        <p class="edu-text">{{ 'home_two.smart.text' | translate }}</p>
+        <p class="edu-text">{{ text }}</p>
 
         <a href="#" class="btn btn-pill btn-dark-blue">{{ 'home_two.smart.cta' | translate }}</a>
       </div>
@@ -19,7 +19,7 @@
           <!-- squiggle svg -->
           <img src="../../../assets/img/home-two/Vector-gll.svg" class="squiggle" alt="shape">
           <div class="edu-main-img">
-            <img src="../../../assets/img/home-two/girl1.png" alt="student">
+            <img [src]="img1" alt="student">
 
           </div>
         </div>
@@ -27,7 +27,7 @@
 
         <!-- small image -->
         <div class="edu-small-img">
-          <img src="../../../assets/img/home-two/girl2.png" alt="student">
+          <img [src]="img2" alt="student">
         </div>
 
         <!-- circle shape -->

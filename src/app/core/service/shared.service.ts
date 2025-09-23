@@ -27,6 +27,8 @@ export class SharedService {
   initialized$ = this.initializationComplete.asObservable();
   private loginMethod: string | null = null;
   private homeVersion: 'v1' | 'v2' = 'v2';
+  private appAttrs: any[] = [];
+
   constructor(private _HttpClient: HttpClient, private router: Router) {}
 
   CheckSecurityPoint(): Observable<CheckSecurityPointResponse> {
@@ -41,10 +43,15 @@ export class SharedService {
         if (response.status === 1) {
           this.isSecurityChecked.next(true);
           this.initializationComplete.next(true);
+
           // home version (v1 or v2)
           const version = this.extractHomeVersion(response.data);
           this.setHomeVersion(version);
           this.setLoginMethod(response.data.settings.auth_login_with);
+
+          if (version === 'v2') {
+            this.setAppAttrs(response.data.app_attrs || []);
+          }
         } else {
           this.isSecurityChecked.next(false);
 
@@ -130,5 +137,26 @@ export class SharedService {
   private applyHomeClass(version: 'v1' | 'v2') {
     document.body.classList.remove('home-v1', 'home-v2');
     document.body.classList.add(version === 'v1' ? 'home-v1' : 'home-v2');
+  }
+
+  // response.data.app_attrs
+
+  setAppAttrs(attrs: any[]) {
+    this.appAttrs = attrs;
+  }
+
+  getAppAttrs() {
+    return this.appAttrs;
+  }
+
+  getAppAttrByCategory(category: string) {
+    return this.appAttrs?.filter((attr) => attr.category === category) || [];
+  }
+
+  getAppAttrValue(category: string, key: string): string | null {
+    const item = this.appAttrs.find(
+      (attr) => attr.category === category && attr.key === key
+    );
+    return item ? item.value : null;
   }
 }

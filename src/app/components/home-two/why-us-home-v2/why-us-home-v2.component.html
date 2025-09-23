@@ -3,12 +3,12 @@
   <div class="container py-5">
     <div class="row g-4 align-items-center">
       <div class="col-lg-5">
-        <p class="why-kicker mb-2">{{ 'home_two.why.kicker' | translate }}</p>
-        <h2 class="why-title mb-3">{{ 'home_two.why.title' | translate }}</h2>
+        <p class="why-kicker mb-2">{{ kicker }}</p>
+        <h2 class="why-title mb-3">{{ title }}</h2>
 
-        <p class="why-text mb-4">{{ 'home_two.why.text' | translate }}</p>
+        <p class="why-text mb-4">{{ text }}</p>
 
-        <a href="#" class="btn btn-pill px-4">{{ 'home_two.why.cta' | translate }}</a>
+        <a href="#" class="btn btn-pill px-4">{{ cta }}</a>
       </div>
       <div class="col-lg-7">
         <div class="row g-4">
@@ -18,10 +18,10 @@
             <div class="feature-card corners tl-gold ">
               <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon2.svg" alt="icon">
+                  <img [src]="feature2Icon" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature1.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature1.text' | translate }}</p>
+                <h5 class="feature-title mb-3">{{ feature1Title }}</h5>
+                <p class="feature-home-text mb-0">{{ feature1Text }}</p>
               </div>
             </div>
           </div>
@@ -31,10 +31,10 @@
             <div class="feature-card corner tl-blue ">
               <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon1.svg" alt="icon">
+                  <img [src]="feature1Icon" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature2.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature2.text' | translate }}</p>
+                <h5 class="feature-title mb-3">{{ feature2Title }}</h5>
+                <p class="feature-home-text mb-0">{{ feature2Text }}</p>
               </div>
             </div>
           </div>
@@ -44,10 +44,10 @@
             <div class="feature-card corners tl-w-blue ">
               <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon4.svg" alt="icon">
+                  <img [src]="feature4Icon" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature3.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature3.text' | translate }}</p>
+                <h5 class="feature-title mb-3">{{ feature3Title }}</h5>
+                <p class="feature-home-text mb-0">{{ feature3Text }}</p>
               </div>
             </div>
           </div>
@@ -57,10 +57,10 @@
             <div class="feature-card corners tl-gray ">
               <div class="d-flex flex-column">
                 <div class="feat-icon mb-3">
-                  <img src="../../../assets/img/home-two/icon3.svg" alt="icon">
+                  <img [src]="feature3Icon" alt="icon">
                 </div>
-                <h5 class="feature-title mb-3">{{ 'home_two.why.feature4.title' | translate }}</h5>
-                <p class="feature-home-text mb-0">{{ 'home_two.why.feature4.text' | translate }}</p>
+                <h5 class="feature-title mb-3">{{ feature4Title }}</h5>
+                <p class="feature-home-text mb-0">{{ feature4Text }}</p>
               </div>
             </div>
           </div>

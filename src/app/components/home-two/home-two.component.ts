@@ -25,6 +25,7 @@ import { FeaturedCoursesHomeV2Component } from './featured-courses-home-v2/featu
 import { SmartCoursesHomeV2Component } from './smart-courses-home-v2/smart-courses-home-v2.component';
 import { BestSellingHomeV2Component } from './best-selling-home-v2/best-selling-home-v2.component';
 import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-home-v2.component';
+import { FooterHomeV2Component } from './footer-home-v2/footer-home-v2.component';
 
 @Component({
   selector: 'app-home-two',
@@ -32,7 +33,6 @@ import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-ho
   imports: [
     CarouselModule,
     TranslateModule,
-    NgIf,
 
     HeroHomeV2Component,
     CounterHomeV2Component,
@@ -42,6 +42,7 @@ import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-ho
     SmartCoursesHomeV2Component,
     BestSellingHomeV2Component,
     TestimonialHomeV2Component,
+    FooterHomeV2Component,
   ],
   templateUrl: './home-two.component.html',
   styleUrl: './home-two.component.scss',
@@ -141,9 +142,6 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
             section.type === 'doctors'
         );
         this.doctors = doctorsSection?.data ?? [];
-
-        //  contact us
-        this.contactUs = res.contact_us;
       },
       error: (err) => console.error(err),
     });

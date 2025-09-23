@@ -29,43 +29,4 @@
 <!-- testimonials  -->
 <app-testimonial-home-v2></app-testimonial-home-v2>
 <!--  footer -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="row justify-content-center gx-5">
-
-      <!-- Logo -->
-      <div class="col-auto text-lg-end mb-4 mb-lg-0">
-        <img src="../../.../../../assets/img/home-two/logo-big.png" alt="LoopEDX" class="footer-logo">
-      </div>
-
-      <!-- Links -->
-      <div class="col-auto mb-4 mb-lg-0">
-        <h6 class="footer-title">{{ 'home_two.footer.links.links' | translate }}</h6>
-        <ul class="footer-links">
-          <li><a href="#">{{ 'home_two.footer.links.about' | translate }}</a></li>
-          <li><a href="#">{{ 'home_two.footer.links.privacy' | translate }}</a></li>
-          <li><a href="#">{{ 'home_two.footer.links.terms' | translate }}</a></li>
-          <li><a href="#">{{ 'home_two.footer.links.support' | translate }}</a></li>
-        </ul>
-      </div>
-
-      <!-- Contact -->
-      <div class="col-auto ">
-        <h6 class="footer-title">{{ 'home_two.footer.contact.title' | translate }}</h6>
-        <ul class="footer-links">
-          <li *ngIf="contactUs?.whatsapp"><a [href]="'https://wa.me/' + contactUs?.whatsapp">{{
-              'home_two.footer.contact.whatsapp' | translate }} :{{
-              contactUs?.whatsapp }} </a></li>
-          <li *ngIf="contactUs?.call_number"><a [href]="'tel:' + contactUs?.call_number">{{
-              'home_two.footer.contact.phone' | translate }}: {{
-              contactUs?.call_number }}</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- bottom -->
-    <div class="footer-bottom">
-      {{ 'home_two.footer.bottom' | translate }}
-    </div>
-  </div>
-</footer>
+<app-footer-home-v2></app-footer-home-v2>
