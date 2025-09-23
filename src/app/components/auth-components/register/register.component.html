@@ -84,6 +84,8 @@
                     'border-success': isFieldValid('password'),
                     'border-danger': isFieldInvalid('password')
                   }" />
+
+
                 <div>
                   <app-alert-error controlName="password" [formName]="regForm" />
                 </div>
@@ -106,7 +108,7 @@
                 <span id="strong" class="active"></span>
                 <span id="heavy" class="active"></span>
               </div>
-              <div id="passwordInfo" [ngClass]="{
+              <!-- <div id="passwordInfo" [ngClass]="{
                   weak: passwordResponce.passwordResponceKey === '0',
                   average: passwordResponce.passwordResponceKey === '1',
                   good: passwordResponce.passwordResponceKey === '2',
@@ -114,7 +116,7 @@
                 }">
                 <img [src]="passwordResponce.passwordResponceImage" />
                 {{ passwordResponce.passwordResponceText }}
-              </div>
+              </div> -->
             </div>
             <div class="form-check remember-me">
               <label class="form-check-label mb-0">
@@ -133,15 +135,12 @@
             </div>
           </form>
         </div>
-        <div class="google-bg text-center">
 
-          <div class="sign-google">
+        <p class="pb-3">
+          {{ 'auth.alreadyHaveAccount' | translate }} <a routerLink="/login">{{ 'auth.signIn' | translate }}</a>
+        </p>
 
-          </div>
-          <p class="mb-0">
-            {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
-          </p>
-        </div>
+
       </div>
       <!-- /Login -->
     </div>

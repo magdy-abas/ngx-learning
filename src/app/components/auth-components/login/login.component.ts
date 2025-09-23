@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       if (initialized) {
         const method = this.sharedService.getLoginMethod();
 
-        this.loginWithWats = method === 'mobile_whatsapp';
+        this.loginWithWats = method === 'mobile_';
       }
     });
     this.settingsSub = this.sharedService.settings$.subscribe((settings) => {

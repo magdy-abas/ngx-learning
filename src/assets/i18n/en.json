@@ -43,7 +43,7 @@
     "invalidEmail": "Please enter a valid email address",
     "inputRequired": "Input is required",
     "inputMaxLength": "Input must not exceed 20 characters",
-    "inputMinLength": "Input must be at least 3 characters long",
+    "inputMinLength": "Input must be at least 6 characters long",
 
     "fullName": "Full Name",
 

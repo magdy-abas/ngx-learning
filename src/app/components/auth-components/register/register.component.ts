@@ -130,13 +130,10 @@ class RegisterComponent implements OnInit, OnDestroy {
   }
   regForm: FormGroup = this._FormBuilder.group(
     {
-      name: [null, [Validators.required, Validators.minLength(3)]],
+      name: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       phone: [null],
-      password: [
-        null,
-        [Validators.required, Validators.pattern('^(?=.*[A-Z]).{6,}$'), ,],
-      ],
+      password: [null, [Validators.required, Validators.minLength(6)]],
     },
     {}
   );

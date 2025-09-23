@@ -81,13 +81,18 @@
                         *ngIf="!show"></i-feather>
                     </span>
                   </div>
-                  <div class="forgot mt-3">
-                    <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
-                        }}</a></span>
-                  </div>
                   <div>
                     <app-alert-error controlName="password" [formName]="loginForm"></app-alert-error>
                   </div>
+                  <div class="forgot mt-3 ">
+                    <span><a class="forgot-link" routerLink="/forgotpass">{{ 'auth.forgotPassword' | translate
+                        }}</a></span>
+
+
+
+
+                  </div>
+
                 </div>
                 <div class="d-grid">
                   <button class="btn btn-primary btn-start" type="submit">{{ 'auth.signIn' | translate }}</button>
@@ -156,17 +161,14 @@
             </form>
 
           </div>
+
+
+
         </div>
+        <p class="mb-0" *ngIf="!loginWithWats">
+          {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
+        </p>
 
-        <div class="google-bg text-center">
-
-          <div class="sign-google">
-
-          </div>
-          <p class="mb-0" *ngIf="!loginWithWats">
-            {{ 'auth.newUser' | translate }} <a routerLink="/signup">{{ 'auth.createAccount' | translate }}</a>
-          </p>
-        </div>
       </div>
 
 
