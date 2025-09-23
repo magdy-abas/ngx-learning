@@ -39,25 +39,27 @@
             </ng-template>
           </ng-container>
 
-          <!--  iOS -->
+          <!-- iOS -->
           <ng-container *ngIf="isIOS">
             <div class="video-el">
               <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
-              <button class="start-btn" (click)="openVideoModal()">
+              <button class="start-btn" (click)="startFirstLesson()">
                 {{ 'courses.startNow' | translate }}
               </button>
             </div>
 
-            <div class="video-modal" *ngIf="showVideoModal">
-              <div class="video-backdrop" (click)="closeVideoModal()"></div>
-              <div class="video-content">
+            <!-- Fullscreen Modal Video -->
+            <div class="video-modal fullscreen" *ngIf="showVideoModal">
+              <div class="video-content fullscreen">
                 <iframe [src]="videoUrl" frameborder="0"
                   allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen
-                  webkitallowfullscreen playsinline></iframe>
+                  webkitallowfullscreen playsinline>
+                </iframe>
                 <button class="close-btn" (click)="closeVideoModal()">×</button>
               </div>
             </div>
           </ng-container>
+
         </section>
 
       </div>
