@@ -25,6 +25,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EncryptionService } from '../../../core/service/encryption.service';
 import { DoctorComment } from '../../../core/interfaces/doctor-comments';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
+import { DeviceTypeService } from '../../../core/service/device-type.service';
 
 @Component({
   selector: 'app-courses-details',
@@ -65,7 +66,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
   public videoUrl: SafeResourceUrl | null = null;
   public videoLoaded: boolean = false;
   public resources: any[] = [];
+  isIOS: boolean = false;
 
+  showVideoModal: boolean = false;
   isAuth!: boolean;
   reqData: RequestJoinDto = new RequestJoinDto();
   VIDEO_ENCRYPTION_KEY: string =
@@ -82,7 +85,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private encryptionService: EncryptionService,
-    private DarkModeService: DarkModeService
+    private DarkModeService: DarkModeService,
+    private deviceService: DeviceTypeService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -93,6 +97,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.DarkModeService.applyMode();
     this.isAuth = this._AuthService.isAuthenticated();
+    this.isIOS = this.deviceService.isIOS;
     const courseId = this._route.snapshot.paramMap.get('id');
     if (courseId) {
       this.fetchCourseDetails(+courseId);
@@ -401,6 +406,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
           this.videoUrl =
             this.sanitizer.bypassSecurityTrustResourceUrl(decryptedUrl);
           this.videoLoaded = true;
+          this.openVideoModal();
+
           this.scrollToTop();
         }
       },
@@ -477,6 +484,14 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
   onPlayerError(error: any) {
     console.error('Player error:', error);
+  }
+
+  openVideoModal() {
+    this.showVideoModal = true;
+  }
+
+  closeVideoModal() {
+    this.showVideoModal = false;
   }
 
   ngOnDestroy(): void {

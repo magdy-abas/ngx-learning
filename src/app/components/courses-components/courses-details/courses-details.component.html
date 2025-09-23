@@ -17,32 +17,49 @@
 
         </div>
 
-        <!-- Video Player -->
         <section class="video-wrap video--cover mb-3">
-          <ng-container *ngIf="!videoLoaded; else showVideo">
+
+          <!-- not ios -->
+          <ng-container *ngIf="!isIOS">
+            <ng-container *ngIf="!videoLoaded; else showVideo">
+              <div class="video-el">
+                <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
+                <button class="start-btn" (click)="startFirstLesson()">
+                  {{ 'courses.startNow' | translate }}
+                </button>
+              </div>
+            </ng-container>
+
+            <ng-template #showVideo>
+              <div class="iframe-wrapper">
+                <iframe [src]="videoUrl" frameborder="0"
+                  allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen
+                  webkitallowfullscreen playsinline></iframe>
+              </div>
+            </ng-template>
+          </ng-container>
+
+          <!--  iOS -->
+          <ng-container *ngIf="isIOS">
             <div class="video-el">
               <img src="../../../../assets/img/start.svg" alt="video" class="placeholder-img" />
-              <button class="start-btn" (click)="startFirstLesson()">
+              <button class="start-btn" (click)="openVideoModal()">
                 {{ 'courses.startNow' | translate }}
               </button>
             </div>
-          </ng-container>
 
-
-
-
-          <ng-template #showVideo>
-            <div class="iframe-wrapper">
-              <iframe [src]="videoUrl" frameborder="0" allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                allowfullscreen webkitallowfullscreen playsinline></iframe>
-
-
+            <div class="video-modal" *ngIf="showVideoModal">
+              <div class="video-backdrop" (click)="closeVideoModal()"></div>
+              <div class="video-content">
+                <iframe [src]="videoUrl" frameborder="0"
+                  allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen
+                  webkitallowfullscreen playsinline></iframe>
+                <button class="close-btn" (click)="closeVideoModal()">×</button>
+              </div>
             </div>
-          </ng-template>
-
-
-
+          </ng-container>
         </section>
+
       </div>
     </main>
 
