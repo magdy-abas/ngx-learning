@@ -401,6 +401,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
           this.videoUrl =
             this.sanitizer.bypassSecurityTrustResourceUrl(decryptedUrl);
           this.videoLoaded = true;
+          this.scrollToTop();
         }
       },
       error: (err) => console.error('Error fetching video:', err),
