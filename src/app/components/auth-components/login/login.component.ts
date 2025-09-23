@@ -131,10 +131,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup = this._FormBuilder.group(
     {
       email: [null, [Validators.required, Validators.email]],
-      password: [
-        null,
-        [Validators.required, Validators.pattern('^(?=.*[A-Z]).{6,}$'), ,],
-      ],
+      password: [null, [Validators.required, Validators.minLength(6)]],
     },
     {}
   );
