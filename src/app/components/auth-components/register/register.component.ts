@@ -34,7 +34,7 @@ import { AuthService } from '../../../core/service/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RegisterDto } from '../../../core/Dtos/AuthDtos';
 import { scrollToTop } from '../../../shared/utils/ui-utils';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   AuthResponse,
   ErrorAuthData,
@@ -108,7 +108,8 @@ class RegisterComponent implements OnInit, OnDestroy {
     private _AuthService: AuthService,
     private _Router: Router,
     private darkModeService: DarkModeService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -117,10 +118,9 @@ class RegisterComponent implements OnInit, OnDestroy {
     this.settingsSub = this.sharedService.settings$.subscribe((settings) => {
       if (settings?.data) {
         this.logoUrl = this.darkModeService.getLogo(settings);
-        const lang = (localStorage.getItem('lang') || 'en') as Lang;
+        const lang = (this.translate.currentLang || 'en') as Lang;
         this.welcomeLogin = this.DataService.getWelcomeSlides(
-          settings.data.app_name[lang] ?? 'App Name',
-
+          settings.data.app_name?.[lang] ?? 'App Name',
           lang
         );
       } else {
