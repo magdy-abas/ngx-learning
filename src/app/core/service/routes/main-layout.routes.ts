@@ -27,6 +27,7 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses/courses.component'
       ).then((m) => m.CoursesComponent),
     title: 'courses',
+    data: { preload: true },
   },
   {
     path: 'booking',
@@ -62,6 +63,7 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses/courses.component'
       ).then((m) => m.CoursesComponent),
     title: 'courses-doctor',
+    data: { preload: true },
   },
   {
     path: 'course-details/:id',
@@ -71,6 +73,7 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses-details/courses-details.component'
       ).then((m) => m.CoursesDetailsComponent),
     title: 'course-details',
+    data: { preload: true },
   },
   {
     path: 'categories',
@@ -80,6 +83,7 @@ export const mainRoutes: Routes = [
         (m) => m.CategoriesComponent
       ),
     title: 'categories',
+    data: { preload: true },
   },
   {
     path: 'categories/:categoryId',
@@ -118,6 +122,7 @@ export const mainRoutes: Routes = [
         (m) => m.LoginComponent
       ),
     title: 'Login',
+    data: { preload: true },
   },
   {
     canActivate: [publicGuard],

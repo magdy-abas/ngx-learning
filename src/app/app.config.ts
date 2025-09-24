@@ -4,8 +4,10 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import {
+  PreloadAllModules,
   provideRouter,
   withInMemoryScrolling,
+  withPreloading,
   withViewTransitions,
 } from '@angular/router';
 import {
@@ -52,7 +54,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withViewTransitions(),
-      withInMemoryScrolling({ scrollPositionRestoration: 'top' })
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+      withPreloading(PreloadAllModules)
     ),
 
     provideAnimations(),

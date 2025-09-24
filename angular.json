@@ -40,7 +40,6 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
 
               "node_modules/ngx-spinner/animations/ball-spin-fade.css",
-              "node_modules/intl-tel-input/build/css/intlTelInput.css",
 
               "src/styles.scss"
             ],
@@ -66,7 +65,8 @@
               "outputHashing": "all",
               "optimization": true,
               "extractLicenses": true,
-              "sourceMap": false
+              "sourceMap": false,
+              "aot": true
             },
             "development": {
               "optimization": false,
