@@ -23,19 +23,22 @@ export class EncryptionService {
     const secretKey = `${userId}-${chapterId}-${this.VIDEO_ENCRYPTION_KEY}-${objectId}-${userName}`;
     const secretIv = `${userId}-${chapterId}-${this.VIDEO_ENCRYPTION_IV}-${objectId}-${userName}`;
 
-    const key = CryptoJS.SHA256(secretKey)
+    const keyHex = CryptoJS.SHA256(secretKey)
       .toString(CryptoJS.enc.Hex)
       .substring(0, 32);
-    const iv = CryptoJS.SHA256(secretIv)
+    const ivHex = CryptoJS.SHA256(secretIv)
       .toString(CryptoJS.enc.Hex)
       .substring(0, 16);
 
+    const key = CryptoJS.enc.Utf8.parse(keyHex);
+    const iv = CryptoJS.enc.Utf8.parse(ivHex);
+
     try {
-      const decryptedBytes = CryptoJS.AES.decrypt(
-        encryptedText,
-        CryptoJS.enc.Utf8.parse(key),
-        { iv: CryptoJS.enc.Utf8.parse(iv) }
-      );
+      const decryptedBytes = CryptoJS.AES.decrypt(encryptedText, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+      });
 
       const decrypted = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
@@ -44,10 +47,9 @@ export class EncryptionService {
         return '';
       }
 
-      console.log('url:', decrypted);
       return decrypted;
     } catch (error) {
-      console.error(' error:', error);
+      console.error('Error during decryption:', error);
       return '';
     }
   }

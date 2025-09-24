@@ -25,12 +25,16 @@ export interface CheckSecurityPointData {
   force_update: number;
   settings: Settings;
   device_checks: DeviceCheck[];
+  custom_code: CustomCode;
   app_styles: any;
   app_attrs: AppAttr[];
   ecommerce_status: boolean;
   select_category_in_register: boolean;
 }
-
+export interface CustomCode {
+  css: string | null;
+  js: string | null;
+}
 export interface CheckSecurityPointResponse {
   status: number;
   message: string;

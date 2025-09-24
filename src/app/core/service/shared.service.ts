@@ -43,6 +43,15 @@ export class SharedService {
         if (response.status === 1) {
           this.isSecurityChecked.next(true);
           this.initializationComplete.next(true);
+          // Inject CSS from backend
+          if (response.data?.custom_code?.css) {
+            this.injectCustomCss(response.data.custom_code.css);
+          }
+
+          // Inject JS from backend
+          if (response.data?.custom_code?.js) {
+            this.injectCustomJs(response.data.custom_code.js);
+          }
 
           // home version (v1 or v2)
           const version = this.extractHomeVersion(response.data);
@@ -158,5 +167,18 @@ export class SharedService {
       (attr) => attr.category === category && attr.key === key
     );
     return item ? item.value : null;
+  }
+
+  private injectCustomCss(cssCode: string) {
+    const style = document.createElement('style');
+    style.innerText = cssCode;
+    document.head.appendChild(style);
+  }
+
+  private injectCustomJs(jsCode: string) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.text = jsCode;
+    document.body.appendChild(script);
   }
 }
