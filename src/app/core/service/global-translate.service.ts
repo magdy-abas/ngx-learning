@@ -54,7 +54,7 @@ export class GlobalTranslateService {
       await this.translateService.use(lang).toPromise();
       this.language$.next(lang);
       this.updateDocumentDirection(lang);
-
+      await this.translateService.use(lang).toPromise();
       window.location.reload();
     } finally {
       await this.spinner.hide();

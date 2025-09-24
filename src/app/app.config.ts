@@ -31,7 +31,11 @@ import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { errorInterceptor } from './core/interceptor/error.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=1.0.3');
+  return new TranslateHttpLoader(
+    http,
+    './assets/i18n/',
+    `.json?v=${Date.now()}`
+  );
 }
 
 export function initLanguage(
