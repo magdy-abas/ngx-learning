@@ -1,4 +1,7 @@
-# Enable Rewrite Engine
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -8,42 +11,6 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Rewrite everything else to index.html (Angular routing)
+  # Rewrite everything else to index.html
   RewriteRule ^ index.html [L]
-</IfModule>
-
-# Allow CORS
-<IfModule mod_headers.c>
-  Header set Access-Control-Allow-Origin "*"
-  Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-  Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-</IfModule>
-
-# Enable Gzip Compression
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
-  AddOutputFilterByType DEFLATE application/javascript application/json
-  AddOutputFilterByType DEFLATE application/xml application/xml+rss
-</IfModule>
-
-# Caching static files
-<IfModule mod_expires.c>
-  ExpiresActive On
-  # Images cache for 1 year
-  ExpiresByType image/jpg "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/gif "access plus 1 year"
-  # Fonts & icons
-  ExpiresByType font/woff2 "access plus 1 year"
-  ExpiresByType application/font-woff2 "access plus 1 year"
-  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
-  ExpiresByType font/ttf "access plus 1 year"
-  ExpiresByType font/otf "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  # CSS & JS cache for 1 month
-  ExpiresByType text/css "access plus 1 month"
-  ExpiresByType application/javascript "access plus 1 month"
-  # Default cache
-  ExpiresDefault "access plus 7 days"
 </IfModule>
