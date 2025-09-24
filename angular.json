@@ -75,6 +75,7 @@
               "sourceMap": false,
               "aot": true
             },
+
             "development": {
               "optimization": false,
               "extractLicenses": false,
