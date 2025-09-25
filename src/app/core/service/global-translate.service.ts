@@ -1,7 +1,7 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +25,19 @@ export class GlobalTranslateService {
     this.initializeLanguage();
   }
 
-  initializeLanguage(): void {
+  initializeLanguage(): Promise<void> {
     const lang = this.language$.value;
-    this.translateService.use(lang);
-    this.updateDocumentDirection(lang);
+
+    this.translateService.setDefaultLang('ar');
+
+    return firstValueFrom(
+      this.translateService.use(lang || 'ar').pipe(
+        retry(2),
+        catchError(() => this.translateService.use('ar'))
+      )
+    ).then(() => {
+      this.updateDocumentDirection(lang || 'ar');
+    });
   }
 
   private updateDocumentDirection(lang: 'ar' | 'en'): void {
