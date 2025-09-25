@@ -224,10 +224,27 @@
       "confirm": "Yes, Confirm Booking",
       "cancel": "Cancel"
     },
+    "freeLogin": {
+      "title": "Login Required",
+      "text": "Please login to access the free content.",
+      "confirm": "Login"
+    },
+
+    "contentUnavailable": {
+      "title": "Can't open content",
+      "text": "We couldn’t open this content right now. Please try again later. If the issue persists, please contact support.",
+      "confirm": "OK"
+    },
     "appointment_success": "The appointment has been successfully booked",
     "requestSentTitle": "Request Sent Successfully!",
     "requestSentBody": "We will contact you soon to confirm your registration.",
-    "ok": "OK"
+    "ok": "OK",
+
+    "coursePurchaseRequired": {
+      "title": "Course Purchase Required",
+      "text": "Please purchase the course to continue accessing its content.",
+      "confirm": "OK"
+    }
   },
   "quiz": {
     "welcome": "Welcome to the Quiz!",

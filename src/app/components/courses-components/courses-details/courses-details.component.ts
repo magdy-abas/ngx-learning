@@ -136,12 +136,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     this.videoUrl = '';
     this.videoLoaded = false;
 
-    if (!isFree && !this._AuthService.isAuthenticated()) {
-      this.confirmBox();
-      return;
-    }
-
-    if (!isFree && !this.CourseSubscribe) {
+    if (!this.checkCourseAccess(isFree, this.CourseSubscribe, this.isAuth)) {
       return;
     }
 
@@ -381,6 +376,33 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       });
     });
   }
+  checkCourseAccess(
+    isFree: boolean,
+    isSubscribed: boolean,
+    isAuth: boolean
+  ): boolean {
+    //  not auth
+    if (!isAuth) {
+      if (isFree) {
+        SweetAlertUtils.showFreeContentLoginRequired().then((result) => {
+          if (result.isConfirmed) {
+            this._Router.navigate(['/login']);
+          }
+        });
+      } else {
+        this.confirmBox();
+      }
+      return false;
+    }
+
+    // not free and not subscribed
+    if (!isFree && !isSubscribed) {
+      SweetAlertUtils.showCoursePurchaseRequired();
+      return false;
+    }
+
+    return true;
+  }
 
   //vedio
   private handleVideo(
@@ -388,20 +410,25 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     chapterId: number,
     isFree: boolean
   ): void {
+    if (!this.checkCourseAccess(isFree, this.CourseSubscribe, this.isAuth))
+      return;
+
     const videoSub = this._CoursesService.getVideo(lessonId).subscribe({
       next: (response) => {
         if (response.status === 1 && response.data?.file_data) {
-          const decryptedUrl = isFree
-            ? response.data.file_data
-            : this.encryptionService.decryptData(
-                response.data.file_data,
-                this.userInfo?.id || 0,
-                chapterId,
-                lessonId,
-                this.userInfo?.name || 'Guest'
-              );
+          const decryptedUrl = this.encryptionService.decryptData(
+            response.data.file_data,
+            this.userInfo?.id || 0,
+            chapterId,
+            lessonId,
+            this.userInfo?.name || 'Guest'
+          );
 
-          console.log('Decrypted Video URL:', decryptedUrl);
+          if (!decryptedUrl) {
+            console.error('Failed to decrypt resource URL');
+            SweetAlertUtils.showContentUnavailable();
+            return;
+          }
 
           this.videoUrl =
             this.sanitizer.bypassSecurityTrustResourceUrl(decryptedUrl);
@@ -421,6 +448,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     chapterId: number,
     isFree: boolean
   ): void {
+    if (!this.checkCourseAccess(isFree, this.CourseSubscribe, this.isAuth))
+      return;
+
     const leaveUrl = `${window.location.origin}/course-details/${this.courseId}`;
 
     const meetingSub = this._CoursesService
@@ -428,16 +458,19 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           if (data.status === 1 && data.data?.join_url) {
-            const decryptedJoinUrl = isFree
-              ? data.data.join_url
-              : this.encryptionService.decryptData(
-                  data.data.join_url,
-                  this.userInfo?.id,
-                  chapterId,
-                  lessonId,
-                  this.userInfo?.name
-                );
+            const decryptedJoinUrl = this.encryptionService.decryptData(
+              data.data.join_url,
+              this.userInfo?.id,
+              chapterId,
+              lessonId,
+              this.userInfo?.name
+            );
 
+            if (!decryptedJoinUrl) {
+              console.error('Failed to decrypt meeting URL');
+              SweetAlertUtils.showContentUnavailable();
+              return;
+            }
             window.open(decryptedJoinUrl, '_blank');
           }
         },
@@ -454,36 +487,27 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     resourceTitle: string,
     isFree: boolean
   ): void {
-    console.log('work');
+    if (!this.checkCourseAccess(isFree, this.CourseSubscribe, this.isAuth))
+      return;
 
-    const decryptedUrl = isFree
-      ? encryptedUrl
-      : this.encryptionService.decryptData(
-          encryptedUrl,
-          this.userInfo?.id || 0,
-          chapterId,
-          resourceId,
-          this.userInfo?.name || 'Guest'
-        );
-    console.log(decryptedUrl);
-    if (decryptedUrl) {
-      this.pdfUrl = decryptedUrl;
-      this.currentResourceTitle = resourceTitle;
-      this.showPdfViewer = true;
-      this.scrollToTop();
+    const decryptedUrl = this.encryptionService.decryptData(
+      encryptedUrl,
+      this.userInfo?.id || 0,
+      chapterId,
+      resourceId,
+      this.userInfo?.name || 'Guest'
+    );
+
+    if (!decryptedUrl) {
+      console.error('Failed to decrypt resource URL');
+      SweetAlertUtils.showContentUnavailable();
+      return;
     }
-  }
 
-  onQualityChanged(quality: string) {
-    console.log('Quality changed to:', quality);
-  }
-
-  onPlayerReady() {
-    console.log('Player is ready');
-  }
-
-  onPlayerError(error: any) {
-    console.error('Player error:', error);
+    this.pdfUrl = decryptedUrl;
+    this.currentResourceTitle = resourceTitle;
+    this.showPdfViewer = true;
+    this.scrollToTop();
   }
 
   openVideoModal() {

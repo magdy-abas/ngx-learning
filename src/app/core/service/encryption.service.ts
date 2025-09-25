@@ -46,6 +46,7 @@ export class EncryptionService {
         console.error('Decryption failed: output is empty');
         return '';
       }
+      console.log('Decrypted URL:', decrypted);
 
       return decrypted;
     } catch (error) {

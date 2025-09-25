@@ -32,11 +32,10 @@ export const SweetAlertUtils = {
     });
   },
 
-  // Course purchase related alerts
   showPurchaseConfirmation() {
     if (!translateService) {
       console.error('TranslateService not initialized in SweetAlert utils');
-      // Fallback to default English text
+
       return Swal.fire({
         title: 'Confirm Purchase',
         text: 'Are you sure you want to buy this course?',
@@ -165,6 +164,45 @@ export const SweetAlertUtils = {
       title: translateService.instant('sweetalert.success.title'),
       text: message,
       confirmButtonText: translateService.instant('sweetalert.ok'),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
+
+  showCoursePurchaseRequired() {
+    return Swal.fire({
+      title: translateService.instant(
+        'sweetalert.coursePurchaseRequired.title'
+      ),
+      text: translateService.instant('sweetalert.coursePurchaseRequired.text'),
+      icon: 'warning',
+      confirmButtonText: translateService.instant(
+        'sweetalert.coursePurchaseRequired.confirm'
+      ),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
+
+  showFreeContentLoginRequired() {
+    return Swal.fire({
+      title: translateService.instant('sweetalert.freeLogin.title'),
+      text: translateService.instant('sweetalert.freeLogin.text'),
+      icon: 'info',
+      confirmButtonText: translateService.instant(
+        'sweetalert.freeLogin.confirm'
+      ),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
+
+  showContentUnavailable() {
+    return Swal.fire({
+      title: translateService.instant('contentUnavailable.title'),
+      text: translateService.instant('contentUnavailable.text'),
+      icon: 'error',
+      confirmButtonText: translateService.instant('contentUnavailable.confirm'),
       width: '450px',
       customClass: commonCustomClasses,
     });
