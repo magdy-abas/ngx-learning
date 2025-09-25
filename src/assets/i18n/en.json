@@ -148,7 +148,7 @@
     "success": "Success!",
     "error": "Error!",
     "requestSuccess": "Your course request has been sent successfully.",
-    "codeSuccess": "Course code verified successfully.",
+    "codeSuccess": "The course code has been submitted. Please wait for your request to be reviewed and approved.",
     "invalidCourseId": "Invalid course ID.",
     "fetchFail": "Failed to fetch course details.",
     "somethingWentWrong": "Something went wrong.",
