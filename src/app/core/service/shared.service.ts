@@ -170,15 +170,22 @@ export class SharedService {
   }
 
   private injectCustomCss(cssCode: string) {
-    const style = document.createElement('style');
-    style.innerText = cssCode;
-    document.head.appendChild(style);
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const div = document.createElement('div');
+    div.innerHTML = cssCode;
+    const elements = Array.from(div.childNodes);
+    elements.forEach((el) => {
+      head.appendChild(el);
+    });
   }
 
   private injectCustomJs(jsCode: string) {
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.text = jsCode;
-    document.body.appendChild(script);
+    const body = document.body || document.getElementsByTagName('body')[0];
+    const div = document.createElement('div');
+    div.innerHTML = jsCode;
+    const elements = Array.from(div.childNodes);
+    elements.forEach((el) => {
+      body.appendChild(el);
+    });
   }
 }
