@@ -138,28 +138,32 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
   }
 
   onBookPrivateAppointment() {
-    SweetAlertUtils.showAppointmentConfirmation(this.doctor.name).then(
-      (result) => {
-        if (result.isConfirmed) {
-          this.doctorsService.BookPrivateAppointment(this.doctor.id).subscribe({
-            next: (res) => {
-              if (res.status === 1) {
-                this.isBooked = true;
-                SweetAlertUtils.showSuccessAlert(
-                  this.translate.instant('sweetalert.appointment_success')
-                );
-              } else {
-                SweetAlertUtils.showBookingFailureAlert(res.message);
-              }
-            },
-            error: (err) => {
-              console.error(err);
-              SweetAlertUtils.showErrorAlert(err.message);
-            },
-          });
-        }
-      }
-    );
+    // SweetAlertUtils.showAppointmentConfirmation(this.doctor.name).then(
+    //   (result) => {
+    //     if (result.isConfirmed) {
+    //       this.doctorsService.BookPrivateAppointment(this.doctor.id).subscribe({
+    //         next: (res) => {
+    //           if (res.status === 1) {
+    //             this.isBooked = true;
+    //             SweetAlertUtils.showSuccessAlert(
+    //               this.translate.instant('sweetalert.appointment_success')
+    //             );
+    //           } else {
+    //             SweetAlertUtils.showBookingFailureAlert(res.message);
+    //           }
+    //         },
+    //         error: (err) => {
+    //           console.error(err);
+    //           SweetAlertUtils.showErrorAlert(err.message);
+    //         },
+    //       });
+    //     }
+    //   }
+    // );
+
+    this.router.navigate(['/booking'], {
+      state: { doctor: this.doctor },
+    });
   }
 
   ngOnDestroy(): void {

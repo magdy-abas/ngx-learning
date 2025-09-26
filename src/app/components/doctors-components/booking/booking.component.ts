@@ -29,12 +29,11 @@ export class BookingComponent {
     { label: '10:00PM - 11:00PM', value: '22:00-23:00' },
   ];
 
-  // config خاص بالـ Datepicker
   bsConfig: Partial<BsDatepickerConfig>;
 
   constructor() {
     this.bsConfig = {
-      containerClass: 'theme-custom', // هنربط الثيم الكاستم من الـ scss
+      containerClass: 'theme-custom',
       showWeekNumbers: false,
       dateInputFormat: 'DD/MM/YYYY',
     };
@@ -42,11 +41,11 @@ export class BookingComponent {
 
   proceedBooking() {
     if (this.selectedDate && this.selectedTime) {
-      alert(`تم الحجز ✅
+      alert(`تم الحجز
 اليوم: ${this.selectedDate.toDateString()}
 الساعة: ${this.selectedTime}`);
     } else {
-      alert('اختر يوم وموعد أولاً ❌');
+      alert('اختر يوم وموعد أولاً ');
     }
   }
 }
