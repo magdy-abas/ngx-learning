@@ -27,6 +27,8 @@ import { BestSellingHomeV2Component } from './best-selling-home-v2/best-selling-
 import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-home-v2.component';
 import { FooterHomeV2Component } from './footer-home-v2/footer-home-v2.component';
 import { SsrService } from '../../core/service/ssr.service';
+import { GlobalTranslateService } from '../../core/service/global-translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-two',
@@ -57,10 +59,18 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
 
   contactUs: ContactUs | null = null;
   private ssr = inject(SsrService);
+  private subscriptions: Subscription[] = [];
+  private globalTranslate = inject(GlobalTranslateService);
 
   private _DynamicHomeService = inject(DynamicHomeService);
 
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.globalTranslate.language$.subscribe(() => {
+        this.getHomeData();
+      })
+    );
+
     this.getHomeData();
     Aos.init({
       offset: 20,
@@ -150,5 +160,9 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
       },
       error: (err) => console.error(err),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 }

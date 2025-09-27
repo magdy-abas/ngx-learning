@@ -1,15 +1,8 @@
-import {
-  Inject,
-  Injectable,
-  PLATFORM_ID,
-  Renderer2,
-  RendererFactory2,
-} from '@angular/core';
+import { SsrService } from './ssr.service';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject, catchError, firstValueFrom, retry } from 'rxjs';
-import { SsrService } from './ssr.service';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +15,7 @@ export class GlobalTranslateService {
     private translateService: TranslateService,
     private spinner: NgxSpinnerService,
     private rendererFactory: RendererFactory2,
-    private ssr: SsrService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private ssr: SsrService
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
 
@@ -51,8 +43,9 @@ export class GlobalTranslateService {
   }
 
   private updateDocumentDirection(lang: 'ar' | 'en'): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const htmlElement = document.documentElement;
+    const htmlElement = this.ssr.getDocument()?.documentElement;
+    if (!htmlElement) return;
+
     htmlElement.classList.remove('lang-ar', 'lang-en');
 
     if (lang === 'en') {
@@ -67,27 +60,12 @@ export class GlobalTranslateService {
   }
 
   async changeLanguage(lang: 'en' | 'ar'): Promise<void> {
-    try {
-      if (isPlatformBrowser(this.platformId)) {
-        await this.spinner.show();
-      }
+    this.ssr.setLocal('lang', lang);
 
-      this.ssr.setLocal('lang', lang);
+    this.updateDocumentDirection(lang);
 
-      await this.translateService.use(lang).toPromise();
-      this.language$.next(lang);
+    await this.translateService.use(lang).toPromise();
 
-      if (isPlatformBrowser(this.platformId)) {
-        this.updateDocumentDirection(lang);
-        await this.spinner.hide();
-
-        // بس اعمل reload في المتصفح فقط
-        window.location.reload();
-      }
-    } catch {
-      if (isPlatformBrowser(this.platformId)) {
-        await this.spinner.hide();
-      }
-    }
+    // this.ssr.getWindow()?.location.reload();
   }
 }
