@@ -106,6 +106,10 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
+    this.translate.onLangChange.subscribe((e) => {
+      console.log('[Navbar] onLangChange fired:', e.lang);
+    });
+
     this.isAuth = this.AuthService.isAuthenticated();
     this.darkModeService.applyMode();
     this.isDarkMode = this.darkModeService.isDarkMode();
@@ -254,11 +258,11 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public switchLanguage(lang: 'en' | 'ar') {
-    this._GlobalTranslateService.changeLanguage(lang);
+  public async switchLanguage(lang: 'en' | 'ar') {
+    console.log('[Navbar] switchLanguage clicked:', lang);
+    await this._GlobalTranslateService.changeLanguage(lang);
     this.closeMobileMenu();
   }
-
   public isActiveRoute(route: string): boolean {
     return this.router.url === route;
   }

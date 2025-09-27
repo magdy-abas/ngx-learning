@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { Course } from '../../../core/interfaces/courses.interface';
 import { SsrService } from '../../../core/service/ssr.service';
+import { GlobalTranslateService } from '../../../core/service/global-translate.service';
 
 interface data {
   active?: boolean;
@@ -58,9 +59,18 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private data: DataService,
     private _CoursesService: CoursesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private globalTranslate: GlobalTranslateService
   ) {}
   ngOnInit(): void {
+    // listen to language change
+    const langSub = this.globalTranslate.language$.subscribe((lang) => {
+      console.log('[Courses] Language changed to:', lang);
+      this.resetAndLoad();
+    });
+
+    this.subscriptions.push(langSub);
+
     const querySub = this.route.queryParams.subscribe((queryParams) => {
       this.searchValue = queryParams['search'] || '';
 
@@ -139,7 +149,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          console.log(res);
+          // console.log(res);
 
           if (res.data.length === 0) {
             this.allDataLoaded = true;
@@ -159,5 +169,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.push(coursesSub);
+  }
+
+  private resetAndLoad() {
+    this.pageNum = 1;
+    this.coursesData = [];
+    this.allDataLoaded = false;
+    this.getCourses();
   }
 }

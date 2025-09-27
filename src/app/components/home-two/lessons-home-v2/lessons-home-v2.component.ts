@@ -28,7 +28,7 @@ export class LessonsHomeV2Component implements OnInit {
     );
   }
   onCategoryClick(category: Category): void {
-    console.log(this.categories);
+    // console.log(this.categories);
 
     if (category.has_sub_categories === 1) {
       this.router.navigate([`/category/${category.id}`]);

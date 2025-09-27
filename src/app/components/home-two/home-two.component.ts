@@ -66,18 +66,30 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.globalTranslate.language$.subscribe(() => {
-        this.getHomeData();
+      this.globalTranslate.language$.subscribe((lang) => {
+        console.log('[HomeTwo] Language changed:', lang);
+        this.resetAndLoad();
       })
     );
 
-    this.getHomeData();
+    this.resetAndLoad();
+
     Aos.init({
       offset: 20,
       duration: 1200,
       easing: 'ease-in-out',
       once: true,
     });
+  }
+
+  private resetAndLoad(): void {
+    console.log('[HomeTwo] resetAndLoad called');
+    this.homeSections = [];
+    this.featuredCourses = null;
+    this.bestSellingCourses = null;
+    this.universities = [];
+    this.doctors = [];
+    this.getHomeData();
   }
 
   ngAfterViewInit(): void {
@@ -142,7 +154,7 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
           }
         });
 
-        console.log(this.featuredCourses);
+        // console.log(this.featuredCourses);
 
         // categories
         const categoriesSection = this.homeSections.find(

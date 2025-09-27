@@ -17,8 +17,6 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get(
     '*.*',
@@ -27,9 +25,32 @@ export function app(): express.Express {
     })
   );
 
-  // All regular routes use the Angular engine
+  // Routes that should only use CSR (fallback to index.html)
+  const csrOnlyRoutes = [
+    '/courses',
+    '/booking',
+    '/instructor-register',
+    '/courses/category',
+    '/courses/doctor',
+    '/course-details',
+    '/categories',
+    '/instructors',
+    '/instructor-profile',
+    '/login',
+    '/signup',
+    '/forgotpass',
+    '/profile',
+    '/course-quiz',
+  ];
+
+  // All other routes
   server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
+
+    if (csrOnlyRoutes.some((r) => req.url.startsWith(r))) {
+      res.sendFile(join(browserDistFolder, 'index.html'));
+      return;
+    }
 
     commonEngine
       .render({

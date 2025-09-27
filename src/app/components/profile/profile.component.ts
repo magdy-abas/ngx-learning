@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
           this.isEditingName = false;
           this.profileForm.get('name')?.disable();
           this.errorMessage = '';
-          console.log(res);
+          // console.log(res);
         } else if (res.status === 0) {
           this.errorMessage = res.message;
         }

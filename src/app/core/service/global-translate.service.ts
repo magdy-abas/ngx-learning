@@ -1,47 +1,64 @@
-import { SsrService } from './ssr.service';
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject, catchError, firstValueFrom, retry } from 'rxjs';
+import { SsrService } from './ssr.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalTranslateService {
   private renderer: Renderer2;
-  public language$: BehaviorSubject<'ar' | 'en'>;
+  public language$ = new BehaviorSubject<'ar' | 'en'>('ar');
 
   constructor(
     private translateService: TranslateService,
-    private spinner: NgxSpinnerService,
     private rendererFactory: RendererFactory2,
     private ssr: SsrService
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
 
-    const storedLang = this.ssr.getLocal('lang') as 'ar' | 'en' | null;
-    const savedLang: 'ar' | 'en' = storedLang === 'en' ? 'en' : 'ar';
+    const storedLang = (this.ssr.getLocal('lang') as 'ar' | 'en') || 'ar';
+    this.language$.next(storedLang);
 
-    this.language$ = new BehaviorSubject<'ar' | 'en'>(savedLang);
     this.translateService.setDefaultLang('ar');
-    this.initializeLanguage();
+    this.initializeLanguage(storedLang);
   }
 
-  initializeLanguage(): Promise<void> {
-    const lang = this.language$.value;
+  async initializeLanguage(lang?: 'ar' | 'en'): Promise<void> {
+    const targetLang = lang || this.language$.value || 'ar';
+    await this.applyLanguage(targetLang);
+  }
 
-    this.translateService.setDefaultLang('ar');
+  async changeLanguage(lang: 'ar' | 'en'): Promise<void> {
+    if (this.language$.value === lang) return;
 
-    return firstValueFrom(
-      this.translateService.use(lang || 'ar').pipe(
+    await this.applyLanguage(lang);
+  }
+
+  private async applyLanguage(lang: 'ar' | 'en'): Promise<void> {
+    console.log('[GlobalTranslateService] applyLanguage called with:', lang);
+
+    this.ssr.setLocal('lang', lang);
+    this.updateDocumentDirection(lang);
+
+    await firstValueFrom(
+      this.translateService.use(lang).pipe(
         retry(2),
-        catchError(() => this.translateService.use('ar'))
+        catchError((err) => {
+          console.error('[GlobalTranslateService] use(lang) failed:', err);
+          return this.translateService.use('ar');
+        })
       )
-    ).then(() => {
-      this.updateDocumentDirection(lang || 'ar');
-    });
-  }
+    );
 
+    console.log(
+      '[GlobalTranslateService] translateService.use completed:',
+      lang
+    );
+
+    this.language$.next(lang);
+    console.log('[GlobalTranslateService] language$ emitted:', lang);
+  }
   private updateDocumentDirection(lang: 'ar' | 'en'): void {
     const htmlElement = this.ssr.getDocument()?.documentElement;
     if (!htmlElement) return;
@@ -57,15 +74,5 @@ export class GlobalTranslateService {
       this.renderer.setAttribute(htmlElement, 'lang', 'ar');
       htmlElement.classList.add('lang-ar');
     }
-  }
-
-  async changeLanguage(lang: 'en' | 'ar'): Promise<void> {
-    this.ssr.setLocal('lang', lang);
-
-    this.updateDocumentDirection(lang);
-
-    await this.translateService.use(lang).toPromise();
-
-    // this.ssr.getWindow()?.location.reload();
   }
 }

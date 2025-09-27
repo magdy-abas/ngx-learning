@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.homeSections = res.data;
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
 

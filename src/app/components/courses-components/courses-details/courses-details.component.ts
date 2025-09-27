@@ -26,6 +26,7 @@ import { EncryptionService } from '../../../core/service/encryption.service';
 import { DoctorComment } from '../../../core/interfaces/doctor-comments';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { DeviceTypeService } from '../../../core/service/device-type.service';
+import { GlobalTranslateService } from '../../../core/service/global-translate.service';
 
 @Component({
   selector: 'app-courses-details',
@@ -86,7 +87,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private encryptionService: EncryptionService,
     private DarkModeService: DarkModeService,
-    private deviceService: DeviceTypeService
+    private deviceService: DeviceTypeService,
+    private globalTranslate: GlobalTranslateService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -98,17 +100,16 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     this.DarkModeService.applyMode();
     this.isAuth = this._AuthService.isAuthenticated();
     this.isIOS = this.deviceService.isIOS;
+
     const courseId = this._route.snapshot.paramMap.get('id');
     if (courseId) {
-      this.fetchCourseDetails(+courseId);
-
-      if (this.isAuth) {
-        this.getResources(+courseId);
-        this.getDoctorComments(+courseId);
-        this.userInfo = this._AuthService.userData;
-      }
-
+      this.loadData(+courseId);
       this.courseId = +courseId;
+
+      this.globalTranslate.language$.subscribe((lang) => {
+        console.log('Language changed to:', lang);
+        this.loadData(this.courseId);
+      });
     } else {
       this.errorMessage = 'Invalid course ID';
       this.isLoading = false;
@@ -117,6 +118,16 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
   private scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  private loadData(courseId: number): void {
+    this.fetchCourseDetails(courseId);
+
+    if (this.isAuth) {
+      this.getResources(courseId);
+      this.getDoctorComments(courseId);
+      this.userInfo = this._AuthService.userData;
+    }
   }
 
   isClientSubscribe() {
@@ -244,7 +255,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
     this.subscriptions.push(resourcesSub);

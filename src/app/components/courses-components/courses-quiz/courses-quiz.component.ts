@@ -86,7 +86,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     const state = history.state;
-    console.log(state);
+    // console.log(state);
 
     this.courseTitle = state.courseTitle || '';
     this.quizTitle = state.quizTitle || '';
