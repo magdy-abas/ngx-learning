@@ -22,6 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
+import { SsrService } from '../../../core/service/ssr.service';
 @Component({
   selector: 'app-courses-quiz',
   standalone: true,
@@ -65,7 +66,8 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
     private _Router: Router,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    private darkModeService: DarkModeService
+    private darkModeService: DarkModeService,
+    private ssr: SsrService
   ) {}
 
   /**
@@ -93,7 +95,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
       this.courseTitle = state.courseTitle;
       this.quizTitle = state.quizTitle;
 
-      localStorage.setItem(
+      this.ssr.setLocal(
         'quiz_meta',
         JSON.stringify({
           courseId: this.courseId,
@@ -102,7 +104,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
         })
       );
     } else {
-      const saved = localStorage.getItem('quiz_meta');
+      const saved = this.ssr.getLocal('quiz_meta');
       if (saved) {
         const parsed = JSON.parse(saved);
         this.courseId = parsed.courseId || this.courseId;

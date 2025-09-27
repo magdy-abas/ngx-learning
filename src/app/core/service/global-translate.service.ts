@@ -1,7 +1,15 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  Renderer2,
+  RendererFactory2,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject, catchError, firstValueFrom, retry } from 'rxjs';
+import { SsrService } from './ssr.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +21,13 @@ export class GlobalTranslateService {
   constructor(
     private translateService: TranslateService,
     private spinner: NgxSpinnerService,
-    private rendererFactory: RendererFactory2
+    private rendererFactory: RendererFactory2,
+    private ssr: SsrService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
 
-    const storedLang = localStorage.getItem('lang') as 'ar' | 'en' | null;
+    const storedLang = this.ssr.getLocal('lang') as 'ar' | 'en' | null;
     const savedLang: 'ar' | 'en' = storedLang === 'en' ? 'en' : 'ar';
 
     this.language$ = new BehaviorSubject<'ar' | 'en'>(savedLang);
@@ -41,6 +51,7 @@ export class GlobalTranslateService {
   }
 
   private updateDocumentDirection(lang: 'ar' | 'en'): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     const htmlElement = document.documentElement;
     htmlElement.classList.remove('lang-ar', 'lang-en');
 
@@ -57,16 +68,26 @@ export class GlobalTranslateService {
 
   async changeLanguage(lang: 'en' | 'ar'): Promise<void> {
     try {
-      await this.spinner.show();
+      if (isPlatformBrowser(this.platformId)) {
+        await this.spinner.show();
+      }
 
-      localStorage.setItem('lang', lang);
-      window.location.reload();
+      this.ssr.setLocal('lang', lang);
+
       await this.translateService.use(lang).toPromise();
       this.language$.next(lang);
-      this.updateDocumentDirection(lang);
-      await this.translateService.use(lang).toPromise();
-    } finally {
-      await this.spinner.hide();
+
+      if (isPlatformBrowser(this.platformId)) {
+        this.updateDocumentDirection(lang);
+        await this.spinner.hide();
+
+        // بس اعمل reload في المتصفح فقط
+        window.location.reload();
+      }
+    } catch {
+      if (isPlatformBrowser(this.platformId)) {
+        await this.spinner.hide();
+      }
     }
   }
 }

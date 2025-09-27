@@ -10,6 +10,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CommonModule } from '@angular/common';
+import { SsrService } from '../../../core/service/ssr.service';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -60,14 +61,18 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
   errorMessage: string = '';
   zoom: number = 1;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private ssr: SsrService) {
     this.setInitialZoom();
-    window.addEventListener('resize', () => this.setInitialZoom());
+    if (this.ssr.isBrowser()) {
+      window.addEventListener('resize', this.resizeHandler);
+    }
   }
 
   private setInitialZoom(): void {
+    if (!this.ssr.isBrowser()) return;
+
     if (window.innerWidth <= 875) {
-      this.zoom = window.innerWidth / 1000; // Adjust this ratio as needed
+      this.zoom = window.innerWidth / 1000;
     } else {
       this.zoom = 1;
     }
@@ -118,6 +123,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', this.resizeHandler);
+    if (this.ssr.isBrowser()) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
   }
 }

@@ -36,6 +36,7 @@ import { OtpInputComponent } from '../../../shared/ui/otp-code-input/otp-code-in
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { SharedService } from '../../../core/service/shared.service';
 import { filter, Subscription, take } from 'rxjs';
+import { SsrService } from '../../../core/service/ssr.service';
 
 @Component({
   selector: 'app-login',
@@ -98,7 +99,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _FormBuilder: FormBuilder,
     private darkModeService: DarkModeService,
     private translate: TranslateService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private ssr: SsrService
   ) {}
   ngOnInit(): void {
     this.translate.get('phone_input.labels').subscribe((labels) => {});
@@ -231,8 +233,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.SendOtpDto.phone_code = dialCode;
     this.SendOtpDto.mobile = mobileNumber;
 
-    localStorage.setItem('phone_code', dialCode);
-    localStorage.setItem('mobile', mobileNumber);
+    this.ssr.setLocal('phone_code', dialCode);
+    this.ssr.setLocal('mobile', mobileNumber);
 
     this._AuthService.sendOtpCode(this.SendOtpDto).subscribe({
       next: (res) => {
@@ -259,8 +261,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.watsLoginDto.otp = code;
-    this.watsLoginDto.mobile = localStorage.getItem('mobile') || '';
-    this.watsLoginDto.phone_code = localStorage.getItem('phone_code') || '';
+    this.watsLoginDto.mobile = this.ssr.getLocal('mobile') || '';
+    this.watsLoginDto.phone_code = this.ssr.getLocal('phone_code') || '';
 
     this._AuthService.watsLogin(this.watsLoginDto).subscribe({
       next: (res) => {

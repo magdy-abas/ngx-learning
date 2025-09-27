@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { initSweetAlertTranslations } from './shared/utils/SweetAlert.utils';
 import { AppAccessService } from './core/service/app-access.service';
 import { setupDynamicRoutes } from './shared/utils/router.utils';
+import { SsrService } from './core/service/ssr.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
   layout: 'v1' | 'v2' = 'v1';
   private router = inject(Router);
   private appAccessService = inject(AppAccessService);
+  private ssr = inject(SsrService);
 
   constructor(
     public sharedService: SharedService,
@@ -51,14 +53,15 @@ export class AppComponent implements OnInit {
   }
 
   setFavicon(iconUrl: string) {
-    document
-      .querySelectorAll("link[rel~='icon']")
-      .forEach((link) => link.remove());
+    const doc = this.ssr.getDocument();
+    if (!doc) return;
 
-    const link = document.createElement('link');
+    doc.querySelectorAll("link[rel~='icon']").forEach((link) => link.remove());
+
+    const link = doc.createElement('link');
     link.rel = 'icon';
     link.type = 'image/png';
     link.href = iconUrl;
-    document.head.appendChild(link);
+    doc.head.appendChild(link);
   }
 }

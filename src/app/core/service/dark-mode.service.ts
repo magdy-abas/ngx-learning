@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { SettingResponse } from '../interfaces/settings.interface';
+import { SsrService } from './ssr.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -7,18 +9,23 @@ import { SettingResponse } from '../interfaces/settings.interface';
 export class DarkModeService {
   private readonly storageKey = 'darkMode';
 
-  constructor() {}
+  constructor(
+    private ssr: SsrService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   isDarkMode(): boolean {
-    return localStorage.getItem(this.storageKey) === 'true';
+    return this.ssr.getLocal(this.storageKey) === 'true';
   }
 
   setDarkMode(isDark: boolean): void {
-    localStorage.setItem(this.storageKey, isDark.toString());
-    if (isDark) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
+    this.ssr.setLocal(this.storageKey, isDark.toString());
+    if (isPlatformBrowser(this.platformId)) {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
     }
   }
 
@@ -29,10 +36,12 @@ export class DarkModeService {
 
   applyMode(): void {
     const isDark = this.isDarkMode();
-    if (isDark) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
+    if (isPlatformBrowser(this.platformId)) {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
     }
   }
 

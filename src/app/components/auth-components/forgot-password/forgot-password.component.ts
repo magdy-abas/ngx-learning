@@ -21,6 +21,7 @@ import { AlertErrorComponent } from '../../../shared/ui/alert-error/alert-error.
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { OtpInputComponent } from '../../../shared/ui/otp-code-input/otp-code-input.component';
+import { SsrService } from '../../../core/service/ssr.service';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -74,7 +75,8 @@ export class ForgotPasswordComponent implements OnInit {
     private router: Router,
     private DataService: DataService,
     private darkModeService: DarkModeService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private ssr: SsrService
   ) {
     // Forms Initialization
     this.emailForm = this.fb.group({
@@ -104,7 +106,7 @@ export class ForgotPasswordComponent implements OnInit {
     Aos.init();
     this.darkModeService.applyMode();
 
-    const settingsString = localStorage.getItem('appSettings');
+    const settingsString = this.ssr.getLocal('appSettings');
     if (settingsString) {
       const settings = JSON.parse(settingsString);
       this.logoUrl = this.darkModeService.getLogo(settings);

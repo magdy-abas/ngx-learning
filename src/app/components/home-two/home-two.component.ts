@@ -26,6 +26,7 @@ import { SmartCoursesHomeV2Component } from './smart-courses-home-v2/smart-cours
 import { BestSellingHomeV2Component } from './best-selling-home-v2/best-selling-home-v2.component';
 import { TestimonialHomeV2Component } from './testimonial-home-v2/testimonial-home-v2.component';
 import { FooterHomeV2Component } from './footer-home-v2/footer-home-v2.component';
+import { SsrService } from '../../core/service/ssr.service';
 
 @Component({
   selector: 'app-home-two',
@@ -55,6 +56,7 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
   doctors: IDoctor[] = [];
 
   contactUs: ContactUs | null = null;
+  private ssr = inject(SsrService);
 
   private _DynamicHomeService = inject(DynamicHomeService);
 
@@ -69,6 +71,8 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    if (!this.ssr.isBrowser()) return;
+
     const counters = [
       { id: 'stat-courses', endVal: 50 },
       { id: 'stat-students', endVal: 2000 },
@@ -77,7 +81,8 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
     ];
 
     const options = { duration: 2 };
-
+    const win = this.ssr.getWindow();
+    if (!win) return;
     const observer = new IntersectionObserver(
       (entries, obs) => {
         entries.forEach((entry) => {
@@ -95,7 +100,7 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
     );
 
     counters.forEach((c) => {
-      const el = document.getElementById(c.id);
+      const el = this.ssr.getDocument()?.getElementById(c.id);
       if (el) {
         observer.observe(el);
       }

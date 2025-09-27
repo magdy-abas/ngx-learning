@@ -11,8 +11,10 @@ import { SettingResponse } from '../interfaces/settings.interface';
 import { baseUrl } from '../../environment/environment.local';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CheckSecurityPointResponse } from '../interfaces/mobile-versions';
+import { SsrService } from './ssr.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +31,12 @@ export class SharedService {
   private homeVersion: 'v1' | 'v2' = 'v2';
   private appAttrs: any[] = [];
 
-  constructor(private _HttpClient: HttpClient, private router: Router) {}
+  constructor(
+    private _HttpClient: HttpClient,
+    private router: Router,
+    private ssr: SsrService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   CheckSecurityPoint(): Observable<CheckSecurityPointResponse> {
     return this._HttpClient.get<CheckSecurityPointResponse>(
@@ -44,13 +51,14 @@ export class SharedService {
           this.isSecurityChecked.next(true);
           this.initializationComplete.next(true);
           // Inject CSS from backend
-          if (response.data?.custom_code?.css) {
-            this.injectCustomCss(response.data.custom_code.css);
-          }
-
-          // Inject JS from backend
-          if (response.data?.custom_code?.js) {
-            this.injectCustomJs(response.data.custom_code.js);
+          if (isPlatformBrowser(this.platformId)) {
+            // Inject CSS & JS from backend
+            if (response.data?.custom_code?.css) {
+              this.injectCustomCss(response.data.custom_code.css);
+            }
+            if (response.data?.custom_code?.js) {
+              this.injectCustomJs(response.data.custom_code.js);
+            }
           }
 
           // home version (v1 or v2)
@@ -104,7 +112,7 @@ export class SharedService {
 
   //  settings in localStorage
   saveSettingsToLocalStorage(settings: SettingResponse) {
-    localStorage.setItem('appSettings', JSON.stringify(settings));
+    this.ssr.setLocal('appSettings', JSON.stringify(settings));
   }
 
   async loadSettings(): Promise<void> {
@@ -120,7 +128,7 @@ export class SharedService {
     if (this.settingsData) {
       return this.settingsData;
     }
-    const local = localStorage.getItem('appSettings');
+    const local = this.ssr.getLocal('appSettings');
     return local ? JSON.parse(local) : null;
   }
   private extractHomeVersion(data: any): 'v1' | 'v2' {
@@ -144,6 +152,7 @@ export class SharedService {
   }
 
   private applyHomeClass(version: 'v1' | 'v2') {
+    if (!isPlatformBrowser(this.platformId)) return;
     document.body.classList.remove('home-v1', 'home-v2');
     document.body.classList.add(version === 'v1' ? 'home-v1' : 'home-v2');
   }
@@ -170,21 +179,21 @@ export class SharedService {
   }
 
   private injectCustomCss(cssCode: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     const head = document.head || document.getElementsByTagName('head')[0];
     const div = document.createElement('div');
     div.innerHTML = cssCode;
-    const elements = Array.from(div.childNodes);
-    elements.forEach((el) => {
+    Array.from(div.childNodes).forEach((el) => {
       head.appendChild(el);
     });
   }
 
   private injectCustomJs(jsCode: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     const body = document.body || document.getElementsByTagName('body')[0];
     const div = document.createElement('div');
     div.innerHTML = jsCode;
-    const elements = Array.from(div.childNodes);
-    elements.forEach((el) => {
+    Array.from(div.childNodes).forEach((el) => {
       body.appendChild(el);
     });
   }

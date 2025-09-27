@@ -23,6 +23,7 @@ import {
   OtpResponse,
   LoginResponse,
 } from '../interfaces/auth.interface';
+import { SsrService } from './ssr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,11 +32,12 @@ export class AuthService {
   constructor(
     private _HttpClient: HttpClient,
     private _Router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private ssr: SsrService
   ) {
     this.auth.set(this.isAuthenticated());
     if (this.isAuthenticated()) {
-      const storedUserData = localStorage.getItem('userData');
+      const storedUserData = this.ssr.getLocal('userData');
       if (storedUserData) {
         this.userData = JSON.parse(storedUserData);
       }
@@ -83,7 +85,7 @@ export class AuthService {
 
   saveUserData(userData: UserData): void {
     this.userData = userData;
-    localStorage.setItem('userData', JSON.stringify(userData));
+    this.ssr.setLocal('userData', JSON.stringify(userData));
   }
 
   saveToken(token: string): void {
@@ -99,8 +101,7 @@ export class AuthService {
   logout(): void {
     this.cookieService.delete('token', '/');
 
-    localStorage.removeItem('userData');
-
+    this.ssr.removeLocal('userData');
     this.userData = null;
 
     this.auth.set(false);

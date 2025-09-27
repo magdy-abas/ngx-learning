@@ -31,6 +31,7 @@ import { GlobalTranslateService } from './core/service/global-translate.service'
 import { SharedService } from './core/service/shared.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { errorInterceptor } from './core/interceptor/error.interceptor';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -90,6 +91,6 @@ export const appConfig: ApplicationConfig = {
       useFactory: initApp,
       deps: [SharedService],
       multi: true,
-    },
+    }, provideClientHydration(),
   ],
 };

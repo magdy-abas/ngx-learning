@@ -26,6 +26,7 @@ import { GlobalTranslateService } from '../../core/service/global-translate.serv
 import { SettingResponse } from '../../core/interfaces/settings.interface';
 import { SweetAlertUtils } from '../../shared/utils/SweetAlert.utils';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
+import { SsrService } from '../../core/service/ssr.service';
 
 interface MenuItem {
   title: string;
@@ -100,7 +101,8 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     private AuthService: AuthService,
     private sharedService: SharedService,
     private darkModeService: DarkModeService,
-    private _GlobalTranslateService: GlobalTranslateService
+    private _GlobalTranslateService: GlobalTranslateService,
+    private ssr: SsrService
   ) {}
 
   ngOnInit() {
@@ -139,18 +141,21 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadUserData() {
-    const userDataString = localStorage.getItem('userData');
+    const userDataString = this.ssr.getLocal('userData');
     if (userDataString) {
       const userData = JSON.parse(userDataString);
       this.userName = userData.name ? userData.name : `user${userData.id}`;
     }
   }
 
-  private isDesktop(): boolean {
+  private isDesktop() {
+    if (!this.ssr.isBrowser()) return;
     return window.innerWidth >= 992;
   }
 
   private handleNavbarState() {
+    if (!this.ssr.isBrowser()) return;
+
     if (!this.isDesktop()) {
       this.isTransparent = false;
       this.isScrolled = false;
@@ -159,6 +164,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (this.isHomePage) {
+      if (!this.ssr.isBrowser()) return;
       if (window.scrollY === 0) {
         this.isTransparent = true;
         this.isScrolled = false;
@@ -174,6 +180,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
+    if (!this.ssr.isBrowser()) return;
     if (this.isDesktop()) {
       this.handleNavbarState();
     }
@@ -189,6 +196,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private setupEventListeners() {
+    if (!this.ssr.isBrowser()) return;
     if (this.hamburgerBtn) {
       this.hamburgerBtn.nativeElement.addEventListener('click', () =>
         this.openMobileMenu()
@@ -212,12 +220,14 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public openMobileMenu() {
+    if (!this.ssr.isBrowser()) return;
     this.isMenuOpened = true;
     this.sideMenu?.nativeElement.classList.add('active');
     this.overlay?.nativeElement.classList.add('active');
   }
 
   public closeMobileMenu() {
+    if (!this.ssr.isBrowser()) return;
     this.isMenuOpened = false;
     this.sideMenu?.nativeElement.classList.remove('active');
     this.overlay?.nativeElement.classList.remove('active');
@@ -225,6 +235,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public toggleSubmenu(menuTitle: string, event?: Event) {
+    if (!this.ssr.isBrowser()) return;
     if (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -253,12 +264,14 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public toggleUserDropdown(event: Event): void {
+    if (!this.ssr.isBrowser()) return;
     event.stopPropagation();
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
   }
 
   @HostListener('document:click')
   closeUserDropdown() {
+    if (!this.ssr.isBrowser()) return;
     this.isUserDropdownOpen = false;
   }
 
@@ -287,6 +300,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   toggleLangDropdown(event: Event) {
+    if (!this.ssr.isBrowser()) return;
     event.stopPropagation();
     this.isLangDropdownOpen = !this.isLangDropdownOpen;
   }
@@ -301,6 +315,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   openSearchPopup() {
+    if (!this.ssr.isBrowser()) return;
     this.closeMobileMenu();
     SweetAlertUtils.showSearchDialog().then((result) => {
       if (result.isConfirmed && result.value) {

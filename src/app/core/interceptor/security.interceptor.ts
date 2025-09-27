@@ -12,7 +12,6 @@ export const securityInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
-  // Skip security check if already initialized and secure
   if (sharedService.isInitialized() && sharedService.getSecurityStatus()) {
     return next(req);
   }

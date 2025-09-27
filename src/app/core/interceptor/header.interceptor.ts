@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppAccessService } from '../service/app-access.service';
+import { SsrService } from '../service/ssr.service';
 
 export const headerInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -19,7 +20,7 @@ export const headerInterceptor: HttpInterceptorFn = (
   const translateService = inject(TranslateService);
   const appAccessService = inject(AppAccessService);
   const router = inject(Router);
-
+  const ssr = inject(SsrService);
   const lang =
     translateService.currentLang || translateService.defaultLang || 'ar';
 
@@ -34,7 +35,7 @@ export const headerInterceptor: HttpInterceptorFn = (
   return next(modifiedReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403) {
-        localStorage.setItem('errorData', JSON.stringify(error.error));
+        ssr.setLocal('errorData', JSON.stringify(error.error));
 
         appAccessService.setAccess(true);
       }

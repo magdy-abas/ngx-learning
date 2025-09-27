@@ -36,16 +36,24 @@
               "node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss",
               "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "node_modules/aos/dist/aos.css",
-
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-
               "node_modules/ngx-spinner/animations/ball-spin-fade.css",
-
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
+            ],
+            "server": "src/main.server.ts",
+            "allowedCommonJsDependencies": [
+              "crypto-js",
+              "google-libphonenumber",
+              "aos",
+              "sweetalert2",
+              "bootstrap"
+            ],
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -74,7 +82,6 @@
               "sourceMap": false,
               "aot": true
             },
-
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -94,6 +101,22 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": ["/"]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "e-learning:build:production",
+              "serverTarget": "e-learning:server:production"
+            },
+            "development": {
+              "browserTarget": "e-learning:build:development",
+              "serverTarget": "e-learning:server:development"
+            }
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

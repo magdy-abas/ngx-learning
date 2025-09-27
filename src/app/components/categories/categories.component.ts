@@ -16,6 +16,7 @@ import { AuthService } from '../../core/service/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
+import { SsrService } from '../../core/service/ssr.service';
 
 @Component({
   selector: 'app-categories',
@@ -34,6 +35,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   isSubCategoryView: boolean = false;
   categoryId: number | null = null;
+  private ssr = inject(SsrService);
 
   private _CategoriesService = inject(CategoriesService);
   private router = inject(Router);
@@ -101,9 +103,16 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
+    if (!this.ssr.isBrowser()) return;
+
+    const win = this.ssr.getWindow();
+    const doc = this.ssr.getDocument();
+
     if (
+      win &&
+      doc &&
       !this.isSubCategoryView &&
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
+      win.innerHeight + win.scrollY >= doc.body.offsetHeight - 100
     ) {
       this.getCategories();
     }

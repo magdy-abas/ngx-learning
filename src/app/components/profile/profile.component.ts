@@ -14,6 +14,7 @@ import { ProfileService } from '../../core/service/profile.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarComponent } from './calendar/calendar.component';
+import { SsrService } from '../../core/service/ssr.service';
 
 @Component({
   selector: 'app-profile',
@@ -36,7 +37,7 @@ export class ProfileComponent implements OnInit {
   isEditingName = false;
   userData: any = { name: '' };
   errorMessage: string = '';
-
+  private ssr = inject(SsrService);
   private _AuthService = inject(AuthService);
   private _ProfileService = inject(ProfileService);
   private _fb = inject(FormBuilder);
@@ -60,7 +61,7 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserData() {
-    const userDataString = localStorage.getItem('userData');
+    const userDataString = this.ssr.getLocal('userData');
     if (userDataString) {
       const user = JSON.parse(userDataString);
 
@@ -109,7 +110,7 @@ export class ProfileComponent implements OnInit {
     this._ProfileService.updateInfo(updateBody).subscribe({
       next: (res) => {
         if (res.status === 1) {
-          localStorage.setItem('userData', JSON.stringify(res.data));
+          this.ssr.setLocal('userData', JSON.stringify(res.data));
           this.loadUserData();
           this.isEditingName = false;
           this.profileForm.get('name')?.disable();

@@ -1,4 +1,10 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FeatherIconModule } from '../../../shared/utils/feather-icons.utils';
 import { DataService } from '../../../core/service/data/data.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +20,7 @@ import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.util
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { Course } from '../../../core/interfaces/courses.interface';
+import { SsrService } from '../../../core/service/ssr.service';
 
 interface data {
   active?: boolean;
@@ -45,6 +52,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   totalCourses: number = 0;
   currentlyShowing: number = 0;
   private subscriptions: Subscription[] = [];
+  private ssr = inject(SsrService);
 
   constructor(
     private data: DataService,
@@ -85,8 +93,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
   @HostListener('window:scroll', [])
   onScroll(): void {
-    const scrollPosition = window.innerHeight + window.pageYOffset;
-    const threshold = document.documentElement.scrollHeight - 50;
+    if (!this.ssr.isBrowser()) return;
+
+    const win = this.ssr.getWindow();
+    const doc = this.ssr.getDocument();
+
+    if (!win || !doc) return;
+
+    const scrollPosition = win.innerHeight + win.pageYOffset;
+    const threshold = doc.documentElement.scrollHeight - 50;
 
     if (scrollPosition >= threshold) {
       this.getCourses();
