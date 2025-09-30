@@ -30,6 +30,8 @@ export class SharedService {
   private loginMethod: string | null = null;
   private homeVersion: 'v1' | 'v2' = 'v2';
   private appAttrs: any[] = [];
+  private appAttrsSubject = new BehaviorSubject<any[]>([]);
+  public appAttrs$ = this.appAttrsSubject.asObservable();
 
   constructor(
     private _HttpClient: HttpClient,
@@ -39,6 +41,12 @@ export class SharedService {
   ) {}
 
   CheckSecurityPoint(): Observable<CheckSecurityPointResponse> {
+    return this._HttpClient.get<CheckSecurityPointResponse>(
+      `${baseUrl}mobile-versions/last-version`
+    );
+  }
+
+  getHomeContent(): Observable<CheckSecurityPointResponse> {
     return this._HttpClient.get<CheckSecurityPointResponse>(
       `${baseUrl}mobile-versions/last-version`
     );
@@ -90,6 +98,18 @@ export class SharedService {
     );
   }
 
+  reloadAppAttrs(): Observable<void> {
+    return this.getHomeContent().pipe(
+      tap((response) => {
+        if (response.status === 1 && response.data?.app_attrs) {
+          this.setAppAttrs(response.data.app_attrs);
+        }
+      }),
+      map(() => void 0),
+      catchError(() => of(void 0))
+    );
+  }
+
   setLoginMethod(method: string) {
     this.loginMethod = method;
   }
@@ -131,6 +151,7 @@ export class SharedService {
     const local = this.ssr.getLocal('appSettings');
     return local ? JSON.parse(local) : null;
   }
+
   private extractHomeVersion(data: any): 'v1' | 'v2' {
     const appAttrs = data?.app_attrs;
     const homeAttr = appAttrs?.find((attr: any) => attr.key === 'home_version');
@@ -161,6 +182,7 @@ export class SharedService {
 
   setAppAttrs(attrs: any[]) {
     this.appAttrs = attrs;
+    this.appAttrsSubject.next(attrs);
   }
 
   getAppAttrs() {

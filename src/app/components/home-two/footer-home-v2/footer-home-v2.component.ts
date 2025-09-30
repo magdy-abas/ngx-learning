@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { SharedService } from '../../../core/service/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-footer-home-v2',
@@ -9,7 +10,7 @@ import { SharedService } from '../../../core/service/shared.service';
   templateUrl: './footer-home-v2.component.html',
   styleUrl: './footer-home-v2.component.scss',
 })
-export class FooterHomeV2Component implements OnInit {
+export class FooterHomeV2Component implements OnInit, OnDestroy {
   footerLogo: string | null = null;
   footerLinks: string[] = [];
   footerContactTitle: string | null = null;
@@ -20,9 +21,19 @@ export class FooterHomeV2Component implements OnInit {
   contactNumber: string | null = null;
   whatsappNumber: string | null = null;
 
+  private subscription?: Subscription;
+
   constructor(private sharedService: SharedService) {}
 
   ngOnInit(): void {
+    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+      if (attrs.length > 0) {
+        this.loadFooterData();
+      }
+    });
+  }
+
+  private loadFooterData(): void {
     const footerAttrs = this.sharedService.getAppAttrByCategory('footer');
     const contactAttrs = this.sharedService.getAppAttrByCategory('contact');
     const bottomFooterAttrs =
@@ -49,5 +60,9 @@ export class FooterHomeV2Component implements OnInit {
 
     this.bottomFooter =
       bottomFooterAttrs.find((attr) => attr.key === 'Rights')?.value || null;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }

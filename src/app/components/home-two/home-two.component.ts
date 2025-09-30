@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import Aos from 'aos';
 import { CountUp } from 'countup.js';
@@ -29,6 +35,7 @@ import { FooterHomeV2Component } from './footer-home-v2/footer-home-v2.component
 import { SsrService } from '../../core/service/ssr.service';
 import { GlobalTranslateService } from '../../core/service/global-translate.service';
 import { Subscription } from 'rxjs';
+import { SharedService } from '../../core/service/shared.service';
 
 @Component({
   selector: 'app-home-two',
@@ -50,7 +57,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './home-two.component.html',
   styleUrl: './home-two.component.scss',
 })
-export class HomeTwoComponent implements AfterViewInit, OnInit {
+export class HomeTwoComponent implements AfterViewInit, OnInit, OnDestroy {
   homeSections: HomeSection[] = [];
   featuredCourses: CoursesSection | null = null;
   bestSellingCourses: CoursesSection | null = null;
@@ -61,18 +68,18 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
   private ssr = inject(SsrService);
   private subscriptions: Subscription[] = [];
   private globalTranslate = inject(GlobalTranslateService);
+  private SharedService = inject(SharedService);
 
   private _DynamicHomeService = inject(DynamicHomeService);
 
   ngOnInit(): void {
+    this.SharedService.reloadAppAttrs().subscribe(() => {});
+
     this.subscriptions.push(
       this.globalTranslate.language$.subscribe((lang) => {
-        console.log('[HomeTwo] Language changed:', lang);
-        this.resetAndLoad();
+        this.getHomeData();
       })
     );
-
-    this.resetAndLoad();
 
     Aos.init({
       offset: 20,
@@ -80,16 +87,6 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
       easing: 'ease-in-out',
       once: true,
     });
-  }
-
-  private resetAndLoad(): void {
-    console.log('[HomeTwo] resetAndLoad called');
-    this.homeSections = [];
-    this.featuredCourses = null;
-    this.bestSellingCourses = null;
-    this.universities = [];
-    this.doctors = [];
-    this.getHomeData();
   }
 
   ngAfterViewInit(): void {
@@ -153,8 +150,6 @@ export class HomeTwoComponent implements AfterViewInit, OnInit {
             this.featuredCourses = mappedSection;
           }
         });
-
-        // console.log(this.featuredCourses);
 
         // categories
         const categoriesSection = this.homeSections.find(

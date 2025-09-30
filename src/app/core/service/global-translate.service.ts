@@ -1,7 +1,8 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, catchError, firstValueFrom, retry } from 'rxjs';
 import { SsrService } from './ssr.service';
+import { SharedService } from './shared.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { SsrService } from './ssr.service';
 export class GlobalTranslateService {
   private renderer: Renderer2;
   public language$ = new BehaviorSubject<'ar' | 'en'>('ar');
+  private sharedService = inject(SharedService);
 
   constructor(
     private translateService: TranslateService,
@@ -36,8 +38,6 @@ export class GlobalTranslateService {
   }
 
   private async applyLanguage(lang: 'ar' | 'en'): Promise<void> {
-    console.log('[GlobalTranslateService] applyLanguage called with:', lang);
-
     this.ssr.setLocal('lang', lang);
     this.updateDocumentDirection(lang);
 
@@ -45,20 +45,16 @@ export class GlobalTranslateService {
       this.translateService.use(lang).pipe(
         retry(2),
         catchError((err) => {
-          console.error('[GlobalTranslateService] use(lang) failed:', err);
           return this.translateService.use('ar');
         })
       )
     );
 
-    console.log(
-      '[GlobalTranslateService] translateService.use completed:',
-      lang
-    );
+    await firstValueFrom(this.sharedService.reloadAppAttrs());
 
     this.language$.next(lang);
-    console.log('[GlobalTranslateService] language$ emitted:', lang);
   }
+
   private updateDocumentDirection(lang: 'ar' | 'en'): void {
     const htmlElement = this.ssr.getDocument()?.documentElement;
     if (!htmlElement) return;

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedService } from '../../../core/service/shared.service';
 import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 interface Avatar {
   file: string;
@@ -22,10 +23,12 @@ interface Testimonial {
   templateUrl: './testimonial-home-v2.component.html',
   styleUrl: './testimonial-home-v2.component.scss',
 })
-export class TestimonialHomeV2Component implements OnInit {
+export class TestimonialHomeV2Component implements OnInit, OnDestroy {
   kicker: string | null = null;
   title: string | null = null;
   testimonials: Testimonial[] = [];
+
+  private subscription?: Subscription;
 
   customOptionsTsSlider = {
     loop: true,
@@ -46,11 +49,21 @@ export class TestimonialHomeV2Component implements OnInit {
   constructor(private sharedService: SharedService) {}
 
   ngOnInit(): void {
+    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+      if (attrs.length > 0) {
+        this.loadTestimonialData();
+      }
+    });
+  }
+
+  private loadTestimonialData(): void {
     this.kicker = this.sharedService.getAppAttrValue(
       'testimonials',
       'kicker_title'
     );
     this.title = this.sharedService.getAppAttrValue('testimonials', 'title');
+
+    this.testimonials = [];
 
     [1, 2, 3].forEach((i) => {
       const text = this.sharedService.getAppAttrValue(
@@ -81,5 +94,9 @@ export class TestimonialHomeV2Component implements OnInit {
         this.testimonials.push({ text, main, avatars });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 }
