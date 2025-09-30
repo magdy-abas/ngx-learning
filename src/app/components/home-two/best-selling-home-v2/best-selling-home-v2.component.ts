@@ -18,9 +18,6 @@ import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-ca
 export class BestSellingHomeV2Component {
   @Input() bestSellingCourses: CoursesSection | null = null;
 
-  ngAfterViewInit(): void {
-    console.log('featuredCourses', this.bestSellingCourses);
-  }
   customOptionsCrSlider = {
     loop: true,
     margin: 20,

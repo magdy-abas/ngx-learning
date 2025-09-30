@@ -106,9 +106,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.translate.onLangChange.subscribe((e) => {
-      console.log('[Navbar] onLangChange fired:', e.lang);
-    });
+    // this.translate.onLangChange.subscribe((e) => {});
 
     this.isAuth = this.AuthService.isAuthenticated();
     this.darkModeService.applyMode();
@@ -259,7 +257,6 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public async switchLanguage(lang: 'en' | 'ar') {
-    console.log('[Navbar] switchLanguage clicked:', lang);
     await this._GlobalTranslateService.changeLanguage(lang);
     this.closeMobileMenu();
   }

@@ -63,9 +63,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private globalTranslate: GlobalTranslateService
   ) {}
   ngOnInit(): void {
-    // listen to language change
     const langSub = this.globalTranslate.language$.subscribe((lang) => {
-      console.log('[Courses] Language changed to:', lang);
       this.resetAndLoad();
     });
 
