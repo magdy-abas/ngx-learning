@@ -1,0 +1,53 @@
+<section class="best-selling instractors my-5" data-aos="fade-up" *ngIf="doctorsSection">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+
+      <!-- left text -->
+      <div class="col-lg-3 position-relative">
+        <div class="bs-text">
+          <h2 class="bs-title position-relative best-selling-title">{{doctorsSection.short_title}} <img
+              src="assets/img/home-two/left-shape.png" alt="icon" class="title-icon position-absolute">
+          </h2>
+          <p class="bs-sub">{{doctorsSection.description}}</p>
+        </div>
+      </div>
+
+      <!-- slider -->
+      <!-- slider -->
+      <div class="col-lg-9 feature-instructors-sec">
+        <owl-carousel-o [options]="customOptionsCrSlider">
+          <ng-template carouselSlide *ngFor="let data of doctorsSection.data">
+            <div class="featured-instructor-two">
+              <div class="row">
+                <div (click)="goToDoctorProfile(data)" data-aos="fade-up">
+                  <div class="instructors-widget">
+                    <div class="instructors-img">
+                      <a href="javascript:;">
+                        <img class="img-fluid" [alt]="data.name" [src]="data.image ||
+                '../../../../../assets/img/instractor-placeholder.png'"
+                          onerror="this.src='../../../../../assets/img/instractor-placeholder.png'">
+                      </a>
+
+                    </div>
+                    <div class="course-details-two">
+                      <div class="instructors-content text-center">
+                        <h5><a href="javascript:;">{{data.name}}</a></h5>
+                        <!-- <p>{{data.job_title}}</p> -->
+                      </div>
+                      <div class="course-info"></div>
+                      <div class="student-count d-flex justify-content-center">
+                        <i class="fa-solid fa-laptop-file"></i>
+                        <span>{{data.courses_count}} {{'courses.courses' | translate}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -201,3 +201,15 @@ export interface CoursesSection {
   short_title: string;
   description: string;
 }
+export interface CategoriesSection {
+  title: string;
+  short_title?: string;
+  description?: string;
+  data: ICategory[];
+}
+export interface DoctorsSection {
+  title: string;
+  short_title?: string;
+  description?: string;
+  data: IDoctor[];
+}

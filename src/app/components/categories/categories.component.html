@@ -34,7 +34,11 @@
                     </div>
                   </div>
                 </ng-container>
-
+                <div class="row">
+                  <div class="loading d-flex justify-content-center" *ngIf="isLoading">
+                    <div class="loader"></div>
+                  </div>
+                </div>
 
                 <ng-container *ngIf="isSubCategoryView">
                   <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 d-flex" *ngFor="let subCategory of subCategories"

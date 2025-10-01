@@ -86,6 +86,11 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
       translationKey: 'navbar.categories',
       route: '/categories',
     },
+    {
+      title: 'instructors',
+      translationKey: 'navbar.instructor',
+      route: '/instructors',
+    },
   ];
 
   public user = {

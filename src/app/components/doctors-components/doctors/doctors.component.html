@@ -1,2 +1,5 @@
 <app-home-instructors [instructorsData]="doctors" [showViewAllButton]="false">
 </app-home-instructors>
+<div class="loading d-flex justify-content-center" *ngIf="isLoading">
+  <div class="loader"></div>
+</div>

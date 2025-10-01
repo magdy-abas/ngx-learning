@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ import {
 import { RequestJoinDto, QuizDTO } from './../Dtos/coursesDtos';
 import { MyCoursesResponse } from '../interfaces/my-courses.interface';
 import { DoctorCommentsResponse } from '../interfaces/doctor-comments';
+import { SKIP_GLOBAL_SPINNER } from '../../shared/utils/loading.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class CoursesService {
     pagination: number,
     pageNum: number,
     category_id: string | null,
-    doctor_id: string | null
+    doctor_id: string | null,
+    showSpinner: boolean = true
   ): Observable<CoursesResponse> {
     let url = `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`;
 
@@ -38,7 +40,10 @@ export class CoursesService {
       url += `&doctor_id=${doctor_id}`;
     }
 
-    return this._HttpClient.get<CoursesResponse>(url);
+    return this._HttpClient.get<CoursesResponse>(url, {
+      context: new HttpContext().set(SKIP_GLOBAL_SPINNER, !showSpinner),
+      observe: 'body' as const,
+    });
   }
 
   getMyCourses(

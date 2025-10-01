@@ -5,7 +5,7 @@
   </div>
 
 
-  <!-- الصف 1: Calendar + Upcoming -->
+  <!--Calendar + Upcoming -->
   <div class="row g-4 align-items-start">
     <!-- Calendar -->
     <div class="col-12 col-lg-6">
@@ -17,14 +17,16 @@
           </div>
         </div>
 
-        <bs-datepicker-inline [bsValue]="bsValue()" [bsConfig]="{
-            containerClass: 'theme-default',
-            showWeekNumbers: false,
-            isAnimated: true,
-            adaptivePosition: false,
-            initCurrentTime: false
-          }" [dateCustomClasses]="eventDates">
+        <bs-datepicker-inline [bsValue]="bsValue()" (bsValueChange)="onDateChange($event)" [bsConfig]="{
+    containerClass: 'theme-default',
+    showWeekNumbers: false,
+    isAnimated: true,
+    adaptivePosition: false,
+    initCurrentTime: false
+  }">
         </bs-datepicker-inline>
+
+
       </div>
     </div>
 
@@ -37,46 +39,31 @@
             <div class="eyebrow">{{ 'calendar.upcomingSub' | translate }}</div>
           </div>
         </div>
-
         <div class="timeline">
-          <div class="tl-item">
+          <div class="tl-item" *ngFor="let s of Sessions; ">
             <div class="date-pill">
-              <div class="d">01</div>
-              <div class="m">Jan</div>
+              <div class="d">{{ s.schedule_date | date:'dd' }}</div>
+              <div class="m">{{ s.schedule_date | date:'MMM' }}</div>
             </div>
             <div class="flex-grow-1">
-              <div class="fw-semibold ">{{ 'calendar.assignmentExpiration' | translate }}</div>
-              <div class="eyebrow">Students Assignment - New Update Features</div>
+              <div class="fw-semibold">{{ s.doctor.name }}</div>
+              <div class="eyebrow">{{ s.schedule_time }} - {{ s.schedule_end_time }}</div>
+              <div class="badge  text-dark mt-1" [ngClass]="getStatusClass(s.status)">{{ s.status_title }}</div>
             </div>
           </div>
 
-          <div class="tl-item">
-            <div class="date-pill">
-              <div class="d">18</div>
-              <div class="m">May</div>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">{{ 'calendar.meeting' | translate }}</div>
-              <div class="eyebrow">Robert Ransdell</div>
-            </div>
-          </div>
-
-          <div class="tl-item">
-            <div class="date-pill">
-              <div class="d">05</div>
-              <div class="m">Jul</div>
-            </div>
-            <div class="flex-grow-1">
-              <div class="fw-semibold">{{ 'calendar.courseExpiration' | translate }}</div>
-              <div class="eyebrow">New Update Features</div>
-            </div>
+          <div class="text-muted" *ngIf="Sessions?.length === 0">
+            {{ 'calendar.noEvents' | translate }}
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
 
-  <!-- الصف 2: Day Events -->
+
+  <!--
   <div class="row g-4 mt-1">
     <div class="col-8">
       <div class="soft-card p-4">
@@ -91,10 +78,8 @@
 
         <div class="divider mb-3"></div>
 
-        <!-- Event Card -->
         <div class="event-card mb-3 d-flex align-items-center">
           <div class="event-icon me-2">
-            <!-- Calendar Icon -->
             <svg height="24px" width="24px" class="icons text-primary" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M20 8.25V18c0 3-1.79 4-4 4H8c-2.21 0-4-1-4-4V8.25c0-3.25 1.79-4 4-4
@@ -117,7 +102,6 @@
             </div>
           </div>
 
-          <!-- Reminder Bell -->
           <button type="button" class="bell" title="{{ 'calendar.remindMe' | translate }}">
             <svg class="icons text-primary" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="bell"
               fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -129,8 +113,7 @@
             </svg>
           </button>
         </div>
-        <!-- End Event Card -->
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

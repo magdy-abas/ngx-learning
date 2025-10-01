@@ -1,17 +1,18 @@
-<section class="courses py-5" data-aos="fade-up">
+<section class="courses py-5" data-aos="fade-up " *ngIf="categories">
   <div class="container py-5">
     <!-- title -->
     <div class="text-center mb-5">
       <h2 class="courses-title position-relative lesson-title ">
         <img src="../../../assets/img/home-two/shape-e.svg" alt="icon" class="title-icon position-absolute">
-        {{ lessonsTitle }}
+        {{ categories.short_title }}
       </h2>
-      <p class="courses-sub">{{ lessonsSubtitle }}</p>
+      <p class="courses-sub">{{ categories.description }}</p>
     </div>
 
     <!-- dynamic courses grid -->
     <div class="row g-4 justify-content-between">
-      <div class="col-12 col-md-4 col-lg-2" *ngFor="let category of categories" (click)="onCategoryClick(category)">
+      <div class="col-12 col-md-4 col-lg-2" *ngFor="let category of categories?.data"
+        (click)="onCategoryClick(category)">
         <div class="course-card">
           <div class="course-img">
             <img [src]="category.image" [alt]="category.title">

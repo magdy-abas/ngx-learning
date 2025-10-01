@@ -207,4 +207,43 @@ export const SweetAlertUtils = {
       customClass: commonCustomClasses,
     });
   },
+
+  showBookingSuccess(request: any) {
+    return Swal.fire({
+      icon: 'success',
+      title: translateService.instant('sweetalert.success.title'),
+      html: `
+      <p>${translateService.instant('sweetalert.bookingSuccess', {
+        doctor: request.doctor.name,
+      })}</p>
+      <p><strong>${request.schedule_date}</strong> - ${
+        request.schedule_time
+      }</p>
+      <p class="mt-2 text-muted">${translateService.instant(
+        'sweetalert.amount'
+      )}: ${request.amount}</p>
+    `,
+      confirmButtonText: translateService.instant('sweetalert.ok'),
+      width: '500px',
+      customClass: commonCustomClasses,
+    });
+  },
+
+  showAlert({
+    title,
+    message,
+    type = 'info',
+  }: {
+    title?: string;
+    message: string;
+    type?: 'success' | 'error' | 'info' | 'warning' | 'question';
+  }) {
+    return Swal.fire({
+      text: message,
+      icon: type,
+      confirmButtonText: translateService.instant('sweetalert.ok'),
+      width: '450px',
+      customClass: commonCustomClasses,
+    });
+  },
 };

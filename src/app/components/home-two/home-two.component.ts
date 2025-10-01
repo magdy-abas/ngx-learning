@@ -19,6 +19,8 @@ import {
   ICourse,
   HomeSection,
   CoursesSection,
+  CategoriesSection,
+  DoctorsSection,
 } from '../../core/interfaces/dynamic-home.interface';
 
 import { NgFor, NgIf } from '@angular/common';
@@ -36,6 +38,7 @@ import { SsrService } from '../../core/service/ssr.service';
 import { GlobalTranslateService } from '../../core/service/global-translate.service';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../../core/service/shared.service';
+import { InstructorsHomeV2Component } from './instructors-home-v2/instructors-home-v2.component';
 
 @Component({
   selector: 'app-home-two',
@@ -53,6 +56,7 @@ import { SharedService } from '../../core/service/shared.service';
     BestSellingHomeV2Component,
     TestimonialHomeV2Component,
     FooterHomeV2Component,
+    InstructorsHomeV2Component,
   ],
   templateUrl: './home-two.component.html',
   styleUrl: './home-two.component.scss',
@@ -62,8 +66,10 @@ export class HomeTwoComponent implements AfterViewInit, OnInit, OnDestroy {
   featuredCourses: CoursesSection | null = null;
   bestSellingCourses: CoursesSection | null = null;
   universities: ICategory[] = [];
-  doctors: IDoctor[] = [];
+  doctorsSection: DoctorsSection | null = null;
 
+  doctors: IDoctor[] = [];
+  categoriesSection: CategoriesSection | null = null;
   contactUs: ContactUs | null = null;
   private ssr = inject(SsrService);
   private subscriptions: Subscription[] = [];
@@ -151,19 +157,35 @@ export class HomeTwoComponent implements AfterViewInit, OnInit, OnDestroy {
           }
         });
 
+        // doctors
+        const doctorsSection = this.homeSections.find(
+          (section): section is HomeSection & { data: IDoctor[] } =>
+            section.type === 'doctors'
+        );
+
+        if (doctorsSection) {
+          this.doctorsSection = {
+            title: doctorsSection.title,
+            short_title: doctorsSection.short_title,
+            description: doctorsSection.description,
+            data: doctorsSection.data,
+          };
+        }
+
         // categories
         const categoriesSection = this.homeSections.find(
           (section): section is HomeSection & { data: ICategory[] } =>
             section.type === 'categories'
         );
-        this.universities = categoriesSection?.data ?? [];
 
-        //  doctors
-        const doctorsSection = this.homeSections.find(
-          (section): section is HomeSection & { data: IDoctor[] } =>
-            section.type === 'doctors'
-        );
-        this.doctors = doctorsSection?.data ?? [];
+        if (categoriesSection) {
+          this.categoriesSection = {
+            title: categoriesSection.title,
+            short_title: categoriesSection.short_title,
+            description: categoriesSection.description,
+            data: categoriesSection.data,
+          };
+        }
       },
       error: (err) => console.error(err),
     });

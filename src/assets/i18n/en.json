@@ -246,6 +246,25 @@
       "confirm": "OK"
     }
   },
+  "booking": {
+    "availableTimes": "Available times for",
+    "noSlots": {
+      "title": "No available slots",
+      "subtitle": "Please choose another day or try again later"
+    },
+    "proceed": "Proceed with Booking",
+    "success": {
+      "title": "Booking Successful ",
+      "schedule": "Booking Schedule",
+      "amount": "Amount",
+      "status": "Status",
+      "statusText": "Request Sent",
+      "goHome": "Go to Homepage"
+    },
+    "doctor": {
+      "courses": "Number of Courses"
+    }
+  },
   "quiz": {
     "welcome": "Welcome to the Quiz!",
     "introShowAnswers": "Questions and answers will be displayed once you click the button",

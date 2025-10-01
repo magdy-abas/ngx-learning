@@ -1,32 +1,26 @@
 import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
+  CategoriesSection,
   Category,
   ICategory,
 } from '../../../core/interfaces/dynamic-home.interface';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../core/service/shared.service';
 
 @Component({
   selector: 'app-lessons-home-v2',
   standalone: true,
-  imports: [TranslateModule, NgFor],
+  imports: [TranslateModule, NgFor, NgIf],
   templateUrl: './lessons-home-v2.component.html',
   styleUrl: './lessons-home-v2.component.scss',
 })
 export class LessonsHomeV2Component implements OnInit {
-  @Input() categories: ICategory[] = [];
-  lessonsTitle: string | null = null;
-  lessonsSubtitle: string | null = null;
+  @Input() categories: CategoriesSection | null = null;
+
   constructor(private router: Router, private sharedService: SharedService) {}
-  ngOnInit(): void {
-    this.lessonsTitle = this.sharedService.getAppAttrValue('lessons', 'title');
-    this.lessonsSubtitle = this.sharedService.getAppAttrValue(
-      'lessons',
-      'subtitle'
-    );
-  }
+  ngOnInit(): void {}
   onCategoryClick(category: Category): void {
     // console.log(this.categories);
 

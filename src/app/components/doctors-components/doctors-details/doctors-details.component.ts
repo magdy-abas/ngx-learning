@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { SweetAlertUtils } from '../../../shared/utils/SweetAlert.utils';
 import { AuthService } from '../../../core/service/auth.service';
-import { SsrService } from '../../../core/service/ssr.service';
 
 @Component({
   selector: 'app-doctors-details',
@@ -37,8 +36,7 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     private doctorsService: DoctorsService,
     private CoursesService: CoursesService,
     private translate: TranslateService,
-    public authService: AuthService,
-    private ssr: SsrService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +63,7 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.doctor = data.data[0];
 
-        this.ssr.setLocal('currentDoctor', JSON.stringify(this.doctor));
+        localStorage.setItem('currentDoctor', JSON.stringify(this.doctor));
 
         if (this.doctor?.id) {
           this.getDoctorCourses(this.doctor.id, this.currentPage);
@@ -121,15 +119,8 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
   }
   @HostListener('window:scroll', [])
   onScroll(): void {
-    if (!this.ssr.isBrowser()) return;
-
-    const win = this.ssr.getWindow();
-    const doc = this.ssr.getDocument();
-
-    if (!win || !doc) return;
-
-    const scrollPosition = win.innerHeight + win.pageYOffset;
-    const pageHeight = doc.documentElement.offsetHeight;
+    const scrollPosition = window.innerHeight + window.pageYOffset;
+    const pageHeight = document.documentElement.offsetHeight;
 
     if (
       scrollPosition >= pageHeight - 100 &&
@@ -145,34 +136,18 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     this.currentPage = page;
     this.getDoctorCourses(this.doctor.id, this.currentPage);
   }
-
   onBookPrivateAppointment() {
-    // SweetAlertUtils.showAppointmentConfirmation(this.doctor.name).then(
-    //   (result) => {
-    //     if (result.isConfirmed) {
-    //       this.doctorsService.BookPrivateAppointment(this.doctor.id).subscribe({
-    //         next: (res) => {
-    //           if (res.status === 1) {
-    //             this.isBooked = true;
-    //             SweetAlertUtils.showSuccessAlert(
-    //               this.translate.instant('sweetalert.appointment_success')
-    //             );
-    //           } else {
-    //             SweetAlertUtils.showBookingFailureAlert(res.message);
-    //           }
-    //         },
-    //         error: (err) => {
-    //           console.error(err);
-    //           SweetAlertUtils.showErrorAlert(err.message);
-    //         },
-    //       });
-    //     }
-    //   }
-    // );
-
-    this.router.navigate(['/booking'], {
-      state: { doctor: this.doctor },
-    });
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/booking'], {
+        state: { doctor: this.doctor },
+      });
+    } else {
+      SweetAlertUtils.showLoginRequired().then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {

@@ -237,14 +237,14 @@ class RegisterComponent implements OnInit, OnDestroy {
   onSubmit() {
     const phoneControl = this.phoneControl;
 
-    // Step 1: Check if  form valid
+    // Check if  form valid
     if (this.regForm.invalid || phoneControl.invalid) {
       this.regForm.markAllAsTouched();
       phoneControl.markAsTouched();
       return;
     }
 
-    //: Extract the  phone num
+    // Extract the  phone num
     const rawPhone: string = phoneControl.value;
 
     // Extract dial code and mobile number

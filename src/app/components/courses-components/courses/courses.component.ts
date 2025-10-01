@@ -53,6 +53,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   totalCourses: number = 0;
   currentlyShowing: number = 0;
   private subscriptions: Subscription[] = [];
+  firstLoad = true;
   private ssr = inject(SsrService);
 
   constructor(
@@ -62,11 +63,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private router: Router,
     private globalTranslate: GlobalTranslateService
   ) {}
+
   ngOnInit(): void {
     const langSub = this.globalTranslate.language$.subscribe((lang) => {
       this.resetAndLoad();
     });
-
     this.subscriptions.push(langSub);
 
     const querySub = this.route.queryParams.subscribe((queryParams) => {
@@ -103,11 +104,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   onScroll(): void {
     if (!this.ssr.isBrowser()) return;
 
-    const win = this.ssr.getWindow();
-    const doc = this.ssr.getDocument();
-
-    if (!win || !doc) return;
-
+    const win = this.ssr.getWindow()!;
+    const doc = this.ssr.getDocument()!;
     const scrollPosition = win.innerHeight + win.pageYOffset;
     const threshold = doc.documentElement.scrollHeight - 50;
 
@@ -143,7 +141,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
         this.pagination,
         this.pageNum,
         this.categoryId,
-        this.doctorId
+        this.doctorId,
+        this.firstLoad
       )
       .subscribe({
         next: (res) => {
@@ -159,10 +158,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
             this.currentlyShowing = this.coursesData.length;
           }
           this.isLoading = false;
+          this.firstLoad = false;
         },
         error: (err) => {
           console.error('Error fetching courses:', err);
           this.isLoading = false;
+          this.firstLoad = false;
         },
       });
 

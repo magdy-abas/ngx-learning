@@ -9,11 +9,12 @@ import Aos from 'aos';
 import { HomeInstructorsComponent } from '../../home/home-components/home-instructors/home-instructors.component';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
-  imports: [HomeInstructorsComponent],
+  imports: [HomeInstructorsComponent, NgIf],
 
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.scss',
@@ -24,6 +25,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   lastPage: number = 1;
   isLoading: boolean = false;
+  firstLoad = true;
 
   private _doctorsService = inject(DoctorsService);
 
@@ -41,18 +43,22 @@ export class DoctorsComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
-    const doctorSub = this._doctorsService.getDoctors(page).subscribe({
-      next: (res: DoctorsResponse) => {
-        this.doctors = [...this.doctors, ...res.data];
-        this.lastPage = res.meta.last_page;
-        this.currentPage++;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching doctors:', error);
-        this.isLoading = false;
-      },
-    });
+    const doctorSub = this._doctorsService
+      .getDoctors(page, undefined, this.firstLoad)
+      .subscribe({
+        next: (res: DoctorsResponse) => {
+          this.doctors = [...this.doctors, ...res.data];
+          this.lastPage = res.meta.last_page;
+          this.currentPage++;
+          this.isLoading = false;
+          this.firstLoad = false;
+        },
+        error: (error) => {
+          console.error('Error fetching doctors:', error);
+          this.isLoading = false;
+          this.firstLoad = false;
+        },
+      });
     this.subscriptions.push(doctorSub);
   }
   ngOnDestroy(): void {
