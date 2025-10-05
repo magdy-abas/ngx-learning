@@ -44,6 +44,8 @@ export class CoursesService {
       context: new HttpContext().set(SKIP_GLOBAL_SPINNER, !showSpinner),
       observe: 'body' as const,
     });
+    {
+    }
   }
 
   getMyCourses(

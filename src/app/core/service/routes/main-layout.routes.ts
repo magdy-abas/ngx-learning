@@ -27,7 +27,6 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses/courses.component'
       ).then((m) => m.CoursesComponent),
     title: 'courses',
-    data: { ssr: false },
   },
   {
     path: 'booking',
@@ -36,7 +35,6 @@ export const mainRoutes: Routes = [
         '../../../components/doctors-components/booking/booking.component'
       ).then((m) => m.BookingComponent),
     title: 'booking',
-    data: { ssr: false },
   },
   {
     path: 'instructor-register',
@@ -45,7 +43,6 @@ export const mainRoutes: Routes = [
         '../../../components/doctors-components/doctors-reg/doctors-reg.component'
       ).then((m) => m.DoctorsRegComponent),
     title: 'instructor-register',
-    data: { ssr: false },
   },
 
   {
@@ -56,7 +53,6 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses/courses.component'
       ).then((m) => m.CoursesComponent),
     title: 'courses-category',
-    data: { ssr: false },
   },
   {
     path: 'courses/doctor/:doctorId',
@@ -66,7 +62,6 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses/courses.component'
       ).then((m) => m.CoursesComponent),
     title: 'courses-doctor',
-    data: { ssr: false },
   },
   {
     path: 'course-details/:id',
@@ -76,7 +71,6 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses-details/courses-details.component'
       ).then((m) => m.CoursesDetailsComponent),
     title: 'course-details',
-    data: { ssr: false },
   },
   {
     path: 'categories',
@@ -86,7 +80,6 @@ export const mainRoutes: Routes = [
         (m) => m.CategoriesComponent
       ),
     title: 'categories',
-    data: { ssr: false },
   },
   {
     path: 'categories/:categoryId',
@@ -96,7 +89,6 @@ export const mainRoutes: Routes = [
         (m) => m.CategoriesComponent
       ),
     title: 'categories-sub',
-    data: { ssr: false },
   },
 
   {
@@ -107,7 +99,6 @@ export const mainRoutes: Routes = [
         '../../../components/doctors-components/doctors/doctors.component'
       ).then((m) => m.DoctorsComponent),
     title: 'instructors',
-    data: { ssr: false },
   },
   {
     path: 'instructor-profile/:id',
@@ -117,7 +108,6 @@ export const mainRoutes: Routes = [
         '../../../components/doctors-components/doctors-details/doctors-details.component'
       ).then((m) => m.DoctorsDetailsComponent),
     title: 'instructor profile',
-    data: { ssr: false },
   },
   // Public pages
   {
@@ -128,7 +118,6 @@ export const mainRoutes: Routes = [
         (m) => m.LoginComponent
       ),
     title: 'Login',
-    data: { ssr: false },
   },
   {
     canActivate: [publicGuard],
@@ -138,7 +127,6 @@ export const mainRoutes: Routes = [
         '../../../components/auth-components/register/register.component'
       ).then((m) => m.RegisterComponent),
     title: 'Signup',
-    data: { ssr: false },
   },
   {
     canActivate: [publicGuard],
@@ -148,7 +136,6 @@ export const mainRoutes: Routes = [
         '../../../components/auth-components/forgot-password/forgot-password.component'
       ).then((m) => m.ForgotPasswordComponent),
     title: 'Forgot Password',
-    data: { ssr: false },
   },
 
   // Protected pages
@@ -161,7 +148,6 @@ export const mainRoutes: Routes = [
         (m) => m.ProfileComponent
       ),
     title: 'profile',
-    data: { ssr: false },
   },
   {
     path: 'course-quiz/:courseId/:quizId',
@@ -171,6 +157,5 @@ export const mainRoutes: Routes = [
         '../../../components/courses-components/courses-quiz/courses-quiz.component'
       ).then((m) => m.CoursesQuizComponent),
     title: 'quiz',
-    data: { ssr: false },
   },
 ];

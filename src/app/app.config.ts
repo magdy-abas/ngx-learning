@@ -91,6 +91,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: initApp,
       deps: [SharedService],
       multi: true,
-    }, provideClientHydration(),
+    },
+    provideClientHydration(),
   ],
 };

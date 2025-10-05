@@ -1,8 +1,15 @@
-import { Injectable, Renderer2, RendererFactory2, inject } from '@angular/core';
+import {
+  Injectable,
+  PLATFORM_ID,
+  Renderer2,
+  RendererFactory2,
+  inject,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, catchError, firstValueFrom, retry } from 'rxjs';
 import { SsrService } from './ssr.service';
 import { SharedService } from './shared.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +18,7 @@ export class GlobalTranslateService {
   private renderer: Renderer2;
   public language$ = new BehaviorSubject<'ar' | 'en'>('ar');
   private sharedService = inject(SharedService);
+  private platformId = inject(PLATFORM_ID);
 
   constructor(
     private translateService: TranslateService,
@@ -23,7 +31,6 @@ export class GlobalTranslateService {
     this.language$.next(storedLang);
 
     this.translateService.setDefaultLang('ar');
-    this.initializeLanguage(storedLang);
   }
 
   async initializeLanguage(lang?: 'ar' | 'en'): Promise<void> {
@@ -44,11 +51,13 @@ export class GlobalTranslateService {
     await firstValueFrom(
       this.translateService.use(lang).pipe(
         retry(2),
-        catchError((err) => {
-          return this.translateService.use('ar');
-        })
+        catchError(() => this.translateService.use('ar'))
       )
     );
+
+    if (isPlatformBrowser(this.platformId)) {
+      await firstValueFrom(this.sharedService.setLang(lang));
+    }
 
     await firstValueFrom(this.sharedService.reloadAppAttrs());
 

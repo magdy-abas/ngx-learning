@@ -5,13 +5,14 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppAccessService } from '../service/app-access.service';
 import { SsrService } from '../service/ssr.service';
+import { isPlatformServer } from '@angular/common';
 
 export const headerInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -23,6 +24,11 @@ export const headerInterceptor: HttpInterceptorFn = (
   const ssr = inject(SsrService);
   const lang =
     translateService.currentLang || translateService.defaultLang || 'ar';
+  const platformId = inject(PLATFORM_ID);
+
+  if (isPlatformServer(platformId)) {
+    return next(req);
+  }
 
   const modifiedReq = req.clone({
     setHeaders: {

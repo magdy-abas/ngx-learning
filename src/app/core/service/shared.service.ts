@@ -15,6 +15,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CheckSecurityPointResponse } from '../interfaces/mobile-versions';
 import { SsrService } from './ssr.service';
 import { isPlatformBrowser } from '@angular/common';
+import { SuccessResponse } from '../interfaces/shared.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,9 @@ export class SharedService {
     return this._HttpClient.get<CheckSecurityPointResponse>(
       `${baseUrl}mobile-versions/last-version`
     );
+  }
+  setLang(lang: string): Observable<any> {
+    return this._HttpClient.post(`${baseUrl}set-lang`, { lang });
   }
 
   checkApiStatus(): Observable<boolean> {
