@@ -107,7 +107,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       this.courseId = +courseId;
 
       this.globalTranslate.language$.subscribe((lang) => {
-        console.log('Language changed to:', lang);
         this.loadData(this.courseId);
       });
     } else {
