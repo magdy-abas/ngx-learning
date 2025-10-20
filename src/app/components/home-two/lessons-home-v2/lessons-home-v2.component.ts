@@ -16,18 +16,16 @@ import { SharedService } from '../../../core/service/shared.service';
   templateUrl: './lessons-home-v2.component.html',
   styleUrl: './lessons-home-v2.component.scss',
 })
-export class LessonsHomeV2Component implements OnInit {
+export class LessonsHomeV2Component {
   @Input() categories: CategoriesSection | null = null;
 
   constructor(private router: Router, private sharedService: SharedService) {}
-  ngOnInit(): void {}
-  onCategoryClick(category: Category): void {
-    // console.log(this.categories);
 
+  onCategoryClick(category: Category): void {
     if (category.has_sub_categories === 1) {
-      this.router.navigate([`/category/${category.id}`]);
+      this.router.navigate([`/category/${category.slug}`]);
     } else {
-      this.router.navigate([`/courses/category/${category.id}`]);
+      this.router.navigate([`/courses/category/${category.slug}`]);
     }
   }
 }

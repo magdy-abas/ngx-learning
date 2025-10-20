@@ -13,7 +13,7 @@ export class CategoriesService {
 
   getCategories(
     withSubCategories: number = 0,
-    id?: number,
+    categorySlug?: string,
     page: number = 1,
     showSpinner: boolean = true
   ): Observable<CategoriesResponse> {
@@ -22,8 +22,8 @@ export class CategoriesService {
     if (withSubCategories !== undefined) {
       params = params.set('with_sub_categories', withSubCategories.toString());
     }
-    if (id !== undefined) {
-      params = params.set('id', id.toString());
+    if (categorySlug !== undefined) {
+      params = params.set('slug', categorySlug);
     }
 
     return this.http.get<CategoriesResponse>(`${baseUrl}categories`, {

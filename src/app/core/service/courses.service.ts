@@ -26,14 +26,14 @@ export class CoursesService {
     searchTerms: string,
     pagination: number,
     pageNum: number,
-    category_id: string | null,
+    categorySlug: string | null,
     doctor_id: string | null,
     showSpinner: boolean = true
   ): Observable<CoursesResponse> {
     let url = `${baseUrl}courses/lite?search=${searchTerms}&paginate_number=${pagination}&page=${pageNum}`;
 
-    if (category_id) {
-      url += `&category_id=${category_id}`;
+    if (categorySlug) {
+      url += `&category_slug=${categorySlug}`;
     }
 
     if (doctor_id) {
@@ -43,10 +43,8 @@ export class CoursesService {
     return this._HttpClient.get<CoursesResponse>(url, {
       context: new HttpContext().set(SKIP_GLOBAL_SPINNER, !showSpinner),
       observe: 'body' as const,
-      withCredentials: true,
+      // withCredentials: true,
     });
-    {
-    }
   }
 
   getMyCourses(
@@ -73,9 +71,11 @@ export class CoursesService {
     );
   }
 
-  getCoursesDetails(courseId: number): Observable<CourseDetailsResponse> {
+  getCoursesDetails(slug: string): Observable<CourseDetailsResponse> {
     return this._HttpClient.get<CourseDetailsResponse>(
-      `${baseUrl}chapters/v2/unsubscribed-course-content?course_id=${courseId}`
+      `${baseUrl}chapters/v2/unsubscribed-course-content-by-slug?slug=${encodeURIComponent(
+        slug
+      )}`
     );
   }
   makeRequest(data: RequestJoinDto): Observable<RequestJoinResponse> {

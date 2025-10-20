@@ -1,6 +1,8 @@
 export interface Category {
   id: number;
   title: string;
+  slug: string;
+
   image: string;
   has_sub_categories: number;
   sub_categories?: Category[];

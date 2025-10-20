@@ -204,7 +204,7 @@ export class SharedService {
     return item ? item.value : null;
   }
 
-  private injectCustomCss(cssCode: string) {
+  injectCustomCss(cssCode: string) {
     if (!isPlatformBrowser(this.platformId)) return;
     const head = document.head || document.getElementsByTagName('head')[0];
     const div = document.createElement('div');
@@ -214,7 +214,7 @@ export class SharedService {
     });
   }
 
-  private injectCustomJs(jsCode: string) {
+  injectCustomJs(jsCode: string) {
     if (!isPlatformBrowser(this.platformId)) return;
     const body = document.body || document.getElementsByTagName('body')[0];
     const div = document.createElement('div');

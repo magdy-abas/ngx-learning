@@ -64,6 +64,8 @@ export interface MeetingInfo {
 // Course Info
 export interface Course {
   id: number;
+  slug: string;
+
   title: string;
   description: string;
   way_to_by_course_in_app: string;
@@ -78,6 +80,8 @@ export interface Course {
   subscriptions_count: number;
   whatsapp_group: string | null;
   telegram_group: string | null;
+  meta_keywords: any;
+  meta_description: any;
 }
 
 // Watch Settings

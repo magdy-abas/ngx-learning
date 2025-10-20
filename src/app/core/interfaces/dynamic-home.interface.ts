@@ -40,6 +40,8 @@ export interface Doctor {
 
 export interface Category {
   id: number;
+  slug: string;
+
   title: string;
   image: string;
   has_sub_categories: number;
@@ -145,6 +147,8 @@ export interface IDoctor {
 
 export interface ICategory {
   id: number;
+  slug: string;
+
   title: string;
   image: string;
   has_sub_categories: number;

@@ -33,7 +33,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   lastPage: number = 1;
   isLoading: boolean = false;
   isSubCategoryView: boolean = false;
-  categoryId: number | null = null;
+  categorySlug: string | null = null;
   firstLoad = true;
   private _CategoriesService = inject(CategoriesService);
   private router = inject(Router);
@@ -42,21 +42,18 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((params) => {
-      this.categoryId = params.get('categoryId')
-        ? parseInt(params.get('categoryId')!, 10)
-        : null;
+      this.categorySlug = params.get('categorySlug');
 
-      if (this.categoryId) {
-        this.getCategories(1, this.categoryId);
+      if (this.categorySlug) {
+        this.getCategories(1, this.categorySlug);
       } else {
         this.getCategories(0);
       }
     });
   }
-
   getCategories(
     withSubCategories: number = 0,
-    id?: number,
+    categorySlug?: string,
     page: number = this.currentPage
   ): void {
     if (this.isLoading || this.currentPage > this.lastPage) return;
@@ -64,7 +61,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this._CategoriesService
-      .getCategories(withSubCategories, id, page, this.firstLoad)
+      .getCategories(withSubCategories, categorySlug, page, this.firstLoad)
       .subscribe((res: CategoriesResponse) => {
         if (withSubCategories === 1) {
           this.subCategories = res.data[0]?.sub_categories || [];
@@ -85,9 +82,9 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
     if (category.has_sub_categories === 1) {
       this.isSubCategoryView = true;
-      this.getCategories(1, category.id);
+      this.getCategories(1, category.slug);
     } else {
-      this.router.navigate([`/courses/category/${category.id}`]);
+      this.router.navigate([`/courses/category/${category.slug}`]);
     }
   }
 
@@ -96,7 +93,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       this.subCategories = subCategory.sub_categories || [];
       this.isSubCategoryView = true;
     } else {
-      this.router.navigate([`/courses/category/${subCategory.id}`]);
+      this.router.navigate([`/courses/category/${subCategory.slug}`]);
     }
   }
 

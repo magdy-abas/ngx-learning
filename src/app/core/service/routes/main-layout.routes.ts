@@ -46,7 +46,7 @@ export const mainRoutes: Routes = [
   },
 
   {
-    path: 'courses/category/:categoryId',
+    path: 'courses/category/:categorySlug',
 
     loadComponent: () =>
       import(
@@ -64,7 +64,7 @@ export const mainRoutes: Routes = [
     title: 'courses-doctor',
   },
   {
-    path: 'course-details/:id',
+    path: 'course-details/:slug',
 
     loadComponent: () =>
       import(

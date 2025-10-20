@@ -27,6 +27,7 @@ import { DoctorComment } from '../../../core/interfaces/doctor-comments';
 import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { DeviceTypeService } from '../../../core/service/device-type.service';
 import { GlobalTranslateService } from '../../../core/service/global-translate.service';
+import { SharedService } from '../../../core/service/shared.service';
 
 @Component({
   selector: 'app-courses-details',
@@ -88,7 +89,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private encryptionService: EncryptionService,
     private DarkModeService: DarkModeService,
     private deviceService: DeviceTypeService,
-    private globalTranslate: GlobalTranslateService
+    private globalTranslate: GlobalTranslateService,
+    private sharedService: SharedService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -101,32 +103,27 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     this.isAuth = this._AuthService.isAuthenticated();
     this.isIOS = this.deviceService.isIOS;
 
-    const courseId = this._route.snapshot.paramMap.get('id');
-    if (courseId) {
-      this.loadData(+courseId);
-      this.courseId = +courseId;
+    const slug = this._route.snapshot.paramMap.get('slug');
+    const nav = this._Router.getCurrentNavigation();
 
-      this.globalTranslate.language$.subscribe((lang) => {
-        this.loadData(this.courseId);
-      });
+    if (nav?.extras.state) {
+      this.courseId = nav.extras.state['id'];
+    }
+
+    if (slug) {
+      this.fetchCourseDetails(slug);
+      if (this.isAuth && this.courseId) {
+        this.getResources(this.courseId);
+        this.getDoctorComments(this.courseId);
+        this.userInfo = this._AuthService.userData;
+      }
     } else {
-      this.errorMessage = 'Invalid course ID';
+      this.errorMessage = 'Invalid course slug';
       this.isLoading = false;
     }
   }
-
   private scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  private loadData(courseId: number): void {
-    this.fetchCourseDetails(courseId);
-
-    if (this.isAuth) {
-      this.getResources(courseId);
-      this.getDoctorComments(courseId);
-      this.userInfo = this._AuthService.userData;
-    }
   }
 
   isClientSubscribe() {
@@ -205,9 +202,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
       0
     );
   }
-  fetchCourseDetails(courseId: number): void {
+  fetchCourseDetails(slug: string): void {
     const courseDetailsSub = this._CoursesService
-      .getCoursesDetails(courseId)
+      .getCoursesDetails(slug)
       .subscribe({
         next: async (data) => {
           if (!data || !data.course) {
@@ -223,6 +220,12 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
           this.isLoading = false;
           this.isClientSubscribe();
+          this.sharedService.injectCustomCss(
+            this.courseDetails.course.meta_description
+          );
+          this.sharedService.injectCustomCss(
+            this.courseDetails.course.meta_keywords
+          );
         },
         error: async (err) => {
           console.error(err);
