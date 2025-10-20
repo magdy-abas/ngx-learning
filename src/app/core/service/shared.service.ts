@@ -62,16 +62,6 @@ export class SharedService {
         if (response.status === 1) {
           this.isSecurityChecked.next(true);
           this.initializationComplete.next(true);
-          // Inject CSS from backend
-          if (isPlatformBrowser(this.platformId)) {
-            // Inject CSS & JS from backend
-            if (response.data?.custom_code?.css) {
-              this.injectCustomCss(response.data.custom_code.css);
-            }
-            if (response.data?.custom_code?.js) {
-              this.injectCustomJs(response.data.custom_code.js);
-            }
-          }
 
           // home version (v1 or v2)
           const version = this.extractHomeVersion(response.data);
@@ -202,25 +192,5 @@ export class SharedService {
       (attr) => attr.category === category && attr.key === key
     );
     return item ? item.value : null;
-  }
-
-  injectCustomCss(cssCode: string) {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const div = document.createElement('div');
-    div.innerHTML = cssCode;
-    Array.from(div.childNodes).forEach((el) => {
-      head.appendChild(el);
-    });
-  }
-
-  injectCustomJs(jsCode: string) {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const body = document.body || document.getElementsByTagName('body')[0];
-    const div = document.createElement('div');
-    div.innerHTML = jsCode;
-    Array.from(div.childNodes).forEach((el) => {
-      body.appendChild(el);
-    });
   }
 }

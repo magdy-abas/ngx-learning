@@ -1,13 +1,19 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
 import { SKIP_GLOBAL_SPINNER } from '../../shared/utils/loading.utils';
+import { isPlatformBrowser } from '@angular/common';
 
 let activeRequests = 0;
 
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   const spinner = inject(NgxSpinnerService);
+  const platformId = inject(PLATFORM_ID);
+
+  if (!isPlatformBrowser(platformId)) {
+    return next(req);
+  }
 
   if (req.context.get(SKIP_GLOBAL_SPINNER)) {
     return next(req);

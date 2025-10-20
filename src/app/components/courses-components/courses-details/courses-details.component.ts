@@ -28,6 +28,7 @@ import { DarkModeService } from '../../../core/service/dark-mode.service';
 import { DeviceTypeService } from '../../../core/service/device-type.service';
 import { GlobalTranslateService } from '../../../core/service/global-translate.service';
 import { SharedService } from '../../../core/service/shared.service';
+import { SeoService } from '../../../core/service/seo.service';
 
 @Component({
   selector: 'app-courses-details',
@@ -90,7 +91,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     private DarkModeService: DarkModeService,
     private deviceService: DeviceTypeService,
     private globalTranslate: GlobalTranslateService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private seo: SeoService
   ) {}
   closePdfViewer(): void {
     this.pdfUrl = '';
@@ -220,12 +222,12 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
           this.isLoading = false;
           this.isClientSubscribe();
-          this.sharedService.injectCustomCss(
-            this.courseDetails.course.meta_description
-          );
-          this.sharedService.injectCustomCss(
-            this.courseDetails.course.meta_keywords
-          );
+          const course = this.courseDetails.course;
+          this.seo.setSeoData({
+            title: course.title,
+            description: course.meta_description,
+            keywords: course.meta_keywords,
+          });
         },
         error: async (err) => {
           console.error(err);

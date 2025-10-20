@@ -7,15 +7,79 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="assets/default-favicon.png">
+
   <style>
+    #global-app-loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      z-index: 999999;
+      transition: opacity 0.4s ease;
+    }
 
+    #global-app-loader .spinner {
+      width: 52px;
+      height: 52px;
+      border: 5px solid #e0e0e0;
+      border-top: 5px solid #23509f;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
-
 </head>
 
 <body>
+  <div id="global-app-loader">
+    <div class="spinner"></div>
+  </div>
 
   <app-root></app-root>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const removeLoader = () => {
+        const loader = document.getElementById('global-app-loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          loader.style.transition = 'opacity 0.4s ease';
+          setTimeout(() => loader.remove(), 400);
+        }
+      };
+
+      const EXTRA_DELAY = 800;
+
+      const appRoot = document.querySelector('app-root');
+
+      const observer = new MutationObserver(() => {
+        if (appRoot && appRoot.children.length > 0) {
+          setTimeout(removeLoader, EXTRA_DELAY);
+          observer.disconnect();
+        }
+      });
+
+      if (appRoot) {
+        observer.observe(appRoot, { childList: true, subtree: true });
+      }
+
+
+      setTimeout(removeLoader, 5000);
+    });
+  </script>
+
+
 </body>
 
 </html>
