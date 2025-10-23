@@ -43,7 +43,7 @@ export class CoursesService {
     return this._HttpClient.get<CoursesResponse>(url, {
       context: new HttpContext().set(SKIP_GLOBAL_SPINNER, !showSpinner),
       observe: 'body' as const,
-      withCredentials: true,
+      // withCredentials: true,
     });
   }
 
