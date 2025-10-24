@@ -63,8 +63,10 @@ export class CoursesCardComponent implements OnInit {
   }
 
   goToCourse(course: any): void {
+    console.log('Slug from card:', course.slug);
+    console.log('Course ID from card:', course.id);
     this._Router.navigate(['/course-details', course.slug], {
-      state: { id: course.id },
+      state: { id: course.id, slug: course.slug },
     });
   }
 

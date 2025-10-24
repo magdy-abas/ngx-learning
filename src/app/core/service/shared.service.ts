@@ -52,9 +52,6 @@ export class SharedService {
       `${baseUrl}mobile-versions/last-version`
     );
   }
-  setLang(lang: string): Observable<any> {
-    return this._HttpClient.post(`${baseUrl}set-lang`, { lang });
-  }
 
   checkApiStatus(): Observable<boolean> {
     return this.CheckSecurityPoint().pipe(

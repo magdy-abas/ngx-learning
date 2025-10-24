@@ -1,6 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  inject,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   BsDatepickerModule,
@@ -9,7 +16,7 @@ import {
 } from 'ngx-bootstrap/datepicker';
 import { TranslateModule } from '@ngx-translate/core';
 import { defineLocale } from 'ngx-bootstrap/chronos';
-import { arLocale } from 'ngx-bootstrap/locale';
+import { arLocale, enGbLocale } from 'ngx-bootstrap/locale';
 import { registerLocaleData } from '@angular/common';
 import localeAr from '@angular/common/locales/ar';
 import localeEn from '@angular/common/locales/en';
@@ -22,10 +29,11 @@ import {
   BookSessionResponse,
 } from '../../../core/interfaces/private-sessions.interface';
 import { SweetAlertUtils } from '../../../shared/utils/SweetAlert.utils';
-
 import { Subject, takeUntil } from 'rxjs';
 
+// ✅ Register locales once
 defineLocale('ar', arLocale);
+defineLocale('en', enGbLocale);
 registerLocaleData(localeAr);
 registerLocaleData(localeEn);
 
@@ -44,9 +52,14 @@ export interface TimeSlot {
 })
 export class BookingComponent implements OnInit, OnDestroy {
   private destroyed$ = new Subject<void>();
+  private localeService = inject(BsLocaleService);
+  private platformId = inject(PLATFORM_ID);
+  refreshKey = signal(1);
 
-  doctor: any;
+  doctor: any = null;
   bookingSuccess: any = null;
+  private lastLoadedDate: string | null = null;
+  private skipNextDateChange = false;
 
   selectedDate = new Date();
   availableDates: Date[] = [];
@@ -54,7 +67,8 @@ export class BookingComponent implements OnInit, OnDestroy {
   timeSlots: TimeSlot[] = [];
   selectedTime: TimeSlot | null = null;
 
-  currentLang: string = 'ar';
+  currentLang: 'ar' | 'en' = 'ar';
+
   bsConfig: Partial<BsDatepickerConfig> = {
     containerClass: 'theme-custom',
     showWeekNumbers: false,
@@ -64,22 +78,25 @@ export class BookingComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private doctorsService: DoctorsService,
-    private localeService: BsLocaleService,
     private globalTranslate: GlobalTranslateService
   ) {
-    this.doctor = history.state['doctor'] ?? null;
+    if (isPlatformBrowser(this.platformId)) {
+      this.doctor = history.state['doctor'] ?? null;
+    }
+
     if (!this.doctor) {
       this.router.navigate(['/']);
     }
   }
 
   ngOnInit(): void {
+    const initLang =
+      (this.globalTranslate.language$.value as 'ar' | 'en') ?? 'ar';
+    this.applyLocale(initLang);
+
     this.globalTranslate.language$
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((lang) => {
-        this.currentLang = lang;
-        this.localeService.use(lang);
-      });
+      .subscribe((lang) => this.applyLocale(lang as 'ar' | 'en'));
 
     if (this.doctor?.id) {
       this.loadAvailableDates(this.doctor.id);
@@ -89,6 +106,16 @@ export class BookingComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+
+  private applyLocale(lang: 'ar' | 'en') {
+    this.currentLang = lang;
+    this.localeService.use(lang === 'ar' ? 'ar' : 'en');
+
+    this.skipNextDateChange = true;
+
+    this.refreshKey.set(0);
+    setTimeout(() => this.refreshKey.set(1), 0);
   }
 
   private loadAvailableDates(doctorId: number) {
@@ -106,26 +133,29 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   onDateChange(date: Date, initial = false) {
-    if (
-      !initial &&
-      this.formatDate(date) === this.formatDate(this.selectedDate)
-    )
-      return;
+    const formatted = this.formatDate(date);
 
+    if (this.skipNextDateChange) {
+      this.skipNextDateChange = false;
+      return;
+    }
+
+    if (this.lastLoadedDate === formatted) return;
+
+    this.lastLoadedDate = formatted;
     this.selectedDate = date;
-    this.doctorsService
-      .getAvailableTimes(this.doctor.id, this.formatDate(date))
-      .subscribe({
-        next: (res: AvailableTimesResponse) => {
-          this.timeSlots = res.data.map((t) => ({
-            id: t.id,
-            time_from: t.time_from,
-            time_to: t.time_to,
-          }));
-          this.selectedTime = this.timeSlots[0] ?? null;
-        },
-        error: (err) => console.error('Failed to load available times', err),
-      });
+
+    this.doctorsService.getAvailableTimes(this.doctor.id, formatted).subscribe({
+      next: (res: AvailableTimesResponse) => {
+        this.timeSlots = res.data.map((t) => ({
+          id: t.id,
+          time_from: t.time_from,
+          time_to: t.time_to,
+        }));
+        this.selectedTime = this.timeSlots[0] ?? null;
+      },
+      error: (err) => console.error('Failed to load available times', err),
+    });
   }
 
   proceedBooking() {

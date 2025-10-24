@@ -17,6 +17,7 @@ import { MyCourse } from '../../../core/interfaces/my-courses.interface';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
+import { GlobalTranslateService } from '../../../core/service/global-translate.service';
 
 @Component({
   selector: 'app-my-courses',
@@ -38,6 +39,8 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   private _CoursesService = inject(CoursesService);
   private _Router = inject(Router);
+  private globalTranslate = inject(GlobalTranslateService);
+
   myCourses: MyCourse[] = [];
 
   searchDataValue: string = '';
@@ -46,6 +49,18 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getMyCourses();
+    let firstLangChange = true;
+
+    const langSub = this.globalTranslate.language$.subscribe((lang) => {
+      if (firstLangChange) {
+        firstLangChange = false;
+        return;
+      }
+
+      this.getMyCourses(this.selectedValue);
+    });
+
+    this.subscriptions.push(langSub);
   }
 
   getMyCourses(selectedValue: string = 'all courses') {

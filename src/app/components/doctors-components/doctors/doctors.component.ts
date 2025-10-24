@@ -10,6 +10,7 @@ import { HomeInstructorsComponent } from '../../home/home-components/home-instru
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { NgIf } from '@angular/common';
+import { GlobalTranslateService } from '../../../core/service/global-translate.service';
 
 @Component({
   selector: 'app-doctors',
@@ -26,11 +27,24 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   lastPage: number = 1;
   isLoading: boolean = false;
   firstLoad = true;
+  private globalTranslate = inject(GlobalTranslateService);
 
   private _doctorsService = inject(DoctorsService);
 
   ngOnInit(): void {
     this.getDoctors();
+    let firstLangChange = true;
+
+    const langSub = this.globalTranslate.language$.subscribe((lang) => {
+      if (firstLangChange) {
+        firstLangChange = false;
+        return;
+      }
+
+      this.resetAndLoad();
+    });
+
+    this.subscriptions.push(langSub);
 
     Aos.init({
       duration: 1200,
@@ -61,6 +75,15 @@ export class DoctorsComponent implements OnInit, OnDestroy {
       });
     this.subscriptions.push(doctorSub);
   }
+
+  private resetAndLoad(): void {
+    this.doctors = [];
+    this.currentPage = 1;
+    this.lastPage = 1;
+    this.firstLoad = true;
+    this.getDoctors();
+  }
+
   ngOnDestroy(): void {
     unsubscribeAll(...this.subscriptions);
   }

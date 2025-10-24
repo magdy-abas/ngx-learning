@@ -16,6 +16,7 @@ import { AuthService } from '../../core/service/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../shared/utils/unSubscribeObservable.utils';
+import { GlobalTranslateService } from '../../core/service/global-translate.service';
 
 @Component({
   selector: 'app-categories',
@@ -39,6 +40,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  private globalTranslate = inject(GlobalTranslateService);
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((params) => {
@@ -50,7 +52,20 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         this.getCategories(0);
       }
     });
+
+    let firstLangChange = true;
+    const langSub = this.globalTranslate.language$.subscribe((lang) => {
+      if (firstLangChange) {
+        firstLangChange = false;
+        return;
+      }
+
+      this.resetAndLoad();
+    });
+
+    this.subscriptions.push(langSub);
   }
+
   getCategories(
     withSubCategories: number = 0,
     categorySlug?: string,
@@ -113,7 +128,22 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
     this.getCategories(0);
   }
+
+  private resetAndLoad(): void {
+    this.categories = [];
+    this.subCategories = [];
+    this.currentPage = 1;
+    this.lastPage = 1;
+    this.firstLoad = true;
+
+    if (this.categorySlug) {
+      this.getCategories(1, this.categorySlug);
+    } else {
+      this.getCategories(0);
+    }
+  }
+
   ngOnDestroy(): void {
-    unsubscribeAll(this.routeSub!);
+    unsubscribeAll(this.routeSub!, ...this.subscriptions);
   }
 }

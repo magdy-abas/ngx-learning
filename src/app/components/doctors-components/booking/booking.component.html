@@ -57,9 +57,12 @@
     'border-end': currentLang === 'en'
   }">
               <div class="theme-custom mx-auto">
-                <bs-datepicker-inline [bsValue]="selectedDate" [bsConfig]="bsConfig" [datesEnabled]="availableDates"
-                  (bsValueChange)="onDateChange($event)">
-                </bs-datepicker-inline>
+                <ng-container *ngIf="refreshKey()">
+                  <bs-datepicker-inline [bsValue]="selectedDate" [bsConfig]="bsConfig" [datesEnabled]="availableDates"
+                    (bsValueChange)="onDateChange($event)">
+                  </bs-datepicker-inline>
+                </ng-container>
+
 
 
               </div>

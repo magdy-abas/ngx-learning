@@ -1,16 +1,17 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { DoctorsService } from '../../../core/service/doctors.service';
 import { Doctor } from '../../../core/interfaces/doctors.interface';
 import { NgIf } from '@angular/common';
 import { CoursesCardComponent } from '../../../shared/ui/courses-card/courses-card.component';
 import { CoursesService } from '../../../core/service/courses.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { unsubscribeAll } from '../../../shared/utils/unSubscribeObservable.utils';
 import { SweetAlertUtils } from '../../../shared/utils/SweetAlert.utils';
 import { AuthService } from '../../../core/service/auth.service';
+import { GlobalTranslateService } from '../../../core/service/global-translate.service';
+import { SsrService } from '../../../core/service/ssr.service';
 
 @Component({
   selector: 'app-doctors-details',
@@ -20,50 +21,67 @@ import { AuthService } from '../../../core/service/auth.service';
   styleUrl: './doctors-details.component.scss',
 })
 export class DoctorsDetailsComponent implements OnInit, OnDestroy {
-  isBooked: boolean = false;
+  isBooked = false;
   subscriptions: Subscription[] = [];
   doctor!: Doctor;
   courses: any[] = [];
-  currentPage: number = 1;
-  totalPages: number = 1;
-  isLoading: boolean = false;
-  allDataLoaded: boolean = false;
-  private doctorId!: number;
+  currentPage = 1;
+  totalPages = 1;
+  isLoading = false;
+  allDataLoaded = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private doctorsService: DoctorsService,
     private CoursesService: CoursesService,
-    private translate: TranslateService,
-    public authService: AuthService
+    public authService: AuthService,
+    private globalTranslate: GlobalTranslateService,
+    private ssr: SsrService
   ) {}
 
   ngOnInit(): void {
     this.currentPage = 1;
     this.courses = [];
     this.allDataLoaded = false;
-    const stateDoctor = history.state['doctor'];
 
-    if (stateDoctor) {
-      this.doctor = stateDoctor;
-      this.getDoctorCourses(this.doctor.id, this.currentPage);
-    } else {
-      const id = this.route.snapshot.paramMap.get('id');
-      if (id) {
-        this.loadDoctor(+id);
+    const win = this.ssr.getWindow();
+
+    if (win) {
+      const stateDoctor = win.history?.state?.['doctor'];
+
+      if (stateDoctor) {
+        this.doctor = stateDoctor;
+        this.getDoctorCourses(this.doctor.id, this.currentPage);
       } else {
-        console.error('No doctor data found in state or route params.');
+        const id = this.route.snapshot.paramMap.get('id');
+        if (id) this.loadDoctor(+id);
+        else console.error('No doctor data found in state or route params.');
       }
+    } else {
+      // SSR
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) this.loadDoctor(+id);
     }
+
+    //  language reload
+    let firstLangChange = true;
+    const langSub = this.globalTranslate.language$.subscribe((lang) => {
+      if (firstLangChange) {
+        firstLangChange = false;
+        return;
+      }
+      this.resetAndReload();
+    });
+
+    this.subscriptions.push(langSub);
   }
 
   loadDoctor(id: number) {
     const doctorSub = this.doctorsService.getDoctors(1, id).subscribe({
       next: (data) => {
         this.doctor = data.data[0];
-
-        localStorage.setItem('currentDoctor', JSON.stringify(this.doctor));
+        this.ssr.setLocal('currentDoctor', JSON.stringify(this.doctor));
 
         if (this.doctor?.id) {
           this.getDoctorCourses(this.doctor.id, this.currentPage);
@@ -77,6 +95,7 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(doctorSub);
   }
+
   getDoctorCourses(doctorId: number, page: number): void {
     if (this.isLoading || this.allDataLoaded) return;
 
@@ -96,19 +115,14 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
           return;
         }
 
-        if (page === 1) {
-          this.courses = res.data;
-        } else {
-          this.courses.push(...res.data);
-        }
+        if (page === 1) this.courses = res.data;
+        else this.courses.push(...res.data);
 
         this.totalPages = +res.meta.last_page || 1;
         this.currentPage = +res.meta.current_page || page;
         this.isLoading = false;
 
-        if (this.currentPage >= this.totalPages) {
-          this.allDataLoaded = true;
-        }
+        if (this.currentPage >= this.totalPages) this.allDataLoaded = true;
       },
       error: (err) => {
         console.error('Failed to load courses', err);
@@ -117,8 +131,11 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(coursesSub);
   }
+
   @HostListener('window:scroll', [])
   onScroll(): void {
+    if (!this.ssr.isBrowser()) return;
+
     const scrollPosition = window.innerHeight + window.pageYOffset;
     const pageHeight = document.documentElement.offsetHeight;
 
@@ -136,6 +153,7 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
     this.currentPage = page;
     this.getDoctorCourses(this.doctor.id, this.currentPage);
   }
+
   onBookPrivateAppointment() {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/booking'], {
@@ -143,11 +161,19 @@ export class DoctorsDetailsComponent implements OnInit, OnDestroy {
       });
     } else {
       SweetAlertUtils.showLoginRequired().then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(['/login']);
-        }
+        if (result.isConfirmed) this.router.navigate(['/login']);
       });
     }
+  }
+
+  private resetAndReload(): void {
+    this.courses = [];
+    this.currentPage = 1;
+    this.allDataLoaded = false;
+
+    const id = this.doctor?.id || this.route.snapshot.paramMap.get('id');
+    if (id) this.loadDoctor(+id);
+    else console.error('❌ No doctor ID found for reload.');
   }
 
   ngOnDestroy(): void {

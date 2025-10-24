@@ -60,10 +60,6 @@ export class GlobalTranslateService {
       )
     );
 
-    if (isPlatformBrowser(this.platformId)) {
-      await firstValueFrom(this.sharedService.setLang(lang));
-    }
-
     this.language$.next(lang);
   }
 

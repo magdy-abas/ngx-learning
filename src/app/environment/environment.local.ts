@@ -11,7 +11,7 @@ function getMainDomain(): string {
   // }
 
   // return parts[0];
-  return 'loop-edx';
+  return 'farida';
 }
 export const baseUrl = `https://${getMainDomain()}.stepsio.com/api/`;
 

@@ -17,14 +17,16 @@
           </div>
         </div>
 
-        <bs-datepicker-inline [bsValue]="bsValue()" (bsValueChange)="onDateChange($event)" [bsConfig]="{
-    containerClass: 'theme-default',
-    showWeekNumbers: false,
-    isAnimated: true,
-    adaptivePosition: false,
-    initCurrentTime: false
-  }">
-        </bs-datepicker-inline>
+        <ng-container *ngIf="refreshKey()">
+          <bs-datepicker-inline [bsValue]="bsValue()" (bsValueChange)="onDateChange($event)" [bsConfig]="{
+        containerClass: 'theme-default',
+        showWeekNumbers: false,
+        isAnimated: true,
+        adaptivePosition: false,
+        initCurrentTime: false
+      }">
+          </bs-datepicker-inline>
+        </ng-container>
 
 
       </div>
