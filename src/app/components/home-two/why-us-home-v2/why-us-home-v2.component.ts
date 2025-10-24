@@ -3,6 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedService } from '../../../core/service/shared.service';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
 
 @Component({
   selector: 'app-why-us-home-v2',
@@ -33,10 +34,10 @@ export class WhyUsHomeV2Component implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private DynamicHomeService: DynamicHomeService) {}
 
   ngOnInit(): void {
-    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+    this.subscription = this.DynamicHomeService.appAttrs$.subscribe((attrs) => {
       if (attrs.length > 0) {
         this.loadWhyUsData();
       }
@@ -44,48 +45,51 @@ export class WhyUsHomeV2Component implements OnInit, OnDestroy {
   }
 
   private loadWhyUsData(): void {
-    this.kicker = this.sharedService.getAppAttrValue('why_us', 'kicker_title');
-    this.title = this.sharedService.getAppAttrValue('why_us', 'title');
-    this.text = this.sharedService.getAppAttrValue('why_us', 'text');
-    this.cta = this.sharedService.getAppAttrValue('why_us', 'btn');
+    this.kicker = this.DynamicHomeService.getAppAttrValue(
+      'why_us',
+      'kicker_title'
+    );
+    this.title = this.DynamicHomeService.getAppAttrValue('why_us', 'title');
+    this.text = this.DynamicHomeService.getAppAttrValue('why_us', 'text');
+    this.cta = this.DynamicHomeService.getAppAttrValue('why_us', 'btn');
 
-    this.feature1Title = this.sharedService.getAppAttrValue(
+    this.feature1Title = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature1_title'
     );
-    this.feature1Text = this.sharedService.getAppAttrValue(
+    this.feature1Text = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature1_text'
     );
 
-    this.feature2Title = this.sharedService.getAppAttrValue(
+    this.feature2Title = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature2_title'
     );
-    this.feature2Text = this.sharedService.getAppAttrValue(
+    this.feature2Text = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature2_text'
     );
 
-    this.feature3Title = this.sharedService.getAppAttrValue(
+    this.feature3Title = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature3_title'
     );
-    this.feature3Text = this.sharedService.getAppAttrValue(
+    this.feature3Text = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature3_text'
     );
 
-    this.feature4Title = this.sharedService.getAppAttrValue(
+    this.feature4Title = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature4_title'
     );
-    this.feature4Text = this.sharedService.getAppAttrValue(
+    this.feature4Text = this.DynamicHomeService.getAppAttrValue(
       'why_us',
       'feature4_text'
     );
 
-    const whyUsAttrs = this.sharedService.getAppAttrByCategory('why_us');
+    const whyUsAttrs = this.DynamicHomeService.getAppAttrByCategory('why_us');
     this.feature1Icon =
       whyUsAttrs.find((attr) => attr.key === 'icon1')?.file || null;
     this.feature2Icon =

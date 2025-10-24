@@ -4,6 +4,7 @@ import { SharedService } from '../../../core/service/shared.service';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
 
 @Component({
   selector: 'app-hero-home-v2',
@@ -26,10 +27,10 @@ export class HeroHomeV2Component implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private DynamicHomeService: DynamicHomeService) {}
 
   ngOnInit(): void {
-    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+    this.subscription = this.DynamicHomeService.appAttrs$.subscribe((attrs) => {
       if (attrs.length > 0) {
         this.loadHeroData();
       }
@@ -37,16 +38,26 @@ export class HeroHomeV2Component implements OnInit, OnDestroy {
   }
 
   private loadHeroData(): void {
-    this.title1 = this.sharedService.getAppAttrValue('hero_section', 'title1');
-    this.title2 = this.sharedService.getAppAttrValue('hero_section', 'title2');
-    this.title3 = this.sharedService.getAppAttrValue('hero_section', 'for You');
-    this.subtitle = this.sharedService.getAppAttrValue(
+    this.title1 = this.DynamicHomeService.getAppAttrValue(
+      'hero_section',
+      'title1'
+    );
+    this.title2 = this.DynamicHomeService.getAppAttrValue(
+      'hero_section',
+      'title2'
+    );
+    this.title3 = this.DynamicHomeService.getAppAttrValue(
+      'hero_section',
+      'for You'
+    );
+    this.subtitle = this.DynamicHomeService.getAppAttrValue(
       'hero_section',
       'subtitle'
     );
-    this.cta = this.sharedService.getAppAttrValue('hero_section', 'btn');
+    this.cta = this.DynamicHomeService.getAppAttrValue('hero_section', 'btn');
 
-    const heroAttrs = this.sharedService.getAppAttrByCategory('hero_section');
+    const heroAttrs =
+      this.DynamicHomeService.getAppAttrByCategory('hero_section');
     this.img1 = heroAttrs.find((attr) => attr.key === 'img1')?.file || null;
     this.img2 = heroAttrs.find((attr) => attr.key === 'img2')?.file || null;
     this.img3 = heroAttrs.find((attr) => attr.key === 'img3')?.file || null;

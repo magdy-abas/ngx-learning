@@ -85,6 +85,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(querySub);
+
+    const langSub = this.globalTranslate.language$.subscribe(() => {
+      this.resetAndLoad();
+    });
+    this.subscriptions.push(langSub);
   }
   ngOnDestroy(): void {
     unsubscribeAll(...this.subscriptions);

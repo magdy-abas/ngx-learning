@@ -30,7 +30,7 @@ export class SharedService {
   initialized$ = this.initializationComplete.asObservable();
   private loginMethod: string | null = null;
   private homeVersion: 'v1' | 'v2' = 'v2';
-  private appAttrs: any[] = [];
+
   private appAttrsSubject = new BehaviorSubject<any[]>([]);
   public appAttrs$ = this.appAttrsSubject.asObservable();
 
@@ -67,10 +67,6 @@ export class SharedService {
           const version = this.extractHomeVersion(response.data);
           this.setHomeVersion(version);
           this.setLoginMethod(response.data.settings.auth_login_with);
-
-          if (version === 'v2') {
-            this.setAppAttrs(response.data.app_attrs || []);
-          }
         } else {
           this.isSecurityChecked.next(false);
 
@@ -89,18 +85,6 @@ export class SharedService {
 
         return of(false);
       })
-    );
-  }
-
-  reloadAppAttrs(): Observable<void> {
-    return this.getHomeContent().pipe(
-      tap((response) => {
-        if (response.status === 1 && response.data?.app_attrs) {
-          this.setAppAttrs(response.data.app_attrs);
-        }
-      }),
-      map(() => void 0),
-      catchError(() => of(void 0))
     );
   }
 
@@ -170,27 +154,5 @@ export class SharedService {
     if (!isPlatformBrowser(this.platformId)) return;
     document.body.classList.remove('home-v1', 'home-v2');
     document.body.classList.add(version === 'v1' ? 'home-v1' : 'home-v2');
-  }
-
-  // response.data.app_attrs
-
-  setAppAttrs(attrs: any[]) {
-    this.appAttrs = attrs;
-    this.appAttrsSubject.next(attrs);
-  }
-
-  getAppAttrs() {
-    return this.appAttrs;
-  }
-
-  getAppAttrByCategory(category: string) {
-    return this.appAttrs?.filter((attr) => attr.category === category) || [];
-  }
-
-  getAppAttrValue(category: string, key: string): string | null {
-    const item = this.appAttrs.find(
-      (attr) => attr.category === category && attr.key === key
-    );
-    return item ? item.value : null;
   }
 }

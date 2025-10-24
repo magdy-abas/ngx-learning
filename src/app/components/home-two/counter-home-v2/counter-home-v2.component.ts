@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedService } from '../../../core/service/shared.service';
 import { Subscription } from 'rxjs';
+import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
 
 @Component({
   selector: 'app-counter-home-v2',
@@ -23,10 +24,10 @@ export class CounterHomeV2Component implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private DynamicHomeService: DynamicHomeService) {}
 
   ngOnInit(): void {
-    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+    this.subscription = this.DynamicHomeService.appAttrs$.subscribe((attrs) => {
       if (attrs.length > 0) {
         this.loadCounterData();
       }
@@ -35,31 +36,34 @@ export class CounterHomeV2Component implements OnInit, OnDestroy {
 
   private loadCounterData(): void {
     this.coursesNumber = +(
-      this.sharedService.getAppAttrValue('counter', 'courses_number') || 0
+      this.DynamicHomeService.getAppAttrValue('counter', 'courses_number') || 0
     );
     this.studentsNumber = +(
-      this.sharedService.getAppAttrValue('counter', 'students_number') || 0
+      this.DynamicHomeService.getAppAttrValue('counter', 'students_number') || 0
     );
     this.teachersNumber = +(
-      this.sharedService.getAppAttrValue('counter', 'teachers_number') || 0
+      this.DynamicHomeService.getAppAttrValue('counter', 'teachers_number') || 0
     );
     this.fieldsNumber = +(
-      this.sharedService.getAppAttrValue('counter', 'fields_number') || 0
+      this.DynamicHomeService.getAppAttrValue('counter', 'fields_number') || 0
     );
 
-    this.coursesLabel = this.sharedService.getAppAttrValue(
+    this.coursesLabel = this.DynamicHomeService.getAppAttrValue(
       'counter',
       'courses'
     );
-    this.studentsLabel = this.sharedService.getAppAttrValue(
+    this.studentsLabel = this.DynamicHomeService.getAppAttrValue(
       'counter',
       'students'
     );
-    this.teachersLabel = this.sharedService.getAppAttrValue(
+    this.teachersLabel = this.DynamicHomeService.getAppAttrValue(
       'counter',
       'teachers'
     );
-    this.fieldsLabel = this.sharedService.getAppAttrValue('counter', 'fields');
+    this.fieldsLabel = this.DynamicHomeService.getAppAttrValue(
+      'counter',
+      'fields'
+    );
   }
 
   ngOnDestroy(): void {

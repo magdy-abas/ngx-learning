@@ -79,8 +79,6 @@ export class HomeTwoComponent implements AfterViewInit, OnInit, OnDestroy {
   private _DynamicHomeService = inject(DynamicHomeService);
 
   ngOnInit(): void {
-    this.SharedService.reloadAppAttrs().subscribe(() => {});
-
     this.subscriptions.push(
       this.globalTranslate.language$.subscribe((lang) => {
         this.getHomeData();

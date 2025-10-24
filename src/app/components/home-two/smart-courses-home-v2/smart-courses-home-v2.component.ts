@@ -4,6 +4,7 @@ import { NgIf } from '@angular/common';
 import { SharedService } from '../../../core/service/shared.service';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
 
 @Component({
   selector: 'app-smart-courses-home-v2',
@@ -22,10 +23,10 @@ export class SmartCoursesHomeV2Component implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private DynamicHomeService: DynamicHomeService) {}
 
   ngOnInit(): void {
-    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+    this.subscription = this.DynamicHomeService.appAttrs$.subscribe((attrs) => {
       if (attrs.length > 0) {
         this.loadSmartData();
       }
@@ -33,14 +34,21 @@ export class SmartCoursesHomeV2Component implements OnInit, OnDestroy {
   }
 
   private loadSmartData(): void {
-    this.kicker = this.sharedService.getAppAttrValue(
+    this.kicker = this.DynamicHomeService.getAppAttrValue(
       'smart_section',
       'kicker_title'
     );
-    this.title = this.sharedService.getAppAttrValue('smart_section', 'title');
-    this.text = this.sharedService.getAppAttrValue('smart_section', 'text');
+    this.title = this.DynamicHomeService.getAppAttrValue(
+      'smart_section',
+      'title'
+    );
+    this.text = this.DynamicHomeService.getAppAttrValue(
+      'smart_section',
+      'text'
+    );
 
-    const smartAttrs = this.sharedService.getAppAttrByCategory('smart_section');
+    const smartAttrs =
+      this.DynamicHomeService.getAppAttrByCategory('smart_section');
     this.img1 = smartAttrs.find((attr) => attr.key === 'img1')?.file || null;
     this.img2 = smartAttrs.find((attr) => attr.key === 'img2')?.file || null;
   }

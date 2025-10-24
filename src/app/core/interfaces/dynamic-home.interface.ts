@@ -6,6 +6,7 @@ export interface DynamicHomeResponse {
   message: string;
   contact_us: ContactUs;
   client_user_is_verified: number;
+  last_version_data: LastVersionData;
 }
 
 export interface HomeSection {
@@ -216,4 +217,51 @@ export interface DoctorsSection {
   short_title?: string;
   description?: string;
   data: IDoctor[];
+}
+export interface LastVersionData {
+  version: string;
+  force_update: number;
+  settings: VersionSettings;
+  device_checks: DeviceCheck[];
+  app_styles: AppStyles;
+  app_attrs: AppAttribute[];
+  cookies: any | null;
+  ecommerce_status: boolean;
+  select_category_in_register: boolean;
+  pbk: string;
+  custom_code: CustomCode;
+}
+
+export interface VersionSettings {
+  open_in_tab: boolean;
+  open_in_ipad: boolean;
+  ios_auth_login_with: string;
+  android_auth_login_with: string;
+  auth_login_with: string;
+  ws_ready_to_use: boolean;
+  all_verified: boolean;
+}
+
+export interface DeviceCheck {
+  key: string;
+  operator: string;
+  value: string;
+}
+
+export interface AppStyles {
+  [key: string]: string;
+  primary_color: string;
+  secondery_color: string;
+}
+
+export interface AppAttribute {
+  category: string;
+  key: string;
+  value: string | null;
+  file: string | null;
+}
+
+export interface CustomCode {
+  css: string;
+  js: string;
 }

@@ -4,6 +4,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedService } from '../../../core/service/shared.service';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
 
 interface Avatar {
   file: string;
@@ -46,10 +47,10 @@ export class TestimonialHomeV2Component implements OnInit, OnDestroy {
     },
   };
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private DynamicHomeService: DynamicHomeService) {}
 
   ngOnInit(): void {
-    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+    this.subscription = this.DynamicHomeService.appAttrs$.subscribe((attrs) => {
       if (attrs.length > 0) {
         this.loadTestimonialData();
       }
@@ -57,16 +58,19 @@ export class TestimonialHomeV2Component implements OnInit, OnDestroy {
   }
 
   private loadTestimonialData(): void {
-    this.kicker = this.sharedService.getAppAttrValue(
+    this.kicker = this.DynamicHomeService.getAppAttrValue(
       'testimonials',
       'kicker_title'
     );
-    this.title = this.sharedService.getAppAttrValue('testimonials', 'title');
+    this.title = this.DynamicHomeService.getAppAttrValue(
+      'testimonials',
+      'title'
+    );
 
     this.testimonials = [];
 
     [1, 2, 3].forEach((i) => {
-      const text = this.sharedService.getAppAttrValue(
+      const text = this.DynamicHomeService.getAppAttrValue(
         'testimonials',
         `quote${i}`
       );
@@ -74,13 +78,14 @@ export class TestimonialHomeV2Component implements OnInit, OnDestroy {
       if (text) {
         // main avatar
         const main =
-          this.sharedService
-            .getAppAttrByCategory('testimonials')
-            .find((attr) => attr.key === `quote${i}_main1`)?.file || null;
+          this.DynamicHomeService.getAppAttrByCategory('testimonials').find(
+            (attr) => attr.key === `quote${i}_main1`
+          )?.file || null;
 
         // floating avatars
-        const avatars = this.sharedService
-          .getAppAttrByCategory('testimonials')
+        const avatars = this.DynamicHomeService.getAppAttrByCategory(
+          'testimonials'
+        )
           .filter((attr) => attr.key.startsWith(`quote${i}_avatar`))
           .map((attr) => {
             let position = '';

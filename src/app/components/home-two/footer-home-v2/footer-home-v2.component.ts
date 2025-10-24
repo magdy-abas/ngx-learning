@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { SharedService } from '../../../core/service/shared.service';
 import { Subscription } from 'rxjs';
+import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
 
 @Component({
   selector: 'app-footer-home-v2',
@@ -23,10 +24,13 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(
+    private DynamicHomeService: DynamicHomeService,
+    private SharedService: SharedService
+  ) {}
 
   ngOnInit(): void {
-    this.subscription = this.sharedService.appAttrs$.subscribe((attrs) => {
+    this.subscription = this.DynamicHomeService.appAttrs$.subscribe((attrs) => {
       if (attrs.length > 0) {
         this.loadFooterData();
       }
@@ -34,10 +38,11 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
   }
 
   private loadFooterData(): void {
-    const footerAttrs = this.sharedService.getAppAttrByCategory('footer');
-    const contactAttrs = this.sharedService.getAppAttrByCategory('contact');
+    const footerAttrs = this.DynamicHomeService.getAppAttrByCategory('footer');
+    const contactAttrs =
+      this.DynamicHomeService.getAppAttrByCategory('contact');
     const bottomFooterAttrs =
-      this.sharedService.getAppAttrByCategory('bottom_footer');
+      this.DynamicHomeService.getAppAttrByCategory('bottom_footer');
 
     this.footerLogo =
       footerAttrs.find((attr) => attr.key === 'big_logo')?.file || null;
@@ -54,9 +59,9 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
       contactAttrs.find((attr) => attr.key === 'whatsapp')?.value || null;
 
     this.contactNumber =
-      this.sharedService.getSettings()?.data?.contact_us?.call_number || null;
+      this.SharedService.getSettings()?.data?.contact_us?.call_number || null;
     this.whatsappNumber =
-      this.sharedService.getSettings()?.data?.contact_us?.whatsapp || null;
+      this.SharedService.getSettings()?.data?.contact_us?.whatsapp || null;
 
     this.bottomFooter =
       bottomFooterAttrs.find((attr) => attr.key === 'Rights')?.value || null;

@@ -59,8 +59,6 @@ export class GlobalTranslateService {
       await firstValueFrom(this.sharedService.setLang(lang));
     }
 
-    await firstValueFrom(this.sharedService.reloadAppAttrs());
-
     this.language$.next(lang);
   }
 
