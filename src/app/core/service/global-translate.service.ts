@@ -46,6 +46,12 @@ export class GlobalTranslateService {
 
   private async applyLanguage(lang: 'ar' | 'en'): Promise<void> {
     this.ssr.setLocal('lang', lang);
+
+    // ✅ هنا نضيف سطر لتخزين اللغة في الكوكيز عشان السيرفر يشوفها
+    if (isPlatformBrowser(this.platformId)) {
+      document.cookie = `lang=${lang}; path=/; SameSite=None; Secure`;
+    }
+
     this.updateDocumentDirection(lang);
 
     await firstValueFrom(
