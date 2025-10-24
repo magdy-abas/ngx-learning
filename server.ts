@@ -39,7 +39,6 @@ export function app(): express.Express {
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
-
   const commonEngine = new CommonEngine();
 
   server.set('view engine', 'html');
@@ -63,9 +62,12 @@ export function app(): express.Express {
         req.headers['accept-language']?.split(',')[0]?.split('-')[0] ||
         'ar';
 
+      const token = req.cookies?.token || null;
+
       res.cookie('lang', lang, { path: '/', sameSite: 'none', secure: true });
 
       console.log('🌍 SSR detected lang:', lang);
+      console.log('🔐 SSR detected token:', token ? '✅ Exists' : '❌ Missing');
 
       const seo = await getSeoSnippets();
 
@@ -77,6 +79,7 @@ export function app(): express.Express {
         providers: [
           { provide: APP_BASE_HREF, useValue: baseUrl },
           { provide: 'SSR_LANG', useValue: lang },
+          { provide: 'SSR_TOKEN', useValue: token },
         ],
       });
 

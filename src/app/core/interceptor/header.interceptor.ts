@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { inject, PLATFORM_ID, Inject, Optional } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
@@ -24,41 +24,39 @@ export const headerInterceptor: HttpInterceptorFn = (
   const ssr = inject(SsrService);
   const platformId = inject(PLATFORM_ID);
 
-  // ✅ نحاول نقرأ اللغة اللي السيرفر مررها وقت SSR (لو فيه)
   let ssrLang: string | null = null;
-  try {
-    ssrLang = inject('SSR_LANG' as any);
-  } catch {
-    ssrLang = null;
+  let ssrToken: string | null = null;
+
+  if (isPlatformServer(platformId)) {
+    try {
+      ssrLang = inject('SSR_LANG' as any);
+      ssrToken = inject('SSR_TOKEN' as any);
+    } catch {
+      ssrLang = null;
+      ssrToken = null;
+    }
   }
 
-  // ✅ نحدد اللغة المناسبة
   const lang =
     ssrLang ||
     translateService.currentLang ||
     translateService.defaultLang ||
     'ar';
 
-  // ✅ لو السيرفر، نضيف الهيدر ونكمل
-  if (isPlatformServer(platformId)) {
-    const modifiedReq = req.clone({
-      setHeaders: {
-        Accept: 'application/json',
-        'Accept-Language': lang,
-        'Accept-Browser': 'angular_website',
-      },
-    });
-    return next(modifiedReq);
+  const headers: Record<string, string> = {
+    Accept: 'application/json',
+    'Accept-Language': lang,
+    'Accept-Browser': 'angular_website',
+  };
+
+  if (ssrToken) {
+    headers['Authorization'] = `Bearer ${ssrToken}`;
+  } else {
+    const token = ssr.getLocal('token');
+    if (token) headers['Authorization'] = `Bearer ${token}`;
   }
 
-  // ✅ لو في المتصفح، نضيف نفس الهيدر عادي
-  const modifiedReq = req.clone({
-    setHeaders: {
-      Accept: 'application/json',
-      'Accept-Language': lang,
-      'Accept-Browser': 'angular_website',
-    },
-  });
+  const modifiedReq = req.clone({ setHeaders: headers });
 
   return next(modifiedReq).pipe(
     catchError((error: HttpErrorResponse) => {

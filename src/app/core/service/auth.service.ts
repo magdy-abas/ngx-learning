@@ -92,8 +92,11 @@ export class AuthService {
     this.cookieService.set('token', token, {
       path: '/',
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
     });
+
+    this.ssr.setLocal('token', token);
+
     this.auth.set(true);
   }
 
@@ -101,18 +104,23 @@ export class AuthService {
   logout(): void {
     this.cookieService.delete('token', '/');
 
+    this.ssr.removeLocal('token');
     this.ssr.removeLocal('userData');
-    this.userData = null;
 
+    this.userData = null;
     this.auth.set(false);
 
     this._Router.navigate(['/login']);
   }
+
   isAuthenticated(): boolean {
-    return !!this.cookieService.get('token');
+    const token = this.cookieService.get('token') || this.ssr.getLocal('token');
+    return !!token;
   }
 
   getToken(): string | null {
-    return this.cookieService.get('token') || null;
+    return (
+      this.cookieService.get('token') || this.ssr.getLocal('token') || null
+    );
   }
 }
