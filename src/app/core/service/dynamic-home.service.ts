@@ -13,9 +13,9 @@ export class DynamicHomeService {
   private appAttrsSubject = new BehaviorSubject<any[]>([]);
   public appAttrs$ = this.appAttrsSubject.asObservable();
 
-  getHomeData(): Observable<DynamicHomeResponse> {
+  getHomeData(v2?: string): Observable<DynamicHomeResponse> {
     return this._HttpClient
-      .get<DynamicHomeResponse>(`${baseUrl}home/dinamic?with_last_version=1`)
+      .get<DynamicHomeResponse>(`${baseUrl}home/dinamic?${v2}`)
       .pipe(
         tap((response) => {
           if (response.last_version_data?.app_attrs) {

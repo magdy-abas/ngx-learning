@@ -1,38 +1,10 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
 import express from 'express';
-import fetch from 'node-fetch';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import cookieParser from 'cookie-parser';
 import bootstrap from './src/main.server';
-
-let cachedSeo = { header: '', body: '', lastFetch: 0 };
-
-async function getSeoSnippets() {
-  const now = Date.now();
-
-  if (now - cachedSeo.lastFetch < 10 * 60 * 1000 && cachedSeo.header) {
-    return cachedSeo;
-  }
-
-  try {
-    const res = await fetch(
-      'https://loop-edx.stepsio.com/api/mobile-versions/last-version'
-    );
-    const json: any = await res.json();
-
-    cachedSeo = {
-      header: json?.data?.custom_code?.css || '',
-      body: json?.data?.custom_code?.js || '',
-      lastFetch: now,
-    };
-  } catch (err) {
-    console.error('❌ Error fetching SEO data:', err);
-  }
-
-  return cachedSeo;
-}
 
 export function app(): express.Express {
   const server = express();
@@ -69,8 +41,6 @@ export function app(): express.Express {
       console.log('🌍 SSR detected lang:', lang);
       console.log('🔐 SSR detected token:', token ? '✅ Exists' : '❌ Missing');
 
-      const seo = await getSeoSnippets();
-
       const html = await commonEngine.render({
         bootstrap,
         documentFilePath: indexHtml,
@@ -83,10 +53,7 @@ export function app(): express.Express {
         ],
       });
 
-      let finalHtml = html.replace('</head>', `${seo.header}\n</head>`);
-      finalHtml = finalHtml.replace('</body>', `${seo.body}\n</body>`);
-
-      res.send(finalHtml);
+      res.send(html);
     } catch (err) {
       console.error('❌ SSR Render Error:', err);
       next(err);

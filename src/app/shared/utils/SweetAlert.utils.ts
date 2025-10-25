@@ -199,10 +199,15 @@ export const SweetAlertUtils = {
 
   showContentUnavailable() {
     return Swal.fire({
-      title: translateService.instant('contentUnavailable.title'),
-      text: translateService.instant('contentUnavailable.text'),
+      title:
+        translateService.instant('contentUnavailable.title') ||
+        'المحتوى غير متاح',
+      text:
+        translateService.instant('contentUnavailable.text') ||
+        'عذرًا، لم نتمكن من عرض هذا المحتوى حاليًا. يرجى المحاولة لاحقًا أو التواصل مع الدعم الفني.',
       icon: 'error',
-      confirmButtonText: translateService.instant('contentUnavailable.confirm'),
+      confirmButtonText:
+        translateService.instant('contentUnavailable.confirm') || 'حسنًا',
       width: '450px',
       customClass: commonCustomClasses,
     });

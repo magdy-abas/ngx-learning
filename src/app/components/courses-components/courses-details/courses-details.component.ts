@@ -105,25 +105,44 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
     this.isAuth = this._AuthService.isAuthenticated();
     this.isIOS = this.deviceService.isIOS;
 
+    if (this.isAuth) {
+      this.userInfo = this._AuthService.getStoredUserData();
+    }
+
     const slug = this._route.snapshot.paramMap.get('slug');
     const nav = this._Router.getCurrentNavigation();
 
-    if (nav?.extras.state) {
+    if (nav?.extras.state?.['id']) {
       this.courseId = nav.extras.state['id'];
     }
 
     if (slug) {
       this.fetchCourseDetails(slug);
-      if (this.isAuth && this.courseId) {
-        this.getResources(this.courseId);
-        this.getDoctorComments(this.courseId);
-        this.userInfo = this._AuthService.userData;
+
+      let firstLangChange = true;
+      const langSub = this.globalTranslate.language$.subscribe((lang) => {
+        if (firstLangChange) {
+          firstLangChange = false;
+          return;
+        }
+        this.resetAndReload(slug);
+      });
+      this.subscriptions.push(langSub);
+
+      if (this.isAuth) {
+        if (this.courseId) {
+          this.getResources(this.courseId);
+          this.getDoctorComments(this.courseId);
+        } else {
+          console.warn('⚠️ No courseId found in navigation state');
+        }
       }
     } else {
       this.errorMessage = 'Invalid course slug';
       this.isLoading = false;
     }
   }
+
   private scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -225,9 +244,8 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
           const course = this.courseDetails.course;
           this.seo.setSeoData({
             title: course.title,
-            description: course.meta_description,
-            keywords: course.meta_keywords,
           });
+          this.seo.injectRawHeadMeta(course.meta_keywords);
         },
         error: async (err) => {
           console.error(err);
@@ -440,7 +458,6 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
           );
 
           if (!decryptedUrl) {
-            console.error('Failed to decrypt resource URL');
             SweetAlertUtils.showContentUnavailable();
             return;
           }
@@ -449,12 +466,14 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
             this.sanitizer.bypassSecurityTrustResourceUrl(decryptedUrl);
           this.videoLoaded = true;
           this.openVideoModal();
-
           this.scrollToTop();
+        } else {
+          console.warn('⚠️ No video data received or invalid response format');
         }
       },
       error: (err) => console.error('Error fetching video:', err),
     });
+
     this.subscriptions.push(videoSub);
   }
 
@@ -531,6 +550,19 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
   closeVideoModal() {
     this.showVideoModal = false;
+  }
+  private resetAndReload(slug: string): void {
+    this.courseDetails = undefined;
+    this.doctorComments = [];
+    this.resources = [];
+    this.isLoading = true;
+
+    this.fetchCourseDetails(slug);
+
+    if (this.isAuth && this.courseId) {
+      this.getResources(this.courseId);
+      this.getDoctorComments(this.courseId);
+    }
   }
 
   ngOnDestroy(): void {

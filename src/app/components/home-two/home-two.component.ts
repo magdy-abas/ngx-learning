@@ -131,7 +131,7 @@ export class HomeTwoComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   getHomeData(): void {
-    this._DynamicHomeService.getHomeData().subscribe({
+    this._DynamicHomeService.getHomeData('with_last_version=1').subscribe({
       next: (res) => {
         this.homeSections = res.data;
 

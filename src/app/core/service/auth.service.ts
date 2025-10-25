@@ -123,4 +123,20 @@ export class AuthService {
       this.cookieService.get('token') || this.ssr.getLocal('token') || null
     );
   }
+
+  getStoredUserData(): UserData | null {
+    if (this.userData) return this.userData;
+
+    const stored = this.ssr.getLocal('userData');
+    if (stored) {
+      try {
+        this.userData = JSON.parse(stored);
+        return this.userData;
+      } catch (e) {
+        console.error('Error parsing stored userData:', e);
+      }
+    }
+
+    return null;
+  }
 }

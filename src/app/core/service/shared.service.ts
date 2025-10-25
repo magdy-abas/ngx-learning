@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { CheckSecurityPointResponse } from '../interfaces/mobile-versions';
 import { SsrService } from './ssr.service';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SuccessResponse } from '../interfaces/shared.interface';
 
 @Injectable({
@@ -38,7 +38,8 @@ export class SharedService {
     private _HttpClient: HttpClient,
     private router: Router,
     private ssr: SsrService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   CheckSecurityPoint(): Observable<CheckSecurityPointResponse> {
@@ -64,6 +65,10 @@ export class SharedService {
           const version = this.extractHomeVersion(response.data);
           this.setHomeVersion(version);
           this.setLoginMethod(response.data.settings.auth_login_with);
+
+          // Inject SEO snippets into <head> and <body>
+          this.injectRawIntoHead(response.data.custom_code?.css);
+          this.injectRawIntoBody(response.data.custom_code.js);
         } else {
           this.isSecurityChecked.next(false);
 
@@ -151,5 +156,37 @@ export class SharedService {
     if (!isPlatformBrowser(this.platformId)) return;
     document.body.classList.remove('home-v1', 'home-v2');
     document.body.classList.add(version === 'v1' ? 'home-v1' : 'home-v2');
+  }
+
+  // ========== <head> ==========
+  injectRawIntoHead(rawHtml: any): void {
+    if (!rawHtml?.trim()) return;
+    const head = this.document.head;
+    if (!head) return;
+
+    if (isPlatformServer(this.platformId)) {
+      head.insertAdjacentHTML('beforeend', rawHtml);
+      return;
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      head.insertAdjacentHTML('beforeend', rawHtml);
+    }
+  }
+
+  // ========== <body> ==========
+  injectRawIntoBody(rawHtml: any): void {
+    if (!rawHtml?.trim()) return;
+    const body = this.document.body;
+    if (!body) return;
+
+    if (isPlatformServer(this.platformId)) {
+      body.insertAdjacentHTML('beforeend', rawHtml);
+      return;
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      body.insertAdjacentHTML('beforeend', rawHtml);
+    }
   }
 }
