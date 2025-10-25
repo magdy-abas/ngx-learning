@@ -150,7 +150,7 @@ export const mainRoutes: Routes = [
     title: 'profile',
   },
   {
-    path: 'course-quiz/:courseId/:quizId',
+    path: 'course-quiz/:slug/:quizId',
     canActivate: [authGuard],
     loadComponent: () =>
       import(

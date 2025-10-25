@@ -53,6 +53,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   showIntro: boolean = true;
   courseTitle: string = '';
   quizTitle: string = '';
+  slug: string = '';
 
   // time quiz
   remaining_seconds: number = 0;
@@ -75,17 +76,20 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   ngOnInit() {
     this.darkModeService.applyMode();
+    const slug = this._route.snapshot.paramMap.get('slug');
+    if (slug) this.slug = slug;
 
     const quizId = this._route.snapshot.paramMap.get('quizId');
-    const courseId = this._route.snapshot.paramMap.get('courseId');
 
-    courseId ? (this.courseId = +courseId) : courseId;
     if (quizId) {
       this.quizId = +quizId;
       this.getQuiz(this.quizId);
     }
 
-    const state = history.state;
+    let state: any = {};
+    if (this.ssr.isBrowser()) {
+      state = history.state;
+    }
     // console.log(state);
 
     this.courseTitle = state.courseTitle || '';
@@ -212,7 +216,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
                 if (res.can_show_answers) {
                   this.showResult = true;
                 } else {
-                  this._Router.navigate([`/course-details/${this.courseId}`]);
+                  this._Router.navigate([`/course-details/${this.slug}`]);
                 }
               }
             },
@@ -320,7 +324,7 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
    * Close result view and reset quiz state
    */
   closeResult(): void {
-    this._Router.navigate([`/course-details/${this.courseId}`]).then(() => {
+    this._Router.navigate([`/course-details/${this.slug}`]).then(() => {
       this.resetQuiz();
     });
   }
@@ -404,6 +408,6 @@ export class CoursesQuizComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   backToCourse(): void {
-    this._Router.navigate([`/course-details/${this.courseId}`]);
+    this._Router.navigate([`/course-details/${this.slug}`]);
   }
 }

@@ -170,12 +170,16 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
 
     switch (lessonType) {
       case 'quiz':
-        this._Router.navigate([`/course-quiz/${this.courseId}/${id}`], {
-          state: {
-            courseTitle: this.courseDetails?.course?.title,
-            quizTitle: lesson,
-          },
-        });
+        this._Router.navigate(
+          [`/course-quiz/${this.courseDetails?.course?.slug}/${id}`],
+          {
+            state: {
+              courseTitle: this.courseDetails?.course?.title,
+              quizTitle: lesson,
+            },
+          }
+        );
+
         break;
 
       case 'video':
@@ -238,6 +242,7 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
             return;
           }
           this.courseDetails = data;
+          this.courseId = this.courseId || this.courseDetails.course.id;
 
           this.isLoading = false;
           this.isClientSubscribe();
