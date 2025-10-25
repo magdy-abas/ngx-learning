@@ -143,19 +143,17 @@
             <!-- <div class="fc-rating mb-2" *ngIf="data.rate && data.rate !== '0.0'"> -->
             <div class="fc-rating mb-2">
               <div class="d-flex align-items-center justify-content-center">
-                <!-- <ng-container *ngFor="let item of [1, 2, 3, 4, 5].slice(0, getFloorValue(data.rate))"> -->
-                <ng-container>
-                  <i class="fas fa-star text-warning me-1"></i>
-                  <i class="fas fa-star text-warning me-1"></i>
-                  <i class="fas fa-star text-warning me-1"></i>
-                  <i class="fas fa-star text-warning me-1"></i>
+                <ng-container *ngFor="let star of getFullStars(data.rate)">
                   <i class="fas fa-star text-warning me-1"></i>
                 </ng-container>
-                <ng-container *ngIf="data.rate % 1 !== 0">
-                  <i class="fa-solid fa-star-half-stroke text-warning me-1"></i>
+
+                <i *ngIf="hasHalfStar(data.rate)" class="fa-solid fa-star-half-stroke text-warning me-1"></i>
+
+                <ng-container *ngFor="let empty of getEmptyStars(data.rate)">
+                  <i class="far fa-star text-warning me-1"></i>
                 </ng-container>
-                <!-- <span class="rating-text">{{ data.rate }}</span> -->
-                <span class="rating-text">(54)</span>
+
+                <span class="rating-text ms-1">({{ data.rate || '0.0' }})</span>
               </div>
             </div>
 

@@ -158,4 +158,25 @@ export class CoursesCardComponent implements OnInit {
   //     });
   //   });
   // }
+
+  getFullStars(rate: string | number | null | undefined): number[] {
+    const r = parseFloat(rate as string);
+    if (isNaN(r) || r < 0) return [];
+    const fullStars = Math.floor(r);
+    return Array(fullStars).fill(0);
+  }
+
+  hasHalfStar(rate: string | number | null | undefined): boolean {
+    const r = parseFloat(rate as string);
+    return !isNaN(r) && r % 1 >= 0.5;
+  }
+
+  getEmptyStars(rate: string | number | null | undefined): number[] {
+    const r = parseFloat(rate as string);
+    if (isNaN(r) || r <= 0) return Array(5).fill(0);
+    const full = Math.floor(r);
+    const half = this.hasHalfStar(r) ? 1 : 0;
+    const empty = 5 - (full + half);
+    return Array(empty).fill(0);
+  }
 }

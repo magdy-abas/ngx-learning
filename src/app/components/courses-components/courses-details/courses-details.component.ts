@@ -241,7 +241,9 @@ export class CoursesDetailsComponent implements OnInit, OnDestroy {
             }
             return;
           }
+
           this.courseDetails = data;
+
           this.courseId = this.courseId || this.courseDetails.course.id;
 
           this.isLoading = false;

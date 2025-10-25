@@ -38,9 +38,6 @@ export function app(): express.Express {
 
       res.cookie('lang', lang, { path: '/', sameSite: 'none', secure: true });
 
-      console.log('🌍 SSR detected lang:', lang);
-      console.log('🔐 SSR detected token:', token ? '✅ Exists' : '❌ Missing');
-
       const html = await commonEngine.render({
         bootstrap,
         documentFilePath: indexHtml,
