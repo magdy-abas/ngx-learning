@@ -8,14 +8,18 @@
       </div>
 
       <!-- Links -->
-      <div class="col-auto mb-4 mb-lg-0" *ngIf="footerLinks.length">
-        <h6 class="footer-title">{{ footerLinks[0] }}</h6>
+      <div class="col-auto mb-4 mb-lg-0" *ngIf="pages.length">
+        <h6 class="footer-title">{{'home_two.footer.links.links' | translate }}</h6>
+
         <ul class="footer-links">
-          <li *ngFor="let link of footerLinks.slice(1)">
-            <a href="#">{{ link }}</a>
+          <li *ngFor="let page of pages">
+            <a [routerLink]="['/', page.slug]">
+              {{ page.title }}
+            </a>
           </li>
         </ul>
       </div>
+
 
       <!-- Contact -->
       <div class="col-auto" *ngIf="footerContactTitle">

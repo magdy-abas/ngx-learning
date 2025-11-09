@@ -4671,3 +4671,19 @@ body.home-v1 .desktop-v2 {
 body.home-v2 .top-info-bar::before {
   background-color: var(--navbar-top-bg) !important;
 }
+
+// home two footer
+
+.policy-details {
+  .page-wrapper {
+    background: linear-gradient(135deg, #f9fbfe 0%, #eef5ff 100%);
+    padding: 50px 0;
+  }
+
+  .page-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+}

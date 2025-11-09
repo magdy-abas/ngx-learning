@@ -1,0 +1,10 @@
+<div class="policy-details">
+  <div class="page-wrapper " *ngIf="page">
+    <div class="container-fluid">
+      <div class="page-card">
+        <h1 class="mb-4 text-end">{{ page.title }}</h1>
+        <div [innerHTML]="safeDesc"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,17 +3,23 @@ import { NgFor, NgIf } from '@angular/common';
 import { SharedService } from '../../../core/service/shared.service';
 import { Subscription } from 'rxjs';
 import { DynamicHomeService } from '../../../core/service/dynamic-home.service';
+import { FooterService } from '../../../core/service/footer.service';
+import {
+  PageItem,
+  PagesListResponse,
+} from '../../../core/interfaces/footer.interface';
+import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer-home-v2',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, RouterLink, TranslateModule],
   templateUrl: './footer-home-v2.component.html',
   styleUrl: './footer-home-v2.component.scss',
 })
 export class FooterHomeV2Component implements OnInit, OnDestroy {
   footerLogo: string | null = null;
-  footerLinks: string[] = [];
   footerContactTitle: string | null = null;
   footerPhoneLabel: string | null = null;
   footerWhatsappLabel: string | null = null;
@@ -21,12 +27,14 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
 
   contactNumber: string | null = null;
   whatsappNumber: string | null = null;
+  pages: PageItem[] = [];
 
   private subscription?: Subscription;
 
   constructor(
     private DynamicHomeService: DynamicHomeService,
-    private SharedService: SharedService
+    private SharedService: SharedService,
+    private footerService: FooterService
   ) {}
 
   ngOnInit(): void {
@@ -47,10 +55,6 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
     this.footerLogo =
       footerAttrs.find((attr) => attr.key === 'big_logo')?.file || null;
 
-    this.footerLinks = footerAttrs
-      .filter((attr) => attr.key === 'links')
-      .map((attr) => attr.value);
-
     this.footerContactTitle =
       footerAttrs.find((attr) => attr.key === 'contact')?.value || null;
     this.footerPhoneLabel =
@@ -65,6 +69,15 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
 
     this.bottomFooter =
       bottomFooterAttrs.find((attr) => attr.key === 'Rights')?.value || null;
+
+    this.loadPages();
+  }
+  private loadPages(): void {
+    this.footerService.getPagesList().subscribe((res) => {
+      this.pages = res.data || null;
+
+      console.log('Footer Pages:', res);
+    });
   }
 
   ngOnDestroy(): void {

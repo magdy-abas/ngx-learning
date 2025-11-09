@@ -1,4 +1,5 @@
 // mainRoutes.ts
+import { ContentPageComponent } from '../../../components/content-page/content-page.component';
 import { MainLayoutComponent } from '../../../layouts/main-layout/main-layout.component';
 import { authGuard } from '../../guard/auth.guard';
 import { publicGuard } from '../../guard/public.guard';
@@ -136,6 +137,14 @@ export const mainRoutes: Routes = [
         '../../../components/auth-components/forgot-password/forgot-password.component'
       ).then((m) => m.ForgotPasswordComponent),
     title: 'Forgot Password',
+  },
+  {
+    path: ':slug',
+    loadComponent: () =>
+      import('../../../components/content-page/content-page.component').then(
+        (m) => m.ContentPageComponent
+      ),
+    title: 'Page Details',
   },
 
   // Protected pages
