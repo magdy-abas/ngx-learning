@@ -75,8 +75,6 @@ export class FooterHomeV2Component implements OnInit, OnDestroy {
   private loadPages(): void {
     this.footerService.getPagesList().subscribe((res) => {
       this.pages = res.data || null;
-
-      console.log('Footer Pages:', res);
     });
   }
 

@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run e-learning:serve-ssr",
-    "build:ssr": "ng build && ng run e-learning:server:production",
+    "build:ssr": "ng build --configuration production",
     "serve:ssr": "node dist/e-learning/server/server.mjs",
     "build:prerender": "ng run e-learning:prerender:production",
     "serve:prerender": "npx http-server dist/e-learning/browser -p 4200"

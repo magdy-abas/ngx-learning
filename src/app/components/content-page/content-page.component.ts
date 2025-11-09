@@ -1,9 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FooterService } from '../../core/service/footer.service';
 import { PageItem } from '../../core/interfaces/footer.interface';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { GlobalTranslateService } from '../../core/service/global-translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-content-page',
@@ -12,29 +21,48 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   templateUrl: './content-page.component.html',
   styleUrls: ['./content-page.component.scss'],
 })
-export class ContentPageComponent implements OnInit {
+export class ContentPageComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private footerService = inject(FooterService);
   private sanitizer = inject(DomSanitizer);
+  private globalTranslate = inject(GlobalTranslateService);
+
+  private langSubs?: Subscription;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   page: PageItem | null = null;
-  safeDesc: SafeHtml | null = null;
+  safeDesc: SafeHtml | string | null = null;
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
+    if (!slug) return;
 
-    if (slug) {
-      this.footerService.getPage(slug).subscribe((res) => {
-        this.page = res.data;
+    this.loadPage(slug);
 
-        this.safeDesc = this.sanitizer.bypassSecurityTrustHtml(
-          this.page.description
-        );
+    this.langSubs = this.globalTranslate.language$.subscribe(() => {
+      this.loadPage(slug);
+    });
+  }
 
-        if (typeof document !== 'undefined') {
-          document.title = this.page.title;
-        }
-      });
-    }
+  private loadPage(slug: string): void {
+    this.footerService.getPage(slug).subscribe((res) => {
+      this.page = res.data;
+
+      if (!isPlatformBrowser(this.platformId)) {
+        this.safeDesc = this.page?.description ?? '';
+        return;
+      }
+
+      this.safeDesc = this.sanitizer.bypassSecurityTrustHtml(
+        this.page?.description ?? ''
+      );
+
+      document.title = this.page?.title ?? 'Page';
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.langSubs?.unsubscribe();
   }
 }
